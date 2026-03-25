@@ -12,7 +12,10 @@ app.use(express.json());
 app.use("/mcp", (req, res, next) => {
   if (API_KEY) {
     const provided =
-      req.headers["x-api-key"] ?? req.headers["authorization"]?.replace("Bearer ", "");
+      req.headers["x-api-key"] ??
+      req.headers["api-key"] ??
+      req.headers["ocp-apim-subscription-key"] ??
+      req.headers["authorization"]?.replace("Bearer ", "");
     if (provided !== API_KEY) {
       res.status(401).json({ error: "Unauthorized" });
       return;
