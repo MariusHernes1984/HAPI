@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/hapi-mcp-server
+  IMAGE_NAME: ghcr.io/mariushernes1984/hapi-mcp-server
 
 jobs:
   build-and-push:
