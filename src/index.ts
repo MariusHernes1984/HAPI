@@ -17,6 +17,7 @@ app.use("/mcp", (req, res, next) => {
       req.headers["ocp-apim-subscription-key"] ??
       req.headers["authorization"]?.replace("Bearer ", "");
     if (provided !== API_KEY) {
+      console.warn(`401 Unauthorized — header keys: [${Object.keys(req.headers).join(", ")}]`);
       res.status(401).json({ error: "Unauthorized" });
       return;
     }
