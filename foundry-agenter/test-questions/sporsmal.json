@@ -1,0 +1,943 @@
+[
+  {
+    "id": "Q-001",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva er anbefalt behandling for KOLS stadium 2?",
+    "demo_verdi": "høy",
+    "tema": "KOLS",
+    "koder": ["ICD-10:J44", "ICPC-2:R95"]
+  },
+  {
+    "id": "Q-002",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilke anbefalinger finnes for behandling av type 2 diabetes?",
+    "demo_verdi": "høy",
+    "tema": "Diabetes",
+    "koder": ["ICD-10:E11", "ICPC-2:T90"]
+  },
+  {
+    "id": "Q-003",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva sier retningslinjene om blodtrykksbehandling ved hypertensjon?",
+    "demo_verdi": "høy",
+    "tema": "Hypertensjon",
+    "koder": ["ICD-10:I10", "ICPC-2:K86"]
+  },
+  {
+    "id": "Q-004",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Vis meg nasjonal faglig retningslinje for hjertesvikt",
+    "demo_verdi": "høy",
+    "tema": "Hjertesvikt",
+    "koder": ["ICD-10:I50"]
+  },
+  {
+    "id": "Q-005",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva anbefales for forebygging av venøs tromboembolisme (VTE) postoperativt?",
+    "demo_verdi": "høy",
+    "tema": "VTE-profylakse",
+    "koder": ["ICD-10:I82"]
+  },
+  {
+    "id": "Q-006",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva er pakkeforløpet for tykk- og endetarmskreft?",
+    "demo_verdi": "høy",
+    "tema": "Kreft - kolorektal",
+    "koder": ["ICD-10:C20"]
+  },
+  {
+    "id": "Q-007",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilke anbefalinger finnes for behandling av depresjon hos voksne?",
+    "demo_verdi": "høy",
+    "tema": "Depresjon",
+    "koder": ["ICD-10:F32", "ICPC-2:P76"]
+  },
+  {
+    "id": "Q-008",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva sier retningslinjene om behandling av osteoporose hos postmenopausale kvinner?",
+    "demo_verdi": "høy",
+    "tema": "Osteoporose",
+    "koder": ["ICD-10:M81", "ICPC-2:L95"]
+  },
+  {
+    "id": "Q-009",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Vis anbefalinger for seponering av antipsykotika",
+    "demo_verdi": "middels",
+    "tema": "Psykose",
+    "koder": ["ICD-10:F20"]
+  },
+  {
+    "id": "Q-010",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva anbefales for utredning og behandling av ADHD hos barn?",
+    "demo_verdi": "høy",
+    "tema": "ADHD",
+    "koder": ["ICD-10:F90", "ICPC-2:P81"]
+  },
+  {
+    "id": "Q-011",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva sier faglige råd om bruk av benzodiazepiner ved angst?",
+    "demo_verdi": "middels",
+    "tema": "Angst",
+    "koder": ["ICD-10:F41", "ICPC-2:P74"]
+  },
+  {
+    "id": "Q-012",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilke retningslinjer finnes for rehabilitering etter hjerneslag?",
+    "demo_verdi": "høy",
+    "tema": "Hjerneslag",
+    "koder": ["ICD-10:I63", "ICPC-2:K90"]
+  },
+  {
+    "id": "Q-013",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva anbefales ved kronisk nyresykdom stadium 3?",
+    "demo_verdi": "høy",
+    "tema": "Kronisk nyresykdom",
+    "koder": ["ICD-10:N18"]
+  },
+  {
+    "id": "Q-014",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Vis pakkeforløp for brystkreft",
+    "demo_verdi": "høy",
+    "tema": "Brystkreft",
+    "koder": ["ICD-10:C50"]
+  },
+  {
+    "id": "Q-015",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva er anbefalingene for ernæring ved Crohns sykdom?",
+    "demo_verdi": "middels",
+    "tema": "Crohns",
+    "koder": ["ICD-10:K50"]
+  },
+  {
+    "id": "Q-016",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva sier retningslinjene om statin-behandling ved høy kardiovaskulær risiko?",
+    "demo_verdi": "høy",
+    "tema": "Kardiovaskulær risiko",
+    "koder": ["ICD-10:Z82"]
+  },
+  {
+    "id": "Q-017",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilke anbefalinger finnes for smertebehandling ved kreftsykdom?",
+    "demo_verdi": "høy",
+    "tema": "Kreftsmerte",
+    "koder": ["ICD-10:Z51"]
+  },
+  {
+    "id": "Q-018",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Vis meg retningslinjer for behandling av kroniske ryggsmerter",
+    "demo_verdi": "høy",
+    "tema": "Ryggsmerter",
+    "koder": ["ICD-10:M54", "ICPC-2:L84"]
+  },
+  {
+    "id": "Q-019",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva anbefales for oppfølging av barn med astma?",
+    "demo_verdi": "høy",
+    "tema": "Astma barn",
+    "koder": ["ICD-10:J45", "ICPC-2:R96"]
+  },
+  {
+    "id": "Q-020",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilke faglige råd finnes for behandling av søvnløshet (insomni)?",
+    "demo_verdi": "middels",
+    "tema": "Insomni",
+    "koder": ["ICD-10:G47", "ICPC-2:P06"]
+  },
+  {
+    "id": "Q-021",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva sier retningslinjene om behandling av epilepsi hos voksne?",
+    "demo_verdi": "høy",
+    "tema": "Epilepsi",
+    "koder": ["ICD-10:G40", "ICPC-2:N88"]
+  },
+  {
+    "id": "Q-022",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Vis anbefalinger for oppfølging etter akutt koronarsyndrom",
+    "demo_verdi": "høy",
+    "tema": "AKS oppfølging",
+    "koder": ["ICD-10:I24"]
+  },
+  {
+    "id": "Q-023",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva anbefales for rusbehandling ved alkoholavhengighet?",
+    "demo_verdi": "høy",
+    "tema": "Alkohol",
+    "koder": ["ICD-10:F10", "ICPC-2:P15"]
+  },
+  {
+    "id": "Q-024",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilke anbefalinger finnes for palliativ behandling i livets sluttfase?",
+    "demo_verdi": "høy",
+    "tema": "Palliasjon",
+    "koder": ["ICD-10:Z51"]
+  },
+  {
+    "id": "Q-025",
+    "kategori": "retningslinje",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva sier retningslinjene om sekundærprevensjon etter hjerneinfarkt?",
+    "demo_verdi": "høy",
+    "tema": "Hjerneinfarkt",
+    "koder": ["ICD-10:I63"]
+  },
+
+  {
+    "id": "Q-026",
+    "kategori": "antibiotika",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilken antibiotika anbefales som førstevalg ved pneumoni hos voksne?",
+    "demo_verdi": "høy",
+    "tema": "Pneumoni",
+    "koder": ["ICD-10:J18"]
+  },
+  {
+    "id": "Q-027",
+    "kategori": "antibiotika",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva er anbefalt antibiotika ved urinveisinfeksjon hos kvinner?",
+    "demo_verdi": "høy",
+    "tema": "UVI",
+    "koder": ["ICD-10:N39", "ICPC-2:U71"]
+  },
+  {
+    "id": "Q-028",
+    "kategori": "antibiotika",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Vis doseringsregime for amoxicillin ved akutt otitt hos barn",
+    "demo_verdi": "høy",
+    "tema": "Otitt",
+    "koder": ["ICD-10:H66", "ICPC-2:H71"]
+  },
+  {
+    "id": "Q-029",
+    "kategori": "antibiotika",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hva er alternativ antibiotika ved penicillinallergi og tonsillitt?",
+    "demo_verdi": "høy",
+    "tema": "Tonsillitt allergi",
+    "koder": ["ICD-10:J03"]
+  },
+  {
+    "id": "Q-030",
+    "kategori": "antibiotika",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Hvilken antibiotika og dose anbefales ved erysipelas?",
+    "demo_verdi": "høy",
+    "tema": "Erysipelas",
+    "koder": ["ICD-10:A46"]
+  },
+
+  {
+    "id": "Q-031",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva er ICPC-2-koden som tilsvarer ICD-10 J44 (KOLS)?",
+    "demo_verdi": "høy",
+    "tema": "Kode-mapping KOLS",
+    "koder": ["ICD-10:J44"]
+  },
+  {
+    "id": "Q-032",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Finn SNOMED CT-kode for ICD-10 E11 (diabetes type 2)",
+    "demo_verdi": "høy",
+    "tema": "Kode-mapping diabetes",
+    "koder": ["ICD-10:E11"]
+  },
+  {
+    "id": "Q-033",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva betyr ICD-10 kode I10?",
+    "demo_verdi": "middels",
+    "tema": "ICD-10 oppslag",
+    "koder": ["ICD-10:I10"]
+  },
+  {
+    "id": "Q-034",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hvilken ICPC-2 kode brukes for hypertensjon i fastlegepraksis?",
+    "demo_verdi": "høy",
+    "tema": "Hypertensjon ICPC-2",
+    "koder": ["ICPC-2:K86"]
+  },
+  {
+    "id": "Q-035",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Finn ATC-koden for metformin",
+    "demo_verdi": "høy",
+    "tema": "ATC legemiddel",
+    "koder": ["ATC:A10BA02"]
+  },
+  {
+    "id": "Q-036",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva er virkestoffet i Buventol Easyhaler?",
+    "demo_verdi": "høy",
+    "tema": "Inhalator virkestoff",
+    "koder": []
+  },
+  {
+    "id": "Q-037",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Vis alle legemidler med ATC-kode J01CA04 (amoxicillin)",
+    "demo_verdi": "høy",
+    "tema": "Amoxicillin preparater",
+    "koder": ["ATC:J01CA04"]
+  },
+  {
+    "id": "Q-038",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva er ATC-klassifiseringen for atorvastatin?",
+    "demo_verdi": "høy",
+    "tema": "Statin ATC",
+    "koder": ["ATC:C10AA05"]
+  },
+  {
+    "id": "Q-039",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva er SNOMED CT-kode for lungekreft?",
+    "demo_verdi": "middels",
+    "tema": "SNOMED lungekreft",
+    "koder": ["ICD-10:C34"]
+  },
+  {
+    "id": "Q-040",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Finn ICD-10 koden for kronisk hjertesvikt med systolisk dysfunksjon",
+    "demo_verdi": "middels",
+    "tema": "Hjertesvikt ICD-10",
+    "koder": ["ICD-10:I50"]
+  },
+  {
+    "id": "Q-041",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Vis virkestoffet og ATC-koden for Eliquis",
+    "demo_verdi": "høy",
+    "tema": "Apixaban",
+    "koder": ["ATC:B01AF02"]
+  },
+  {
+    "id": "Q-042",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hvilke legemidler finnes på markedet med virkestoffet lisinopril?",
+    "demo_verdi": "middels",
+    "tema": "ACE-hemmer preparater",
+    "koder": ["ATC:C09AA03"]
+  },
+  {
+    "id": "Q-043",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva betyr ICPC-2 kode K74?",
+    "demo_verdi": "middels",
+    "tema": "ICPC-2 K74",
+    "koder": ["ICPC-2:K74"]
+  },
+  {
+    "id": "Q-044",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Finn pakningsinformasjon for Paracet 500 mg tabletter",
+    "demo_verdi": "middels",
+    "tema": "Paracet pakning",
+    "koder": []
+  },
+  {
+    "id": "Q-045",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva er LIS-spesialitetskoden for indremedisin?",
+    "demo_verdi": "lav",
+    "tema": "LIS kode",
+    "koder": []
+  },
+  {
+    "id": "Q-046",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Finn tilsvarende ICD-10 kode for ICPC-2 R96 (astma)",
+    "demo_verdi": "høy",
+    "tema": "Kode-mapping astma",
+    "koder": ["ICPC-2:R96"]
+  },
+  {
+    "id": "Q-047",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hvilken ATC-gruppe tilhører betablokkere?",
+    "demo_verdi": "middels",
+    "tema": "Betablokkere ATC",
+    "koder": ["ATC:C07"]
+  },
+  {
+    "id": "Q-048",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Vis alle pakninger av methotrexat tilgjengelig i Norge",
+    "demo_verdi": "middels",
+    "tema": "Methotrexat pakninger",
+    "koder": ["ATC:L01BA01"]
+  },
+  {
+    "id": "Q-049",
+    "kategori": "kodeverk",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Hva er ICD-10 koden for fibromyalgi?",
+    "demo_verdi": "middels",
+    "tema": "Fibromyalgi kode",
+    "koder": ["ICD-10:M79"]
+  },
+  {
+    "id": "Q-050",
+    "kategori": "legemiddel",
+    "agent": "hapi-kodeverk-agent",
+    "sporsmal": "Vis virkestoff og styrke for Ozempic",
+    "demo_verdi": "høy",
+    "tema": "Semaglutid",
+    "koder": ["ATC:A10BJ06"]
+  },
+
+  {
+    "id": "Q-051",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for KOLS?",
+    "demo_verdi": "høy",
+    "tema": "NKI KOLS",
+    "koder": ["ICD-10:J44"]
+  },
+  {
+    "id": "Q-052",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hva er siste målte verdi for HbA1c-kontroll ved diabetes?",
+    "demo_verdi": "høy",
+    "tema": "NKI diabetes HbA1c",
+    "koder": ["ICD-10:E11"]
+  },
+  {
+    "id": "Q-053",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Vis kvalitetsindikatorer for hjerneslag",
+    "demo_verdi": "høy",
+    "tema": "NKI hjerneslag",
+    "koder": ["ICD-10:I63"]
+  },
+  {
+    "id": "Q-054",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Er det noen nasjonale mål for bruk av spirometri ved KOLS?",
+    "demo_verdi": "høy",
+    "tema": "NKI spirometri",
+    "koder": []
+  },
+  {
+    "id": "Q-055",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hva er trendutvikling for 30-dagers reinnleggelse ved hjertesvikt?",
+    "demo_verdi": "høy",
+    "tema": "NKI hjertesvikt",
+    "koder": ["ICD-10:I50"]
+  },
+  {
+    "id": "Q-056",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Vis alle kvalitetsindikatorer for psykisk helse",
+    "demo_verdi": "høy",
+    "tema": "NKI psykisk helse",
+    "koder": []
+  },
+  {
+    "id": "Q-057",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hva er nasjonal måloppnåelse for trombolyse ved hjerneinfarkt?",
+    "demo_verdi": "høy",
+    "tema": "NKI trombolyse",
+    "koder": []
+  },
+  {
+    "id": "Q-058",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hvilke indikatorer måler kvalitet i kreftbehandling?",
+    "demo_verdi": "høy",
+    "tema": "NKI kreft",
+    "koder": []
+  },
+  {
+    "id": "Q-059",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Vis statistikk for antibiotikaforbruk i norske sykehus",
+    "demo_verdi": "høy",
+    "tema": "NKI antibiotika",
+    "koder": []
+  },
+  {
+    "id": "Q-060",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Er vi over eller under nasjonalt mål for brystkreftscreening?",
+    "demo_verdi": "høy",
+    "tema": "NKI screening",
+    "koder": ["ICD-10:C50"]
+  },
+  {
+    "id": "Q-061",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hva er andel pasienter med hjertesvikt som får ACE-hemmer?",
+    "demo_verdi": "høy",
+    "tema": "NKI hjertesvikt medikament",
+    "koder": []
+  },
+  {
+    "id": "Q-062",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Vis kvalitetsindikatorer knyttet til ICPC-2 kode K86",
+    "demo_verdi": "middels",
+    "tema": "NKI hypertensjon",
+    "koder": ["ICPC-2:K86"]
+  },
+  {
+    "id": "Q-063",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Hva er de nyeste NKI-tallene for hoftebruddbehandling?",
+    "demo_verdi": "høy",
+    "tema": "NKI hoftebrudd",
+    "koder": ["ICD-10:S72"]
+  },
+  {
+    "id": "Q-064",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Vis indikatorer for pasienttilfredshet i somatisk sykehus",
+    "demo_verdi": "middels",
+    "tema": "NKI pasienttilfredshet",
+    "koder": []
+  },
+  {
+    "id": "Q-065",
+    "kategori": "statistikk",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Er det kvalitetsindikatorer for oppfølging etter selvmordsforsøk?",
+    "demo_verdi": "høy",
+    "tema": "NKI selvmord",
+    "koder": []
+  },
+
+  {
+    "id": "Q-066",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er anbefalt behandling for KOLS, og hva er kvalitetsmålet for spirometri-bruk?",
+    "demo_verdi": "høy",
+    "tema": "KOLS behandling + NKI",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:J44"]
+  },
+  {
+    "id": "Q-067",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Pasient med ICD-10 E11 — vis retningslinjer og NKI-mål for HbA1c",
+    "demo_verdi": "høy",
+    "tema": "Diabetes klinisk oversikt",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:E11"]
+  },
+  {
+    "id": "Q-068",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hvilken antibiotika anbefales mot pneumoni, og hva er ATC-koden?",
+    "demo_verdi": "høy",
+    "tema": "Pneumoni antibiotika + ATC",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:J18"]
+  },
+  {
+    "id": "Q-069",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Vis behandlingsanbefaling for hjertesvikt og hvilke legemidler som inngår",
+    "demo_verdi": "høy",
+    "tema": "Hjertesvikt legemidler",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:I50"]
+  },
+  {
+    "id": "Q-070",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Min pasient har ICPC-2 R95 — hva betyr det i ICD-10, og hva er retningslinjene?",
+    "demo_verdi": "høy",
+    "tema": "Kode-mapping + retningslinje",
+    "involverer_agenter": ["hapi-kodeverk-agent", "hapi-retningslinje-agent"],
+    "koder": ["ICPC-2:R95"]
+  },
+  {
+    "id": "Q-071",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva anbefales for diabetes type 2, og er vi på mål nasjonalt?",
+    "demo_verdi": "høy",
+    "tema": "Diabetes full oversikt",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:E11"]
+  },
+  {
+    "id": "Q-072",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Pasient allergisk mot penicillin med pneumoni — hva er alternativ antibiotika og dose?",
+    "demo_verdi": "høy",
+    "tema": "Antibiotika allergi",
+    "involverer_agenter": ["hapi-retningslinje-agent"],
+    "koder": ["ICD-10:J18"]
+  },
+  {
+    "id": "Q-073",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Gi en fullstendig klinisk oversikt over KOLS: retningslinjer, koder og NKI",
+    "demo_verdi": "høy",
+    "tema": "KOLS komplett oversikt",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:J44", "ICPC-2:R95"]
+  },
+  {
+    "id": "Q-074",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er Ozempic, hvilken indikasjon har det, og hva sier retningslinjene?",
+    "demo_verdi": "høy",
+    "tema": "Semaglutid + indikasjon",
+    "involverer_agenter": ["hapi-kodeverk-agent", "hapi-retningslinje-agent"],
+    "koder": ["ATC:A10BJ06"]
+  },
+  {
+    "id": "Q-075",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Vis pakkeforløp for lungekreft og hvilke ICD-10 koder som er relevante",
+    "demo_verdi": "høy",
+    "tema": "Lungekreft pakkeforløp",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:C34"]
+  },
+  {
+    "id": "Q-076",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Er det samsvar mellom retningslinjene for hypertensjon og NKI-målene?",
+    "demo_verdi": "høy",
+    "tema": "Hypertensjon retningslinje + NKI",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:I10"]
+  },
+  {
+    "id": "Q-077",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er anbefalt blodfortynnende etter hjerneslag og hva heter legemidlene?",
+    "demo_verdi": "høy",
+    "tema": "Hjerneslag antikoagulasjon",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:I63"]
+  },
+  {
+    "id": "Q-078",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Fastlegen bruker ICPC-2 K86 — hva er anbefalingene og eksisterer NKI-mål?",
+    "demo_verdi": "høy",
+    "tema": "Primærhelsetjeneste ICPC-2",
+    "involverer_agenter": ["hapi-kodeverk-agent", "hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICPC-2:K86"]
+  },
+  {
+    "id": "Q-079",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er pakkeforløpet for prostatakreft og hva er NKI-status?",
+    "demo_verdi": "høy",
+    "tema": "Prostatakreft full oversikt",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:C61"]
+  },
+  {
+    "id": "Q-080",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Legemiddel ved atrieflimmer: hva anbefales, hva heter ATC-koden og er vi på mål?",
+    "demo_verdi": "høy",
+    "tema": "Atrieflimmer komplett",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:I48"]
+  },
+
+  {
+    "id": "Q-081",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Gi meg en klinisk beslutningsstøtte-oversikt for nydiagnostisert type 2 diabetes",
+    "demo_verdi": "høy",
+    "tema": "Diabetes ny diagnose",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:E11"]
+  },
+  {
+    "id": "Q-082",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er behandlingsmålet for LDL-kolesterol ved høy kardiovaskulær risiko?",
+    "demo_verdi": "høy",
+    "tema": "Kolesterol behandlingsmål",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:E78"]
+  },
+  {
+    "id": "Q-083",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Pasient med KOLS og komorbid depresjon — hvilke retningslinjer gjelder?",
+    "demo_verdi": "høy",
+    "tema": "Komorbiditet KOLS + depresjon",
+    "involverer_agenter": ["hapi-retningslinje-agent"],
+    "koder": ["ICD-10:J44", "ICD-10:F32"]
+  },
+  {
+    "id": "Q-084",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er dosering av warfarin, og hvordan monitorieres det?",
+    "demo_verdi": "høy",
+    "tema": "Warfarin dosering",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ATC:B01AA03"]
+  },
+  {
+    "id": "Q-085",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hvilke NKI-indikatorer er under nasjonalt mål dette kvartalet?",
+    "demo_verdi": "høy",
+    "tema": "NKI underytelse",
+    "involverer_agenter": ["hapi-statistikk-agent"],
+    "koder": []
+  },
+  {
+    "id": "Q-086",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er pakkeforløpet for utredning av hjerneslag og hva er NKI-resultater?",
+    "demo_verdi": "høy",
+    "tema": "Hjerneslag pakkeforløp + NKI",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:I63"]
+  },
+  {
+    "id": "Q-087",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Vis meg gjeldende anbefalinger for tromboseprofylakse og ATC-kode for LMWH",
+    "demo_verdi": "høy",
+    "tema": "VTE profylakse legemidler",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ATC:B01AB"]
+  },
+  {
+    "id": "Q-088",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva sier retningslinjene om bariatrisk kirurgi ved diabetes, og hva er ICD-10 koden?",
+    "demo_verdi": "høy",
+    "tema": "Bariatri + diabetes",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:E11", "ICD-10:E66"]
+  },
+  {
+    "id": "Q-089",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Gi en oversikt over behandlingsanbefalinger og NKI for psykisk helse hos barn",
+    "demo_verdi": "høy",
+    "tema": "Psykisk helse barn",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": []
+  },
+  {
+    "id": "Q-090",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er nasjonal anbefaling for NOAC vs warfarin ved atrieflimmer?",
+    "demo_verdi": "høy",
+    "tema": "Antikoagulasjon valg",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ICD-10:I48", "ATC:B01AF"]
+  },
+
+  {
+    "id": "Q-091",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hvilke faglige råd finnes for oppfølging av multisyk eldre pasient?",
+    "demo_verdi": "høy",
+    "tema": "Multisyk eldre",
+    "involverer_agenter": ["hapi-retningslinje-agent"],
+    "koder": []
+  },
+  {
+    "id": "Q-092",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva anbefales for behandling av rusmiddelavhengighet, og hva er relevante NKI?",
+    "demo_verdi": "høy",
+    "tema": "Rusbehandling + NKI",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:F10"]
+  },
+  {
+    "id": "Q-093",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Vis meg retningslinjer og NKI for hofteproteseoperasjon",
+    "demo_verdi": "høy",
+    "tema": "Hofteprotese kvalitet",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:M16"]
+  },
+  {
+    "id": "Q-094",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva sier retningslinjene om antibiotikabehandling i sykehus og hva er ATC J01?",
+    "demo_verdi": "høy",
+    "tema": "Sykehus antibiotika",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ATC:J01"]
+  },
+  {
+    "id": "Q-095",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Gi fullstendig klinisk støtte for behandling av revmatoid artritt",
+    "demo_verdi": "høy",
+    "tema": "Revmatoid artritt",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:M05"]
+  },
+  {
+    "id": "Q-096",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er legemiddelbehandling og NKI-mål for osteoporose?",
+    "demo_verdi": "høy",
+    "tema": "Osteoporose legemidler + NKI",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:M81"]
+  },
+  {
+    "id": "Q-097",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hva er pakkeforløpet for mistanke om kreft i bukspyttkjertelen?",
+    "demo_verdi": "høy",
+    "tema": "Bukspyttkjertelkreft pakkeforløp",
+    "involverer_agenter": ["hapi-retningslinje-agent"],
+    "koder": ["ICD-10:C25"]
+  },
+  {
+    "id": "Q-098",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Hvilke retningslinjer og NKI gjelder for tverrfaglig spesialisert rusbehandling (TSB)?",
+    "demo_verdi": "høy",
+    "tema": "TSB full oversikt",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+    "koder": []
+  },
+  {
+    "id": "Q-099",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Sammenlign anbefalinger for GLP-1-agonister i diabetes retningslinjene med ATC-klassifisering",
+    "demo_verdi": "høy",
+    "tema": "GLP-1 agonister",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+    "koder": ["ATC:A10BJ", "ICD-10:E11"]
+  },
+  {
+    "id": "Q-100",
+    "kategori": "sammensatt",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Gi meg en komplett klinisk beslutningsstøtte for hjertesvikt: pakkeforløp, legemidler, koder og NKI",
+    "demo_verdi": "høy",
+    "tema": "Hjertesvikt komplett beslutningsstøtte",
+    "involverer_agenter": ["hapi-retningslinje-agent", "hapi-kodeverk-agent", "hapi-statistikk-agent"],
+    "koder": ["ICD-10:I50", "ATC:C09", "ATC:C07"]
+  }
+]
