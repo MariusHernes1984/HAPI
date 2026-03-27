@@ -1,26 +1,35 @@
 """
 Deploy HAPI-agenter til Azure AI Foundry.
 
-Oppretter 4 agenter som alle kobler til HAPI MCP Server
-via Azure Container Apps:
-  1. HAPI Retningslinje-agent
-  2. HAPI Kodeverk-agent
-  3. HAPI Statistikk-agent
-  4. HAPI Orkestrator (koordinerer de tre over)
+Oppretter 5 agenter:
+  1. HAPI Retningslinje-agent  (MCP: HAPI)
+  2. HAPI Kodeverk-agent       (MCP: HAPI)
+  3. HAPI Statistikk-agent     (MCP: HAPI)
+  4. HAPI Orkestrator           (ren ruter, ingen verktoy)
+  5. CRM Kundealias-agent       (Azure AI Search: kundealias-crm)
 
 Bruk:
   1. Kopier .env.example til .env og fyll inn verdier
   2. pip install -r requirements.txt
   3. az login
   4. python deploy_agents.py
+  5. python deploy_agents.py --only crm-kundealias-agent  (deploy kun CRM)
 """
 
 import os
+import sys
 import json
 from dotenv import load_dotenv
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
-from azure.ai.projects.models import MCPTool, PromptAgentDefinition
+from azure.ai.projects.models import (
+    MCPTool,
+    PromptAgentDefinition,
+    AzureAISearchTool,
+    AzureAISearchToolResource,
+    AISearchIndexResource,
+    AzureAISearchQueryType,
+)
 
 load_dotenv()
 
@@ -34,7 +43,28 @@ MCP_SERVER_URL = os.environ.get(
 )
 MODEL = os.environ.get("MODEL_DEPLOYMENT", "gpt-5.3-chat")
 
-# --- MCP Tool-definisjoner per agent ---
+# Azure AI Search (for CRM-agent)
+SEARCH_CONNECTION_NAME = os.environ.get("SEARCH_CONNECTION_NAME", "kateaisearchd2ftyf")
+SEARCH_INDEX_NAME = os.environ.get("SEARCH_INDEX_NAME", "kundealias-crm")
+
+# --- Tool-definisjoner ---
+
+def ai_search_tool(client: AIProjectClient) -> AzureAISearchTool:
+    """Opprett en AzureAISearchTool for Kundealias CRM-indeksen."""
+    connection = client.connections.get(SEARCH_CONNECTION_NAME)
+    return AzureAISearchTool(
+        azure_ai_search=AzureAISearchToolResource(
+            indexes=[
+                AISearchIndexResource(
+                    project_connection_id=connection.id,
+                    index_name=SEARCH_INDEX_NAME,
+                    query_type=AzureAISearchQueryType.SIMPLE,
+                    top_k=10,
+                ),
+            ]
+        )
+    )
+
 
 def hapi_mcp_tool(allowed_tools: list[str] | None = None) -> MCPTool:
     """Opprett en MCPTool som peker til HAPI MCP Server."""
@@ -121,6 +151,24 @@ AGENTS = {
         "allowed_tools": [],
         "has_mcp": False,
     },
+    "crm-kundealias-agent": {
+        "instructions": (
+            "Du er en CRM-assistent som hjelper med aa slaa opp kundeinformasjon "
+            "fra Kundealias CRM-databasen via Azure AI Search.\n\n"
+            "Du kan svare paa spoersmaal om:\n"
+            "- Kundenavn og kundealias\n"
+            "- SuperOffice-IDer\n"
+            "- ACP-IDer\n"
+            "- Partnercenter-GUIDer\n\n"
+            "Naar du faar et spoersmaal:\n"
+            "1. Soek i indeksen med kundenavn, alias eller ID\n"
+            "2. Presenter resultatene tydelig med alle tilgjengelige felt\n"
+            "3. Hvis flere treff: list alle og spoer om bruker vil ha mer detalj\n\n"
+            "Svar alltid paa norsk. Oppgi kilde: Kundealias CRM (Dataverse)."
+        ),
+        "has_mcp": False,
+        "has_search": True,
+    },
 }
 
 
@@ -129,6 +177,8 @@ def deploy_agent(client: AIProjectClient, agent_name: str, config: dict) -> dict
     tools = []
     if config.get("has_mcp"):
         tools.append(hapi_mcp_tool(config["allowed_tools"]))
+    if config.get("has_search"):
+        tools.append(ai_search_tool(client))
 
     agent = client.agents.create_version(
         agent_name=agent_name,
@@ -149,6 +199,13 @@ def deploy_agent(client: AIProjectClient, agent_name: str, config: dict) -> dict
 
 
 def main():
+    # --only flag: deploy kun en spesifikk agent
+    only_agent = None
+    if "--only" in sys.argv:
+        idx = sys.argv.index("--only")
+        if idx + 1 < len(sys.argv):
+            only_agent = sys.argv[idx + 1]
+
     print(f"Kobler til Azure AI Foundry: {PROJECT_ENDPOINT}")
     print(f"MCP Server: {MCP_SERVER_URL}")
     print(f"Modell: {MODEL}\n")
@@ -158,13 +215,21 @@ def main():
         credential=DefaultAzureCredential(),
     )
 
-    print("Oppretter HAPI-agenter...\n")
+    agents_to_deploy = AGENTS
+    if only_agent:
+        if only_agent not in AGENTS:
+            print(f"FEIL: Ukjent agent '{only_agent}'")
+            print(f"Tilgjengelige: {', '.join(AGENTS.keys())}")
+            sys.exit(1)
+        agents_to_deploy = {only_agent: AGENTS[only_agent]}
+
+    print(f"Oppretter {len(agents_to_deploy)} agent(er)...\n")
 
     results = {}
-    for agent_name, config in AGENTS.items():
+    for agent_name, config in agents_to_deploy.items():
         results[agent_name] = deploy_agent(client, agent_name, config)
 
-    print("\n--- Deployment fullført ---\n")
+    print("\n--- Deployment fullfort ---\n")
 
     # Lagre resultater til fil
     output_file = os.path.join(os.path.dirname(__file__), "deployed_agents.json")
