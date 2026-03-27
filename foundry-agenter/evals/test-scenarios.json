@@ -1,0 +1,190 @@
+{
+  "name": "HAPI Agent Test Scenarios",
+  "description": "Testscenarioer for evaluering av HAPI-agentene i Azure AI Foundry",
+  "scenarios": [
+    {
+      "id": "TC-001",
+      "name": "Enkel diagnose — behandling",
+      "input": "Hva er anbefalt behandling for KOLS?",
+      "forventet_ruting": [
+        "orkestrator → kodeverk_agent (finn ICD-10 J44)",
+        "orkestrator → retningslinje_agent (søk anbefalinger med J44)"
+      ],
+      "mcp_verktøy_forventet": ["sok_innhold", "hent_anbefalinger", "hent_innhold"],
+      "forventet_output": {
+        "inneholder": ["J44", "KOLS", "anbefaling", "Helsedirektoratet"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inneholder minst én anbefaling med styrkegrad",
+        "Kilde oppgis som Helsedirektoratet",
+        "infoId er inkludert i svaret"
+      ]
+    },
+    {
+      "id": "TC-002",
+      "name": "Legemiddel — antibiotika",
+      "input": "Hvilken antibiotika anbefales for pneumoni?",
+      "forventet_ruting": [
+        "orkestrator → kodeverk_agent (finn ATC-kode / virkestoff)",
+        "orkestrator → retningslinje_agent (hent anbefalinger inkl. antibiotikamodell)"
+      ],
+      "mcp_verktøy_forventet": ["sok_innhold", "hent_innhold", "hent_retningslinje"],
+      "forventet_output": {
+        "inneholder": ["doseringsregime", "SNOMED CT", "førstevalg", "alternativ"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inkluderer førstevalg og alternativ",
+        "Dosering med styrke, enhet, intervall og varighet er oppgitt",
+        "Kontraindikasjoner nevnes",
+        "SNOMED CT-koder for legemidlene er inkludert"
+      ]
+    },
+    {
+      "id": "TC-003",
+      "name": "Kode-mapping",
+      "input": "Hva er ICPC-2-koden for ICD-10 J44?",
+      "forventet_ruting": [
+        "orkestrator → kodeverk_agent direkte"
+      ],
+      "mcp_verktøy_forventet": ["hent_innhold", "hent_anbefalinger"],
+      "forventet_output": {
+        "inneholder": ["R95", "ICPC-2", "ICD-10", "J44"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inneholder R95 som ICPC-2-ekvivalent",
+        "Konfidens er klassifisert",
+        "Mapping-metode er forklart (samkoding)"
+      ]
+    },
+    {
+      "id": "TC-004",
+      "name": "NKI-spørring",
+      "input": "Hvilke kvalitetsindikatorer finnes for KOLS?",
+      "forventet_ruting": [
+        "orkestrator → statistikk_agent (hent NKI)",
+        "orkestrator → retningslinje_agent (koble til retningslinjer, valgfritt)"
+      ],
+      "mcp_verktøy_forventet": ["hent_kvalitetsindikatorer", "hent_innhold"],
+      "forventet_output": {
+        "inneholder": ["NKI", "verdi", "mål", "periode", "Helsedirektoratet"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inneholder minst én kvalitetsindikator",
+        "Verdi, mål og periode er oppgitt",
+        "Enhet og definisjon er inkludert",
+        "Advarsel om at statistikk ikke gir grunnlag for kliniske beslutninger"
+      ]
+    },
+    {
+      "id": "TC-005",
+      "name": "Sammensatt spørsmål",
+      "input": "Gi meg behandlingsanbefalinger og kvalitetsindikatorer for KOLS",
+      "forventet_ruting": [
+        "orkestrator → kodeverk_agent (valider kode)",
+        "orkestrator → retningslinje_agent (anbefalinger)",
+        "orkestrator → statistikk_agent (NKI)"
+      ],
+      "mcp_verktøy_forventet": ["sok_innhold", "hent_anbefalinger", "hent_kvalitetsindikatorer"],
+      "forventet_output": {
+        "inneholder": ["anbefaling", "NKI", "J44", "Helsedirektoratet"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inneholder både anbefalinger OG kvalitetsindikatorer",
+        "Data fra begge agenter er syntetisert i ett sammenhengende svar",
+        "Kilder er oppgitt for alle datapunkter"
+      ]
+    },
+    {
+      "id": "TC-006",
+      "name": "Ugyldig kode — feilhåndtering",
+      "input": "Hva er behandling for diagnosekode XYZ99?",
+      "forventet_ruting": [
+        "orkestrator → kodeverk_agent (validér kode → feil)",
+        "orkestrator → be om avklaring"
+      ],
+      "mcp_verktøy_forventet": ["hent_innhold"],
+      "forventet_output": {
+        "inneholder": ["ukjent", "ugyldig", "fant ikke"],
+        "konfidens": "lav"
+      },
+      "validering": [
+        "Svaret gir tydelig feilmelding om at koden ikke finnes",
+        "Agenten foreslår å sjekke skrivemåte eller bruke fritekst-søk",
+        "Agenten fabrikkerer IKKE data"
+      ]
+    },
+    {
+      "id": "TC-007",
+      "name": "Pakkeforløp — kreft",
+      "input": "Vis meg pakkeforløpet for brystkreft",
+      "forventet_ruting": [
+        "orkestrator → retningslinje_agent"
+      ],
+      "mcp_verktøy_forventet": ["hent_pakkeforlop", "sok_innhold"],
+      "forventet_output": {
+        "inneholder": ["pakkeforløp", "brystkreft"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inneholder pakkeforløp-data med forløpsbeskrivelse",
+        "infoId og kilde er oppgitt"
+      ]
+    },
+    {
+      "id": "TC-008",
+      "name": "Veileder-oppslag",
+      "input": "Finn nasjonale veiledere om psykisk helse",
+      "forventet_ruting": [
+        "orkestrator → retningslinje_agent"
+      ],
+      "mcp_verktøy_forventet": ["hent_veiledere", "sok_innhold"],
+      "forventet_output": {
+        "inneholder": ["veileder", "psykisk"],
+        "konfidens": "middels"
+      },
+      "validering": [
+        "Svaret lister relevante veiledere",
+        "Konfidens reflekterer søketype (fritekst = middels)"
+      ]
+    },
+    {
+      "id": "TC-009",
+      "name": "Legemiddeloppslag — ATC",
+      "input": "Hvilke legemidler har ATC-kode J01CA04?",
+      "forventet_ruting": [
+        "orkestrator → kodeverk_agent"
+      ],
+      "mcp_verktøy_forventet": ["hent_innhold"],
+      "forventet_output": {
+        "inneholder": ["J01CA04", "amoxicillin", "legemiddel"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret inneholder legemiddelnavn, virkestoff, legemiddelform",
+        "ATC-klassifisering er korrekt"
+      ]
+    },
+    {
+      "id": "TC-010",
+      "name": "Endringer — aktualitet",
+      "input": "Har det vært oppdateringer i retningslinjer siste uke?",
+      "forventet_ruting": [
+        "orkestrator → retningslinje_agent"
+      ],
+      "mcp_verktøy_forventet": ["hent_endringer"],
+      "forventet_output": {
+        "inneholder": ["endring", "oppdatert"],
+        "konfidens": "høy"
+      },
+      "validering": [
+        "Svaret lister eventuelle endringer med dato og type",
+        "Hvis ingen endringer, oppgis dette eksplisitt"
+      ]
+    }
+  ]
+}

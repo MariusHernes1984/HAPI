@@ -1,0 +1,68 @@
+{
+  "name": "HAPI Agent Governance",
+  "description": "Felles regler, lisenskrav og konfigurasjon for alle HAPI-agenter i Azure AI Foundry",
+  "hapi_api": {
+    "produksjon": "https://api.helsedirektoratet.no",
+    "qa_test": "https://api-qa.helsedirektoratet.no",
+    "autentisering": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "merknad": "API-nøkkel lagres som Azure Key Vault secret, aldri i kode eller agentprompts"
+    },
+    "mcp_server": {
+      "transport": "HTTP Streamable (POST /mcp)",
+      "port": 3000,
+      "container": "ghcr.io/mariushernes1984/hapi-mcp-server",
+      "env_vars": {
+        "HAPI_SUBSCRIPTION_KEY": "Subscription key for HAPI API",
+        "MCP_API_KEY": "Valgfri API-nøkkel for MCP-endepunktet",
+        "PORT": "HTTP-port (standard: 3000)"
+      }
+    }
+  },
+  "lisens_nlod": {
+    "beskrivelse": "Norsk lisens for offentlige data (NLOD)",
+    "krav": [
+      "Oppgi kilde: Vis 'Kilde: Helsedirektoratet' i alle svar med HAPI-data",
+      "Ikke endre faglig innhold: Anbefalinger gjengis korrekt",
+      "Ikke fremstå som Helsedirektoratet: Merkes som tredjepartsverktøy",
+      "Følge NLOD: Norsk lisens for offentlige data"
+    ]
+  },
+  "konfidensklassifisering": {
+    "høy": "Direkte treff på eksakt kode, entydig innhold, nylig oppdatert",
+    "middels": "Indirekte treff (via mapping), flere mulige tolkninger, eldre data",
+    "lav": "Ingen direkte treff, basert på semantisk søk, ukjent aktualitet"
+  },
+  "data_oppdatering": {
+    "innhold": {
+      "frekvens": "Fortløpende (minutter)",
+      "strategi": "Inkrementell via sistOppdatert"
+    },
+    "legemidler_fest": {
+      "frekvens": "Nattlig",
+      "strategi": "Full synk nattlig"
+    },
+    "nki_statistikk": {
+      "frekvens": "Kvartalsvis",
+      "strategi": "Full synk ved publisering"
+    },
+    "kodeverk": {
+      "frekvens": "Ved endring (ca. 2x/mnd)",
+      "strategi": "Manuell trigger"
+    }
+  },
+  "sikkerhet": [
+    "Alle HAPI-kall logges via Azure Monitor / audit trail",
+    "API-nøkkel lagres i Azure Key Vault, aldri eksponert i kode eller agentprompts",
+    "Agent-tilgang begrenses til nødvendige MCP-verktøy per agent",
+    "QA-miljøet inneholder testdata — skal kun brukes for utvikling"
+  ],
+  "felles_agent_regler": [
+    "ALDRI endre faglig meningsinnhold fra Helsedirektoratet",
+    "Oppgi alltid kilde (Helsedirektoratet) og infoId",
+    "Hvis informasjonen er utdatert eller mangler, si det eksplisitt",
+    "Statistikk alene gir IKKE grunnlag for kliniske beslutninger",
+    "Bruk NØYAKTIG skrivemåte for kodeverk i API-kall",
+    "Alle svar skal inkludere konfidensklassifisering"
+  ]
+}
