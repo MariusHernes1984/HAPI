@@ -81,7 +81,8 @@ def run_test(client: AIProjectClient, scenario: dict) -> dict:
         )
 
         output_text = response.output_text
-        print(f"  Svar: {output_text[:200]}...")
+        safe_preview = output_text[:200].encode("cp1252", errors="replace").decode("cp1252")
+        print(f"  Svar: {safe_preview}...")
 
         # Sjekk om forventede nøkkelord finnes i svaret
         found = [kw for kw in scenario["expected_keywords"] if kw.lower() in output_text.lower()]

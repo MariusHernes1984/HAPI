@@ -1,22 +1,22 @@
 {
   "hapi-retningslinje-agent": {
     "name": "hapi-retningslinje-agent",
-    "id": "hapi-retningslinje-agent:3",
-    "version": "3"
+    "id": "hapi-retningslinje-agent:4",
+    "version": "4"
   },
   "hapi-kodeverk-agent": {
     "name": "hapi-kodeverk-agent",
-    "id": "hapi-kodeverk-agent:3",
-    "version": "3"
+    "id": "hapi-kodeverk-agent:6",
+    "version": "6"
   },
   "hapi-statistikk-agent": {
     "name": "hapi-statistikk-agent",
-    "id": "hapi-statistikk-agent:3",
-    "version": "3"
+    "id": "hapi-statistikk-agent:6",
+    "version": "6"
   },
   "hapi-orkestrator": {
     "name": "hapi-orkestrator",
-    "id": "hapi-orkestrator:5",
-    "version": "5"
+    "id": "hapi-orkestrator:6",
+    "version": "6"
   }
 }

@@ -1,5 +1,51 @@
 [
   {
+    "id": "TC-001",
+    "agent": "hapi-orkestrator",
+    "status": "PASS",
+    "found_keywords": [
+      "KOLS",
+      "anbefaling",
+      "Helsedirektoratet"
+    ],
+    "missing_keywords": [],
+    "response_preview": "Spørsmålet gjelder **behandling av KOLS (kronisk obstruktiv lungesykdom)**. Dette hører til **hapi-retningslinje-agent** fordi det gjelder kliniske anbefalinger og behandling.\n\nKort oppsummert fra **Nasjonal faglig retningslinje for diagnostisering og behandling av KOLS**:\n\nAnbefalt behandling ved **KOLS** omfatter vanligvis en kombinasjon av ikke‑medikamentelle tiltak og legemiddelbehandling:\n\n• Røykeslutt: Det viktigste tiltaket ved **KOLS**, fordi det kan bremse sykdomsprogresjon.  \n• Fysisk "
+  },
+  {
+    "id": "TC-002",
+    "agent": "hapi-retningslinje-agent",
+    "status": "PASS",
+    "found_keywords": [
+      "diabetes",
+      "retningslinje"
+    ],
+    "missing_keywords": [],
+    "response_preview": "Nasjonal faglig retningslinje: **Diabetes (inkl. type 2)**\n\n- Tittel: Nasjonal faglig retningslinje for diabetes  \n- Kilde: Helsedirektoratet  \n- infoId: 2ea5f302-48e0-4146-ae00-39a54dc2175f  \n- Status: Gjeldende  \n- Sist faglig oppdatert: 2025-05-06  \n- URL: https://www.helsedirektoratet.no/retningslinjer/diabetes  \n\nRelevante kapitler for **diabetes type 2** i retningslinjen:\n- Diagnostikk av diabetes, risikovurdering og oppfølging av personer med høy risiko\n- Behandling med blodsukkersenkende"
+  },
+  {
+    "id": "TC-003",
+    "agent": "hapi-kodeverk-agent",
+    "status": "PASS",
+    "found_keywords": [
+      "ICPC-2",
+      "ICD-10",
+      "J44"
+    ],
+    "missing_keywords": [],
+    "response_preview": "ICD-10 **J44 (Annen kronisk obstruktiv lungesykdom / COPD)** tilsvarer vanligvis:\n\n- **ICPC-2: R95 – Kronisk obstruktiv lungesykdom (KOLS)**\n\nDette er standard klinisk mapping når diagnosen gjelder COPD/KOLS i primærhelsetjenesten.\n\nKonfidens: **høy**."
+  },
+  {
+    "id": "TC-004",
+    "agent": "hapi-statistikk-agent",
+    "status": "PASS",
+    "found_keywords": [
+      "kvalitetsindikator",
+      "NKI"
+    ],
+    "missing_keywords": [],
+    "response_preview": "For KOLS (kronisk obstruktiv lungesykdom) finnes det flere nasjonale kvalitetsindikatorer (NKI) i Norge som brukes for å følge kvaliteten på diagnostikk, behandling og oppfølging. De viktigste indikatorene ligger særlig i primærhelsetjenesten og i sykehus.\n\nEksempler på norske kvalitetsindikatorer for KOLS:\n\n• Andel pasienter med KOLS som har fått utført spirometri  \n• Andel pasienter med KOLS som er registrert med røykevaner  \n• Andel røykende KOLS‑pasienter som har fått tilbud om røykeavvennin"
+  },
+  {
     "id": "TC-005",
     "agent": "hapi-orkestrator",
     "status": "PASS",
@@ -8,6 +54,6 @@
       "pneumoni"
     ],
     "missing_keywords": [],
-    "response_preview": "Spørsmålet gjelder **antibiotika ved pneumoni**, som er et tema om **behandling og anbefalinger**. Jeg ruter derfor forespørselen til **hapi-retningslinje-agent**, som håndterer faglige anbefalinger om antibiotika og behandling.\n\nRelevant kildegrunnlag:  \nKilde: Helsedirektoratet – *Nasjonal faglig retningslinje for bruk av antibiotika i primærhelsetjenesten*.\n\nForespørsel sendt til retningslinje-agent:  \n\"Hvilken antibiotika anbefales for pneumoni (lungebetennelse)?\""
+    "response_preview": "Jeg ruter spørsmålet ditt om **pneumoni** og **antibiotika** til riktig fagagent.\n\nRuting: **hapi-retningslinje-agent**  \nTema: anbefalt **antibiotika ved pneumoni** (behandling og nasjonale faglige retningslinjer).\n\nDenne agenten bruker **nasjonale faglige retningslinjer for antibiotikabruk** fra **Helsedirektoratet** som kilde."
   }
 ]
