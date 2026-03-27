@@ -1,0 +1,202 @@
+[
+  {
+    "id": "P-001",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Legen sa jeg har KOLS. Jeg skjønner ikke helt hva det betyr for meg fremover. Hva slags behandling finnes, og vil jeg bli verre?",
+    "demo_verdi": "høy",
+    "tema": "KOLS"
+  },
+  {
+    "id": "P-002",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Jeg fikk beskjed om at blodsukkeret mitt er for høyt og at jeg kanskje har diabetes. Hva skjer nå? Hva gjør legen vanligvis i en sånn situasjon?",
+    "demo_verdi": "høy",
+    "tema": "Diabetes"
+  },
+  {
+    "id": "P-003",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg har høyt blodtrykk og tar én tablett om dagen, men blodtrykket er fortsatt høyt. Er det normalt at man trenger mer medisin? Hva gjør legene vanligvis da?",
+    "demo_verdi": "høy",
+    "tema": "Hypertensjon"
+  },
+  {
+    "id": "P-004",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Mamma har fått diagnosen hjertesvikt. Vi er veldig bekymret. Hva betyr det i praksis, og hva slags behandling og oppfølging kan hun forvente?",
+    "demo_verdi": "høy",
+    "tema": "Hjertesvikt"
+  },
+  {
+    "id": "P-005",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg har hatt vondt i ryggen i flere måneder og er sykemeldt. Legen fant ingenting på MR. Hva kan egentlig gjøres for kroniske ryggsmerter når det ikke er noe alvorlig?",
+    "demo_verdi": "høy",
+    "tema": "Ryggsmerter"
+  },
+  {
+    "id": "P-006",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Barnet mitt på 8 år har astma og vi er redde for å gi for mye medisin. Men han har hatt tre innleggelser i år. Hva anbefales egentlig for barn med dårlig kontrollert astma?",
+    "demo_verdi": "høy",
+    "tema": "Astma barn"
+  },
+  {
+    "id": "P-007",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Jeg er deprimert og legen vil gi meg antidepressiva. Jeg er skeptisk og har prøvd det før uten at det hjalp. Finnes det andre anbefalte behandlinger jeg kan be om?",
+    "demo_verdi": "høy",
+    "tema": "Depresjon"
+  },
+  {
+    "id": "P-008",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Legen min vil at sønnen min på 9 år skal utredes for ADHD. Hva innebærer en slik utredning, og hva slags hjelp og behandling kan han få etterpå?",
+    "demo_verdi": "høy",
+    "tema": "ADHD barn"
+  },
+  {
+    "id": "P-009",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg tar Ozempic for diabetes og har hørt at det også hjelper mot fedme. Legen min er litt skeptisk. Hva sier de offisielle norske retningslinjene om dette legemidlet?",
+    "demo_verdi": "høy",
+    "tema": "GLP-1 / Ozempic"
+  },
+  {
+    "id": "P-010",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Pappa fikk hjerneinfarkt for to uker siden. Han er hjemme nå. Hva slags oppfølging og rehabilitering bør han få, og hva kan vi som familie forvente oss av forløpet?",
+    "demo_verdi": "høy",
+    "tema": "Hjerneslag rehabilitering"
+  },
+  {
+    "id": "P-011",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg har søvnproblemer og legen ga meg sovepiller for en stund siden. Nå er jeg redd for å bli avhengig. Finnes det andre måter å behandle søvnproblemer på som er anbefalt?",
+    "demo_verdi": "middels",
+    "tema": "Insomni"
+  },
+  {
+    "id": "P-012",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg drikker for mye og vil slutte, men har prøvd alene uten hell. Hva slags hjelp kan jeg få, og hva er det offentlige tilbudet for folk som sliter med alkohol?",
+    "demo_verdi": "høy",
+    "tema": "Alkohol"
+  },
+  {
+    "id": "P-013",
+    "kategori": "pasient",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Jeg hørte at norske sykehus ikke er gode nok på hjerneslag. Stemmer det? Er det noe som viser hvor bra eller dårlig det egentlig er i Norge?",
+    "demo_verdi": "høy",
+    "tema": "NKI hjerneslag"
+  },
+  {
+    "id": "P-014",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Legen mistenker at jeg har kreft i tykktarmen. Hva skjer nå? Hvor lang tid tar det før jeg får svar, og hva er prosessen videre?",
+    "demo_verdi": "høy",
+    "tema": "Tykktarmskreft pakkeforløp"
+  },
+  {
+    "id": "P-015",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Fastlegen sier jeg har begynnende osteoporose. Jeg er 64 år og akkurat ferdig med overgangsalderen. Hva anbefales, og trenger jeg medisin med en gang?",
+    "demo_verdi": "høy",
+    "tema": "Osteoporose"
+  },
+  {
+    "id": "P-016",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Jeg har atrieflimmer og legen vil ha meg på blodfortynnende. Jeg er redd for bivirkninger. Hva finnes av anbefalte legemidler og hva er forskjellen på dem?",
+    "demo_verdi": "høy",
+    "tema": "Atrieflimmer antikoagulasjon"
+  },
+  {
+    "id": "P-017",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Legen sa at jeg har for høyt kolesterol og bør ta statiner. Jeg er 48 år og har ingen hjerteproblemer ennå. Er det virkelig nødvendig, og hva sier retningslinjene?",
+    "demo_verdi": "høy",
+    "tema": "Kolesterol statiner"
+  },
+  {
+    "id": "P-018",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg har hatt angst i mange år og vil helst unngå medisin. Legen snakker om kognitiv terapi. Er det anbefalt av de norske helsemyndighetene, og hva finnes ellers?",
+    "demo_verdi": "middels",
+    "tema": "Angst"
+  },
+  {
+    "id": "P-019",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Farmor er 85 og bor på sykehjem. Hun er nå i livets sluttfase. Hva slags behandling og omsorg bør hun få nå, og hva kan vi forvente av pleiepersonalet?",
+    "demo_verdi": "høy",
+    "tema": "Palliasjon sykehjem"
+  },
+  {
+    "id": "P-020",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Jeg har epilepsi og tok nylig en ny anfallstype legen ikke har sett hos meg før. Nå vil han bytte medisin. Hva sier retningslinjene om behandling av epilepsi hos voksne?",
+    "demo_verdi": "høy",
+    "tema": "Epilepsi"
+  },
+  {
+    "id": "P-021",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Jeg er 38 år og fikk nylig beskjed om at jeg har revmatoid artritt. Jeg er redd for å bli syk og miste jobbfunksjonen min. Hva er standard behandling og hva kan jeg forvente av forløpet?",
+    "demo_verdi": "høy",
+    "tema": "Revmatoid artritt"
+  },
+  {
+    "id": "P-022",
+    "kategori": "pasient",
+    "agent": "hapi-statistikk-agent",
+    "sporsmal": "Jeg leser at diabetes-behandlingen i Norge ikke er god nok. Stemmer det? Er det noen tall som viser hvordan vi ligger an sammenlignet med hva som er målet?",
+    "demo_verdi": "høy",
+    "tema": "NKI diabetes"
+  },
+  {
+    "id": "P-023",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Legen har sagt at jeg bør behandles for Crohns sykdom. Kan kosthold og livsstil påvirke sykdommen, eller er det bare medisin som hjelper?",
+    "demo_verdi": "middels",
+    "tema": "Crohns"
+  },
+  {
+    "id": "P-024",
+    "kategori": "pasient",
+    "agent": "hapi-orkestrator",
+    "sporsmal": "Jeg er 72 år og har nylig hatt hjerteinfarkt og fått satt inn stent. Hva slags oppfølging bør jeg ha nå, og hva er det viktigste jeg bør gjøre for å unngå et nytt infarkt?",
+    "demo_verdi": "høy",
+    "tema": "AKS sekundærprevensjon"
+  },
+  {
+    "id": "P-025",
+    "kategori": "pasient",
+    "agent": "hapi-retningslinje-agent",
+    "sporsmal": "Sønnen min fikk lungebetennelse og legen vil gi ham penicillin. Han har vært litt allergisk mot penicillin som liten, men vi er usikre. Hva er alternativet hvis han ikke tåler penicillin?",
+    "demo_verdi": "høy",
+    "tema": "Pneumoni allergi barn"
+  }
+]
