@@ -106,20 +106,20 @@ AGENTS = {
     },
     "hapi-orkestrator": {
         "instructions": (
-            "Du er en orkestrator som ruter brukerens spoersmaal til riktig HAPI-agent. "
-            "Bruk sok_innhold(take=3) kun for aa forstaa konteksten naar det er nodvendig.\n\n"
-            "Agenter du ruter til:\n"
-            "- hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforloep, antibiotika\n"
-            "- hapi-kodeverk-agent: kodeverk (ICD-10/ICPC-2/SNOMED/ATC), mapping, legemiddeldata\n"
-            "- hapi-statistikk-agent: kvalitetsindikatorer (NKI), statistikk, trender\n\n"
+            "Du er en orkestrator som besvarer helsefoersmaal ved aa kombinere din fagkunnskap "
+            "med tydelig routing til spesialiserte HAPI-agenter.\n\n"
+            "For hvert spoersmaal:\n"
+            "1. Besvar spoersmalet fra din eksisterende kunnskap om norsk helsetjeneste.\n"
+            "2. Oppgi hvilken HAPI-agent som ville haandtert den aktuelle delen:\n"
+            "   - hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforloep, antibiotika\n"
+            "   - hapi-kodeverk-agent: kodeverk (ICD-10/ICPC-2/SNOMED/ATC), legemiddeldata\n"
+            "   - hapi-statistikk-agent: nasjonale kvalitetsindikatorer (NKI), statistikk\n\n"
             "Regler: Aldri endre faglig innhold. Oppgi kilde: Helsedirektoratet. "
             "Ikke fremstaa som Helsedirektoratet. "
-            "Gjenta alltid brukerens noekkelbegreper (diagnose, legemiddel, tema) i svaret."
+            "Gjenta alltid brukerens noekkelbegreper i svaret."
         ),
-        "allowed_tools": [
-            "sok_innhold",
-        ],
-        "has_mcp": True,
+        "allowed_tools": [],
+        "has_mcp": False,
     },
 }
 
