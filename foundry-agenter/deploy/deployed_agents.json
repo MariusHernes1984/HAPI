@@ -1,0 +1,22 @@
+{
+  "hapi-retningslinje-agent": {
+    "name": "hapi-retningslinje-agent",
+    "id": "hapi-retningslinje-agent:3",
+    "version": "3"
+  },
+  "hapi-kodeverk-agent": {
+    "name": "hapi-kodeverk-agent",
+    "id": "hapi-kodeverk-agent:3",
+    "version": "3"
+  },
+  "hapi-statistikk-agent": {
+    "name": "hapi-statistikk-agent",
+    "id": "hapi-statistikk-agent:3",
+    "version": "3"
+  },
+  "hapi-orkestrator": {
+    "name": "hapi-orkestrator",
+    "id": "hapi-orkestrator:5",
+    "version": "5"
+  }
+}

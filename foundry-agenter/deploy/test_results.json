@@ -1,0 +1,13 @@
+[
+  {
+    "id": "TC-005",
+    "agent": "hapi-orkestrator",
+    "status": "PASS",
+    "found_keywords": [
+      "antibiotika",
+      "pneumoni"
+    ],
+    "missing_keywords": [],
+    "response_preview": "Spørsmålet gjelder **antibiotika ved pneumoni**, som er et tema om **behandling og anbefalinger**. Jeg ruter derfor forespørselen til **hapi-retningslinje-agent**, som håndterer faglige anbefalinger om antibiotika og behandling.\n\nRelevant kildegrunnlag:  \nKilde: Helsedirektoratet – *Nasjonal faglig retningslinje for bruk av antibiotika i primærhelsetjenesten*.\n\nForespørsel sendt til retningslinje-agent:  \n\"Hvilken antibiotika anbefales for pneumoni (lungebetennelse)?\""
+  }
+]
