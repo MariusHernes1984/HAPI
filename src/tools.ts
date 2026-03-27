@@ -33,25 +33,130 @@ async function hapiGet(
   return res.json();
 }
 
-function truncateText(obj: unknown, maxLen = 4000): unknown {
+// Felter som er viktige for klinisk kvalitet — beholdes alltid
+const ESSENTIAL_FIELDS = new Set([
+  "id", "infoId", "tittel", "title", "navn", "name",
+  "kortTittel", "shortTitle", "infoType",
+  "status", "styrkegrad", "anbefalingstype",
+  "kopiertFraInfoId", "sistFagligOppdatert", "forstPublisert",
+  "koder", "kodeverdi", "kodeverk", "kode",
+  "atcKode", "atcNavn", "virkestoff", "legemiddelform", "styrke",
+  "sctId", "term",
+  "behandlingsregimer", "doseringsregimer", "kontraindikasjoner",
+]);
+
+// Felter som ofte er store og kan trygt forkortes
+const VERBOSE_FIELDS = new Set([
+  "tekst", "text", "innhold", "content", "intro", "ingress",
+  "beskrivelse", "description", "sammendrag", "summary",
+  "html", "htmlInnhold", "raadTekst",
+]);
+
+// Felter som trygt kan fjernes for å spare plass
+const DROPPABLE_FIELDS = new Set([
+  "links", "lenker", "referanser", "references",
+  "vedlegg", "attachments", "metadata",
+  "picoer", "pico", "picoResultater",
+  "evidensgrunnlag", "kunnskapsgrunnlag",
+  "sortering", "sorting", "order",
+  "opphavsinformasjon", "endringshistorikk",
+  "spraak", "language",
+]);
+
+const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
+const MAX_TEXT_LENGTH = 1500;     // Maks tegn per tekstfelt
+const MAX_ESSENTIAL_LENGTH = 4000; // Lengre grense for essensielle felter
+const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde
+
+function stripHtml(html: string): string {
+  return html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#\d+;/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function smartTruncate(obj: unknown, depth = 0): unknown {
+  if (depth > 8) return undefined; // Hindre uendelig rekursjon
+
   if (typeof obj === "string") {
-    return obj.length > maxLen ? obj.slice(0, maxLen) + "…" : obj;
+    // Strip HTML og begrens lengde
+    const clean = obj.includes("<") ? stripHtml(obj) : obj;
+    const maxLen = MAX_TEXT_LENGTH;
+    return clean.length > maxLen
+      ? clean.slice(0, maxLen) + "… [forkortet]"
+      : clean;
   }
+
   if (Array.isArray(obj)) {
-    return obj.map((item) => truncateText(item, maxLen));
+    const truncated = obj.slice(0, MAX_ARRAY_ITEMS).map((item) => smartTruncate(item, depth + 1));
+    if (obj.length > MAX_ARRAY_ITEMS) {
+      truncated.push(`… og ${obj.length - MAX_ARRAY_ITEMS} flere resultater (bruk ID for detaljer)` as unknown);
+    }
+    return truncated;
   }
+
   if (obj && typeof obj === "object") {
     const result: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(obj)) {
-      result[k] = truncateText(v, maxLen);
+      // Fjern felter som ikke tilfører klinisk verdi
+      if (DROPPABLE_FIELDS.has(k)) continue;
+
+      // Essensielle felter: behold med høyere grense
+      if (ESSENTIAL_FIELDS.has(k)) {
+        if (typeof v === "string") {
+          const clean = v.includes("<") ? stripHtml(v) : v;
+          result[k] = clean.length > MAX_ESSENTIAL_LENGTH
+            ? clean.slice(0, MAX_ESSENTIAL_LENGTH) + "… [forkortet]"
+            : clean;
+        } else {
+          result[k] = smartTruncate(v, depth + 1);
+        }
+        continue;
+      }
+
+      // Verbose felter: strip HTML og begrens kraftig
+      if (VERBOSE_FIELDS.has(k)) {
+        if (typeof v === "string") {
+          const clean = v.includes("<") ? stripHtml(v) : v;
+          result[k] = clean.length > MAX_TEXT_LENGTH
+            ? clean.slice(0, MAX_TEXT_LENGTH) + "… [forkortet]"
+            : clean;
+        } else {
+          result[k] = smartTruncate(v, depth + 1);
+        }
+        continue;
+      }
+
+      // Alt annet: standard behandling
+      result[k] = smartTruncate(v, depth + 1);
     }
     return result;
   }
+
   return obj;
 }
 
 function formatResult(data: unknown): string {
-  return JSON.stringify(truncateText(data), null, 2);
+  const compressed = smartTruncate(data);
+  let json = JSON.stringify(compressed, null, 2);
+
+  // Siste sikkerhetsnett: kutt total lengde
+  if (json.length > MAX_TOTAL_LENGTH) {
+    json = json.slice(0, MAX_TOTAL_LENGTH) + "\n… [respons forkortet for å passe kontekstvindu]";
+  }
+
+  return json;
+}
+
+// Beholder gammel funksjon for bakoverkompatibilitet
+function truncateText(obj: unknown, maxLen = 4000): unknown {
+  return smartTruncate(obj);
 }
 
 export function createServer(): McpServer {
