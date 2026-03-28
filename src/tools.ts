@@ -205,7 +205,6 @@ export function createServer(): McpServer {
         SearchMode: searchMode,
         QueryType: "Full",
         Top: top.toString(),
-        getFullInfobits: "true",
       });
       return { content: [{ type: "text", text: formatResult(data) }] };
     }
