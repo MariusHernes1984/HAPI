@@ -157,9 +157,43 @@ function smartTruncate(obj: unknown, depth = 0): unknown {
   return obj;
 }
 
+/**
+ * Normaliser ICD-10-koder som mangler punktum.
+ * HAPI returnerer noen ganger "M790" i stedet for "M79.0".
+ * Mønster: En bokstav + 2 siffer + 1+ siffer → sett inn punktum etter de 3 første.
+ */
+function normalizeIcd10Code(code: string): string {
+  return code.replace(/^([A-Z]\d{2})(\d+)$/i, "$1.$2");
+}
+
+/**
+ * Gå gjennom et objekt og normaliser alle ICD-10-lignende kodeverdier.
+ */
+function normalizeCodesInResult(obj: unknown): unknown {
+  if (typeof obj === "string") return obj;
+  if (Array.isArray(obj)) return obj.map(normalizeCodesInResult);
+  if (obj && typeof obj === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+      if (
+        typeof v === "string" &&
+        (k === "kode" || k === "kodeverdi" || k === "code") &&
+        /^[A-Z]\d{3,}$/i.test(v)
+      ) {
+        result[k] = normalizeIcd10Code(v);
+      } else {
+        result[k] = normalizeCodesInResult(v);
+      }
+    }
+    return result;
+  }
+  return obj;
+}
+
 function formatResult(data: unknown): string {
   const compressed = smartTruncate(data);
-  let json = JSON.stringify(compressed, null, 2);
+  const normalized = normalizeCodesInResult(compressed);
+  let json = JSON.stringify(normalized, null, 2);
 
   // Siste sikkerhetsnett: kutt total lengde
   if (json.length > MAX_TOTAL_LENGTH) {
