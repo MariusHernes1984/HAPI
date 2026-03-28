@@ -15,11 +15,13 @@ Deploy som Azure Container App:
 import os
 import asyncio
 import logging
+from pathlib import Path
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from orchestrate import orchestrate, OrchestrationResult
@@ -91,6 +93,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+STATIC_DIR = Path(__file__).parent / "static"
 
 
 # --- Endepunkter ---
@@ -197,6 +201,12 @@ async def list_agents():
             },
         ]
     }
+
+
+@app.get("/", include_in_schema=False)
+async def root():
+    """Serve chat UI."""
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 # --- Kjor lokalt ---

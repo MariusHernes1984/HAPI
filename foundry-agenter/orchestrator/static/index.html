@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPI Helseassistent</title>
+  <style>
+    :root {
+      --primary: #0d6e6e;
+      --primary-light: #0f8a8a;
+      --primary-dark: #094e4e;
+      --accent: #28a87d;
+      --accent-light: #d0f0e4;
+      --bg: #f0f5f4;
+      --bg-chat: #ffffff;
+      --text: #1a2e2e;
+      --text-light: #5a7272;
+      --border: #d4e0df;
+      --user-bubble: #0d6e6e;
+      --bot-bubble: #ffffff;
+      --shadow: 0 2px 12px rgba(13,110,110,0.08);
+      --shadow-lg: 0 8px 32px rgba(13,110,110,0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* --- Header --- */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .header-text p {
+      font-size: 0.78rem;
+      opacity: 0.8;
+      margin-top: 1px;
+    }
+
+    .header-badge {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #4ade80;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* --- Chat area --- */
+    .chat-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      scroll-behavior: smooth;
+    }
+
+    .welcome {
+      text-align: center;
+      padding: 48px 20px;
+      max-width: 560px;
+      margin: auto;
+    }
+
+    .welcome-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+    }
+
+    .welcome h2 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .welcome p {
+      color: var(--text-light);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .suggestions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    .suggestion {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      font-size: 0.84rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
+    }
+
+    .suggestion:hover {
+      border-color: var(--primary-light);
+      background: #f0faf8;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+    }
+
+    .suggestion-icon {
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* --- Messages --- */
+    .message {
+      display: flex;
+      gap: 12px;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message.user {
+      flex-direction: row-reverse;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .message.bot .avatar {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+    }
+
+    .message.user .avatar {
+      background: #e2e8f0;
+      color: #64748b;
+    }
+
+    .bubble {
+      padding: 14px 18px;
+      border-radius: var(--radius);
+      line-height: 1.65;
+      font-size: 0.9rem;
+      max-width: 680px;
+    }
+
+    .message.user .bubble {
+      background: var(--user-bubble);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    .message.bot .bubble {
+      background: var(--bot-bubble);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      border-bottom-left-radius: 4px;
+    }
+
+    .bubble h1, .bubble h2, .bubble h3, .bubble h4 {
+      color: var(--primary);
+      margin: 16px 0 8px 0;
+      font-weight: 600;
+    }
+
+    .bubble h1:first-child, .bubble h2:first-child,
+    .bubble h3:first-child, .bubble h4:first-child {
+      margin-top: 0;
+    }
+
+    .bubble h2 { font-size: 1.05rem; }
+    .bubble h3 { font-size: 0.95rem; }
+
+    .bubble p { margin: 6px 0; }
+
+    .bubble ul, .bubble ol {
+      margin: 6px 0 6px 20px;
+    }
+
+    .bubble li { margin: 4px 0; }
+
+    .bubble strong { color: var(--primary-dark); }
+
+    .bubble code {
+      background: #f1f5f4;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+
+    .bubble table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.85rem;
+    }
+
+    .bubble th, .bubble td {
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .bubble th {
+      background: #f0f5f4;
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* --- Metadata bar --- */
+    .meta-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #e8efee;
+    }
+
+    .meta-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+
+    .meta-chip.agent {
+      background: var(--accent-light);
+      color: var(--primary-dark);
+    }
+
+    .meta-chip.time {
+      background: #f1f5f9;
+      color: #64748b;
+    }
+
+    .meta-chip.confidence {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    /* --- Loading --- */
+    .loading-container {
+      display: flex;
+      gap: 12px;
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .loading-bubble {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      border-bottom-left-radius: 4px;
+      padding: 18px 22px;
+      box-shadow: var(--shadow);
+    }
+
+    .loading-text {
+      font-size: 0.85rem;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .loading-agents {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .loading-agent {
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: #f0f5f4;
+      color: var(--text-light);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .loading-agent.active {
+      background: var(--accent-light);
+      color: var(--primary);
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .dots::after {
+      content: '';
+      animation: dots 1.5s steps(4, end) infinite;
+    }
+
+    @keyframes dots {
+      0% { content: ''; }
+      25% { content: '.'; }
+      50% { content: '..'; }
+      75% { content: '...'; }
+    }
+
+    /* --- Input area --- */
+    .input-area {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 16px 24px;
+      box-shadow: 0 -4px 16px rgba(0,0,0,0.04);
+    }
+
+    .input-wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .input-field {
+      flex: 1;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.92rem;
+      font-family: inherit;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s;
+      max-height: 120px;
+      line-height: 1.5;
+    }
+
+    .input-field:focus {
+      border-color: var(--primary-light);
+    }
+
+    .input-field::placeholder {
+      color: #a0b5b5;
+    }
+
+    .send-btn {
+      width: 46px;
+      height: 46px;
+      border: none;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover:not(:disabled) {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba(13,110,110,0.3);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .send-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .disclaimer {
+      text-align: center;
+      font-size: 0.7rem;
+      color: var(--text-light);
+      margin-top: 8px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 640px) {
+      .suggestions { grid-template-columns: 1fr; }
+      .chat-container { padding: 16px; }
+      .input-area { padding: 12px 16px; }
+      .header-badge { display: none; }
+      .bubble { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>HAPI Helseassistent</h1>
+      <p>Norsk helseinformasjon fra Helsedirektoratet</p>
+    </div>
+    <div class="header-badge">
+      <span class="status-dot"></span>
+      <span>3 agenter aktive</span>
+    </div>
+  </header>
+
+  <div class="chat-container" id="chat">
+    <div class="welcome" id="welcome">
+      <div class="welcome-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#0d6e6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+      </div>
+      <h2>Hei! Hva lurer du paa?</h2>
+      <p>
+        Jeg henter faglig informasjon fra Helsedirektoratets retningslinjer, kodeverk og kvalitetsindikatorer.
+        Still et spoersmaal saa finner jeg svar fra riktig kilde.
+      </p>
+      <div class="suggestions">
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;</span>
+          <span>Hva er foerstevalg antibiotika ved akutt mellomoerebetennelse?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
+          <span>Hva er ICD-10 koden for diabetes type 2?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F4CA;</span>
+          <span>Finnes det kvalitetsindikatorer for psykisk helsevern?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F9EC;</span>
+          <span>Hva er anbefalt behandling for KOLS?</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="input-area">
+    <div class="input-wrapper">
+      <textarea
+        id="input"
+        class="input-field"
+        placeholder="Skriv et helsefaglig spoersmaal..."
+        rows="1"
+        onkeydown="handleKey(event)"
+        oninput="autoResize(this)"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+    <div class="disclaimer">
+      Informasjonen er hentet fra Helsedirektoratets offisielle kilder. Dette er ikke medisinsk raadgivning &mdash; kontakt lege for kliniske beslutninger.
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+    const chat = document.getElementById('chat');
+    const input = document.getElementById('input');
+    const sendBtn = document.getElementById('sendBtn');
+    let isLoading = false;
+
+    function autoResize(el) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    }
+
+    function handleKey(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function askSuggestion(el) {
+      const text = el.querySelector('span:last-child').textContent;
+      input.value = text;
+      sendMessage();
+    }
+
+    function scrollToBottom() {
+      chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
+    }
+
+    function addUserMessage(text) {
+      const welcome = document.getElementById('welcome');
+      if (welcome) welcome.remove();
+
+      const div = document.createElement('div');
+      div.className = 'message user';
+      div.innerHTML = `
+        <div class="avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+            <circle cx="12" cy="7" r="4"/>
+          </svg>
+        </div>
+        <div class="bubble">${escapeHtml(text)}</div>
+      `;
+      chat.appendChild(div);
+      scrollToBottom();
+    }
+
+    function showLoading() {
+      const div = document.createElement('div');
+      div.className = 'loading-container';
+      div.id = 'loading';
+      div.innerHTML = `
+        <div class="avatar" style="background: linear-gradient(135deg, var(--primary), var(--accent)); color: white;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="loading-bubble">
+          <div class="loading-text">
+            <div class="spinner"></div>
+            <span>Analyserer spoersmaal og henter data<span class="dots"></span></span>
+          </div>
+          <div class="loading-agents" id="loadingAgents"></div>
+        </div>
+      `;
+      chat.appendChild(div);
+      scrollToBottom();
+    }
+
+    function updateLoadingAgents(agents) {
+      const container = document.getElementById('loadingAgents');
+      if (!container) return;
+
+      const labels = {
+        'hapi-retningslinje-agent': 'Retningslinjer',
+        'hapi-kodeverk-agent': 'Kodeverk',
+        'hapi-statistikk-agent': 'Statistikk',
+      };
+
+      container.innerHTML = agents.map(a => `
+        <div class="loading-agent active">
+          <div class="spinner" style="width:12px;height:12px;border-width:1.5px;"></div>
+          ${labels[a] || a}
+        </div>
+      `).join('');
+    }
+
+    function removeLoading() {
+      const el = document.getElementById('loading');
+      if (el) el.remove();
+    }
+
+    function addBotMessage(answer, routing, agentResults, totalMs) {
+      removeLoading();
+
+      const labels = {
+        'hapi-retningslinje-agent': 'Retningslinjer',
+        'hapi-kodeverk-agent': 'Kodeverk',
+        'hapi-statistikk-agent': 'Statistikk',
+      };
+
+      const confLabels = {
+        'hoey': 'Hoey',
+        'middels': 'Middels',
+        'lav': 'Lav',
+      };
+
+      let metaHtml = '<div class="meta-bar">';
+      if (routing && routing.agents) {
+        routing.agents.forEach(a => {
+          metaHtml += `<span class="meta-chip agent">${labels[a] || a}</span>`;
+        });
+      }
+      if (routing && routing.confidence) {
+        metaHtml += `<span class="meta-chip confidence">Konfidens: ${confLabels[routing.confidence] || routing.confidence}</span>`;
+      }
+      if (totalMs) {
+        const secs = (totalMs / 1000).toFixed(1);
+        metaHtml += `<span class="meta-chip time">${secs}s</span>`;
+      }
+      metaHtml += '</div>';
+
+      const div = document.createElement('div');
+      div.className = 'message bot';
+      div.innerHTML = `
+        <div class="avatar">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div class="bubble">
+          ${renderMarkdown(answer)}
+          ${metaHtml}
+        </div>
+      `;
+      chat.appendChild(div);
+      scrollToBottom();
+    }
+
+    function addErrorMessage(error) {
+      removeLoading();
+      const div = document.createElement('div');
+      div.className = 'message bot';
+      div.innerHTML = `
+        <div class="avatar" style="background: #fee2e2; color: #dc2626;">!</div>
+        <div class="bubble" style="border-color: #fecaca;">
+          <strong style="color: #dc2626;">Beklager, noe gikk galt</strong>
+          <p style="color: #7f1d1d; font-size: 0.85rem;">${escapeHtml(error)}</p>
+          <p style="font-size: 0.85rem;">Proev igjen, eller omformuler spoersmalet.</p>
+        </div>
+      `;
+      chat.appendChild(div);
+      scrollToBottom();
+    }
+
+    function escapeHtml(text) {
+      const d = document.createElement('div');
+      d.textContent = text;
+      return d.innerHTML;
+    }
+
+    function renderMarkdown(text) {
+      if (!text) return '';
+      let html = escapeHtml(text);
+
+      // Headers
+      html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+      html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+      html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+      html = html.replace(/^# (.+)$/gm, '<h2>$1</h2>');
+
+      // Bold and italic
+      html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+      html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+      // Code
+      html = html.replace(/`(.+?)`/g, '<code>$1</code>');
+
+      // Unordered lists
+      html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+      html = html.replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>');
+
+      // Tables
+      html = html.replace(/^\|(.+)\|$/gm, function(match) {
+        const cells = match.split('|').filter(c => c.trim());
+        if (cells.every(c => /^[\s-:]+$/.test(c))) return '';
+        const tag = 'td';
+        const row = cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('');
+        return `<tr>${row}</tr>`;
+      });
+      html = html.replace(/(<tr>.*<\/tr>\n?)+/g, '<table>$&</table>');
+
+      // Line breaks
+      html = html.replace(/\n\n/g, '</p><p>');
+      html = html.replace(/\n/g, '<br>');
+      html = '<p>' + html + '</p>';
+
+      // Clean up empty p tags
+      html = html.replace(/<p>\s*<\/p>/g, '');
+      html = html.replace(/<p>\s*(<h[234]>)/g, '$1');
+      html = html.replace(/(<\/h[234]>)\s*<\/p>/g, '$1');
+      html = html.replace(/<p>\s*(<ul>)/g, '$1');
+      html = html.replace(/(<\/ul>)\s*<\/p>/g, '$1');
+      html = html.replace(/<p>\s*(<table>)/g, '$1');
+      html = html.replace(/(<\/table>)\s*<\/p>/g, '$1');
+
+      return html;
+    }
+
+    async function sendMessage() {
+      const query = input.value.trim();
+      if (!query || isLoading) return;
+
+      isLoading = true;
+      sendBtn.disabled = true;
+      input.value = '';
+      input.style.height = 'auto';
+
+      addUserMessage(query);
+      showLoading();
+
+      try {
+        const resp = await fetch(`${API_BASE}/ask`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query }),
+        });
+
+        if (!resp.ok) {
+          const err = await resp.json().catch(() => ({ detail: 'Ukjent feil' }));
+          throw new Error(err.detail || `HTTP ${resp.status}`);
+        }
+
+        const data = await resp.json();
+
+        // Show which agents were called
+        if (data.routing && data.routing.agents) {
+          updateLoadingAgents(data.routing.agents);
+        }
+
+        addBotMessage(data.answer, data.routing, data.agent_results, data.total_duration_ms);
+
+      } catch (err) {
+        addErrorMessage(err.message);
+      } finally {
+        isLoading = false;
+        sendBtn.disabled = false;
+        input.focus();
+      }
+    }
+
+    // Focus input on load
+    input.focus();
+  </script>
+</body>
+</html>
