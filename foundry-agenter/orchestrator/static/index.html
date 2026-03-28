@@ -317,6 +317,82 @@
       color: #854d0e;
     }
 
+    /* --- Orchestration flow --- */
+    .orch-flow {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .orch-flow-inner {
+      background: linear-gradient(135deg, #f0faf8 0%, #eef6f5 100%);
+      border: 1px solid var(--accent-light);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      font-size: 0.8rem;
+    }
+
+    .orch-flow-title {
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+    }
+
+    .orch-steps {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .orch-step {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 16px;
+      font-weight: 500;
+      font-size: 0.74rem;
+    }
+
+    .orch-step.routing {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .orch-step.agent {
+      background: var(--accent-light);
+      color: var(--primary-dark);
+    }
+
+    .orch-step.agent.loading {
+      animation: agentPulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes agentPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    .orch-step.synth {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .orch-arrow {
+      color: var(--text-light);
+      font-size: 0.7rem;
+    }
+
+    .orch-step .step-icon {
+      font-size: 0.85rem;
+    }
+
     /* --- Loading --- */
     .loading-container {
       display: flex;
@@ -343,29 +419,6 @@
       display: flex;
       align-items: center;
       gap: 8px;
-    }
-
-    .loading-agents {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .loading-agent {
-      padding: 5px 12px;
-      border-radius: 16px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      background: #f0f5f4;
-      color: var(--text-light);
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .loading-agent.active {
-      background: var(--accent-light);
-      color: var(--primary);
     }
 
     .spinner {
@@ -561,6 +614,15 @@
     const sendBtn = document.getElementById('sendBtn');
     let isLoading = false;
 
+    // Conversation history for context
+    const conversationHistory = [];
+
+    const AGENT_LABELS = {
+      'hapi-retningslinje-agent': 'Retningslinjer',
+      'hapi-kodeverk-agent': 'Kodeverk',
+      'hapi-statistikk-agent': 'Statistikk',
+    };
+
     function autoResize(el) {
       el.style.height = 'auto';
       el.style.height = Math.min(el.scrollHeight, 120) + 'px';
@@ -602,6 +664,37 @@
       scrollToBottom();
     }
 
+    function showOrchFlow(agents) {
+      // Remove previous flow
+      const prev = document.getElementById('orchFlow');
+      if (prev) prev.remove();
+
+      const agentChips = agents.map(a =>
+        `<span class="orch-step agent loading"><span class="step-icon">&#x1F916;</span> ${AGENT_LABELS[a] || a}</span>`
+      ).join('<span class="orch-arrow">&#x2192;</span>');
+
+      const div = document.createElement('div');
+      div.className = 'orch-flow';
+      div.id = 'orchFlow';
+      div.innerHTML = `
+        <div class="orch-flow-inner">
+          <div class="orch-flow-title">
+            <div class="spinner"></div>
+            Orkestrering aktiv
+          </div>
+          <div class="orch-steps">
+            <span class="orch-step routing"><span class="step-icon">&#x1F9ED;</span> Router</span>
+            <span class="orch-arrow">&#x2192;</span>
+            ${agentChips}
+            <span class="orch-arrow">&#x2192;</span>
+            <span class="orch-step synth"><span class="step-icon">&#x2728;</span> Syntese</span>
+          </div>
+        </div>
+      `;
+      chat.appendChild(div);
+      scrollToBottom();
+    }
+
     function showLoading() {
       const div = document.createElement('div');
       div.className = 'loading-container';
@@ -615,31 +708,12 @@
         <div class="loading-bubble">
           <div class="loading-text">
             <div class="spinner"></div>
-            <span>Analyserer spoersmaal og henter data<span class="dots"></span></span>
+            <span>Henter data fra HAPI MCP Server<span class="dots"></span></span>
           </div>
-          <div class="loading-agents" id="loadingAgents"></div>
         </div>
       `;
       chat.appendChild(div);
       scrollToBottom();
-    }
-
-    function updateLoadingAgents(agents) {
-      const container = document.getElementById('loadingAgents');
-      if (!container) return;
-
-      const labels = {
-        'hapi-retningslinje-agent': 'Retningslinjer',
-        'hapi-kodeverk-agent': 'Kodeverk',
-        'hapi-statistikk-agent': 'Statistikk',
-      };
-
-      container.innerHTML = agents.map(a => `
-        <div class="loading-agent active">
-          <div class="spinner" style="width:12px;height:12px;border-width:1.5px;"></div>
-          ${labels[a] || a}
-        </div>
-      `).join('');
     }
 
     function removeLoading() {
@@ -647,35 +721,39 @@
       if (el) el.remove();
     }
 
+    function finishOrchFlow(agents, totalMs) {
+      const el = document.getElementById('orchFlow');
+      if (!el) return;
+
+      const secs = (totalMs / 1000).toFixed(1);
+
+      const agentChips = agents.map(a =>
+        `<span class="orch-step agent"><span class="step-icon">&#x2705;</span> ${AGENT_LABELS[a] || a}</span>`
+      ).join('<span class="orch-arrow">&#x2192;</span>');
+
+      el.innerHTML = `
+        <div class="orch-flow-inner">
+          <div class="orch-flow-title">
+            &#x2705; Orkestrering fullfort (${secs}s) &mdash; data hentet via HAPI MCP Server
+          </div>
+          <div class="orch-steps">
+            <span class="orch-step routing"><span class="step-icon">&#x1F9ED;</span> Router</span>
+            <span class="orch-arrow">&#x2192;</span>
+            ${agentChips}
+            <span class="orch-arrow">&#x2192;</span>
+            <span class="orch-step synth"><span class="step-icon">&#x2728;</span> Syntese</span>
+          </div>
+        </div>
+      `;
+    }
+
     function addBotMessage(answer, routing, agentResults, totalMs) {
       removeLoading();
 
-      const labels = {
-        'hapi-retningslinje-agent': 'Retningslinjer',
-        'hapi-kodeverk-agent': 'Kodeverk',
-        'hapi-statistikk-agent': 'Statistikk',
-      };
-
-      const confLabels = {
-        'hoey': 'Hoey',
-        'middels': 'Middels',
-        'lav': 'Lav',
-      };
-
-      let metaHtml = '<div class="meta-bar">';
+      // Update orch flow to completed
       if (routing && routing.agents) {
-        routing.agents.forEach(a => {
-          metaHtml += `<span class="meta-chip agent">${labels[a] || a}</span>`;
-        });
+        finishOrchFlow(routing.agents, totalMs);
       }
-      if (routing && routing.confidence) {
-        metaHtml += `<span class="meta-chip confidence">Konfidens: ${confLabels[routing.confidence] || routing.confidence}</span>`;
-      }
-      if (totalMs) {
-        const secs = (totalMs / 1000).toFixed(1);
-        metaHtml += `<span class="meta-chip time">${secs}s</span>`;
-      }
-      metaHtml += '</div>';
 
       const div = document.createElement('div');
       div.className = 'message bot';
@@ -687,7 +765,6 @@
         </div>
         <div class="bubble">
           ${renderMarkdown(answer)}
-          ${metaHtml}
         </div>
       `;
       chat.appendChild(div);
@@ -696,6 +773,9 @@
 
     function addErrorMessage(error) {
       removeLoading();
+      const prev = document.getElementById('orchFlow');
+      if (prev) prev.remove();
+
       const div = document.createElement('div');
       div.className = 'message bot';
       div.innerHTML = `
@@ -765,16 +845,37 @@
       return html;
     }
 
+    function buildQueryWithContext(query) {
+      // Check if this is a follow-up question (short, references previous)
+      const followUpWords = ['den', 'det', 'dette', 'disse', 'mer om', 'utdyp', 'fortell mer',
+                             'hvor', 'hvilken', 'hvorfor', 'hva mener', 'kan du forklare',
+                             'forrige', 'som du sa', 'du nevnte', 'hentet du', 'data fra'];
+      const isFollowUp = query.length < 100 && followUpWords.some(w => query.toLowerCase().includes(w));
+
+      if (isFollowUp && conversationHistory.length > 0) {
+        const lastExchange = conversationHistory[conversationHistory.length - 1];
+        return `Kontekst fra forrige spoersmaal: "${lastExchange.query}"
+Forrige svar handlet om: ${lastExchange.agents.map(a => AGENT_LABELS[a] || a).join(', ')}
+
+Nytt oppfoelgingsspoersmaal: ${query}`;
+      }
+      return query;
+    }
+
     async function sendMessage() {
-      const query = input.value.trim();
-      if (!query || isLoading) return;
+      const rawQuery = input.value.trim();
+      if (!rawQuery || isLoading) return;
 
       isLoading = true;
       sendBtn.disabled = true;
       input.value = '';
       input.style.height = 'auto';
 
-      addUserMessage(query);
+      addUserMessage(rawQuery);
+
+      // Build query with conversation context for follow-ups
+      const query = buildQueryWithContext(rawQuery);
+
       showLoading();
 
       try {
@@ -791,10 +892,23 @@
 
         const data = await resp.json();
 
-        // Show which agents were called
+        // Remove loading, show orchestration flow
+        removeLoading();
         if (data.routing && data.routing.agents) {
-          updateLoadingAgents(data.routing.agents);
+          showOrchFlow(data.routing.agents);
         }
+
+        // Small delay so user sees the orchestration flow
+        await new Promise(r => setTimeout(r, 800));
+
+        // Save to conversation history
+        conversationHistory.push({
+          query: rawQuery,
+          agents: data.routing ? data.routing.agents : [],
+          answer: data.answer ? data.answer.substring(0, 200) : '',
+        });
+        // Keep max 5 exchanges
+        if (conversationHistory.length > 5) conversationHistory.shift();
 
         addBotMessage(data.answer, data.routing, data.agent_results, data.total_duration_ms);
 

@@ -42,21 +42,26 @@ class OrchestrationResult:
 
 # --- Konfigurasjon ---
 
-SYNTHESIS_PROMPT = """Du er en medisinsk oppsummerings-agent. Kombiner svarene fra spesialiserte agenter
-til ett sammenhengende, klinisk nyttig svar paa norsk.
+SYNTHESIS_PROMPT = """Du er HAPI Helseassistent — et multi-agent orkestreringsystem.
+Du kombinerer svar fra spesialiserte agenter til ett sammenhengende svar paa norsk.
 
 Brukerens spoersmaal: {query}
 
-Svar fra agentene:
+Foelgende agenter ble kalt via HAPI MCP Server (Helsedirektoratets API):
 {agent_outputs}
 
 REGLER:
 - Kombiner informasjonen logisk (diagnose -> behandling -> statistikk)
 - Behold faglig presisjon — ikke endre meningsinnhold
-- Oppgi kilde: Helsedirektoratet
-- Hvis agenter gir motstridende info, paapek det
+- Bruk overskrifter for aa strukturere svaret
 - Hold svaret konsist men komplett
-- Bruk overskrifter for aa strukturere svaret"""
+- Hvis agenter gir motstridende info, paapek det
+- Avslutt ALLTID svaret med en kildelinje:
+  "Kilde: Helsedirektoratets retningslinjer via HAPI (agenter: {agent_names})"
+- Du skal ALDRI si at du ikke har orkestrert agenter — det HAR du
+- Du skal ALDRI si at du brukte web-soek — du brukte KUN HAPI MCP Server"""
+
+SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratets database via HAPI MCP Server (agent: {agent_name})*"
 
 
 async def call_agent(
@@ -112,27 +117,47 @@ async def call_agent(
         )
 
 
+def _agent_label(name: str) -> str:
+    """Lag lesbart agentnavn."""
+    labels = {
+        "hapi-retningslinje-agent": "Retningslinje-agent",
+        "hapi-kodeverk-agent": "Kodeverk-agent",
+        "hapi-statistikk-agent": "Statistikk-agent",
+    }
+    return labels.get(name, name)
+
+
 async def synthesize(
     project: AsyncProjectClient,
     query: str,
     results: list[AgentResult],
 ) -> str:
     """Kombiner agent-resultater til ett svar via LLM."""
-    # Hvis bare ett resultat, returner direkte
     successful = [r for r in results if r.success and r.output]
-    if len(successful) == 1:
-        return successful[0].output
 
     if not successful:
         return "Beklager, ingen av agentene klarte aa hente data for dette spoersmalet."
 
-    # Bygg agent-output-tekst
+    # Hvis bare ett resultat, legg til kildemarkering
+    if len(successful) == 1:
+        r = successful[0]
+        footer = SOURCE_FOOTER.format(agent_name=_agent_label(r.agent_name))
+        return r.output + footer
+
+    # Flere resultater — syntetiser via LLM
     agent_outputs = ""
+    agent_names_list = []
     for r in successful:
-        label = r.agent_name.replace("hapi-", "").replace("-agent", "").upper()
+        label = _agent_label(r.agent_name)
+        agent_names_list.append(label)
         agent_outputs += f"\n--- {label} ---\n{r.output}\n"
 
-    prompt = SYNTHESIS_PROMPT.format(query=query, agent_outputs=agent_outputs)
+    agent_names = ", ".join(agent_names_list)
+    prompt = SYNTHESIS_PROMPT.format(
+        query=query,
+        agent_outputs=agent_outputs,
+        agent_names=agent_names,
+    )
 
     try:
         openai = project.get_openai_client()
@@ -146,8 +171,9 @@ async def synthesize(
         # Fallback: konkatener resultatene
         parts = []
         for r in successful:
-            parts.append(f"## {r.agent_name}\n{r.output}")
-        return "\n\n".join(parts)
+            parts.append(f"## {_agent_label(r.agent_name)}\n{r.output}")
+        footer = f"\n\n---\n*Kilde: Helsedirektoratets database via HAPI MCP Server*"
+        return "\n\n".join(parts) + footer
 
 
 async def orchestrate(
