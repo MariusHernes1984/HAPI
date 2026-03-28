@@ -85,8 +85,11 @@ async def call_agent(
         output = response.output_text
         duration = int((time.monotonic() - start) * 1000)
 
-        # Rydd opp
-        await openai.conversations.delete(conversation.id)
+        # Rydd opp (ignorer feil ved sletting — conversation kan allerede vaere slettet)
+        try:
+            await openai.conversations.delete(conversation.id)
+        except Exception:
+            pass
 
         logger.info(f"  {agent_name}: {duration}ms, {len(output)} tegn")
 
