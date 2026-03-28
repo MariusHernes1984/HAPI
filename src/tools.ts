@@ -43,6 +43,10 @@ const ESSENTIAL_FIELDS = new Set([
   "atcKode", "atcNavn", "virkestoff", "legemiddelform", "styrke",
   "sctId", "term",
   "behandlingsregimer", "doseringsregimer", "kontraindikasjoner",
+  // Doserings- og legemiddeldetaljer som maa bevares
+  "dose", "dosering", "enhet", "intervall", "varighet",
+  "administrasjonsvei", "legemiddelnavn", "preparatnavn",
+  "forstevalg", "foerstevalg", "alternativ",
 ]);
 
 // Felter som ofte er store og kan trygt forkortes
@@ -65,8 +69,8 @@ const DROPPABLE_FIELDS = new Set([
 
 const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
 const MAX_TEXT_LENGTH = 1500;     // Maks tegn per tekstfelt
-const MAX_ESSENTIAL_LENGTH = 4000; // Lengre grense for essensielle felter
-const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde
+const MAX_ESSENTIAL_LENGTH = 6000; // Lengre grense for essensielle felter (oekt for dosering)
+const MAX_TOTAL_LENGTH = 80000;   // Maks total JSON-lengde (oekt for aa bevare klinisk data)
 
 function stripHtml(html: string): string {
   return html
