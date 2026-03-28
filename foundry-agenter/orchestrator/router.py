@@ -22,7 +22,11 @@ KEYWORD_RULES: list[tuple[list[str], list[str]]] = [
         ["behandling", "anbefaling", "retningslinje", "retningslinjer",
          "pakkeforlop", "pakkeforloep", "veileder", "faglig rad",
          "faglige raad", "rundskriv", "antibiotika", "dosering",
-         "foerstevalg", "forstevalg", "forstevalgfor"],
+         "foerstevalg", "forstevalg", "forstevalgfor",
+         "kols", "diabetes", "astma", "kreft", "depresjon", "angst",
+         "hjertesvikt", "hypertensjon", "blodtrykk", "slag",
+         "diagnose", "symptom", "symptomer", "sykdom",
+         "hjelpe", "hva kan jeg", "hva bor jeg", "hva burde"],
         [RETNINGSLINJE],
     ),
     # Kodeverk-triggere
