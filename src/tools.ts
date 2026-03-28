@@ -77,10 +77,11 @@ const DROPPABLE_FIELDS = new Set([
   "spraak", "language",
 ]);
 
-const MAX_ARRAY_ITEMS = 25;      // Maks antall elementer i en array (oekt for aa fange flere anbefalinger)
-const MAX_TEXT_LENGTH = 3500;     // Maks tegn per tekstfelt (oekt for aa bevare klinisk tekst)
-const MAX_ESSENTIAL_LENGTH = 6000; // Lengre grense for essensielle felter (oekt for dosering)
-const MAX_TOTAL_LENGTH = 120000;  // Maks total JSON-lengde (oekt for aa bevare fullstendige retningslinjer)
+const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
+const MAX_TEXT_LENGTH = 2000;     // Maks tegn per tekstfelt
+const MAX_ESSENTIAL_LENGTH = 4000; // Lengre grense for essensielle felter (dosering, anbefalinger)
+const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde — holdes lav for Azure AI Foundry MCP-kompatibilitet
+const DEFAULT_SEARCH_TOP = 15;    // Maks antall resultater fra HAPI søk-API
 
 function stripHtml(html: string): string {
   return html
@@ -168,10 +169,6 @@ function formatResult(data: unknown): string {
   return json;
 }
 
-// Beholder gammel funksjon for bakoverkompatibilitet
-function truncateText(obj: unknown, maxLen = 4000): unknown {
-  return smartTruncate(obj);
-}
 
 export function createServer(): McpServer {
   const server = new McpServer({
@@ -182,9 +179,13 @@ export function createServer(): McpServer {
   // 1. Søk i innhold
   server.tool(
     "sok_innhold",
-    "Søk i Helsedirektoratets innhold (retningslinjer, veiledere, pakkeforløp m.m.). Returnerer treff basert på fritekst.",
+    "Søk i Helsedirektoratets innhold (retningslinjer, veiledere, pakkeforløp m.m.). Returnerer topp-treff basert på fritekst. Bruk hent_innhold_id for detaljer om spesifikke treff.",
     {
       queryText: z.string().describe("Søketekst / fritekst"),
+      maxResults: z
+        .number()
+        .optional()
+        .describe("Maks antall resultater (default 15, maks 30)"),
       filter: z
         .string()
         .optional()
@@ -195,18 +196,16 @@ export function createServer(): McpServer {
         .enum(["Any", "All"])
         .optional()
         .describe("Søkemodus: Any (default) eller All"),
-      getFullInfobits: z
-        .boolean()
-        .optional()
-        .describe("Om full infobit-struktur skal returneres"),
     },
-    async ({ queryText, filter, searchMode, getFullInfobits }) => {
+    async ({ queryText, maxResults, filter, searchMode }) => {
+      const top = Math.min(maxResults ?? DEFAULT_SEARCH_TOP, 30);
       const data = await hapiGet("/sok/infobit", {
         QueryText: queryText,
         Filter: filter,
         SearchMode: searchMode,
         QueryType: "Full",
-        getFullInfobits: getFullInfobits?.toString(),
+        Top: top.toString(),
+        getFullInfobits: "true",
       });
       return { content: [{ type: "text", text: formatResult(data) }] };
     }
