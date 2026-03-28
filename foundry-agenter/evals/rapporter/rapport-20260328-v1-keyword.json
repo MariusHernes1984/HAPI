@@ -1,0 +1,693 @@
+{
+  "tidspunkt": "2026-03-28T09:16:59",
+  "antall": 30,
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "DELVIS",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29406,
+      "answer_length": 931
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "DELVIS",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Kort behandlingsvarighet (3-5 dager)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 42165,
+      "answer_length": 781
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 1,
+      "forventet": 2,
+      "mangler": [
+        "Erytromycin, klaritromycin eller klindamycin som alternativer"
+      ],
+      "feil": [
+        "Penicillin som alternativ (pasienten er allergisk)"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 28609,
+      "answer_length": 1016
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandlingsresistens",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 3,
+      "forventet": 3,
+      "mangler": [],
+      "feil": [
+        "Anbefaling om aa avslutte all behandling"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 35349,
+      "answer_length": 1860
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "DELVIS",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Inhalasjonsbehandling (bronkodilatorer)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 63790,
+      "answer_length": 2421
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "MANGLER",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 1,
+      "forventet": 3,
+      "mangler": [
+        "Pakkeforloep med definerte forloepstider",
+        "Utredning inkluderer bildediagnostikk og biopsi"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 40976,
+      "answer_length": 1147
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 1,
+      "forventet": 3,
+      "mangler": [
+        "Soevnhygieniske raad",
+        "Sovemedisin kun kortvarig og med forsiktighet"
+      ],
+      "feil": [
+        "Langvarig bruk av sovemedisin som anbefaling"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 53633,
+      "answer_length": 1504
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Tidlig rehabilitering (innen 24-48 timer)"
+      ],
+      "feil": [
+        "Anbefaling om aa vente med rehabilitering i uker",
+        "Kun medikamentell behandling uten rehabilitering"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 46323,
+      "answer_length": 2381
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "score": "MANGLER",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 0,
+      "forventet": 4,
+      "mangler": [
+        "Dobbel platehemming (ASA + P2Y12-hemmer)",
+        "Statin",
+        "Betablokker",
+        "Livsstilsendringer"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 40765,
+      "answer_length": 1841
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni antibiotika",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 1,
+      "forventet": 2,
+      "mangler": [
+        "Penicillin G (benzylpenicillin) intravenoes som foerstevalg"
+      ],
+      "feil": [
+        "Kun peroral behandling for innlagte pasienter"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 34082,
+      "answer_length": 1441
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "score": "FEIL",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 1,
+      "forventet": 2,
+      "mangler": [
+        "Underkoder som E11.0-E11.9 bor nevnes"
+      ],
+      "feil": [
+        "E10 som kode for type 2 (E10 er type 1)"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 45867,
+      "answer_length": 759
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "DELVIS",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 1,
+      "forventet": 2,
+      "mangler": [
+        "I10 tilhoerer kapittel IX (hjerte- og karsykdommer)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 14137,
+      "answer_length": 244
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 1,
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 19973,
+      "answer_length": 296
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 2,
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23539,
+      "answer_length": 456
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 2,
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13101,
+      "answer_length": 243
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Fibromyalgi ICD-10",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 1,
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 30911,
+      "answer_length": 291
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 1,
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 15459,
+      "answer_length": 741
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 2,
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Feil ATC-kode"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 14439,
+      "answer_length": 415
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "BESTATT",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": 3,
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17493,
+      "answer_length": 989
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag trombolyse",
+      "score": "MANGLER",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": 0,
+      "forventet": 3,
+      "mangler": [
+        "Trombolyse-indikator med verdi",
+        "Nasjonalt maal for andel som faar trombolyse",
+        "Vurdering av om maalet er naad eller ikke"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 22769,
+      "answer_length": 2148
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "DELVIS",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": 1,
+      "forventet": 2,
+      "mangler": [
+        "Periode eller aarstall for maalingen"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 31460,
+      "answer_length": 1141
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI psykisk helse",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": 2,
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Indikatorer som ikke finnes i NKI",
+        "Somatiske indikatorer presentert som psykisk helse"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 32780,
+      "answer_length": 2617
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": 2,
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23861,
+      "answer_length": 1255
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "score": "BESTATT",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 3,
+      "forventet": 4,
+      "mangler": [
+        "Inhalasjonsmedisiner"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 52579,
+      "answer_length": 2015
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "DELVIS",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Inhalasjonssteroider som basisbehandling"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29920,
+      "answer_length": 1546
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Baade medikamentell og ikke-medikamentell behandling"
+      ],
+      "feil": [
+        "Kun AA/selvhjelp uten offentlig tilbud",
+        "At man maa klare det alene"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 39585,
+      "answer_length": 1740
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "FEIL",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 1,
+      "forventet": 2,
+      "mangler": [
+        "Penicillin/benzylpenicillin som foerstevalg"
+      ],
+      "feil": [
+        "Feil ATC-kode for oppgitt antibiotika",
+        "Antibiotika som ikke er foerstevalg presentert som det"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 21647,
+      "answer_length": 793
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "FEIL",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "treff": 2,
+      "forventet": 3,
+      "mangler": [
+        "Metformin som foerstevalg medikament"
+      ],
+      "feil": [
+        "E11 feilidentifisert som type 1 diabetes"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 37750,
+      "answer_length": 1954
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "MANGLER",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": 1,
+      "forventet": 3,
+      "mangler": [
+        "ATC-kode A10BJ06",
+        "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 67984,
+      "answer_length": 2193
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "score": "MANGLER",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": 0,
+      "forventet": 2,
+      "mangler": [
+        "Koden finnes ikke eller er ugyldig",
+        "Forslag om aa sjekke skrivemaate"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13374,
+      "answer_length": 47
+    }
+  ]
+}
