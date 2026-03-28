@@ -1,0 +1,598 @@
+{
+  "name": "HAPI Agent Evaluering",
+  "description": "30 evalueringssporsmal med faktasjekk-kriterier for aa verifisere korrekthet i svar fra HAPI-agentene. Fokus paa at svarene IKKE gir feilinformasjon.",
+  "version": "1.0",
+  "dato": "2026-03-28",
+  "evalueringskriterier": {
+    "KORREKT": "Svaret inneholder fakta som stemmer med Helsedirektoratets data",
+    "FEIL": "Svaret inneholder fakta som IKKE stemmer med Helsedirektoratets data",
+    "MANGLER": "Svaret mangler viktig informasjon som burde vaert med",
+    "HALLUSINERING": "Svaret inneholder informasjon som agenten har funnet paa selv",
+    "KILDE": "Svaret oppgir kilde (Helsedirektoratet / HAPI)"
+  },
+  "questions": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva er foerstevalg antibiotika ved akutt otitis media hos barn?",
+      "tema": "Otitt antibiotika",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+          "Dosering skal vaere oppgitt (mg/kg eller konkret dose)",
+          "Varighet typisk 5 dager"
+        ],
+        "skal_IKKE_inneholde": [
+          "Amoxicillin som foerstevalg (dette er IKKE norsk foerstevalg)",
+          "Bredspektret antibiotika som foerstevalg"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
+      }
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva er anbefalt foerstelinjebehandling ved ukomplisert urinveisinfeksjon hos ikke-gravide kvinner?",
+      "tema": "UVI antibiotika",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Nitrofurantoin eller pivmecillinam som foerstevalg",
+          "Trimetoprim som alternativ",
+          "Kort behandlingsvarighet (3-5 dager)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Ciprofloxacin som foerstevalg (fluorokinoloner er IKKE foerstevalg ved enkel UVI)",
+          "Amoxicillin som foerstevalg ved UVI"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
+      }
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "En pasient med bekreftet streptokokk-tonsillitt er allergisk mot penicillin. Hva er anbefalt alternativ?",
+      "tema": "Tonsillitt penicillinallergi",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Erytromycin, klaritromycin eller klindamycin som alternativer",
+          "Dosering bor vaere oppgitt"
+        ],
+        "skal_IKKE_inneholde": [
+          "Penicillin som alternativ (pasienten er allergisk)",
+          "Cefalosporiner uten forbehold (kryssallergi-risiko)"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva anbefaler retningslinjene for behandling av moderat til alvorlig depresjon som ikke har respondert paa SSRI etter 6 uker?",
+      "tema": "Depresjon behandlingsresistens",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Doseoekning, bytte av preparat, eller kombinasjon",
+          "Psykoterapi (kognitiv atferdsterapi) som del av behandling",
+          "Vurdering av spesialisthenvisning"
+        ],
+        "skal_IKKE_inneholde": [
+          "Benzodiazepiner som foerstevalg ved depresjon",
+          "Anbefaling om aa avslutte all behandling"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva sier de nasjonale retningslinjene om behandling av KOLS? Jeg har en pasient paa 68 aar som fortsatt roeyker.",
+      "tema": "KOLS behandling",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Roeykelutt er viktigste tiltak",
+          "Inhalasjonsbehandling (bronkodilatorer)",
+          "Trinnvis tilnaerming basert paa sykdomsgrad"
+        ],
+        "skal_IKKE_inneholde": [
+          "Antibiotika som standardbehandling for KOLS (kun ved eksaserbasjon)",
+          "Kurativ behandling (KOLS er kronisk)"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva er pakkeforleopet for brystkreft? Hvilke tidsfrister gjelder?",
+      "tema": "Brystkreft pakkeforloep",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Pakkeforloep med definerte forloepstider",
+          "Utredning inkluderer bildediagnostikk og biopsi",
+          "Tidsfrister fra henvisning til utredningsstart"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktede tidsfrister som ikke stemmer med Helsedirektoratets pakkeforloep"
+        ],
+        "kilde_krav": "Helsedirektoratet / Pakkeforloep for kreft"
+      }
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva anbefales for behandling av insomni? Finnes det ikke-medikamentelle alternativer?",
+      "tema": "Insomni",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Kognitiv atferdsterapi for insomni (CBT-I) er foerstevalg",
+          "Soevnhygieniske raad",
+          "Sovemedisin kun kortvarig og med forsiktighet"
+        ],
+        "skal_IKKE_inneholde": [
+          "Benzodiazepiner som foerstevalg",
+          "Langvarig bruk av sovemedisin som anbefaling"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva anbefaler retningslinjene for rehabilitering etter hjerneslag?",
+      "tema": "Hjerneslag rehabilitering",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Tidlig rehabilitering (innen 24-48 timer)",
+          "Tverrfaglig team",
+          "Individuell rehabiliteringsplan"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefaling om aa vente med rehabilitering i uker",
+          "Kun medikamentell behandling uten rehabilitering"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva sier retningslinjene om oppfoelging og sekundaerprevensjon etter akutt koronarsyndrom med PCI?",
+      "tema": "AKS sekundaerprevensjon",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Dobbel platehemming (ASA + P2Y12-hemmer)",
+          "Statin",
+          "Betablokker",
+          "Livsstilsendringer"
+        ],
+        "skal_IKKE_inneholde": [
+          "Kun livsstilsendringer uten medikamenter",
+          "Antikoagulasjon som standard (kun ved tilleggsindikasjoner)"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva er anbefalt antibiotika som foerstevalg ved fellesskapservervet pneumoni hos voksen innlagt paa sengepost?",
+      "tema": "Pneumoni antibiotika",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Penicillin G (benzylpenicillin) intravenoes som foerstevalg",
+          "Dosering bor vaere oppgitt"
+        ],
+        "skal_IKKE_inneholde": [
+          "Bredspektret antibiotika (piperacillin-tazobaktam, meropenem) som foerstevalg ved ukomplisert",
+          "Kun peroral behandling for innlagte pasienter"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
+      }
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er ICD-10 koden for diabetes mellitus type 2?",
+      "tema": "ICD-10 diabetes",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "E11 er hovedkoden for diabetes mellitus type 2",
+          "Underkoder som E11.0-E11.9 bor nevnes"
+        ],
+        "skal_IKKE_inneholde": [
+          "E10 som kode for type 2 (E10 er type 1)",
+          "Feil kodeverk (f.eks. ICPC-2 koder presentert som ICD-10)"
+        ],
+        "kilde_krav": "HAPI / Helsedirektoratets kodeverk"
+      }
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva betyr ICD-10 kode I10?",
+      "tema": "ICD-10 hypertensjon",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Essensiell (primaer) hypertensjon",
+          "I10 tilhoerer kapittel IX (hjerte- og karsykdommer)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Sekundaer hypertensjon (det er I15)",
+          "Feil diagnose knyttet til I10"
+        ],
+        "kilde_krav": "HAPI / ICD-10"
+      }
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er ATC-koden for metformin?",
+      "tema": "ATC metformin",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "A10BA02 er ATC-koden for metformin"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil ATC-kode",
+          "Forveksling med andre diabetesmidler"
+        ],
+        "kilde_krav": "HAPI / ATC-registeret"
+      }
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Vis alle legemidler registrert i Norge med ATC-kode J01CA04 (amoxicillin).",
+      "tema": "Amoxicillin preparater",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "J01CA04 er amoxicillin",
+          "Minst ett preparatnavn registrert i Norge"
+        ],
+        "skal_IKKE_inneholde": [
+          "Preparater som IKKE inneholder amoxicillin",
+          "ATC-koder for andre virkestoffer presentert som amoxicillin"
+        ],
+        "kilde_krav": "HAPI / FEST"
+      }
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er virkestoff og ATC-klassifisering for Eliquis?",
+      "tema": "Apixaban ATC",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Apixaban er virkestoffet",
+          "B01AF02 er ATC-koden"
+        ],
+        "skal_IKKE_inneholde": [
+          "Rivaroxaban (det er Xarelto, ikke Eliquis)",
+          "Warfarin (helt annet legemiddel)"
+        ],
+        "kilde_krav": "HAPI / FEST"
+      }
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er ICD-10 koden for fibromyalgi?",
+      "tema": "Fibromyalgi ICD-10",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "M79.7 er koden for fibromyalgi"
+        ],
+        "skal_IKKE_inneholde": [
+          "M79.0 (revmatisme, uspesifisert) presentert som fibromyalgi",
+          "Psykiatriske koder presentert som fibromyalgi"
+        ],
+        "kilde_krav": "HAPI / ICD-10"
+      }
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "En kollega brukte ICPC-2 kode K74 i en epikrise. Hva betyr det?",
+      "tema": "ICPC-2 K74",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "K74 i ICPC-2 betyr iskemisk hjertesykdom med angina"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil diagnose for K74",
+          "ICD-10 koder presentert som ICPC-2"
+        ],
+        "kilde_krav": "HAPI / ICPC-2"
+      }
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er virkestoff, ATC-kode og styrke for Ozempic?",
+      "tema": "Semaglutid",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Semaglutid er virkestoffet",
+          "A10BJ06 er ATC-koden"
+        ],
+        "skal_IKKE_inneholde": [
+          "Liraglutid (det er Victoza, ikke Ozempic)",
+          "Feil ATC-kode"
+        ],
+        "kilde_krav": "HAPI / FEST"
+      }
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "agent": "hapi-statistikk-agent",
+      "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for KOLS, og hva er de nasjonale maalene?",
+      "tema": "NKI KOLS",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Minst en kvalitetsindikator med navn",
+          "Nasjonalt maal eller maaltall",
+          "Kilde er Helsedirektoratet/NKI"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktede indikatorer som ikke finnes i NKI",
+          "Tall som agenten har funnet paa"
+        ],
+        "kilde_krav": "Helsedirektoratet / NKI"
+      }
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "agent": "hapi-statistikk-agent",
+      "sporsmal": "Vis kvalitetsindikatorer for hjerneslag. Er norske sykehus over eller under nasjonalt maal for trombolyse?",
+      "tema": "NKI hjerneslag trombolyse",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Trombolyse-indikator med verdi",
+          "Nasjonalt maal for andel som faar trombolyse",
+          "Vurdering av om maalet er naad eller ikke"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktede prosenttall",
+          "Tall fra andre land presentert som norske"
+        ],
+        "kilde_krav": "Helsedirektoratet / NKI"
+      }
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "agent": "hapi-statistikk-agent",
+      "sporsmal": "Hva er siste maalte verdi for andel diabetespasienter med god HbA1c-kontroll i Norge?",
+      "tema": "NKI diabetes HbA1c",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "HbA1c-indikator med verdi eller andel",
+          "Periode eller aarstall for maalingen"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktede prosenttall",
+          "Generelle paastander uten tall fra NKI"
+        ],
+        "kilde_krav": "Helsedirektoratet / NKI"
+      }
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "agent": "hapi-statistikk-agent",
+      "sporsmal": "Finnes det nasjonale kvalitetsindikatorer for psykisk helsevern? Vis de viktigste med siste verdier.",
+      "tema": "NKI psykisk helse",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Minst en indikator for psykisk helsevern",
+          "Verdi eller maaltall"
+        ],
+        "skal_IKKE_inneholde": [
+          "Indikatorer som ikke finnes i NKI",
+          "Somatiske indikatorer presentert som psykisk helse"
+        ],
+        "kilde_krav": "Helsedirektoratet / NKI"
+      }
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "agent": "hapi-statistikk-agent",
+      "sporsmal": "Hva er de nyeste NKI-tallene for hoftebrudd? Holder vi de nasjonale tidskravene?",
+      "tema": "NKI hoftebrudd",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Tidskrav for operasjon etter hoftebrudd",
+          "Andel som opereres innen fristen"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktede tidsfrister",
+          "Tall fra andre land"
+        ],
+        "kilde_krav": "Helsedirektoratet / NKI"
+      }
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Legen sa jeg har KOLS. Hva betyr det for meg fremover, og hva slags behandling finnes?",
+      "tema": "KOLS pasientperspektiv",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "KOLS er en kronisk lungesykdom",
+          "Roykeslutt er viktigste tiltak",
+          "Inhalasjonsmedisiner",
+          "Informasjon hentet fra Helsedirektoratet"
+        ],
+        "skal_IKKE_inneholde": [
+          "At KOLS kan kureres (det er kronisk)",
+          "Spesifikke medisinske raad uten forbehold (skal henvise til lege)"
+        ],
+        "kilde_krav": "Helsedirektoratet via HAPI"
+      }
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Barnet mitt paa 8 aar har astma og vi er redde for aa gi for mye medisin. Han har hatt tre innleggelser i aar. Hva anbefales for barn med daarlig kontrollert astma?",
+      "tema": "Astma barn",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Trinnvis behandling (trappeopp)",
+          "Inhalasjonssteroider som basisbehandling",
+          "Oppfoelging og kontroll"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefaling om aa stoppe medisin uten legevurdering",
+          "At astmamedisin generelt er farlig for barn"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Jeg drikker for mye og vil slutte. Hva slags hjelp kan jeg faa, og hva er det offentlige tilbudet?",
+      "tema": "Alkoholavhengighet",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Fastlege som foerste kontaktpunkt",
+          "Tverrfaglig spesialisert rusbehandling (TSB)",
+          "Baade medikamentell og ikke-medikamentell behandling"
+        ],
+        "skal_IKKE_inneholde": [
+          "Kun AA/selvhjelp uten offentlig tilbud",
+          "At man maa klare det alene"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "agent": "hapi-orkestrator",
+      "sporsmal": "Vi behandler en pasient med pneumoni og skal sette opp rekvirering. Hvilken antibiotika anbefales som foerstevalg, og hva er ATC-koden jeg skal bruke?",
+      "tema": "Pneumoni antibiotika + ATC",
+      "forventet_routing": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Penicillin/benzylpenicillin som foerstevalg",
+          "ATC-kode for valgt antibiotika (f.eks. J01CE01 for benzylpenicillin)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil ATC-kode for oppgitt antibiotika",
+          "Antibiotika som ikke er foerstevalg presentert som det"
+        ],
+        "kilde_krav": "Helsedirektoratet + HAPI/ATC"
+      }
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "agent": "hapi-orkestrator",
+      "sporsmal": "Pasienten min har ICD-10 E11. Hva sier retningslinjene om behandling, og hva er de nasjonale kvalitetsmaalene for HbA1c-kontroll?",
+      "tema": "Diabetes klinisk oversikt",
+      "forventet_routing": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "E11 = diabetes type 2",
+          "Metformin som foerstevalg medikament",
+          "HbA1c-maal eller kvalitetsindikator"
+        ],
+        "skal_IKKE_inneholde": [
+          "E11 feilidentifisert som type 1 diabetes",
+          "Insulin som foerstevalg ved type 2 (kun ved avansert sykdom)"
+        ],
+        "kilde_krav": "Helsedirektoratet + NKI"
+      }
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "agent": "hapi-orkestrator",
+      "sporsmal": "Flere pasienter spoer meg om Ozempic. Hva er dette legemidlet, og hva sier retningslinjene om bruk av GLP-1-agonister ved diabetes?",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Semaglutid er virkestoffet i Ozempic",
+          "ATC-kode A10BJ06",
+          "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil virkestoff",
+          "At Ozempic er godkjent for vektreduksjon (det er Wegovy, ikke Ozempic)"
+        ],
+        "kilde_krav": "Helsedirektoratet + HAPI/FEST"
+      }
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er behandling for diagnosekode XYZ99?",
+      "tema": "Ugyldig kode",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Koden finnes ikke eller er ugyldig",
+          "Forslag om aa sjekke skrivemaate"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktet diagnose for XYZ99",
+          "Behandlingsanbefalinger basert paa en ikke-eksisterende kode"
+        ],
+        "kilde_krav": "Agenten skal IKKE fabrikkere data"
+      }
+    }
+  ]
+}
