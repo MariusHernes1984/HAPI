@@ -47,13 +47,23 @@ const ESSENTIAL_FIELDS = new Set([
   "dose", "dosering", "enhet", "intervall", "varighet",
   "administrasjonsvei", "legemiddelnavn", "preparatnavn",
   "forstevalg", "foerstevalg", "alternativ",
+  // Behandlings- og klinisk innhold som maa bevares
+  "behandling", "anbefaling", "anbefalinger", "tiltak",
+  "trinn", "steg", "protokoll", "regime",
+  "medikament", "medikamenter", "legemiddel", "legemidler",
+  "forlopstider", "forlopstid", "tidsfrist", "tidsfrister",
+  "maal", "maalverdi", "nasjonaltMaal", "resultat", "verdi",
+  "indikator", "indikatorverdi", "periode",
+  // Kliniske tekstfelter som ofte inneholder selve anbefalingen
+  "tekst", "text", "innhold", "content",
+  "beskrivelse", "description", "sammendrag", "summary",
+  "raadTekst", "intro", "ingress",
 ]);
 
 // Felter som ofte er store og kan trygt forkortes
+// NB: tekst, innhold, beskrivelse etc. er naa ESSENTIAL for aa bevare klinisk innhold
 const VERBOSE_FIELDS = new Set([
-  "tekst", "text", "innhold", "content", "intro", "ingress",
-  "beskrivelse", "description", "sammendrag", "summary",
-  "html", "htmlInnhold", "raadTekst",
+  "html", "htmlInnhold",
 ]);
 
 // Felter som trygt kan fjernes for å spare plass
@@ -67,10 +77,10 @@ const DROPPABLE_FIELDS = new Set([
   "spraak", "language",
 ]);
 
-const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
-const MAX_TEXT_LENGTH = 1500;     // Maks tegn per tekstfelt
+const MAX_ARRAY_ITEMS = 25;      // Maks antall elementer i en array (oekt for aa fange flere anbefalinger)
+const MAX_TEXT_LENGTH = 3500;     // Maks tegn per tekstfelt (oekt for aa bevare klinisk tekst)
 const MAX_ESSENTIAL_LENGTH = 6000; // Lengre grense for essensielle felter (oekt for dosering)
-const MAX_TOTAL_LENGTH = 80000;   // Maks total JSON-lengde (oekt for aa bevare klinisk data)
+const MAX_TOTAL_LENGTH = 120000;  // Maks total JSON-lengde (oekt for aa bevare fullstendige retningslinjer)
 
 function stripHtml(html: string): string {
   return html
