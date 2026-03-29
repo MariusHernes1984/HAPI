@@ -7,7 +7,8 @@ i stedet for naiv keyword-matching som ga for mange falske positiver.
 Rapporter lagres automatisk i evals/rapporter/ for progresjonssporing.
 
 Bruk:
-  python run_eval.py                          # Kjoer alle 30
+  python run_eval.py                          # Kjoer alle HAPI-spoersmaal (default)
+  python run_eval.py --eval-file crm          # Kjoer CRM-evalueringen
   python run_eval.py --ids EVAL-001 EVAL-005  # Kjoer spesifikke
   python run_eval.py --kategori kodeverk      # Kjoer en kategori
   python run_eval.py --tag v2-llm             # Legg til tag i filnavn
@@ -44,8 +45,13 @@ PROJECT_ENDPOINT = os.environ.get(
     "https://kateecosystem-resource.services.ai.azure.com/api/projects/kateecosystem",
 )
 
-EVAL_FILE = Path(__file__).parent / "eval-questions.json"
-RAPPORTER_DIR = Path(__file__).parent / "rapporter"
+EVAL_DIR = Path(__file__).parent
+EVAL_FILES = {
+    "hapi": EVAL_DIR / "eval-questions-hapi.json",
+    "crm": EVAL_DIR / "eval-questions-crm.json",
+}
+DEFAULT_EVAL = "hapi"
+RAPPORTER_DIR = EVAL_DIR / "rapporter"
 
 # --- Sikkerhet: Skriveoperasjoner ---
 # CRM-agenten kan i teorien trigge skriveoperasjoner mot produksjon.
@@ -636,13 +642,18 @@ def build_combined_report(
 
 def main():
     parser = argparse.ArgumentParser(description="HAPI Agent Evaluering v2 (LLM-faktasjekk)")
+    parser.add_argument("--eval-file", choices=list(EVAL_FILES.keys()), default=DEFAULT_EVAL,
+                        help=f"Velg evalueringsfil: {', '.join(EVAL_FILES.keys())} (default: {DEFAULT_EVAL})")
     parser.add_argument("--ids", nargs="+", help="Kjoer spesifikke spoersmaal (f.eks. EVAL-001 EVAL-005)")
     parser.add_argument("--kategori", help="Kjoer en kategori (retningslinje, kodeverk, statistikk, pasient, sammensatt)")
     parser.add_argument("--tag", default="", help="Tag for rapportfilnavn (f.eks. v2-llm, post-mcp-fix)")
     parser.add_argument("--runs", type=int, default=1, help="Antall ganger aa kjoere eval (default: 1). Flere kjoringer gir konsensusrapport.")
     args = parser.parse_args()
 
-    with open(EVAL_FILE) as f:
+    eval_file = EVAL_FILES[args.eval_file]
+    safe_print(f"Evalueringsfil: {eval_file.name}")
+
+    with open(eval_file) as f:
         data = json.load(f)
 
     questions = data["questions"]
