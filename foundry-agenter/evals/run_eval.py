@@ -47,6 +47,33 @@ PROJECT_ENDPOINT = os.environ.get(
 EVAL_FILE = Path(__file__).parent / "eval-questions.json"
 RAPPORTER_DIR = Path(__file__).parent / "rapporter"
 
+# --- Sikkerhet: Skriveoperasjoner ---
+# CRM-agenten kan i teorien trigge skriveoperasjoner mot produksjon.
+# Evals skal KUN inneholde lesesporsmal. Denne sjekken blokkerer
+# spoersmaal som ser ut til aa be om skriving.
+WRITE_KEYWORDS = [
+    "opprett", "oppdater", "endre", "slett", "fjern", "registrer",
+    "flytt", "legg til", "lag", "book", "avlys", "kanseller",
+]
+# Eneste tillatte kunde-ID for fremtidige skrivetester
+SAFE_WRITE_CUSTOMER_ID = "33569291"
+
+
+def _check_write_safety(question: dict) -> bool:
+    """Returnerer True hvis spoersmaalet er trygt (lesing). False hvis det inneholder skriveord."""
+    q_lower = question["sporsmal"].lower()
+    agent = question.get("agent", "")
+    # Kun relevant for CRM-agenten
+    if "crm" not in agent:
+        return True
+    for kw in WRITE_KEYWORDS:
+        if kw in q_lower:
+            # Tillat hvis eksplisitt rettet mot test-kunde
+            if SAFE_WRITE_CUSTOMER_ID in question["sporsmal"]:
+                return True
+            return False
+    return True
+
 
 def safe_print(text: str):
     """Print som haandterer unicode paa Windows."""
@@ -260,6 +287,20 @@ async def run_eval(questions: list[dict]) -> list[dict]:
             for i, q in enumerate(questions, 1):
                 qid = q["id"]
                 safe_print(f"\n[{i}/{len(questions)}] {qid}: {q['sporsmal'][:80]}...")
+
+                # Sikkerhet: blokker skriveoperasjoner mot CRM-produksjon
+                if not _check_write_safety(q):
+                    safe_print(f"  BLOKKERT: Spoersmaal inneholder skriveord for CRM-agent. Hopper over.")
+                    safe_print(f"  (Skrivetester krever kunde-ID {SAFE_WRITE_CUSTOMER_ID})")
+                    results.append({
+                        "id": qid, "kategori": q.get("kategori", ""),
+                        "tema": q.get("tema", ""), "score": "BLOKKERT_SIKKERHET",
+                        "begrunnelse": "Skriveoperasjon blokkert av sikkerhetsjekk",
+                        "routing_correct": False, "actual_routing": [],
+                        "expected_routing": q.get("forventet_routing", []),
+                        "duration_ms": 0,
+                    })
+                    continue
 
                 # Route
                 routing = route(q["sporsmal"])

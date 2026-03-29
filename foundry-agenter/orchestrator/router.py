@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 RETNINGSLINJE = "hapi-retningslinje-agent"
 KODEVERK = "hapi-kodeverk-agent"
 STATISTIKK = "hapi-statistikk-agent"
+CRM = "crm-kundealias-agent"
 
 # --- Routing-regler ---
 
@@ -42,6 +43,14 @@ KEYWORD_RULES: list[tuple[list[str], list[str]]] = [
          "maaloppnaaelse", "trend", "nasjonalt maal", "rate",
          "andel", "prosent"],
         [STATISTIKK],
+    ),
+    # CRM-triggere
+    (
+        ["crm", "superoffice", "kunde", "kundealias", "salg", "salgsmulighet",
+         "pipeline", "deal", "kontaktperson", "selskap", "firma",
+         "moete", "kalender", "oppfoelging", "forecast", "tilbud",
+         "vunnet", "tapt"],
+        [CRM],
     ),
 ]
 
@@ -135,6 +144,7 @@ Agenter:
 - hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforloep, antibiotika
 - hapi-kodeverk-agent: kodeverk (ICD-10, ICPC-2, SNOMED, ATC), legemiddeldata, kode-mapping
 - hapi-statistikk-agent: nasjonale kvalitetsindikatorer (NKI), statistikk, trender
+- crm-kundealias-agent: SuperOffice CRM, kunder, salg, pipeline, kontakter, moeter, forecast
 
 Svar BARE med JSON: {"agents": ["agent-navn-1", "agent-navn-2"]}
 
