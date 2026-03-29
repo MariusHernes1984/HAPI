@@ -1,7 +1,7 @@
 {
-  "crm-kundealias-agent": {
-    "name": "crm-kundealias-agent",
-    "id": "crm-kundealias-agent:7",
-    "version": "7"
+  "hapi-statistikk-agent": {
+    "name": "hapi-statistikk-agent",
+    "id": "hapi-statistikk-agent:8",
+    "version": "8"
   }
 }

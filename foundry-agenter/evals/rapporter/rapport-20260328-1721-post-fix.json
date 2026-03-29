@@ -1,0 +1,97 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-28T17:21:05.138692",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 3,
+    "tag": "post-fix",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "2/3 (67%)",
+    "bestatt": 1,
+    "delvis": 1,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 1,
+    "routing_korrekthet": 3,
+    "snitt_responstid_ms": 29206
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: substring not found",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 26307,
+      "answer_length": 913,
+      "answer_preview": "Førstevalg ved **akutt otitis media hos barn i primærhelsetjenesten** er:\n\n- **Fenoksymetylpenicillin (penicillin V)**\n\nDosering (barn < 40 kg):  \n- **Fenoksymetylpenicillin 15 mg/kg x 4 per os**  \n- **Behandlingsvarighet: 5 døgn**\n\nAlternativ ved **penicillinallergi**:  \n- **Erytromycin**\n\nViktige "
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret oppgir riktige foerstevalg og alternativ i tråd med Helsedirektoratets retningslinjer, men nevner ikke anbefalt kort behandlingsvarighet på 3–5 dager.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Nitrofurantoin eller pivmecillinam som foerstevalg",
+        "Trimetoprim som alternativ"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Kort behandlingsvarighet (3-5 dager)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 24331,
+      "answer_length": 684,
+      "answer_preview": "**Anbefalt førstelinjebehandling ved ukomplisert urinveisinfeksjon (akutt cystitt) hos ikke‑gravide kvinner i primærhelsetjenesten:**\n\nFørstevalg antibiotika er:  \n- **Pivmecillinam**  \n- **Nitrofurantoin**  \n- **Trimetoprim** (dersom lokal resistens <20 %)\n\nFluorokinoloner (f.eks. ciprofloxacin) sk"
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker de sentrale elementene i Helsedirektoratets KOLS‑retningslinje: røykeslutt, bronkodilaterende inhalasjonsbehandling og trinnvis behandlingsstrategi. Ingen tydelige medisinske feil er identifisert og kilde er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Røykeavvenning som viktigste tiltak",
+        "Inhalasjonsbehandling med bronkodilatatorer",
+        "Trinnvis tilnærming basert på symptomer/sykdomsgrad"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 36980,
+      "answer_length": 2662,
+      "answer_preview": "Basert på **Nasjonal faglig retningslinje for diagnostisering og behandling av KOLS** fra Helsedirektoratet:\n\nKilde: Helsedirektoratet  \nRetningslinje infoId: 52970834-1ab0-41ea-b206-fd5c5435931d  \nStatus: Gjeldende  \nSist faglig oppdatert: 15.02.2022\n\nFor en **68‑åring med KOLS som fortsatt røyker*"
+    }
+  ]
+}

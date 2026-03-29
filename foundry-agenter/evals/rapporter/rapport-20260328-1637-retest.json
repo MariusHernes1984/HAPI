@@ -1,0 +1,100 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-28T16:37:49.708456",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 3,
+    "tag": "retest",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/3 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 3,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 3,
+    "snitt_responstid_ms": 35895
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret gir ingen medisinsk informasjon om behandling og dekker ingen av de forventede fakta. Det oppgir heller ingen relevant kilde fra Helsedirektoratet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)",
+        "Varighet typisk 5 dager"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 58190,
+      "answer_length": 47,
+      "answer_preview": "Fant ingen treff i Helsedirektoratets database."
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret inneholder ingen av de forventede faglige punktene og gir kun beskjed om manglende treff. Det presenteres heller ingen kildebasert informasjon fra Helsedirektoratets retningslinjer.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Nitrofurantoin eller pivmecillinam som foerstevalg",
+        "Trimetoprim som alternativ",
+        "Kort behandlingsvarighet (3-5 dager)"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 27173,
+      "answer_length": 47,
+      "answer_preview": "Fant ingen treff i Helsedirektoratets database."
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret gir ingen faglig informasjon om behandling av KOLS og dekker ingen av de forventede fakta. Det oppgir heller ingen relevant kilde fra Helsedirektoratet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Roeykelutt er viktigste tiltak",
+        "Inhalasjonsbehandling (bronkodilatorer)",
+        "Trinnvis tilnaerming basert paa sykdomsgrad"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 22323,
+      "answer_length": 47,
+      "answer_preview": "Fant ingen treff i Helsedirektoratets database."
+    }
+  ]
+}

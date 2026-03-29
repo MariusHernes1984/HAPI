@@ -11,6 +11,7 @@ Bruk:
   python run_eval.py --ids EVAL-001 EVAL-005  # Kjoer spesifikke
   python run_eval.py --kategori kodeverk      # Kjoer en kategori
   python run_eval.py --tag v2-llm             # Legg til tag i filnavn
+  python run_eval.py --runs 3                 # Kjoer 3 ganger, generer konsensusrapport
 """
 
 import asyncio
@@ -19,11 +20,20 @@ import time
 import sys
 import os
 import argparse
+import logging
+from collections import Counter
 from pathlib import Path
 from datetime import datetime
 
-from azure.identity.aio import DefaultAzureCredential as AsyncCredential
+from azure.identity.aio import (
+    AzureCliCredential as AsyncCliCredential,
+    ChainedTokenCredential as AsyncChainedCredential,
+    DefaultAzureCredential as AsyncCredential,
+    ManagedIdentityCredential as AsyncManagedIdentityCredential,
+)
 from azure.ai.projects.aio import AIProjectClient as AsyncProjectClient
+
+logger = logging.getLogger(__name__)
 
 # Legg til orchestrator-mappen i path for routing
 sys.path.insert(0, str(Path(__file__).parent.parent / "orchestrator"))
@@ -157,11 +167,95 @@ async def call_agent(project, agent_name: str, query: str) -> dict:
         return {"success": False, "output": "", "duration_ms": duration, "error": str(e)}
 
 
+async def _acquire_credential(max_retries: int = 3, delay: float = 2.0):
+    """Acquire Azure credential with retry logic and fallback.
+
+    Tries DefaultAzureCredential first (which includes AzureCliCredential
+    among others). On failure, retries up to *max_retries* times with a
+    short delay.  If all retries fail, falls back to an explicit
+    ChainedTokenCredential with AzureCliCredential and
+    ManagedIdentityCredential so we cover both local-dev and CI scenarios.
+    """
+    last_error = None
+
+    # --- Attempt 1-N: DefaultAzureCredential ---
+    for attempt in range(1, max_retries + 1):
+        try:
+            cred = AsyncCredential()
+            # Force an early token acquisition to surface auth errors now
+            # rather than in the middle of the eval run.
+            await cred.get_token("https://management.azure.com/.default")
+            safe_print(f"  Credential acquired (DefaultAzureCredential, attempt {attempt})")
+            return cred
+        except Exception as e:
+            last_error = e
+            safe_print(
+                f"  Credential attempt {attempt}/{max_retries} failed: "
+                f"{type(e).__name__}: {str(e)[:120]}"
+            )
+            # Close the failed credential to avoid resource leaks
+            try:
+                await cred.close()
+            except Exception:
+                pass
+            if attempt < max_retries:
+                safe_print(f"  Retrying in {delay}s...")
+                await asyncio.sleep(delay)
+                delay *= 1.5  # gentle back-off
+
+    # --- Fallback: explicit ChainedTokenCredential ---
+    safe_print("  DefaultAzureCredential exhausted, trying fallback chain...")
+    try:
+        fallback = AsyncChainedCredential(
+            AsyncCliCredential(),
+            AsyncManagedIdentityCredential(),
+        )
+        await fallback.get_token("https://management.azure.com/.default")
+        safe_print("  Credential acquired (fallback ChainedTokenCredential)")
+        return fallback
+    except Exception as e2:
+        safe_print(f"  Fallback credential also failed: {type(e2).__name__}: {str(e2)[:120]}")
+        try:
+            await fallback.close()
+        except Exception:
+            pass
+        raise RuntimeError(
+            f"All credential strategies failed. "
+            f"Last DefaultAzureCredential error: {last_error}. "
+            f"Fallback error: {e2}"
+        ) from e2
+
+
+async def _retry_on_auth_error(coro_factory, max_retries: int = 2, delay: float = 1.5):
+    """Retry an async callable if it fails with a credential/timeout error.
+
+    *coro_factory* must be a zero-arg callable that returns a new awaitable
+    each time (e.g. ``lambda: call_agent(project, name, q)``).
+    """
+    last_error = None
+    auth_error_keywords = ("timed out", "credential", "token", "authentication", "unauthorized")
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            return await coro_factory()
+        except Exception as e:
+            last_error = e
+            err_lower = str(e).lower()
+            is_auth = any(kw in err_lower for kw in auth_error_keywords)
+            if is_auth and attempt < max_retries:
+                safe_print(f"    Auth-related error (attempt {attempt}), retrying in {delay}s...")
+                await asyncio.sleep(delay)
+                continue
+            raise
+    raise last_error  # should not reach here, but just in case
+
+
 async def run_eval(questions: list[dict]) -> list[dict]:
     """Kjoer evaluering mot alle spoersmaal med LLM-faktasjekk."""
     results = []
 
-    async with AsyncCredential() as cred:
+    cred = await _acquire_credential()
+    try:
         async with AsyncProjectClient(endpoint=PROJECT_ENDPOINT, credential=cred) as project:
             for i, q in enumerate(questions, 1):
                 qid = q["id"]
@@ -176,18 +270,36 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                 expected_routing = q.get("forventet_routing", [])
                 routing_correct = set(agents) == set(expected_routing)
 
-                # Kall foerste agent
+                # Kall foerste agent (med retry ved auth-feil)
                 agent_to_call = agents[0] if agents else "hapi-retningslinje-agent"
-                result = await call_agent(project, agent_to_call, q["sporsmal"])
+                try:
+                    result = await _retry_on_auth_error(
+                        lambda a=agent_to_call, s=q["sporsmal"]: call_agent(project, a, s)
+                    )
+                except Exception as agent_err:
+                    result = {
+                        "success": False, "output": "",
+                        "duration_ms": 0, "error": str(agent_err),
+                    }
 
                 if result["success"]:
                     safe_print(f"  Svar mottatt: {result['duration_ms']}ms, {len(result['output'])} tegn")
 
-                    # LLM-basert faktasjekk
+                    # LLM-basert faktasjekk (med retry ved auth-feil)
                     safe_print(f"  Faktasjekk (LLM)...")
-                    fact_check = await llm_fact_check(
-                        project, q["sporsmal"], result["output"], q["faktasjekk"]
-                    )
+                    try:
+                        fact_check = await _retry_on_auth_error(
+                            lambda s=q["sporsmal"], o=result["output"], f=q["faktasjekk"]: (
+                                llm_fact_check(project, s, o, f)
+                            )
+                        )
+                    except Exception as fc_err:
+                        fact_check = {
+                            "score": "FEIL_TEKNISK",
+                            "treff": [], "mangler": [], "feil_funnet": [],
+                            "kilde_ok": False,
+                            "begrunnelse": f"Faktasjekk feilet etter retries: {fc_err}",
+                        }
 
                     score = fact_check["score"]
                     icons = {"BESTATT": "OK", "DELVIS": "~~", "MANGLER": "!!", "FEIL": "XX", "HALLUSINERING": "XX"}
@@ -235,6 +347,8 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                         "expected_routing": expected_routing,
                         "duration_ms": result["duration_ms"],
                     })
+    finally:
+        await cred.close()
 
     return results
 
@@ -341,11 +455,150 @@ def save_report(results: list[dict], tag: str = ""):
     return filepath
 
 
+# --- Score ordering (best to worst) for conservative consensus tie-breaking ---
+SCORE_ORDER = ["BESTATT", "DELVIS", "MANGLER", "FEIL", "HALLUSINERING", "FEIL_TEKNISK"]
+SCORE_RANK = {s: i for i, s in enumerate(SCORE_ORDER)}
+
+
+def _consensus_score(scores: list[str]) -> str:
+    """Determine consensus score from multiple runs.
+
+    Returns the most common score. On tie, returns the worse score
+    (conservative approach) based on SCORE_ORDER.
+    """
+    counts = Counter(scores)
+    max_count = max(counts.values())
+    # All scores that share the highest count
+    tied = [s for s, c in counts.items() if c == max_count]
+    if len(tied) == 1:
+        return tied[0]
+    # Tie: pick the worst score (highest rank index)
+    return max(tied, key=lambda s: SCORE_RANK.get(s, len(SCORE_ORDER)))
+
+
+def build_combined_report(
+    all_run_results: list[list[dict]],
+    tag: str = "",
+) -> str:
+    """Build and save a combined consensus report from multiple runs.
+
+    Returns the filepath of the saved combined report.
+    """
+    n_runs = len(all_run_results)
+
+    # Collect question IDs from first run (order preserved)
+    question_ids = [r["id"] for r in all_run_results[0]]
+
+    combined_results = []
+    unanimous_count = 0
+
+    for idx, qid in enumerate(question_ids):
+        # Gather per-run data for this question
+        run_scores = []
+        run_details = []
+        for run_idx, run_results in enumerate(all_run_results):
+            r = run_results[idx]
+            run_scores.append(r["score"])
+            run_details.append({
+                "run": run_idx + 1,
+                "score": r["score"],
+                "begrunnelse": r.get("begrunnelse", ""),
+                "duration_ms": r.get("duration_ms", 0),
+            })
+
+        consensus = _consensus_score(run_scores)
+        is_unanimous = len(set(run_scores)) == 1
+
+        if is_unanimous:
+            unanimous_count += 1
+
+        # Use first run's metadata as base
+        base = all_run_results[0][idx]
+        combined_results.append({
+            "id": qid,
+            "kategori": base.get("kategori", ""),
+            "tema": base.get("tema", ""),
+            "consensus_score": consensus,
+            "unanimous": is_unanimous,
+            "all_scores": run_scores,
+            "run_details": run_details,
+            "routing_correct": base.get("routing_correct", False),
+            "actual_routing": base.get("actual_routing", []),
+            "expected_routing": base.get("expected_routing", []),
+        })
+
+    total = len(combined_results)
+    stability = unanimous_count / total * 100 if total else 0
+
+    # Consensus-based score distribution
+    by_score = Counter(r["consensus_score"] for r in combined_results)
+    bestatt = by_score.get("BESTATT", 0) + by_score.get("DELVIS", 0)
+
+    # Print combined summary
+    safe_print(f"\n{'='*60}")
+    safe_print(f"KOMBINERT KONSENSUSRAPPORT ({n_runs} kjoringer)")
+    safe_print(f"{'='*60}")
+    safe_print(f"\nStabilitet: {unanimous_count}/{total} spoersmaal lik i alle kjoringer ({stability:.0f}%)")
+    safe_print(f"Konsensus-korrekthetsscore: {bestatt}/{total} ({bestatt/total*100:.0f}%)")
+    safe_print(f"\nKonsensus-fordeling:")
+    for score_name in SCORE_ORDER:
+        count = by_score.get(score_name, 0)
+        if count > 0:
+            pct = count / total * 100
+            safe_print(f"  {score_name}: {count} ({pct:.0f}%)")
+
+    # Show unstable questions
+    unstable = [r for r in combined_results if not r["unanimous"]]
+    if unstable:
+        safe_print(f"\nUstabile spoersmaal ({len(unstable)}):")
+        for r in unstable:
+            scores_str = ", ".join(r["all_scores"])
+            safe_print(f"  {r['id']}: [{scores_str}] -> konsensus: {r['consensus_score']}")
+
+    # Save combined report
+    RAPPORTER_DIR.mkdir(exist_ok=True)
+    timestamp = datetime.now().strftime("%Y%m%d-%H%M")
+    tag_suffix = f"-{tag}" if tag else ""
+    filename = f"rapport-{timestamp}{tag_suffix}-combined.json"
+    filepath = RAPPORTER_DIR / filename
+
+    report = {
+        "metadata": {
+            "tidspunkt": datetime.now().isoformat(),
+            "versjon": "v2-llm",
+            "antall_spoersmaal": total,
+            "antall_kjoringer": n_runs,
+            "tag": tag or None,
+            "eval_metode": "LLM-faktasjekk (gpt-5.3-chat) — konsensus",
+        },
+        "oppsummering": {
+            "korrekthetsscore": f"{bestatt}/{total} ({bestatt/total*100:.0f}%)",
+            "bestatt": by_score.get("BESTATT", 0),
+            "delvis": by_score.get("DELVIS", 0),
+            "mangler": by_score.get("MANGLER", 0),
+            "feil": by_score.get("FEIL", 0),
+            "hallusinering": by_score.get("HALLUSINERING", 0),
+            "teknisk_feil": by_score.get("FEIL_TEKNISK", 0),
+            "stabilitet_prosent": round(stability, 1),
+            "unanime_spoersmaal": unanimous_count,
+            "routing_korrekthet": sum(1 for r in combined_results if r.get("routing_correct", False)),
+        },
+        "resultater": combined_results,
+    }
+
+    with open(filepath, "w", encoding="utf-8") as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+
+    safe_print(f"\nKombinert rapport lagret: {filepath}")
+    return str(filepath)
+
+
 def main():
     parser = argparse.ArgumentParser(description="HAPI Agent Evaluering v2 (LLM-faktasjekk)")
     parser.add_argument("--ids", nargs="+", help="Kjoer spesifikke spoersmaal (f.eks. EVAL-001 EVAL-005)")
     parser.add_argument("--kategori", help="Kjoer en kategori (retningslinje, kodeverk, statistikk, pasient, sammensatt)")
     parser.add_argument("--tag", default="", help="Tag for rapportfilnavn (f.eks. v2-llm, post-mcp-fix)")
+    parser.add_argument("--runs", type=int, default=1, help="Antall ganger aa kjoere eval (default: 1). Flere kjoringer gir konsensusrapport.")
     args = parser.parse_args()
 
     with open(EVAL_FILE) as f:
@@ -358,13 +611,38 @@ def main():
     elif args.kategori:
         questions = [q for q in questions if q["kategori"] == args.kategori]
 
+    n_runs = max(1, args.runs)
+
     safe_print(f"HAPI Agent Evaluering v2 (LLM-faktasjekk) -- {len(questions)} spoersmaal")
+    if n_runs > 1:
+        safe_print(f"Antall kjoringer: {n_runs} (konsensusrapport genereres)")
     safe_print(f"Fokus: Korrekthet og fravaaer av feilinformasjon")
     safe_print(f"{'='*60}")
 
-    results = asyncio.run(run_eval(questions))
-    print_summary(results)
-    save_report(results, tag=args.tag)
+    if n_runs == 1:
+        # Original single-run behaviour
+        results = asyncio.run(run_eval(questions))
+        print_summary(results)
+        save_report(results, tag=args.tag)
+    else:
+        # Multi-run with consensus
+        all_run_results = []
+        for run_num in range(1, n_runs + 1):
+            safe_print(f"\n{'#'*60}")
+            safe_print(f"# KJOERING {run_num}/{n_runs}")
+            safe_print(f"{'#'*60}")
+
+            results = asyncio.run(run_eval(questions))
+            print_summary(results)
+
+            # Save individual run report with -runN suffix
+            run_tag = f"{args.tag}-run{run_num}" if args.tag else f"run{run_num}"
+            save_report(results, tag=run_tag)
+
+            all_run_results.append(results)
+
+        # Generate combined consensus report
+        build_combined_report(all_run_results, tag=args.tag)
 
 
 if __name__ == "__main__":

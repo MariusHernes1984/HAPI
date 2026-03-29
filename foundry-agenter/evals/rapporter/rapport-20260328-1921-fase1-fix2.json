@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-28T19:21:22.013390",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 4,
+    "tag": "fase1-fix2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/4 (25%)",
+    "bestatt": 0,
+    "delvis": 1,
+    "mangler": 2,
+    "feil": 1,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 3,
+    "snitt_responstid_ms": 24725
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret beskriver strukturen i pakkeforløpet og utredning med bildediagnostikk/biopsi, men oppgir ikke de sentrale forløpstidene som spørsmålet etterspør. Ingen faktiske feil er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Utredning inkluderer bildediagnostikk",
+        "Utredning inkluderer biopsi"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Pakkeforløp med definerte forløpstider",
+        "Konkrete tidsfrister i pakkeforløpet",
+        "Tidsfrist fra henvisning til start av utredning"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 34251,
+      "answer_length": 1853,
+      "answer_preview": "Jeg fant pakkeforløpet i HAPI (Helsedirektoratet) men responsen inneholdt ikke feltet **forløpstider**. I henhold til retningslinjene kan jeg derfor ikke oppgi konkrete tidsfrister i dager uten at de kommer direkte fra dette feltet.\n\nKonkrete tidsfrister finnes i Helsedirektoratets pakkeforløpsdokum"
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Fibromyalgi ICD-10",
+      "score": "FEIL",
+      "begrunnelse": "Svaret oppgir feil ICD-10-kode; korrekt kode for fibromyalgi er M79.7. Dermed inneholder svaret medisinsk feilinformasjon.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [
+        "M79.7 er koden for fibromyalgi"
+      ],
+      "feil": [
+        "Oppgir ICD-10 kode M79.0 som fibromyalgi (M79.0 er revmatisme, uspesifisert)"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 13735,
+      "answer_length": 473,
+      "answer_preview": "Resultat fra Helsedirektoratets database:\n\n- ICD-10 kode: M79.0  \n- Tittel: Fibromyalgi  \n- Kilde: Helsedirektoratet – «Fibromyalgi (L18 Utbredte muskelsmerter/fibromyalgi)»  \n- HAPI‑innhold ID: 0006-0069-771cc569-b36f-4864-b5a2-003ac8f561b9  \n\nMerknad: Koden er funnet som tematagg (ICD10: M790) på "
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer en reell nasjonal kvalitetsindikator fra NKI og oppgir korrekt kilde, men oppgir ikke noe nasjonalt måltall slik spørsmålet etterspør.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Kvalitetsindikator: Reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS (eldre pasienter)",
+        "Kilde angitt: Helsedirektoratet / Nasjonalt kvalitetsindikatorsystem"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Nasjonalt mål eller måltall for indikatoren"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 20609,
+      "answer_length": 1691,
+      "answer_preview": "Fra Helsedirektoratets Nasjonale kvalitetsindikatorsystem finnes det per nå **én spesifikk nasjonal kvalitetsindikator knyttet direkte til KOLS** i materialet som er tilgjengelig via HAPI.\n\n1) Reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS (eldre pasienter)\n\n- Hva måles:  \n  Sa"
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI psykisk helse",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret identifiserer relevante NKI‑indikatorer for psykisk helsevern, men oppfyller ikke kravet om å vise siste verdi eller måltall. Dermed dekker det under halvparten av de forventede fakta.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Nevner flere nasjonale kvalitetsindikatorer for psykisk helsevern"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Oppgir ikke siste verdi eller måltall for indikatorene"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 30308,
+      "answer_length": 3401,
+      "answer_preview": "Ja. Helsedirektoratet har flere **nasjonale kvalitetsindikatorer (NKI)** for psykisk helsevern. Jeg fant følgende indikatorer i NKI‑registeret (infoId som starter med `0003-0010-`, altså ekte NKI‑indikatorer).\n\nViktig: HAPI‑responsen inneholder **indikatornavn og definisjon**, men **ingen konkrete t"
+    }
+  ]
+}

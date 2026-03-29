@@ -1,6 +1,6 @@
 {
   "name": "HAPI Agent Evaluering",
-  "description": "30 evalueringssporsmal med faktasjekk-kriterier for aa verifisere korrekthet i svar fra HAPI-agentene. Fokus paa at svarene IKKE gir feilinformasjon.",
+  "description": "30 evalueringssporsmal med faktasjekk-kriterier for aa verifisere korrekthet i svar fra HAPI-agentene. Fokus paa at svarene IKKE gir feilinformasjon. Opprinnelig EVAL-016 (fibromyalgi) erstattet med kodeverk-mapping pga feil i HAPI-kildedata.",
   "version": "1.0",
   "dato": "2026-03-28",
   "evalueringskriterier": {
@@ -307,18 +307,19 @@
       "id": "EVAL-016",
       "kategori": "kodeverk",
       "agent": "hapi-kodeverk-agent",
-      "sporsmal": "Hva er ICD-10 koden for fibromyalgi?",
-      "tema": "Fibromyalgi ICD-10",
+      "sporsmal": "Jeg bruker ICD-10 kode J44 for KOLS paa sykehuset. Hva er tilsvarende kode i ICPC-2 for fastlegen?",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
       "forventet_routing": ["hapi-kodeverk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "M79.7 er koden for fibromyalgi"
+          "R95 er ICPC-2 koden for KOLS",
+          "Mapping mellom ICD-10 og ICPC-2 er beskrevet"
         ],
         "skal_IKKE_inneholde": [
-          "M79.0 (revmatisme, uspesifisert) presentert som fibromyalgi",
-          "Psykiatriske koder presentert som fibromyalgi"
+          "Feil ICPC-2 kode for KOLS",
+          "R96 presentert som KOLS (R96 er astma)"
         ],
-        "kilde_krav": "HAPI / ICD-10"
+        "kilde_krav": "HAPI / Helsedirektoratet"
       }
     },
     {

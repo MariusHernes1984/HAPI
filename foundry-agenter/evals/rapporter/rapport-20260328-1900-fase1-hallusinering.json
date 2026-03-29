@@ -1,0 +1,133 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-28T19:00:03.145452",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 4,
+    "tag": "fase1-hallusinering",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/4 (25%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 1,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 3,
+    "snitt_responstid_ms": 26681
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver korrekt pakkeforløpet, utredningselementer og sentrale forløpstider i tråd med Helsedirektoratets pakkeforløp for brystkreft. Tidsfristene som oppgis er konsistente med standardforløpet frem til behandlingsstart.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Pakkeforløp med definerte forløpstider",
+        "Utredning inkluderer bildediagnostikk og biopsi",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 36112,
+      "answer_length": 1851,
+      "answer_preview": "**Pakkeforløp for brystkreft** beskriver et standardisert pasientforløp fra **begrunnet mistanke om kreft til oppstart av behandling** i spesialisthelsetjenesten.  \nKilde: Helsedirektoratet – *Pakkeforløp for brystkreft* (infoId: d9ad3427-44e3-4a3f-8d42-cc8f57af8d84).\n\n### Start av pakkeforløpet\nPak"
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Fibromyalgi ICD-10",
+      "score": "FEIL",
+      "begrunnelse": "Riktig ICD-10-kode for fibromyalgi er M79.7, ikke M79.0. Svaret oppgir derfor en medisinsk feil kode for diagnosen.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [
+        "M79.7 er koden for fibromyalgi"
+      ],
+      "feil": [
+        "M79.0 (revmatisme, uspesifisert) presentert som fibromyalgi"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 20149,
+      "answer_length": 278,
+      "answer_preview": "ICD-10 kode: **M79.0**\n\nTittel: **Revmatisme, uspesifisert (inkluderer fibromyalgi)**  \nKilde: **Helsedirektoratet**\n\nRelatert kode i samme oppføring:  \n- ICPC-2: **L18 – Utbredte muskelsmerter / fibromyalgi**\n\nKonfidens: **Høy** (direkte treff fra Helsedirektoratets database)."
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir en reell nasjonal kvalitetsindikator fra NKI, men inkluderer ikke et nasjonalt måltall slik spørsmålet krever.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator med navn",
+        "Kilde er Helsedirektoratet/NKI"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Nasjonalt maal eller maaltall"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 24432,
+      "answer_length": 1214,
+      "answer_preview": "Jeg finner **én nasjonal kvalitetsindikator for KOLS** i Helsedirektoratets HAPI‑innhold.\n\n• **Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/KOLS**  \n  - Beskrivelse: Sannsynlighet for **akutt reinnleggelse innen 30 dager etter utskrivning** hos pasienter ≥67 år"
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI psykisk helse",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Selv om relevante indikatorer nevnes, presenteres konkrete tall og datakilder som ikke kan verifiseres mot Helsedirektoratets publiserte NKI. Dette tyder på fabrikkert eller ikke‑sporbar statistikk.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst én indikator for psykisk helsevern er oppgitt",
+        "Flere indikatorer er presentert med konkrete verdier eller måltall"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Dokumenterte siste offisielle NKI‑verdier fra Helsedirektoratet",
+        "Verifiserbar kildehenvisning til faktiske NKI‑indikatorer (navn/lenke fra Helsedirektoratet)"
+      ],
+      "feil": [
+        "Spesifikke prosentverdier og perioder (f.eks. 68 % og 42 % i 2. tertial 2022) fremstår som oppdiktede og kan ikke knyttes til kjente publiserte NKI‑verdier",
+        "Bruk av interne 'HAPI'-statistikkelelement‑IDer som kilde til NKI-data uten offentlig sporbarhet tyder på fabrikkert datagrunnlag"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 26032,
+      "answer_length": 2938,
+      "answer_preview": "Ja. Helsedirektoratet publiserer flere **nasjonale kvalitetsindikatorer (NKI)** for psykisk helsevern. I HAPI‑dataene jeg fant er noen sentrale indikatorer knyttet til ventetid, pasientforløp og bruk av tvang. Nedenfor er de viktigste med tilgjengelige siste verdier i datagrunnlaget.\n\nMerk: NKI-data"
+    }
+  ]
+}
