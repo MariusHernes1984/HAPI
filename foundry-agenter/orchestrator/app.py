@@ -273,6 +273,21 @@ async def evals_summary():
     return {"reports": [s for s in summaries if s.get("antall", 0) > 10]}
 
 
+@app.get("/api/evals/report/{filename}")
+async def eval_report_detail(filename: str):
+    """Return full detail for a single eval report."""
+    if not re.match(r'^rapport-[\w\-]+\.json$', filename):
+        raise HTTPException(status_code=400, detail="Ugyldig filnavn")
+    filepath = EVALS_DIR / filename
+    if not filepath.exists():
+        raise HTTPException(status_code=404, detail="Rapport ikke funnet")
+    try:
+        data = json.loads(filepath.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    return data
+
+
 @app.get("/stats", include_in_schema=False)
 async def stats_page():
     """Serve eval statistics page."""

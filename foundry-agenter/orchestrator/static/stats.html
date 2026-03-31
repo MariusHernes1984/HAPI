@@ -206,6 +206,8 @@
       font-weight: 500;
     }
 
+    .report-table tr { cursor: pointer; }
+
     .loading-state {
       text-align: center;
       padding: 48px;
@@ -224,10 +226,161 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* --- Drill-down modal --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 100;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 32px 16px;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      max-width: 900px;
+      width: 100%;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      position: sticky;
+      top: 0;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 18px 24px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .modal-header h2 { font-size: 1.05rem; font-weight: 600; }
+    .modal-header p { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
+
+    .modal-close {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .modal-close:hover { background: rgba(255,255,255,0.25); }
+
+    .modal-body { padding: 24px; }
+
+    .modal-summary {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .modal-summary .summary-card { padding: 12px 10px; }
+    .modal-summary .summary-card .value { font-size: 1.3rem; }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .detail-table th {
+      text-align: left;
+      padding: 8px 10px;
+      background: #f0f5f4;
+      color: var(--primary);
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+      position: sticky;
+      top: 0;
+    }
+
+    .detail-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .detail-table tr:hover td { background: #f8fafa; }
+
+    .score-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    .score-badge.bestatt { background: #dcfce7; color: #15803d; }
+    .score-badge.delvis { background: #fef9c3; color: #a16207; }
+    .score-badge.mangler { background: #ffedd5; color: #c2410c; }
+    .score-badge.feil { background: #fee2e2; color: #dc2626; }
+    .score-badge.hallusinering { background: #fce7f3; color: #be185d; }
+
+    .detail-reasoning {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .detail-answer {
+      font-size: 0.74rem;
+      color: var(--text);
+      background: #f8fafa;
+      padding: 8px 10px;
+      border-radius: 6px;
+      margin-top: 6px;
+      max-height: 120px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      border: 1px solid var(--border);
+    }
+
+    .routing-info {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .routing-chip {
+      font-size: 0.68rem;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #e0f2fe;
+      color: #0369a1;
+    }
+
+    .routing-chip.wrong { background: #fee2e2; color: #dc2626; }
+
+    .expandable { cursor: pointer; }
+    .expandable .expand-content { display: none; }
+    .expandable.open .expand-content { display: block; }
+
     @media (max-width: 640px) {
       .container { padding: 16px; }
       .summary-cards { grid-template-columns: repeat(2, 1fr); }
       .chart-container { height: 240px; }
+      .modal { max-height: calc(100vh - 32px); }
+      .modal-body { padding: 16px; }
     }
   </style>
 </head>
@@ -269,6 +422,21 @@
           <div class="spinner"></div>
           Henter eval-data...
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 id="modalTitle">Rapport</h2>
+          <p id="modalSubtitle"></p>
+        </div>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <div class="loading-state"><div class="spinner"></div>Henter detaljer...</div>
       </div>
     </div>
   </div>
@@ -442,7 +610,7 @@
         `;
         const date = r.tidspunkt ? r.tidspunkt.substring(0, 16).replace('T', ' ') : '-';
         const tag = r.tag ? `<span class="tag-chip">${esc(r.tag)}</span>` : '';
-        return `<tr>
+        return `<tr onclick="openReport('${esc(r.file)}')">
           <td>${esc(date)}</td>
           <td>${tag}</td>
           <td>${r.korrekthet_pct != null ? r.korrekthet_pct + '%' : '-'}</td>
@@ -479,6 +647,154 @@
       const d = document.createElement('div');
       d.textContent = text;
       return d.innerHTML;
+    }
+
+    // --- Drill-down modal ---
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    async function openReport(filename) {
+      const overlay = document.getElementById('modalOverlay');
+      const body = document.getElementById('modalBody');
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      body.innerHTML = '<div class="loading-state"><div class="spinner"></div>Henter detaljer...</div>';
+
+      try {
+        const resp = await fetch(`${API_BASE}/api/evals/report/${encodeURIComponent(filename)}`);
+        if (!resp.ok) throw new Error('Kunne ikke hente rapport');
+        const data = await resp.json();
+        renderModal(data, filename);
+      } catch (err) {
+        body.innerHTML = `<p style="color:#dc2626;padding:24px;text-align:center;">${esc(err.message)}</p>`;
+      }
+    }
+
+    function scoreClass(score) {
+      if (!score) return '';
+      const s = score.toLowerCase().replace('feil_teknisk', 'feil');
+      if (s.includes('bestatt')) return 'bestatt';
+      if (s.includes('delvis')) return 'delvis';
+      if (s.includes('mangler')) return 'mangler';
+      if (s.includes('feil')) return 'feil';
+      if (s.includes('hallusinering')) return 'hallusinering';
+      return '';
+    }
+
+    function renderModal(data, filename) {
+      const meta = data.metadata || {};
+      const ops = data.oppsummering || {};
+      const resultater = data.resultater || [];
+
+      document.getElementById('modalTitle').textContent = meta.tag || filename;
+      document.getElementById('modalSubtitle').textContent =
+        (meta.tidspunkt ? meta.tidspunkt.substring(0, 16).replace('T', ' ') : '') +
+        (meta.versjon ? '  —  ' + meta.versjon : '');
+
+      // Summary cards
+      const total = resultater.length;
+      const counts = { bestatt: 0, delvis: 0, mangler: 0, feil: 0, hallusinering: 0 };
+      resultater.forEach(r => {
+        const s = (r.score || r.consensus_score || '').toLowerCase();
+        if (s.includes('bestatt')) counts.bestatt++;
+        else if (s.includes('delvis')) counts.delvis++;
+        else if (s.includes('mangler')) counts.mangler++;
+        else if (s.includes('hallusinering')) counts.hallusinering++;
+        else if (s.includes('feil')) counts.feil++;
+      });
+
+      // Detail rows
+      const detailRows = resultater.map((r, i) => {
+        const score = r.score || r.consensus_score || '-';
+        const cls = scoreClass(score);
+        const tema = r.tema || r.kategori || '';
+        const begrunnelse = r.begrunnelse || '';
+        const answer = r.answer_preview || '';
+        const routing = r.actual_routing || [];
+        const expectedRouting = r.expected_routing || r.forventet_routing || [];
+        const routingOk = r.routing_correct !== false;
+
+        // For combined reports with run_details
+        let runsHtml = '';
+        if (r.run_details && r.run_details.length > 0) {
+          runsHtml = '<div style="margin-top:6px;"><strong style="font-size:0.72rem;color:var(--primary);">Kjoeredetaljer:</strong>' +
+            r.run_details.map(rd =>
+              `<div style="margin:4px 0;padding:4px 8px;background:#f8fafa;border-radius:4px;font-size:0.72rem;">` +
+              `<span class="score-badge ${scoreClass(rd.score)}">${esc(rd.score)}</span> ` +
+              `<span style="color:var(--text-light);">${(rd.duration_ms/1000).toFixed(1)}s</span>` +
+              (rd.begrunnelse ? `<div class="detail-reasoning">${esc(rd.begrunnelse)}</div>` : '') +
+              `</div>`
+            ).join('') + '</div>';
+        }
+
+        const routingHtml = routing.length > 0
+          ? `<div class="routing-info">${routing.map(a =>
+              `<span class="routing-chip${routingOk ? '' : ' wrong'}">${esc(a.replace('hapi-','').replace('-agent',''))}</span>`
+            ).join('')}</div>`
+          : '';
+
+        return `<tr class="expandable" onclick="this.classList.toggle('open')">
+          <td style="white-space:nowrap">${esc(r.id || 'Q' + (i+1))}</td>
+          <td>${esc(tema)}</td>
+          <td><span class="score-badge ${cls}">${esc(score)}</span></td>
+          <td>${routingHtml}</td>
+          <td style="white-space:nowrap">${r.duration_ms ? (r.duration_ms/1000).toFixed(1) + 's' : '-'}</td>
+          <td>
+            ${begrunnelse ? `<div class="detail-reasoning">${esc(begrunnelse)}</div>` : ''}
+            <div class="expand-content">
+              ${answer ? `<div class="detail-answer">${esc(answer)}</div>` : ''}
+              ${runsHtml}
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+
+      document.getElementById('modalBody').innerHTML = `
+        <div class="modal-summary">
+          <div class="summary-card">
+            <div class="value">${total}</div>
+            <div class="label">Spoersmaal</div>
+          </div>
+          <div class="summary-card">
+            <div class="value green">${counts.bestatt}</div>
+            <div class="label">Bestatt</div>
+          </div>
+          <div class="summary-card">
+            <div class="value yellow">${counts.delvis}</div>
+            <div class="label">Delvis</div>
+          </div>
+          <div class="summary-card">
+            <div class="value" style="color:#c2410c">${counts.mangler}</div>
+            <div class="label">Mangler</div>
+          </div>
+          <div class="summary-card">
+            <div class="value red">${counts.feil}</div>
+            <div class="label">Feil</div>
+          </div>
+          <div class="summary-card">
+            <div class="value" style="color:#be185d">${counts.hallusinering}</div>
+            <div class="label">Hallusinering</div>
+          </div>
+        </div>
+        <table class="detail-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Tema</th>
+              <th>Score</th>
+              <th>Routing</th>
+              <th>Tid</th>
+              <th>Detaljer</th>
+            </tr>
+          </thead>
+          <tbody>${detailRows}</tbody>
+        </table>
+      `;
     }
 
     async function init() {
