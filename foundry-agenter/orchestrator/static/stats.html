@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPI — Data Statistikk</title>
+  <style>
+    :root {
+      --primary: #0d6e6e;
+      --primary-light: #0f8a8a;
+      --primary-dark: #094e4e;
+      --accent: #28a87d;
+      --accent-light: #d0f0e4;
+      --bg: #f0f5f4;
+      --text: #1a2e2e;
+      --text-light: #5a7272;
+      --border: #d4e0df;
+      --shadow: 0 2px 12px rgba(13,110,110,0.08);
+      --shadow-lg: 0 8px 32px rgba(13,110,110,0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
+    .header-text p { font-size: 0.78rem; opacity: 0.8; margin-top: 1px; }
+
+    .header-back {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: white;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .header-back:hover { background: rgba(255,255,255,0.22); }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    /* --- Summary cards --- */
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+
+    .summary-card {
+      background: white;
+      border-radius: var(--radius-sm);
+      padding: 18px 16px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .summary-card .value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.2;
+    }
+
+    .summary-card .value.green { color: #16a34a; }
+    .summary-card .value.yellow { color: #ca8a04; }
+    .summary-card .value.red { color: #dc2626; }
+
+    .summary-card .label {
+      font-size: 0.76rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+
+    /* --- Chart section --- */
+    .chart-section {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+
+    .chart-section h2 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .chart-section .subtitle {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-bottom: 20px;
+    }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+    }
+
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    /* --- Report table --- */
+    .table-section {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .table-section h2 {
+      font-size: 1.05rem;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+
+    .report-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: #f0f5f4;
+      color: var(--primary);
+      font-weight: 600;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .report-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .report-table tr:hover td { background: #f8fafa; }
+
+    .score-bar {
+      display: flex;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #e5e7eb;
+      min-width: 80px;
+    }
+
+    .score-bar .seg-bestatt { background: #16a34a; }
+    .score-bar .seg-delvis { background: #eab308; }
+    .score-bar .seg-mangler { background: #f97316; }
+    .score-bar .seg-feil { background: #dc2626; }
+
+    .tag-chip {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 0.7rem;
+      font-weight: 500;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 48px;
+      color: var(--text-light);
+    }
+
+    .loading-state .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 640px) {
+      .container { padding: 16px; }
+      .summary-cards { grid-template-columns: repeat(2, 1fr); }
+      .chart-container { height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Data Statistikk</h1>
+      <p>Eval-resultater over tid</p>
+    </div>
+    <a class="header-back" href="/">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+      </svg>
+      Tilbake til chat
+    </a>
+  </header>
+
+  <div class="container">
+    <div id="summaryCards" class="summary-cards"></div>
+
+    <div class="chart-section">
+      <h2>Korrekthetsscore over tid</h2>
+      <p class="subtitle">Prosentandel korrekte svar per eval-rapport</p>
+      <div class="chart-container">
+        <canvas id="evalChart"></canvas>
+      </div>
+    </div>
+
+    <div class="table-section">
+      <h2>Alle eval-rapporter</h2>
+      <div id="reportTable">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          Henter eval-data...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+
+    async function loadData() {
+      const resp = await fetch(`${API_BASE}/api/evals/summary`);
+      const data = await resp.json();
+      return data.reports;
+    }
+
+    function renderSummaryCards(reports) {
+      if (reports.length === 0) return;
+
+      const latest = reports[reports.length - 1];
+      const first = reports[0];
+      const trend = latest.korrekthet_pct - first.korrekthet_pct;
+      const avgPct = Math.round(reports.reduce((s, r) => s + (r.korrekthet_pct || 0), 0) / reports.length);
+      const totalHall = reports.reduce((s, r) => s + (r.hallusinering || 0), 0);
+
+      document.getElementById('summaryCards').innerHTML = `
+        <div class="summary-card">
+          <div class="value">${reports.length}</div>
+          <div class="label">Eval-rapporter</div>
+        </div>
+        <div class="summary-card">
+          <div class="value green">${latest.korrekthet_pct != null ? latest.korrekthet_pct + '%' : '-'}</div>
+          <div class="label">Siste korrekthet</div>
+        </div>
+        <div class="summary-card">
+          <div class="value ${trend >= 0 ? 'green' : 'red'}">${trend >= 0 ? '+' : ''}${trend}%</div>
+          <div class="label">Trend (start til naa)</div>
+        </div>
+        <div class="summary-card">
+          <div class="value yellow">${avgPct}%</div>
+          <div class="label">Gjennomsnitt</div>
+        </div>
+        <div class="summary-card">
+          <div class="value red">${totalHall}</div>
+          <div class="label">Hallusinasjoner totalt</div>
+        </div>
+      `;
+    }
+
+    function renderChart(reports) {
+      const canvas = document.getElementById('evalChart');
+      const ctx = canvas.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      const W = rect.width;
+      const H = rect.height;
+
+      const pad = { top: 20, right: 20, bottom: 60, left: 50 };
+      const chartW = W - pad.left - pad.right;
+      const chartH = H - pad.top - pad.bottom;
+
+      // Filter reports with valid percentage
+      const pts = reports.filter(r => r.korrekthet_pct != null);
+      if (pts.length === 0) return;
+
+      // Background
+      ctx.fillStyle = '#fafcfc';
+      ctx.fillRect(0, 0, W, H);
+
+      // Grid lines
+      ctx.strokeStyle = '#e5e7eb';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([4, 4]);
+      for (let pct = 0; pct <= 100; pct += 25) {
+        const y = pad.top + chartH - (pct / 100) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(pad.left, y);
+        ctx.lineTo(W - pad.right, y);
+        ctx.stroke();
+
+        ctx.fillStyle = '#5a7272';
+        ctx.font = '11px Segoe UI, system-ui, sans-serif';
+        ctx.textAlign = 'right';
+        ctx.fillText(pct + '%', pad.left - 8, y + 4);
+      }
+      ctx.setLineDash([]);
+
+      // Data points
+      const xStep = pts.length > 1 ? chartW / (pts.length - 1) : chartW / 2;
+
+      // Area fill
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = pad.left + (pts.length > 1 ? i * xStep : chartW / 2);
+        const y = pad.top + chartH - (p.korrekthet_pct / 100) * chartH;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      const lastX = pad.left + (pts.length > 1 ? (pts.length - 1) * xStep : chartW / 2);
+      ctx.lineTo(lastX, pad.top + chartH);
+      ctx.lineTo(pad.left, pad.top + chartH);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + chartH);
+      grad.addColorStop(0, 'rgba(13,110,110,0.2)');
+      grad.addColorStop(1, 'rgba(13,110,110,0.02)');
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Line
+      ctx.beginPath();
+      pts.forEach((p, i) => {
+        const x = pad.left + (pts.length > 1 ? i * xStep : chartW / 2);
+        const y = pad.top + chartH - (p.korrekthet_pct / 100) * chartH;
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = '#0d6e6e';
+      ctx.lineWidth = 2.5;
+      ctx.lineJoin = 'round';
+      ctx.stroke();
+
+      // Dots and labels
+      pts.forEach((p, i) => {
+        const x = pad.left + (pts.length > 1 ? i * xStep : chartW / 2);
+        const y = pad.top + chartH - (p.korrekthet_pct / 100) * chartH;
+
+        // Dot
+        ctx.beginPath();
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#0d6e6e';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+
+        // Value label
+        ctx.fillStyle = '#1a2e2e';
+        ctx.font = 'bold 11px Segoe UI, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(p.korrekthet_pct + '%', x, y - 12);
+
+        // X-axis label (tag or date)
+        ctx.save();
+        ctx.translate(x, H - pad.bottom + 14);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillStyle = '#5a7272';
+        ctx.font = '10px Segoe UI, system-ui, sans-serif';
+        ctx.textAlign = 'right';
+        const label = p.tag || (p.tidspunkt ? p.tidspunkt.substring(5, 16).replace('T', ' ') : 'rapport ' + (i + 1));
+        ctx.fillText(label, 0, 0);
+        ctx.restore();
+      });
+    }
+
+    function renderTable(reports) {
+      if (reports.length === 0) {
+        document.getElementById('reportTable').innerHTML = '<p style="color:var(--text-light); text-align:center; padding:24px;">Ingen eval-rapporter funnet.</p>';
+        return;
+      }
+
+      const rows = reports.slice().reverse().map(r => {
+        const total = r.total || r.antall || 1;
+        const barHtml = `
+          <div class="score-bar">
+            <div class="seg-bestatt" style="width:${(r.bestatt/total)*100}%"></div>
+            <div class="seg-delvis" style="width:${(r.delvis/total)*100}%"></div>
+            <div class="seg-mangler" style="width:${((r.mangler||0)/total)*100}%"></div>
+            <div class="seg-feil" style="width:${(r.feil/total)*100}%"></div>
+          </div>
+        `;
+        const date = r.tidspunkt ? r.tidspunkt.substring(0, 16).replace('T', ' ') : '-';
+        const tag = r.tag ? `<span class="tag-chip">${esc(r.tag)}</span>` : '';
+        return `<tr>
+          <td>${esc(date)}</td>
+          <td>${tag}</td>
+          <td>${r.korrekthet_pct != null ? r.korrekthet_pct + '%' : '-'}</td>
+          <td>${barHtml}</td>
+          <td style="color:#16a34a">${r.bestatt}</td>
+          <td style="color:#ca8a04">${r.delvis}</td>
+          <td style="color:#dc2626">${r.feil}</td>
+          <td style="color:#7c2d12">${r.hallusinering}</td>
+          <td>${r.antall}</td>
+        </tr>`;
+      }).join('');
+
+      document.getElementById('reportTable').innerHTML = `
+        <table class="report-table">
+          <thead>
+            <tr>
+              <th>Dato</th>
+              <th>Tag</th>
+              <th>Score</th>
+              <th>Fordeling</th>
+              <th>Bestatt</th>
+              <th>Delvis</th>
+              <th>Feil</th>
+              <th>Hall.</th>
+              <th>Antall</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
+    function esc(text) {
+      const d = document.createElement('div');
+      d.textContent = text;
+      return d.innerHTML;
+    }
+
+    async function init() {
+      try {
+        const reports = await loadData();
+        renderSummaryCards(reports);
+        renderChart(reports);
+        renderTable(reports);
+
+        window.addEventListener('resize', () => renderChart(reports));
+      } catch (err) {
+        document.getElementById('reportTable').innerHTML =
+          `<p style="color:#dc2626; text-align:center; padding:24px;">Feil ved lasting av data: ${esc(err.message)}</p>`;
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
