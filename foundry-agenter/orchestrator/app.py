@@ -270,7 +270,7 @@ async def evals_summary():
                 "total": total,
             })
 
-    return {"reports": summaries}
+    return {"reports": [s for s in summaries if s.get("antall", 0) > 10]}
 
 
 @app.get("/stats", include_in_schema=False)
