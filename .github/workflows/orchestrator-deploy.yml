@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - 'foundry-agenter/orchestrator/**'
+      - 'foundry-agenter/evals/rapporter/**'
   workflow_dispatch:
 
 env:
@@ -32,7 +33,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./foundry-agenter/orchestrator
+          context: ./foundry-agenter
           file: ./foundry-agenter/orchestrator/Dockerfile
           push: true
           tags: |

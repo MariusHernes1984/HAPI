@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:35:43.627290",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 3,
+    "tag": "fase3-sokestrategi-run1",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/3 (33%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 2,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 3,
+    "snitt_responstid_ms": 22157
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir korrekt foerstevalg og relevant kilde, men mangler baade anbefalt dosering og behandlingsvarighet. Dermed dekkes under 40% av forventede fakta.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Dosering er ikke oppgitt (mg/kg eller konkret dose)",
+        "Varighet typisk 5 dager er ikke oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 26755,
+      "answer_length": 811,
+      "answer_preview": "**Førstevalg antibiotika ved akutt otitis media hos barn (primærhelsetjenesten):**  \n- **Fenoksymetylpenicillin (penicillin V)** peroralt.\n\nRetningslinjen presiserer at mange barn **ikke trenger antibiotika initialt**. Ved ukomplisert akutt mellomørebetennelse kan man ofte **avvente med symptomlindr"
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandlingsresistens",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret nevner psykoterapi og SSRI som førstevalg, men beskriver ikke anbefalte tiltak ved manglende respons etter 6 uker som doseøkning, bytte/kombinasjon eller henvisning. Ingen medisinske feil er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Psykoterapi som del av behandling"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Doseøkning, bytte av preparat eller kombinasjon ved manglende effekt av SSRI",
+        "Vurdering av spesialisthenvisning"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 22429,
+      "answer_length": 1543,
+      "answer_preview": "Jeg finner ingen eksplisitt anbefaling i HAPI‑materialet som beskriver **videre legemiddelstrategi ved manglende respons på SSRI etter ~6 uker** (f.eks. bytte til SNRI, augmentering osv.). De tilgjengelige normerende enhetene om depresjon i HAPI omtaler hovedsakelig:\n\n- at **SSRI er førstevalg ved k"
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni antibiotika",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret angir korrekt foerstevalg (benzylpenicillin IV) med relevant dosering og refererer til Helsedirektoratets retningslinje. Ingen reelle faglige feil i forhold til spoersmaalet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Penicillin G (benzylpenicillin) intravenoes som foerstevalg",
+        "Dosering er oppgitt (1,2 g IV x 4)"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17288,
+      "answer_length": 1259,
+      "answer_preview": "**Førstevalg ved samfunnservervet pneumoni hos voksen innlagt på sengepost (ikke intensiv):**\n\n**Standard behandlingsregime (førstevalg)**  \n- **Benzylpenicillin (penicillin G)**  \n- **Dose:** 1,2 g intravenøst x 4\n\nDette dekker primært **Streptococcus pneumoniae**, som er vanligste årsak til samfun"
+    }
+  ]
+}

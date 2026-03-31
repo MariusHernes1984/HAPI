@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:10:15.827589",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "antall_kjoringer": 3,
+    "tag": "eval006-fix",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat) — konsensus"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "stabilitet_prosent": 0.0,
+    "unanime_spoersmaal": 0,
+    "routing_korrekthet": 1
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "consensus_score": "HALLUSINERING",
+      "unanimous": false,
+      "all_scores": [
+        "MANGLER",
+        "DELVIS",
+        "HALLUSINERING"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver pakkeforløpet og utredningen korrekt, men oppgir ikke de faktiske tidsfristene som er en sentral del av spørsmålet. Dermed dekkes bare en mindre del av de forventede fakta.",
+          "duration_ms": 41639
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver pakkeforløpet og korrekt utredning, men oppgir ikke de konkrete tidsfristene som gjelder. Ingen medisinske feil eller oppdiktede tidsfrister.",
+          "duration_ms": 34250
+        },
+        {
+          "run": 3,
+          "score": "HALLUSINERING",
+          "begrunnelse": "Svaret beskriver pakkeforløpet korrekt, men flere tidsfrister avviker fra Helsedirektoratets offisielle forløpstider. Dette innebærer fabrikerte/feil tidsangivelser.",
+          "duration_ms": 26874
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    }
+  ]
+}

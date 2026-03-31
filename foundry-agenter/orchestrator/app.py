@@ -205,7 +205,7 @@ async def list_agents():
     }
 
 
-EVALS_DIR = Path(__file__).parent.parent / "evals" / "rapporter"
+EVALS_DIR = Path("/app/evals/rapporter")
 
 
 @app.get("/api/evals/summary")

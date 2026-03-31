@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:18:13.582171",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval006-strict-run1",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 42047
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret beskriver strukturen i pakkeforløpet og korrekt utredning med bildediagnostikk og biopsi, men oppgir ikke de faktiske forløpstidene eller tidsfristen fra henvisning til oppstart av utredning. Derfor dekker det under 40 % av forventede fakta.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Utredning inkluderer bildediagnostikk og biopsi"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Pakkeforløp med definerte forløpstider",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 42047,
+      "answer_length": 2645,
+      "answer_preview": "**Pakkeforløp for brystkreft** beskriver hvordan pasienter med begrunnet mistanke om brystkreft skal utredes og behandles i spesialisthelsetjenesten. Forløpet starter når sykehuset mottar henvisning med begrunnet mistanke om kreft eller når sykehuset selv starter utredning.  \nKilde: Helsedirektorate"
+    }
+  ]
+}
