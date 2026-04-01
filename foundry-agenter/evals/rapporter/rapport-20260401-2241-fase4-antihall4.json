@@ -1,0 +1,83 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T22:41:46.887048",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 2,
+    "tag": "fase4-antihall4",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/2 (50%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 36862
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere reelle nasjonale kvalitetsindikatorer for hjerneslag fra Helsedirektoratets NKI og inkluderer infoId/kilde. Ingen tydelige feil eller oppdiktede indikatorer identifisert.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering og testing av svelgefunksjon etter hjerneslag",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag",
+        "Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for hjerneslag",
+        "infoId oppgitt for indikatorer",
+        "Kilde oppgitt: Helsedirektoratet / Nasjonale kvalitetsindikatorer"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 39183,
+      "answer_length": 1710,
+      "answer_preview": "Følgende nasjonale kvalitetsindikatorer for hjerneslag finnes i HAPI (Helsedirektoratet):\n\n1. Behandlet i slagenhet etter akutt hjerneslag  \n- Måltall: Andel pasienter med akutt hjerneslag som er behandlet i slagenhet.  \n- Nasjonalt resultat: 95,6 % i 2021.  \n- Nasjonalt målnivå: minst 90 %.  \n- Dat"
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Selv om NKI og riktig indikator omtales, oppgis konkrete tall og tidsperioder som ikke kan verifiseres som offisielle NKI‑publiseringer. Dette fremstår som fabrikkerte eller usikre data.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Indikator for hoftebrudd identifisert (\"Hoftebrudd operert innen henholdsvis 24 timer og 48 timer\")",
+        "Kilde oppgitt som Helsedirektoratet / Nasjonale kvalitetsindikatorer (NKI)"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Ingen verifiserbar referanse til konkret NKI‑indikator-ID eller publisert datasett",
+        "Ingen tydelig bekreftelse på at tallene faktisk finnes i HAPI/NKI eller at nyere tall ikke er tilgjengelige"
+      ],
+      "feil": [
+        "Presenterer spesifikke prosenttall og tertial (59,9 % og 93,0 % i 2. tertial 2022) uten verifiserbar NKI‑publisering",
+        "Påstår at dette er \"nyeste tilgjengelige publiserte tall\" uten dokumentasjon og uten å nevne at NKI vanligvis publiserer nyere årsdata"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 34542,
+      "answer_length": 1683,
+      "answer_preview": "Basert på data fra Helsedirektoratets Nasjonale kvalitetsindikatorer (NKI):\n\nIndikator: «Hoftebrudd operert innen henholdsvis 24 timer og 48 timer»  \nDefinisjon: Andel pasienter over 65 år med hoftebrudd som opereres innen 24 timer og innen 48 timer etter innleggelse ved øyeblikkelig hjelp.  \nKilde:"
+    }
+  ]
+}

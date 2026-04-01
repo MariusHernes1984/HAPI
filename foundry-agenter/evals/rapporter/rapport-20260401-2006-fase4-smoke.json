@@ -1,0 +1,109 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T20:06:42.239149",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 3,
+    "tag": "fase4-smoke",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/3 (33%)",
+    "bestatt": 0,
+    "delvis": 1,
+    "mangler": 1,
+    "feil": 1,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 29214
+  },
+  "resultater": [
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "FEIL",
+      "begrunnelse": "Svaret oppgir feil foerstevalg sammenlignet med forventet fasit og oppgir ikke ATC-kode. Dermed mangler sentrale fakta og inneholder en faglig avvikende anbefaling.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Benzylpenicillin/penicillin som foerstevalg",
+        "ATC-kode for valgt antibiotika (f.eks. J01CE01 for benzylpenicillin)"
+      ],
+      "feil": [
+        "Fenoksymetylpenicillin oppgis som foerstevalg i stedet for benzylpenicillin/penicillin"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 27825,
+      "answer_length": 650,
+      "answer_preview": "Basert på Helsedirektoratets anbefalinger for behandling av pneumoni:\n\nFørstevalg antibiotika  \n- Fenoksymetylpenicillin i monoterapi\n\nBehandlingsvarighet  \n- 7 døgn\n\nMulige alternativer i spesielle situasjoner  \n- Doksysyklin ved penicillinallergi  \n- Amoksicillin ved pneumoni hos pasienter med kol"
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer korrekt E11 som type 2-diabetes og beskriver HbA1c-mål og kvalitetsindikatorer. Det mangler imidlertid sentral anbefaling om metformin som førstevalg, og NKI er ikke oppgitt som kilde.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "E11 = diabetes type 2",
+        "HbA1c-maal for behandling",
+        "nasjonale kvalitetsindikatorer for HbA1c (andel ≤53 mmol/mol og ≥75 mmol/mol)"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Metformin som foerstevalg medikament ved type 2-diabetes"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 37424,
+      "answer_length": 2702,
+      "answer_preview": "For en pasient med **ICD‑10 E11 (diabetes mellitus type 2)** beskriver Helsedirektoratet følgende hovedprinsipper for behandling og oppfølging.\n\n**Behandling – hovedpunkter i retningslinjene**  \nKilde: Helsedirektoratet\n\nLivsstilsbehandling er grunnleggende i behandlingen. Kostholdet bør legge til r"
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret nevner kun metformin som førstevalg og sier at det ikke finnes anbefalinger om GLP‑1‑agonister i funnene. Det dekker ingen av de forventede nøkkelfaktaene om Ozempic/semaglutid eller GLP‑1‑agonisters plass i behandlingen.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Semaglutid er virkestoffet i Ozempic",
+        "ATC-kode A10BJ06",
+        "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 22393,
+      "answer_length": 1578,
+      "answer_preview": "Jeg finner **ingen nasjonale anbefalinger om GLP‑1‑reseptoragonister eller Ozempic** i treffene fra Helsedirektoratets API i denne samtalen. Derfor kan jeg ikke presentere en retningslinjeanbefaling om disse legemidlene basert på tilgjengelige MCP‑data.\n\nDet som faktisk finnes i retningslinjeinnhold"
+    }
+  ]
+}

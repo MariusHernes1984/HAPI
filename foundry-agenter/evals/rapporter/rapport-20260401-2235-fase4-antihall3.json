@@ -1,0 +1,105 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T22:35:46.411368",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 4,
+    "tag": "fase4-antihall3",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/4 (25%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 3,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 12746
+  },
+  "resultater": [
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir en reell NKI‑indikator for KOLS og viser til Helsedirektoratet som kilde. Ingen oppdiktede tall eller indikatorer er brukt, men infoId mangler.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for KOLS med navn",
+        "Kilde oppgitt (Helsedirektoratet / Nasjonalt kvalitetsindikatorsystem)",
+        "Indikator relatert til reinnleggelse innen 30 dager for astma/KOLS hos eldre"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "infoId for indikatoren"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 25566,
+      "answer_length": 1192,
+      "answer_preview": "Fra Helsedirektoratets nasjonale kvalitetsindikatorsystem finnes det én nasjonal kvalitetsindikator relatert til KOLS.\n\nIndikator:  \nReinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/kronisk obstruktiv lungesykdom (KOLS).\n\nHva indikatoren måler:  \nIndikatoren måler "
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Connection error.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 25421,
+      "answer_length": 2772,
+      "answer_preview": "--- Retningslinje ---\nFølgende **nasjonale kvalitetsindikatorer for hjerneslag** finnes i HAPI (Helsedirektoratet):\n\n1. **Behandlet i slagenhet etter akutt hjerneslag**  \n   - Hovedmåltall: Andel pasienter med akutt hjerneslag behandlet i slagenhet  \n   - infoId: 32  \n   - Sist faglig oppdatert: 30."
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Connection error.; Connection error.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Connection error.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 0
+    }
+  ]
+}

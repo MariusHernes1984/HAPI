@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-31T22:28:56.604926",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "test-auth",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 28778
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt foerstevalg (fenoksymetylpenicillin), riktig dosering og behandlingsvarighet i tråd med nasjonal retningslinje. Ingen medisinske feil er identifisert og relevant kilde er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+        "Dosering er oppgitt (25 mg/kg per dose x 3)",
+        "Varighet 5 dager"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 28778,
+      "answer_length": 922,
+      "answer_preview": "**Førstevalg antibiotika ved akutt otitis media hos barn (primærhelsetjenesten):**\n\n• **Fenoksymetylpenicillin (penicillin V)**\n\n**Dosering (barn < 40 kg):**  \n• **25 mg/kg per dose × 3 daglig**  \n• **Behandlingsvarighet: 5 døgn**\n\n**Alternativ (ved penicillinallergi):**  \n• **Erytromycin** (doserin"
+    }
+  ]
+}
