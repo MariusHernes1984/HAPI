@@ -1,0 +1,651 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-31T20:32:54.634412",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 40,
+    "tag": "3x30-20260331-run1",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/40 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 40,
+    "routing_korrekthet": 29,
+    "snitt_responstid_ms": 12174
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 22250
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11573
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11524
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandlingsresistens",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 10920
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11426
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11679
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11255
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11675
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11625
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11711
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11590
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11578
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11507
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11567
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11516
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11552
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11571
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 10940
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 11284
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag trombolyse",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 11025
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 11019
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI psykisk helse",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 11399
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 10837
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11358
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 14290
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11460
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 27956,
+      "answer_length": 1038,
+      "answer_preview": "I den nasjonale retningslinjen for **pneumoni** anbefales følgende empiriske førstevalg ved samfunnservervet pneumoni:\n\nFørstevalg  \n- **Fenoksymetylpenicillin (penicillin V)**  \n- Dekker primært *Streptococcus pneumoniae*, som er vanligste årsak i Norge.\n\nATC‑kode  \n- **J01CE02** – Phenoxymethylpen"
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 12246
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 11445
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 11065
+    },
+    {
+      "id": "EVAL-031",
+      "kategori": "crm-lesing",
+      "tema": "Salgspipeline oversikt",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 10964
+    },
+    {
+      "id": "EVAL-032",
+      "kategori": "crm-lesing",
+      "tema": "Kontaktoppslag selskap",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 11504
+    },
+    {
+      "id": "EVAL-033",
+      "kategori": "crm-lesing",
+      "tema": "Vunne salg periode",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 11527
+    },
+    {
+      "id": "EVAL-034",
+      "kategori": "crm-lesing",
+      "tema": "Kalender aktiviteter",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 11159
+    },
+    {
+      "id": "EVAL-035",
+      "kategori": "crm-lesing",
+      "tema": "Pipeline forecast",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 10059,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "EVAL-036",
+      "kategori": "crm-lesing",
+      "tema": "Selskapsoppslag",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 11147
+    },
+    {
+      "id": "EVAL-037",
+      "kategori": "crm-lesing",
+      "tema": "Salg forfallsdato",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 11701
+    },
+    {
+      "id": "EVAL-038",
+      "kategori": "crm-feilhaandtering",
+      "tema": "Ikke-eksisterende kunde",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 12866
+    },
+    {
+      "id": "EVAL-039",
+      "kategori": "crm-lesing",
+      "tema": "Salgsanalyse periode",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 12345
+    },
+    {
+      "id": "EVAL-040",
+      "kategori": "crm-lesing",
+      "tema": "Kundeoppfoelging inaktive",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 10854
+    }
+  ]
+}

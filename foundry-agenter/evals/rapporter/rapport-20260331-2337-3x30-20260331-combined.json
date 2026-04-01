@@ -1,0 +1,1599 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-31T23:37:37.047023",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 40,
+    "antall_kjoringer": 3,
+    "tag": "3x30-20260331",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat) — konsensus"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "22/40 (55%)",
+    "bestatt": 15,
+    "delvis": 7,
+    "mangler": 16,
+    "feil": 1,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "stabilitet_prosent": 65.0,
+    "unanime_spoersmaal": 26,
+    "routing_korrekthet": 29
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "FEIL_TEKNISK"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt foerstevalg (fenoksymetylpenicillin), inkluderer dosering i mg/kg og behandlingsvarighet 5 dager, samt henviser til Helsedirektoratets retningslinje.",
+          "duration_ms": 25130
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt foerstevalg (fenoksymetylpenicillin), inkluderer dosering og behandlingsvarighet, og henviser til Helsedirektoratets retningslinje. Ingen reelle medisinske feil i forhold til etterspurte fakta.",
+          "duration_ms": 20873
+        },
+        {
+          "run": 3,
+          "score": "FEIL_TEKNISK",
+          "begrunnelse": "LLM-faktasjekk feilet: substring not found",
+          "duration_ms": 18902
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "DELVIS",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir korrekt anbefalte antibiotika (nitrofurantoin/pivmecillinam og trimetoprim som alternativ) og henviser til riktig retningslinje. Det mangler informasjon om anbefalt kort behandlingsvarighet på 3–5 dager.",
+          "duration_ms": 21102
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir pivmecillinam og nitrofurantoin som førstelinje og trimetoprim som alternativ, med korrekt kort behandlingsvarighet. Det henviser også til Helsedirektoratets nasjonale retningslinje.",
+          "duration_ms": 16989
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir pivmecillinam og nitrofurantoin som førstevalg, trimetoprim som alternativ og korrekt kort behandlingsvarighet. Det refererer også til Helsedirektoratets nasjonale retningslinje.",
+          "duration_ms": 19583
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "consensus_score": "FEIL",
+      "unanimous": false,
+      "all_scores": [
+        "FEIL",
+        "BESTATT",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "FEIL",
+          "begrunnelse": "Svaret inkluderer relevante alternativer og dosering, men oppgir feil behandlingsvarighet og feil prioritering av førstevalg sammenlignet med Helsedirektoratets anbefalinger.",
+          "duration_ms": 21610
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir et korrekt anbefalt alternativ (erytromycin) og inkluderer dosering samt henviser til Helsedirektoratet. Selv om andre alternativer ikke nevnes, oppfyller svaret hovedkravene uten feil.",
+          "duration_ms": 16400
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir erytromycin med dosering og refererer til Helsedirektoratet, men nevner ikke de andre anbefalte alternativene (klaritromycin eller klindamycin).",
+          "duration_ms": 16913
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandlingsresistens",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir kun generelle anbefalinger og nevner psykoterapi, men dekker ikke sentrale tiltak ved manglende SSRI‑respons etter 6 uker som doseøkning, bytte/kombinasjon eller vurdering av henvisning. Ingen faktiske feil er oppgitt.",
+          "duration_ms": 24990
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir kun generelle førstelinjeanbefalinger og psykoterapi, men dekker ikke anbefalte tiltak ved manglende respons på SSRI etter 6 uker. Ingen medisinske feil er oppgitt.",
+          "duration_ms": 34017
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir kun psykoterapi som del av behandling og mangler sentrale anbefalinger om dosejustering/bytte/kombinasjon og vurdering av henvisning til spesialist. Ingen medisinske feil er oppgitt.",
+          "duration_ms": 22027
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker de sentrale punktene i Helsedirektoratets retningslinjer: røykeslutt, bronkodilaterende inhalasjonsbehandling og trinnvis behandling. Antibiotika omtales kun ved forverring, ikke som standardbehandling.",
+          "duration_ms": 33647
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker hovedprinsippene i Helsedirektoratets KOLS‑retningslinje: røykeslutt, bronkodilaterende inhalasjonsbehandling og trinnvis behandling basert på symptomer og forverringer. Ingen klare medisinske feil eller anbefaling av antibiotika som standardbehandling.",
+          "duration_ms": 41912
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker sentrale elementer i Helsedirektoratets retningslinje: røykeslutt, bronkodilaterende inhalasjonsbehandling og trinnvis opptrapping etter symptomer/eksaserbasjoner. Ingen klare medisinske feil eller påstander om kurativ behandling eller rutinemessig antibiotika.",
+          "duration_ms": 43159
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "consensus_score": "DELVIS",
+      "unanimous": false,
+      "all_scores": [
+        "DELVIS",
+        "DELVIS",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver pakkeforløpets struktur og utredning korrekt, men oppgir ikke de konkrete tidsfristene som etterspørres. Ingen medisinske feil er identifisert.",
+          "duration_ms": 47656
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver pakkeforløpet korrekt og nevner at det finnes definerte forløpstider, samt korrekt utredning med bildediagnostikk og biopsi. Det oppgir imidlertid ikke de konkrete tidsfristene (f.eks. fra henvisning til utredningsstart).",
+          "duration_ms": 49126
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver pakkeforløpet og utredning korrekt, men oppgir ikke de konkrete forløpstidene eller tidsfristen fra henvisning til start av utredning. Dermed mangler sentrale fakta om tidsfrister.",
+          "duration_ms": 40791
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir CBT-I som førstevalg, beskriver søvnhygieniske tiltak og presiserer at sovemedisin kun bør brukes kortvarig. Helsedirektoratet er oppgitt som kilde.",
+          "duration_ms": 26436
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker alle forventede hovedpunkter: CBT-I som førstevalg, søvnhygieniske råd og at sovemedisin kun bør brukes kortvarig. Ingen medisinske feil er identifisert og Helsedirektoratet er oppgitt som kilde.",
+          "duration_ms": 29975
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker alle forventede hovedpunkter: CBT-I som førstevalg, søvnhygieniske råd og restriktiv kortvarig bruk av sovemedisin. Ingen medisinske feil er identifisert og Helsedirektoratet er oppgitt som kilde.",
+          "duration_ms": 30186
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker alle forventede hovedpunkter fra Helsedirektoratets retningslinje, inkludert tidlig oppstart, tverrfaglig team og individuell rehabiliteringsplan, og inneholder ingen medisinske feil.",
+          "duration_ms": 33834
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret dekker de sentrale anbefalingene: tidlig oppstart av rehabilitering, tverrfaglig team og individuell rehabiliteringsplan. Ingen medisinske feil og korrekt kilde fra Helsedirektoratet er oppgitt.",
+          "duration_ms": 25000
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret beskriver tidlig oppstart av rehabilitering (fra første dag), tverrfaglig team og individuelt tilpasset rehabilitering. Ingen medisinske feil og Helsedirektoratet er oppgitt som kilde.",
+          "duration_ms": 34292
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "consensus_score": "MANGLER",
+      "unanimous": false,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir kun generelle prinsipper som sekundærforebygging og hjerterehabilitering, men mangler de sentrale anbefalte tiltakene som dobbel platehemming, statin, betablokker og livsstilsendringer.",
+          "duration_ms": 24644
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir at det ikke finnes relevante anbefalinger i datagrunnlaget og gir derfor ingen av de forventede tiltakene for sekundærprevensjon. Det inneholder ingen direkte feil, men dekker 0 % av forventede fakta.",
+          "duration_ms": 17202
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret omtaler statinbehandling og livsstilstiltak, men beskriver ikke tydelig anbefalt dobbel platehemming etter ACS med PCI og nevner ikke betablokker. Ingen klare medisinske feil er oppgitt.",
+          "duration_ms": 38467
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni antibiotika",
+      "consensus_score": "MANGLER",
+      "unanimous": false,
+      "all_scores": [
+        "BESTATT",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret angir benzylpenicillin i.v. som foerstevalg og oppgir korrekt dosering. Det refererer til Helsedirektoratets nasjonale retningslinje.",
+          "duration_ms": 20074
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir ingen behandlingsanbefaling eller dosering og dekker derfor ikke de forventede fakta. Det refereres generelt til retningslinjen, men uten faktisk kildeunderbygget innhold.",
+          "duration_ms": 27716
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir ikke anbefalt antibiotika eller dosering for innlagte voksne med samfunnservervet pneumoni. Det henviser kun til generelle vurderinger og besvarer derfor ikke spørsmålet.",
+          "duration_ms": 26377
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt hovedkode (E11) for type 2-diabetes og lister relevante underkoder E11.0–E11.9. Ingen medisinske feil identifisert, og kilde til ICD-10/bruk i Norge er oppgitt.",
+          "duration_ms": 13928
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt hovedkode (E11) for type 2-diabetes og lister relevante underkoder E11.0–E11.9. Ingen medisinske feil og kilde til Helsedirektoratets ICD-10-kodeverk er oppgitt.",
+          "duration_ms": 15332
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt hovedkode (E11) for type 2-diabetes og lister relevante underkoder fra E11.0 til E11.9. Kilde til Helsedirektoratets ICD-10 kodeverk er oppgitt.",
+          "duration_ms": 23562
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "consensus_score": "DELVIS",
+      "unanimous": false,
+      "all_scores": [
+        "DELVIS",
+        "DELVIS",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer korrekt at I10 er essensiell (primær) hypertensjon, men nevner ikke at koden tilhører kapittel IX i ICD-10. Ingen medisinske feil er oppgitt og relevant kilde er referert.",
+          "duration_ms": 13165
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer korrekt at I10 er essensiell (primær) hypertensjon og oppgir relevant kilde. Det nevner imidlertid ikke at koden tilhører kapittel IX i ICD‑10.",
+          "duration_ms": 18173
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver hypertensjon generelt, men oppgir ikke at I10 spesifikt betyr essensiell (primær) hypertensjon og nevner ikke kapittel IX i ICD‑10. Kilden er ikke et autoritativt ICD‑10-oppslag.",
+          "duration_ms": 14966
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt ATC-kode for metformin (A10BA02) og viser til relevant kilde (HAPI/FEST). Ingen medisinske feil funnet.",
+          "duration_ms": 17835
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt ATC-kode for metformin (A10BA02) og angir relevant kilde (FEST via HAPI). Ingen medisinske feil funnet.",
+          "duration_ms": 13949
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt ATC-kode for metformin (A10BA02) og refererer til FEST/HAPI som kilde. Ingen medisinske feil funnet.",
+          "duration_ms": 12410
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "consensus_score": "DELVIS",
+      "unanimous": false,
+      "all_scores": [
+        "DELVIS",
+        "HALLUSINERING",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret bekrefter korrekt at ATC‑koden J01CA04 er amoksicillin, men oppgir ingen konkrete legemiddelpreparater registrert i Norge med denne koden.",
+          "duration_ms": 16878
+        },
+        {
+          "run": 2,
+          "score": "HALLUSINERING",
+          "begrunnelse": "Selv om ATC‑koden og virkestoffet er korrekt, presenteres ikke faktiske norske preparatnavn og de oppgitte FEST‑IDene fremstår som oppdiktede.",
+          "duration_ms": 30887
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer korrekt at ATC‑koden J01CA04 er amoksicillin, men oppgir ingen registrerte preparater i Norge slik spørsmålet ber om.",
+          "duration_ms": 19594
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt virkestoff (apixaban) og riktig ATC-kode (B01AF02) for Eliquis, og refererer til FEST/HAPI som kilde.",
+          "duration_ms": 11370
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt virkestoff (apixaban) og riktig ATC-kode (B01AF02). Ingen medisinske feil er identifisert og kilde til FEST/HAPI er oppgitt.",
+          "duration_ms": 17935
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt virkestoff (apixaban) og korrekt ATC-kode (B01AF02) for Eliquis, og refererer til FEST som kilde.",
+          "duration_ms": 38184
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "FEIL"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt ICPC-2-kode (R95) for KOLS og knytter den til ICD-10 J44. Helsedirektoratet er oppgitt som kilde.",
+          "duration_ms": 12720
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt ICPC-2-kode (R95) for KOLS og beskriver koblingen til ICD-10 J44. Det henviser også til Helsedirektoratet som kilde.",
+          "duration_ms": 23634
+        },
+        {
+          "run": 3,
+          "score": "FEIL",
+          "begrunnelse": "Svaret hevder at ingen ICPC-2-kode finnes for KOLS, men korrekt kode er R95. Dermed inneholder svaret medisinsk feilinformasjon.",
+          "duration_ms": 22943
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt betydning av ICPC-2 kode K74 (iskemisk hjertesykdom med angina) og refererer til relevant kilde. Ingen medisinske feil funnet.",
+          "duration_ms": 12260
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt betydning av ICPC-2 kode K74 (iskemisk hjertesykdom med angina) og gir relevant forklaring. Kilde fra Helsedirektoratet er oppgitt.",
+          "duration_ms": 16252
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt betydning av ICPC-2 kode K74 (iskemisk hjertesykdom med angina) og inkluderer kildehenvisning til Helsedirektoratet/HAPI. Ingen medisinske feil identifisert.",
+          "duration_ms": 21378
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt virkestoff (semaglutid) og korrekt ATC-kode (A10BJ06), og inkluderer kilde til FEST. Ingen medisinske feil er identifisert.",
+          "duration_ms": 7727
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt virkestoff (semaglutid) og korrekt ATC-kode (A10BJ06) for Ozempic, og inkluderer også en gyldig styrke. Kilde til HAPI/FEST er oppgitt.",
+          "duration_ms": 14110
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt virkestoff (semaglutid) og korrekt ATC-kode (A10BJ06), og refererer til FEST/HAPI som kilde. Ingen medisinske feil er identifisert.",
+          "duration_ms": 18781
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir en reell NKI‑indikator for KOLS/astma og beskriver korrekt at målet er lavest mulig reinnleggelsesrate uten fast nasjonalt prosentmål. Kilde til Helsedirektoratet/NKI er oppgitt.",
+          "duration_ms": 18678
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir en reell nasjonal kvalitetsindikator i NKI for astma/KOLS og korrekt målformulering. Kilde til Helsedirektoratet/NKI er angitt og ingen åpenbare feil forekommer.",
+          "duration_ms": 30797
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer en reell kvalitetsindikator fra Helsedirektoratet, men oppgir ikke et nasjonalt måltall slik oppgaven etterspør. Ingen klare faktiske feil.",
+          "duration_ms": 26439
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag trombolyse",
+      "consensus_score": "HALLUSINERING",
+      "unanimous": false,
+      "all_scores": [
+        "HALLUSINERING",
+        "HALLUSINERING",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "HALLUSINERING",
+          "begrunnelse": "Svaret mangler det sentrale nasjonale måltallet for trombolyseandel og vurderingen av måloppnåelse. Det hevder også feilaktig at indikatoren ikke har et nasjonalt mål, noe som tyder på fabrikkert eller misrepresentert informasjon.",
+          "duration_ms": 31357
+        },
+        {
+          "run": 2,
+          "score": "HALLUSINERING",
+          "begrunnelse": "Svaret svarer på en annen indikator enn den som etterspørres (andel som får trombolyse) og oppgir sannsynligvis oppdiktede tall. Dermed fremstår dataene som hallusinerte selv om Helsedirektoratet nevnes som kilde.",
+          "duration_ms": 25551
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir en trombolyseverdi, men mangler nasjonalt mål for andel pasienter som får trombolyse og vurdering av om dette målet er nådd. Ingen klare faktiske feil identifisert.",
+          "duration_ms": 26947
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "MANGLER",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret gir ingen faktisk prosentandel for andel pasienter med god HbA1c‑kontroll, kun en beskrivelse av indikatoren og utvikling. Dermed mangler hovedfakta som etterspørres.",
+          "duration_ms": 37094
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir en konkret HbA1c‑indikator med prosentverdi og årstall fra Helsedirektoratet. Ingen åpenbare faktafeil eller oppdiktede tall.",
+          "duration_ms": 26956
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir en konkret HbA1c‑indikator med prosentandel og årstall, samt refererer til Helsedirektoratet/NKI. Ingen åpenbare medisinske feil eller oppdiktede påstander fremgår.",
+          "duration_ms": 28243
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI psykisk helse",
+      "consensus_score": "MANGLER",
+      "unanimous": false,
+      "all_scores": [
+        "DELVIS",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir flere relevante nasjonale kvalitetsindikatorer fra Helsedirektoratet, men inkluderer ingen faktiske verdier eller måltall slik spørsmålet etterspør.",
+          "duration_ms": 26127
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir ingen nasjonale kvalitetsindikatorer eller verdier. Det inneholder heller ingen faktiske feil, men oppfyller ikke kravene i spørsmålet.",
+          "duration_ms": 21807
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret oppgir ingen faktiske kvalitetsindikatorer eller verdier og oppfyller dermed ikke innholdskravet. Det inneholder heller ingen medisinske feil eller hallusinerte data.",
+          "duration_ms": 26914
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver relevante NKI‑indikatorer, men oppgir verken nasjonale tidskrav eller faktiske andeler operert innen fristen. Dermed dekkes ikke de etterspurte fakta.",
+          "duration_ms": 26200
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver indikatorene og oppgir kilde, men oppgir verken nasjonale tidskrav eller andel operert innen frist. Dermed dekkes ingen av de forventede fakta.",
+          "duration_ms": 36661
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret gir ingen faktiske NKI‑tall eller tidskrav og dekker dermed ikke de etterspurte faktaene. Det inneholder heller ingen medisinske feil eller oppdiktede tall.",
+          "duration_ms": 19087
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret forklarer korrekt hva KOLS er, understreker røykeslutt som viktigste tiltak og beskriver inhalasjonsbehandling. Det oppgir også Helsedirektoratet som kilde og inneholder ingen medisinske feil.",
+          "duration_ms": 31385
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret forklarer korrekt hva KOLS er, nevner røykeslutt som viktigste tiltak og beskriver inhalasjonsbehandling. Det viser også til Helsedirektoratet og inneholder ingen medisinske feil.",
+          "duration_ms": 37584
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret forklarer korrekt hva KOLS er, nevner røykeslutt som viktigste tiltak, beskriver inhalasjonsmedisiner og oppgir Helsedirektoratet som kilde. Ingen medisinske feil eller kurpåstander.",
+          "duration_ms": 41905
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "consensus_score": "MANGLER",
+      "unanimous": false,
+      "all_scores": [
+        "DELVIS",
+        "BESTATT",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret omtaler inhalasjonssteroider som typisk grunnbehandling og behov for oppfølging/spesialistvurdering ved dårlig kontrollert astma. Det mangler imidlertid forklaring av trinnvis behandlingsstrategi.",
+          "duration_ms": 30371
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret beskriver opptrapping av behandling (økt dose eller kombinasjonsbehandling), forklarer rollen til inhalasjonssteroider og vektlegger oppfølging og vurdering hos lege. Ingen medisinske feil er identifisert og Helsedirektoratet refereres.",
+          "duration_ms": 31111
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret nevner behov for spesialistoppfølging og vurdering av behandling, men beskriver ikke trinnvis opptrapping eller inhalasjonssteroider som basisbehandling. Ingen medisinske feil er identifisert.",
+          "duration_ms": 33744
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "consensus_score": "DELVIS",
+      "unanimous": true,
+      "all_scores": [
+        "DELVIS",
+        "DELVIS",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret dekker sentrale offentlige tilbud (fastlege, TSB og medisinsk/ikke‑medisinsk behandling) og inneholder ingen medisinske feil. Helsedirektoratet er imidlertid ikke oppgitt som kilde.",
+          "duration_ms": 15744
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret dekker de sentrale offentlige tilbudene (fastlege, kommunale tjenester, TSB) og både medikamentell og ikke‑medikamentell behandling uten faktiske feil. Helsedirektoratet eller annen kilde er imidlertid ikke oppgitt.",
+          "duration_ms": 21652
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver korrekt fastlege som inngang, TSB og både medikamentell og samtalebasert behandling i tråd med Helsedirektoratets informasjon. Det oppgis imidlertid ingen kildehenvisning.",
+          "duration_ms": 22341
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "consensus_score": "DELVIS",
+      "unanimous": true,
+      "all_scores": [
+        "DELVIS",
+        "DELVIS",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir penicillin som foerstevalg og korrekt ATC-kode for fenoksymetylpenicillin. Det mangler imidlertid eksplisitt henvisning til benzylpenicillin (J01CE01) som forventet i fasiten.",
+          "duration_ms": 17544
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir penicillin (fenoksymetylpenicillin) som førstevalg og korrekt ATC-kode for dette. Det mangler imidlertid benzylpenicillin og tilhørende ATC-kode (J01CE01) som forventet i fasiten.",
+          "duration_ms": 25491
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret oppgir penicillin som førstevalg og korrekt ATC-kode for fenoksymetylpenicillin, men inkluderer ikke benzylpenicillin (J01CE01) som forventet førstevalg i fasiten.",
+          "duration_ms": 25618
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "consensus_score": "DELVIS",
+      "unanimous": true,
+      "all_scores": [
+        "DELVIS",
+        "DELVIS",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer korrekt E11 som type 2‑diabetes og oppgir relevante HbA1c‑mål, men mangler sentral anbefaling om metformin som førstevalg. Det oppgis kun Helsedirektoratet som kilde, ikke også NKI som krevd.",
+          "duration_ms": 32018
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer korrekt E11 som diabetes type 2 og oppgir HbA1c-mål og relevante kvalitetsindikatorer. Det mangler imidlertid sentral anbefaling om metformin som førstevalg ved medikamentell behandling.",
+          "duration_ms": 37099
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret identifiserer korrekt at E11 er type 2‑diabetes og oppgir HbA1c‑mål/kvalitetsindikatorer, men mangler sentral behandlingsanbefaling om metformin som førstevalg. Kun Helsedirektoratet er oppgitt som kilde, ikke NKI.",
+          "duration_ms": 28645
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "consensus_score": "DELVIS",
+      "unanimous": true,
+      "all_scores": [
+        "DELVIS",
+        "DELVIS",
+        "DELVIS"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver korrekt virkestoff og plassering av GLP‑1‑agonister i behandlingsalgoritmen. ATC-koden mangler og HAPI/FEST er ikke oppgitt som kilde.",
+          "duration_ms": 37226
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver korrekt virkestoff og plassering av GLP‑1‑agonister i behandlingsalgoritmen. ATC-kode mangler, og kun Helsedirektoratet er oppgitt som kilde (ikke HAPI/FEST).",
+          "duration_ms": 49900
+        },
+        {
+          "run": 3,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver korrekt virkestoff og retningslinjebasert plassering av GLP-1-agonister, men mangler ATC-kode og oppgir ikke HAPI/FEST som kilde.",
+          "duration_ms": 41876
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir at koden trolig ikke finnes eller kan være feilstavet og ber om korrekt kode eller diagnosenavn. Det gis ingen oppdiktet diagnose eller behandling.",
+          "duration_ms": 12716
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret forklarer at koden ikke finnes eller kan være feil skrevet og ber om å sjekke kodeverk eller diagnosenavn. Det gir ingen oppdiktede diagnoser eller behandlinger og oppgir kilde.",
+          "duration_ms": 19163
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret opplyser at koden kan være ugyldig eller ikke eksistere og foreslår å sjekke kode/skrivemåte. Det gir ingen oppdiktede diagnoser eller behandlinger.",
+          "duration_ms": 16267
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ]
+    },
+    {
+      "id": "EVAL-031",
+      "kategori": "crm-lesing",
+      "tema": "Salgspipeline oversikt",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker derfor ingen av de forventede faktaene. Det oppgis heller ingen kilde til SuperOffice CRM via AI Search.",
+          "duration_ms": 2952
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar inneholder ingen informasjon eller tabell over salg i pipeline. Ingen kilde til SuperOffice CRM via AI Search er oppgitt.",
+          "duration_ms": 2930
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar inneholder ingen informasjon eller tabell over aapne salg. Ingen kilde til SuperOffice CRM via AI Search er oppgitt.",
+          "duration_ms": 3090
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-032",
+      "kategori": "crm-lesing",
+      "tema": "Kontaktoppslag selskap",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon om kontaktpersoner hos Atea. Ingen kilder er oppgitt.",
+          "duration_ms": 3131
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker derfor ingen av de forventede fakta. Ingen kilde er oppgitt.",
+          "duration_ms": 3032
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon om kontaktpersoner hos Atea. Ingen kilder er oppgitt.",
+          "duration_ms": 2406
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-033",
+      "kategori": "crm-lesing",
+      "tema": "Vunne salg periode",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar inneholder ingen informasjon om salg. Ingen av de forventede faktaene er dekket og kilde er ikke oppgitt.",
+          "duration_ms": 2345
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon om vunne salg denne maaneden og oppgir heller ikke kilde fra SuperOffice CRM via AI Search.",
+          "duration_ms": 2881
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar er tomt og inneholder ingen av de forventede faktaene. Ingen kilde er oppgitt.",
+          "duration_ms": 3979
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-034",
+      "kategori": "crm-lesing",
+      "tema": "Kalender aktiviteter",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar er tomt og inneholder ingen av de forventede fakta. Ingen kilde er oppgitt.",
+          "duration_ms": 4800
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar inneholder ingen informasjon om moeter. Ingen kilde er oppgitt og ingen forventede fakta er dekket.",
+          "duration_ms": 4120
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Ingen svar er gitt, derfor mangler alle forventede fakta og kildehenvisning.",
+          "duration_ms": 2499
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-035",
+      "kategori": "crm-lesing",
+      "tema": "Pipeline forecast",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Ingen svar er oppgitt, så ingen av de forventede faktaene er dekket og ingen kilde er angitt.",
+          "duration_ms": 4134
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar er tomt og inneholder ingen av de forventede fakta eller kildehenvisning.",
+          "duration_ms": 2456
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon om total pipeline-verdi eller Q2-perioden. Det oppgis heller ingen kilde til SuperOffice CRM via AI Search.",
+          "duration_ms": 3506
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-036",
+      "kategori": "crm-lesing",
+      "tema": "Selskapsoppslag",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Agentsvaret inneholder ingen informasjon. Verken CRM-data eller bekreftelse på om selskapet ble funnet er oppgitt.",
+          "duration_ms": 2329
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Agentens svar er tomt og inneholder ingen CRM-informasjon eller indikasjon på om selskapet ble funnet.",
+          "duration_ms": 2993
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon eller CRM-data. Det er derfor umulig å bekrefte funn av selskapet eller kildebruk.",
+          "duration_ms": 2391
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-037",
+      "kategori": "crm-lesing",
+      "tema": "Salg forfallsdato",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret fra agenten inneholder ingen informasjon og dekker derfor ikke de forventede fakta. Ingen feil eller hallusinasjoner er identifisert, men innholdet mangler helt.",
+          "duration_ms": 2393
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker ingen av de forventede faktaene. Ingen kilde er oppgitt.",
+          "duration_ms": 4333
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker ingen av de forventede fakta. Ingen kilde er oppgitt.",
+          "duration_ms": 3532
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-038",
+      "kategori": "crm-feilhaandtering",
+      "tema": "Ikke-eksisterende kunde",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker derfor ingen av de forventede punktene. Det er heller ingen hallusinerte data.",
+          "duration_ms": 2522
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker ingen av de forventede fakta. Det finnes heller ingen oppdiktede data.",
+          "duration_ms": 4958
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker derfor ingen av de forventede punktene. Det forekommer heller ingen fabrikkert data.",
+          "duration_ms": 3595
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-039",
+      "kategori": "crm-lesing",
+      "tema": "Salgsanalyse periode",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon eller analyse. Det mangler både CRM-baserte data og kildehenvisning til SuperOffice CRM via AI Search.",
+          "duration_ms": 4525
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Ingen svar eller CRM-basert informasjon er oppgitt. Dermed mangler både datagrunnlag, tall og kildehenvisning.",
+          "duration_ms": 3111
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Ingen svar er gitt, så ingen av de forventede faktaene er dekket og ingen kilde er oppgitt.",
+          "duration_ms": 3334
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    },
+    {
+      "id": "EVAL-040",
+      "kategori": "crm-lesing",
+      "tema": "Kundeoppfoelging inaktive",
+      "consensus_score": "MANGLER",
+      "unanimous": true,
+      "all_scores": [
+        "MANGLER",
+        "MANGLER",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Agentsvaret er tomt og inneholder verken kundeliste eller henvisning til aktivitetshistorikk fra SuperOffice CRM.",
+          "duration_ms": 2994
+        },
+        {
+          "run": 2,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker ingen av de forventede faktaene. Det er heller ingen referanse til aktivitetshistorikk eller kilde.",
+          "duration_ms": 5840
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret inneholder ingen informasjon og dekker ingen av de forventede fakta. Ingen kilde eller referanse til aktivitetshistorikk er oppgitt.",
+          "duration_ms": 2442
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ]
+    }
+  ]
+}

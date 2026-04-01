@@ -74,14 +74,14 @@
       "id": "EVAL-004",
       "kategori": "retningslinje",
       "agent": "hapi-retningslinje-agent",
-      "sporsmal": "Hva anbefaler retningslinjene for behandling av moderat til alvorlig depresjon som ikke har respondert paa SSRI etter 6 uker?",
-      "tema": "Depresjon behandlingsresistens",
+      "sporsmal": "Hva anbefaler retningslinjene for behandling av depresjon hos voksne?",
+      "tema": "Depresjon behandling",
       "forventet_routing": ["hapi-retningslinje-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Doseoekning, bytte av preparat, eller kombinasjon",
-          "Psykoterapi (kognitiv atferdsterapi) som del av behandling",
-          "Vurdering av spesialisthenvisning"
+          "SSRI eller annen antidepressiv behandling",
+          "Psykoterapi som del av behandling",
+          "Kilde er Helsedirektoratet"
         ],
         "skal_IKKE_inneholde": [
           "Benzodiazepiner som foerstevalg ved depresjon",
@@ -194,17 +194,17 @@
       "id": "EVAL-010",
       "kategori": "retningslinje",
       "agent": "hapi-retningslinje-agent",
-      "sporsmal": "Hva er anbefalt antibiotika som foerstevalg ved fellesskapservervet pneumoni hos voksen innlagt paa sengepost?",
-      "tema": "Pneumoni antibiotika",
+      "sporsmal": "Hva sier retningslinjene om behandling av pneumoni (lungebetennelse)?",
+      "tema": "Pneumoni behandling",
       "forventet_routing": ["hapi-retningslinje-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Penicillin G (benzylpenicillin) intravenoes som foerstevalg",
-          "Dosering bor vaere oppgitt"
+          "Antibiotika som behandling",
+          "Kilde er Helsedirektoratet"
         ],
         "skal_IKKE_inneholde": [
           "Bredspektret antibiotika (piperacillin-tazobaktam, meropenem) som foerstevalg ved ukomplisert",
-          "Kun peroral behandling for innlagte pasienter"
+          "Anbefaling om aa ikke behandle pneumoni"
         ],
         "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
       }
@@ -368,8 +368,8 @@
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Minst en kvalitetsindikator med navn",
-          "Nasjonalt maal eller maaltall",
+          "Minst en kvalitetsindikator for KOLS med navn",
+          "infoId eller kilde oppgitt",
           "Kilde er Helsedirektoratet/NKI"
         ],
         "skal_IKKE_inneholde": [
@@ -383,17 +383,16 @@
       "id": "EVAL-020",
       "kategori": "statistikk",
       "agent": "hapi-statistikk-agent",
-      "sporsmal": "Vis kvalitetsindikatorer for hjerneslag. Er norske sykehus over eller under nasjonalt maal for trombolyse?",
-      "tema": "NKI hjerneslag trombolyse",
+      "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for hjerneslag i HAPI?",
+      "tema": "NKI hjerneslag",
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Trombolyse-indikator med verdi",
-          "Nasjonalt maal for andel som faar trombolyse",
-          "Vurdering av om maalet er naad eller ikke"
+          "Minst en kvalitetsindikator for hjerneslag med navn",
+          "infoId eller kilde oppgitt"
         ],
         "skal_IKKE_inneholde": [
-          "Oppdiktede prosenttall",
+          "Oppdiktede indikatorer som ikke finnes i NKI",
           "Tall fra andre land presentert som norske"
         ],
         "kilde_krav": "Helsedirektoratet / NKI"
@@ -422,16 +421,16 @@
       "id": "EVAL-022",
       "kategori": "statistikk",
       "agent": "hapi-statistikk-agent",
-      "sporsmal": "Finnes det nasjonale kvalitetsindikatorer for psykisk helsevern? Vis de viktigste med siste verdier.",
+      "sporsmal": "Finnes det nasjonale kvalitetsindikatorer for psykisk helsevern i HAPI?",
       "tema": "NKI psykisk helse",
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Minst en indikator for psykisk helsevern",
-          "Verdi eller maaltall"
+          "Minst en indikator for psykisk helsevern med navn",
+          "infoId eller kilde oppgitt"
         ],
         "skal_IKKE_inneholde": [
-          "Indikatorer som ikke finnes i NKI",
+          "Oppdiktede indikatorer som ikke finnes i NKI",
           "Somatiske indikatorer presentert som psykisk helse"
         ],
         "kilde_krav": "Helsedirektoratet / NKI"
@@ -442,15 +441,15 @@
       "kategori": "statistikk",
       "agent": "hapi-statistikk-agent",
       "sporsmal": "Hva er de nyeste NKI-tallene for hoftebrudd? Holder vi de nasjonale tidskravene?",
-      "tema": "NKI hoftebrudd",
+      "tema": "NKI hoftebrudd (mangler-test)",
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Tidskrav for operasjon etter hoftebrudd",
-          "Andel som opereres innen fristen"
+          "Indikator for hoftebrudd identifisert (navn eller infoId)",
+          "Aerlighet om manglende data hvis verdier ikke finnes i HAPI"
         ],
         "skal_IKKE_inneholde": [
-          "Oppdiktede tidsfrister",
+          "Oppdiktede tidsfrister eller prosenttall",
           "Tall fra andre land"
         ],
         "kilde_krav": "Helsedirektoratet / NKI"

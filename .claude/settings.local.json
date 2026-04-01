@@ -3,7 +3,8 @@
     "allow": [
       "Bash(export PATH=\"/c/Program Files/nodejs:$PATH\")",
       "Bash(npx tsc:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(xargs grep:*)"
     ]
   }
 }

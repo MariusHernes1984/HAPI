@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T11:02:24.250615",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "hapi-probe",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 1,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 0,
+    "snitt_responstid_ms": 44506
+  },
+  "resultater": [
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "FEIL",
+      "begrunnelse": "Svaret identifiserer en relevant indikator og oppgir riktig kilde, men gir feil informasjon om at det ikke finnes nasjonalt måltall og hevder feilaktig at dette er den eneste KOLS‑relaterte indikatoren.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Nevner en relevant nasjonal kvalitetsindikator: reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS",
+        "Henviser til Helsedirektoratet/Nasjonale kvalitetsindikatorer som kilde"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Oppgir ikke nasjonalt mål/måltall for indikatoren"
+      ],
+      "feil": [
+        "Påstanden om at det ikke finnes et eksplisitt nasjonalt måltall for indikatoren er feil; NKI-systemet oppgir et nasjonalt mål for indikatoren",
+        "Påstanden om at dette er den eneste nasjonale kvalitetsindikatoren som gjelder KOLS er misvisende"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 44506,
+      "answer_length": 1718,
+      "answer_preview": "I HAPI-datagrunnlaget fra Helsedirektoratet finnes det **én nasjonal kvalitetsindikator som direkte gjelder KOLS**.\n\n1. Reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS (eldre pasienter ≥67 år)  \n- Hva måles: Sannsynlighet for **akutt reinnleggelse innen 30 dager etter utskrivnin"
+    }
+  ]
+}

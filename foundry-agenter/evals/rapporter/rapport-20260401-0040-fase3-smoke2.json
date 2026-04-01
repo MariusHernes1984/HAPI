@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T00:40:35.086851",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 2,
+    "tag": "fase3-smoke2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/2 (50%)",
+    "bestatt": 0,
+    "delvis": 1,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 0,
+    "snitt_responstid_ms": 29336
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag trombolyse",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret lister noen hjerneslag‑indikatorer, men gir ikke trombolyseindikatoren, ingen tallverdi og ingen vurdering opp mot nasjonalt mål. Det inneholder heller ingen åpenbare feil eller oppdiktede tall.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-statistikk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Trombolyse-indikator med verdi",
+        "Nasjonalt mål for andel som får trombolyse",
+        "Vurdering av om målet er nådd eller ikke"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 27145,
+      "answer_length": 1340,
+      "answer_preview": "Jeg fant følgende **nasjonale kvalitetsindikatorer (NKI) relatert til hjerneslag** i Helsedirektoratets API:\n\n• Behandlet i slagenhet etter akutt hjerneslag  \n  - infoId: 0003-0010-32  \n  - Definisjon (HAPI‑felt: Hovedmåltall): «Andel pasienter med akutt hjerneslag behandlet i slagenhet»\n\n• Blodtryk"
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver korrekt virkestoff og plasseringen av GLP‑1‑agonister i behandlingen av type 2‑diabetes. ATC‑kode mangler og det refereres kun til Helsedirektoratet, ikke HAPI/FEST.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Semaglutid er virkestoffet i Ozempic",
+        "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "ATC-kode A10BJ06"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 31527,
+      "answer_length": 1819,
+      "answer_preview": "**Hva er Ozempic?**  \nOzempic er et legemiddel som inneholder **semaglutid**, en **GLP‑1‑reseptoragonist**. Det gis vanligvis som **ukentlig subkutan injeksjon**.\n\nVirkningsmekanismer:\n- Stimulerer **glukoseavhengig insulinsekresjon**\n- Hemmer **glukagon**\n- **Forsinker ventrikkeltømming**\n- Øker **"
+    }
+  ]
+}
