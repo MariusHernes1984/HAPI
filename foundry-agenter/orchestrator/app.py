@@ -208,13 +208,34 @@ async def list_agents():
 EVALS_DIR = Path("/app/evals/rapporter")
 
 
-def _is_hapi_only(data: dict) -> bool:
-    """Return True if report contains only HAPI agents (no CRM)."""
-    for r in data.get("resultater", []):
-        for a in r.get("actual_routing", r.get("forventet_routing", r.get("expected_routing", []))):
-            if "crm" in a.lower():
-                return False
-    return True
+def _is_crm_result(r: dict) -> bool:
+    """Return True if a single eval result involves a CRM agent."""
+    for a in r.get("actual_routing", r.get("forventet_routing", r.get("expected_routing", []))):
+        if "crm" in a.lower():
+            return True
+    return r.get("kategori", "").lower() == "crm"
+
+
+def _hapi_stats(resultater: list[dict]) -> dict | None:
+    """Compute stats from only the HAPI results, excluding CRM. Returns None if <1 HAPI result."""
+    hapi = [r for r in resultater if not _is_crm_result(r)]
+    if not hapi:
+        return None
+    total = len(hapi)
+    scores = [(r.get("score") or r.get("consensus_score") or "").upper() for r in hapi]
+    bestatt = sum(1 for s in scores if "BESTATT" in s)
+    delvis = sum(1 for s in scores if "DELVIS" in s)
+    mangler = sum(1 for s in scores if "MANGLER" in s)
+    feil = sum(1 for s in scores if "FEIL" in s)
+    hallusinering = sum(1 for s in scores if "HALLUSINERING" in s)
+    pct = round((bestatt + delvis) / total * 100) if total else 0
+    routing_ok = sum(1 for r in hapi if r.get("routing_correct", True))
+    return {
+        "antall": total, "korrekthet_pct": pct,
+        "bestatt": bestatt, "delvis": delvis, "mangler": mangler,
+        "feil": feil, "hallusinering": hallusinering,
+        "routing_korrekthet": routing_ok, "total": total,
+    }
 
 
 @app.get("/api/evals/summary")
@@ -230,59 +251,26 @@ async def evals_summary():
         except Exception:
             continue
 
-        if not _is_hapi_only(data):
+        resultater = data.get("resultater", [])
+        if not resultater:
             continue
 
-        # Newer format with metadata wrapper
-        if "metadata" in data and "oppsummering" in data:
-            meta = data["metadata"]
-            ops = data["oppsummering"]
-            # Parse percentage from "23/30 (77%)"
-            pct_match = re.search(r"\((\d+)%\)", ops.get("korrekthetsscore", ""))
-            pct = int(pct_match.group(1)) if pct_match else None
-            total_match = re.search(r"(\d+)/(\d+)", ops.get("korrekthetsscore", ""))
-            summaries.append({
-                "file": f.name,
-                "tidspunkt": meta.get("tidspunkt"),
-                "tag": meta.get("tag", ""),
-                "versjon": meta.get("versjon", ""),
-                "antall": meta.get("antall_spoersmaal", 0),
-                "korrekthet_pct": pct,
-                "bestatt": ops.get("bestatt", 0),
-                "delvis": ops.get("delvis", 0),
-                "mangler": ops.get("mangler", 0),
-                "feil": ops.get("feil", 0),
-                "hallusinering": ops.get("hallusinering", 0),
-                "routing_korrekthet": ops.get("routing_korrekthet", 0),
-                "total": int(total_match.group(2)) if total_match else meta.get("antall_spoersmaal", 0),
-            })
-        # Older format without metadata
-        elif "tidspunkt" in data and "resultater" in data:
-            resultater = data["resultater"]
-            total = len(resultater)
-            bestatt = sum(1 for r in resultater if r.get("score") == "BESTATT")
-            delvis = sum(1 for r in resultater if r.get("score") == "DELVIS")
-            mangler = sum(1 for r in resultater if r.get("score") == "MANGLER")
-            feil = sum(1 for r in resultater if r.get("score") == "FEIL")
-            hallusinering = sum(1 for r in resultater if r.get("score") == "HALLUSINERING")
-            pct = round(bestatt / total * 100) if total else 0
-            summaries.append({
-                "file": f.name,
-                "tidspunkt": data.get("tidspunkt"),
-                "tag": "",
-                "versjon": "",
-                "antall": total,
-                "korrekthet_pct": pct,
-                "bestatt": bestatt,
-                "delvis": delvis,
-                "mangler": mangler,
-                "feil": feil,
-                "hallusinering": hallusinering,
-                "routing_korrekthet": sum(1 for r in resultater if r.get("routing_correct")),
-                "total": total,
-            })
+        stats = _hapi_stats(resultater)
+        if not stats or stats["antall"] <= 10:
+            continue
 
-    return {"reports": [s for s in summaries if s.get("antall", 0) > 10]}
+        meta = data.get("metadata", {})
+        tidspunkt = meta.get("tidspunkt") or data.get("tidspunkt")
+
+        summaries.append({
+            "file": f.name,
+            "tidspunkt": tidspunkt,
+            "tag": meta.get("tag", ""),
+            "versjon": meta.get("versjon", ""),
+            **stats,
+        })
+
+    return {"reports": summaries}
 
 
 @app.get("/api/evals/report/{filename}")
@@ -297,6 +285,9 @@ async def eval_report_detail(filename: str):
         data = json.loads(filepath.read_text(encoding="utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    # Filter out CRM results
+    if "resultater" in data:
+        data["resultater"] = [r for r in data["resultater"] if not _is_crm_result(r)]
     return data
 
 
