@@ -208,6 +208,15 @@ async def list_agents():
 EVALS_DIR = Path("/app/evals/rapporter")
 
 
+def _is_hapi_only(data: dict) -> bool:
+    """Return True if report contains only HAPI agents (no CRM)."""
+    for r in data.get("resultater", []):
+        for a in r.get("actual_routing", r.get("forventet_routing", r.get("expected_routing", []))):
+            if "crm" in a.lower():
+                return False
+    return True
+
+
 @app.get("/api/evals/summary")
 async def evals_summary():
     """Return eval report summaries over time for the stats dashboard."""
@@ -219,6 +228,9 @@ async def evals_summary():
         try:
             data = json.loads(f.read_text(encoding="utf-8"))
         except Exception:
+            continue
+
+        if not _is_hapi_only(data):
             continue
 
         # Newer format with metadata wrapper
