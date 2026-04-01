@@ -3,7 +3,7 @@
     "tidspunkt": "2026-03-30T11:42:57.749350",
     "versjon": "v2-llm",
     "antall_spoersmaal": 30,
-    "tag": "fase3-full-run3",
+    "tag": "Fase 3 Sokestrategi run 3",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

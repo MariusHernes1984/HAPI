@@ -3,7 +3,7 @@
     "tidspunkt": "2026-03-28T11:20:06.522853",
     "versjon": "v2-llm",
     "antall_spoersmaal": 30,
-    "tag": "post-mcp-fix",
+    "tag": "v2 Etter MCP-fiks",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

@@ -3,7 +3,7 @@
     "tidspunkt": "2026-03-28T10:00:04.219586",
     "versjon": "v2-llm",
     "antall_spoersmaal": 30,
-    "tag": "v2-llm-baseline",
+    "tag": "v2 LLM-routing baseline",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

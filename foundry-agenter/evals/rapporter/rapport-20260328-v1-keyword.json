@@ -689,5 +689,8 @@
       "duration_ms": 13374,
       "answer_length": 47
     }
-  ]
+  ],
+  "metadata": {
+    "tag": "v1 Keyword-routing baseline"
+  }
 }

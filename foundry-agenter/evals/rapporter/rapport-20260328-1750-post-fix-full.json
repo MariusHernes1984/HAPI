@@ -3,7 +3,7 @@
     "tidspunkt": "2026-03-28T17:50:49.957533",
     "versjon": "v2-llm",
     "antall_spoersmaal": 30,
-    "tag": "post-fix-full",
+    "tag": "v3 Full kjoring etter fiks",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

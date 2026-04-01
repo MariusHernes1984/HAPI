@@ -3,7 +3,7 @@
     "tidspunkt": "2026-03-29T21:39:09.360150",
     "versjon": "v2-llm",
     "antall_spoersmaal": 40,
-    "tag": "fase2-stabilitet-run2",
+    "tag": "Fase 2 Stabilitet run 2",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

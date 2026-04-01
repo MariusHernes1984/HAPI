@@ -3,7 +3,7 @@
     "tidspunkt": "2026-03-31T23:05:01.760649",
     "versjon": "v2-llm",
     "antall_spoersmaal": 30,
-    "tag": "run2",
+    "tag": "3x30 Konsensustest run 2",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

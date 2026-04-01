@@ -3,7 +3,7 @@
     "tidspunkt": "2026-04-01T01:08:55.708981",
     "versjon": "v2-llm",
     "antall_spoersmaal": 40,
-    "tag": "fase3-v2",
+    "tag": "Fase 3 Anti-hall v2",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {

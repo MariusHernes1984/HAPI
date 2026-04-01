@@ -4,7 +4,7 @@
     "versjon": "v2-llm",
     "antall_spoersmaal": 40,
     "antall_kjoringer": 3,
-    "tag": "3x30-20260331",
+    "tag": "3x30 Konsensustest konsensus (b)",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat) — konsensus"
   },
   "oppsummering": {
