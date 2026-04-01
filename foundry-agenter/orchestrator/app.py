@@ -217,8 +217,17 @@ def _is_crm_result(r: dict) -> bool:
 
 
 def _hapi_stats(resultater: list[dict]) -> dict | None:
-    """Compute stats from only the HAPI results, excluding CRM. Returns None if <1 HAPI result."""
+    """Compute stats from only the HAPI results, excluding CRM and FEIL_TEKNISK. Returns None if <1 HAPI result."""
     hapi = [r for r in resultater if not _is_crm_result(r)]
+    if not hapi:
+        return None
+    # Skip reports where majority is FEIL_TEKNISK (broken runs)
+    scores = [(r.get("score") or r.get("consensus_score") or "").upper() for r in hapi]
+    teknisk_count = sum(1 for s in scores if "FEIL_TEKNISK" in s)
+    if teknisk_count > len(hapi) / 2:
+        return None
+    # Exclude FEIL_TEKNISK results from scoring
+    hapi = [r for r, s in zip(hapi, scores) if "FEIL_TEKNISK" not in s]
     if not hapi:
         return None
     total = len(hapi)
