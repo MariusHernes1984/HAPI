@@ -41,7 +41,11 @@ KEYWORD_RULES: list[tuple[list[str], list[str]]] = [
     (
         ["kvalitetsindikator", "nki", "statistikk", "indikator",
          "maaloppnaaelse", "trend", "nasjonalt maal", "rate",
-         "andel", "prosent"],
+         "andel", "prosent",
+         # Vanlige NKI-domener
+         "trombolyse", "ventetid", "overlevelse", "reinnleggelse",
+         "hoftebrudd", "keisersnitt", "komplikasjonsrate",
+         "30-dagers", "epikrisetid", "pasientsikkerhet"],
         [STATISTIKK],
     ),
     # CRM-triggere
@@ -70,6 +74,8 @@ COMPOUND_TRIGGERS = [
     (["retningslinje", "kode"], [RETNINGSLINJE, KODEVERK]),
     (["komplett", "oversikt"], [RETNINGSLINJE, KODEVERK, STATISTIKK]),
     (["alt om", ""], [RETNINGSLINJE, KODEVERK, STATISTIKK]),
+    (["sykehus", "maal"], [STATISTIKK, RETNINGSLINJE]),
+    (["over", "under", "nasjonalt"], [STATISTIKK]),
 ]
 
 
