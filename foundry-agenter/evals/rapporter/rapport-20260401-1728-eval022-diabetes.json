@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T17:28:48.605904",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval022-diabetes",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 0,
+    "snitt_responstid_ms": 25664
+  },
+  "resultater": [
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere reelle nasjonale kvalitetsindikatorer for diabetes fra Helsedirektoratets NKI og inkluderer kildehenvisning/infoId. Ingen åpenbare oppdiktede indikatorer eller feil sykdomsområder.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for diabetes med navn",
+        "infoId eller kilde oppgitt"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 25664,
+      "answer_length": 2570,
+      "answer_preview": "Ja. HAPI inneholder flere **nasjonale kvalitetsindikatorer for diabetes** fra Helsedirektoratets nasjonale kvalitetsindikatorsystem. De viktigste som finnes i datagrunnlaget er:\n\n1. **Blodsukkerregulering hos voksne med type 1 diabetes**  \n   - Måler andel pasienter ved årskontroll med:  \n     - HbA"
+    }
+  ]
+}

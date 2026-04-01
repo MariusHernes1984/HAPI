@@ -421,17 +421,17 @@
       "id": "EVAL-022",
       "kategori": "statistikk",
       "agent": "hapi-statistikk-agent",
-      "sporsmal": "Finnes det nasjonale kvalitetsindikatorer for psykisk helsevern i HAPI?",
-      "tema": "NKI psykisk helse",
+      "sporsmal": "Finnes det nasjonale kvalitetsindikatorer for diabetes i HAPI? Vis de viktigste.",
+      "tema": "NKI diabetes",
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Minst en indikator for psykisk helsevern med navn",
+          "Minst en kvalitetsindikator for diabetes med navn",
           "infoId eller kilde oppgitt"
         ],
         "skal_IKKE_inneholde": [
           "Oppdiktede indikatorer som ikke finnes i NKI",
-          "Somatiske indikatorer presentert som psykisk helse"
+          "Indikatorer for andre sykdommer presentert som diabetes"
         ],
         "kilde_krav": "Helsedirektoratet / NKI"
       }
