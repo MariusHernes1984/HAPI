@@ -1,0 +1,77 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T00:03:48.891200",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 2,
+    "tag": "fase3-smoke",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/2 (50%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 29724
+  },
+  "resultater": [
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir et korrekt anbefalt alternativ (erytromycin) med dosering og henviser til Helsedirektoratet. Mangler bare å nevne de andre mulige alternativene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Erytromycin oppgitt som alternativ ved penicillinallergi",
+        "Dosering er oppgitt"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Klaritromycin som alternativ er ikke nevnt",
+        "Klindamycin som alternativ er ikke nevnt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 36359,
+      "answer_length": 730,
+      "answer_preview": "Ved **bekreftet streptokokk‑tonsillitt (GAS) hos pasient med penicillinallergi** anbefales et makrolid som alternativ.\n\nAnbefalt alternativ:\n- **Erytromycin peroralt**  \n  Dosering (voksne): **250 mg x 4 i 5 dager**  \n\nDette brukes når pasienten **ikke kan få penicillin**.\n\nKommentar fra retningslin"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag trombolyse",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ingen faktiske kvalitetsindikatorer eller tall og vurderer ikke måloppnåelse. Det inneholder heller ingen konkret kildebruk fra Helsedirektoratet/NKI.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-statistikk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Trombolyse-indikator med verdi",
+        "Nasjonalt maal for andel som faar trombolyse",
+        "Vurdering av om maalet er naad eller ikke"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 23089,
+      "answer_length": 934,
+      "answer_preview": "Jeg kan ikke hente NKI‑indikatorene riktig her fordi de nødvendige HAPI‑verktøyene mangler i denne sesjonen. For slike spørsmål må jeg først bruke `hent_kvalitetsindikatorer` og deretter `hent_kvalitetsindikator` for å hente de faktiske indikatorene og tallene. De verktøyene er ikke tilgjengelige i "
+    }
+  ]
+}
