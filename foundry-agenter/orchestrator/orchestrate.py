@@ -64,12 +64,16 @@ REGLER:
 SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratets database via HAPI MCP Server (agent: {agent_name})*"
 
 
-async def call_agent(
+AGENT_TIMEOUT_S = 120  # Maks ventetid per agent-kall (sekunder)
+AGENT_MAX_RETRIES = 2  # Antall forsoek per agent
+
+
+async def _call_agent_once(
     project: AsyncProjectClient,
     agent_name: str,
     query: str,
 ) -> AgentResult:
-    """Kall en Foundry-agent og returner resultatet."""
+    """Kall en Foundry-agent (ett forsoek)."""
     start = time.monotonic()
 
     try:
@@ -115,6 +119,69 @@ async def call_agent(
             success=False,
             error=str(e),
         )
+
+
+async def call_agent(
+    project: AsyncProjectClient,
+    agent_name: str,
+    query: str,
+) -> AgentResult:
+    """Kall en Foundry-agent med timeout og retry.
+
+    - Timeout: Avbryt kall som tar over AGENT_TIMEOUT_S sekunder.
+    - Retry: Proev paa nytt ved timeout eller nettverksfeil (opp til AGENT_MAX_RETRIES).
+    """
+    retryable_keywords = ("timed out", "timeout", "credential", "token",
+                          "connection", "502", "503", "504")
+    last_result = None
+
+    for attempt in range(1, AGENT_MAX_RETRIES + 1):
+        try:
+            result = await asyncio.wait_for(
+                _call_agent_once(project, agent_name, query),
+                timeout=AGENT_TIMEOUT_S,
+            )
+            if result.success:
+                return result
+
+            # Agent returnerte feil — sjekk om den er retryable
+            err_lower = (result.error or "").lower()
+            if any(kw in err_lower for kw in retryable_keywords) and attempt < AGENT_MAX_RETRIES:
+                logger.warning(f"  {agent_name}: retryable feil (forsoek {attempt}), proever igjen...")
+                await asyncio.sleep(2)
+                last_result = result
+                continue
+            return result
+
+        except asyncio.TimeoutError:
+            duration = int(AGENT_TIMEOUT_S * 1000)
+            logger.warning(f"  {agent_name}: TIMEOUT etter {AGENT_TIMEOUT_S}s (forsoek {attempt})")
+            last_result = AgentResult(
+                agent_name=agent_name,
+                output="",
+                duration_ms=duration,
+                success=False,
+                error=f"Timeout etter {AGENT_TIMEOUT_S}s",
+            )
+            if attempt < AGENT_MAX_RETRIES:
+                await asyncio.sleep(2)
+                continue
+
+        except Exception as e:
+            duration = 0
+            logger.error(f"  {agent_name}: uventet feil (forsoek {attempt}): {e}")
+            last_result = AgentResult(
+                agent_name=agent_name,
+                output="",
+                duration_ms=duration,
+                success=False,
+                error=str(e),
+            )
+            if attempt < AGENT_MAX_RETRIES:
+                await asyncio.sleep(2)
+                continue
+
+    return last_result
 
 
 def _agent_label(name: str) -> str:

@@ -76,6 +76,16 @@ COMPOUND_TRIGGERS = [
     (["alt om", ""], [RETNINGSLINJE, KODEVERK, STATISTIKK]),
     (["sykehus", "maal"], [STATISTIKK, RETNINGSLINJE]),
     (["over", "under", "nasjonalt"], [STATISTIKK]),
+    # Legemiddel + behandling — trenger baade kodeverk og retningslinje
+    (["legemiddel", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
+    (["legemiddel", "behandling"], [KODEVERK, RETNINGSLINJE]),
+    (["medisin", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
+]
+
+# Legemiddelnavn som trigger kodeverk+retningslinje (sammensatt)
+DRUG_NAMES = [
+    "ozempic", "wegovy", "metformin", "eliquis", "xarelto",
+    "paracetamol", "ibux", "ibuprofen", "voltaren",
 ]
 
 
@@ -107,6 +117,17 @@ def route(query: str) -> RoutingDecision:
         decision.requires_code_lookup = True
         decision.agents.append(KODEVERK)
         decision.reasoning += f"Fant kode(r): {codes}. "
+
+    # Steg 1b: Sjekk om spoersmalet nevner et kjent legemiddelnavn
+    # Da trengs baade kodeverk (legemiddeldata) og retningslinje (behandlingsraad)
+    for drug in DRUG_NAMES:
+        if drug in q:
+            if KODEVERK not in decision.agents:
+                decision.agents.append(KODEVERK)
+            if RETNINGSLINJE not in decision.agents:
+                decision.agents.append(RETNINGSLINJE)
+            decision.reasoning += f"Legemiddel '{drug}' funnet — trenger kodeverk+retningslinje. "
+            break
 
     # Steg 2: Sjekk sammensatte triggere foerst
     for triggers, agents in COMPOUND_TRIGGERS:

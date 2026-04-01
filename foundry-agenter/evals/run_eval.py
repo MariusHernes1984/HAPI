@@ -317,17 +317,65 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                 expected_routing = q.get("forventet_routing", [])
                 routing_correct = set(agents) == set(expected_routing)
 
-                # Kall foerste agent (med retry ved auth-feil)
-                agent_to_call = agents[0] if agents else "hapi-retningslinje-agent"
-                try:
-                    result = await _retry_on_auth_error(
-                        lambda a=agent_to_call, s=q["sporsmal"]: call_agent(project, a, s)
+                # Kall ALLE routede agenter parallelt (som produksjons-orkestratoren)
+                agents_to_call = agents if agents else ["hapi-retningslinje-agent"]
+                agent_tasks = [
+                    _retry_on_auth_error(
+                        lambda a=a, s=q["sporsmal"]: call_agent(project, a, s)
                     )
+                    for a in agents_to_call
+                ]
+
+                try:
+                    agent_results = await asyncio.gather(*agent_tasks, return_exceptions=True)
                 except Exception as agent_err:
-                    result = {
-                        "success": False, "output": "",
-                        "duration_ms": 0, "error": str(agent_err),
-                    }
+                    agent_results = [{"success": False, "output": "", "duration_ms": 0, "error": str(agent_err)}]
+
+                # Samle vellykkede resultater
+                successful_outputs = []
+                total_duration = 0
+                for idx, ar in enumerate(agent_results):
+                    if isinstance(ar, Exception):
+                        safe_print(f"  {agents_to_call[idx]}: FEIL ({ar})")
+                        continue
+                    if ar.get("success") and ar.get("output"):
+                        agent_label = agents_to_call[idx].replace("hapi-", "").replace("-agent", "").title()
+                        successful_outputs.append(f"--- {agent_label} ---\n{ar['output']}")
+                        total_duration = max(total_duration, ar["duration_ms"])
+                        safe_print(f"  {agents_to_call[idx]}: {ar['duration_ms']}ms, {len(ar['output'])} tegn")
+                    else:
+                        safe_print(f"  {agents_to_call[idx]}: FEIL ({ar.get('error', 'tomt svar')})")
+
+                # Syntetiser hvis flere agenter svarte
+                if len(successful_outputs) > 1:
+                    combined = "\n\n".join(successful_outputs)
+                    synth_prompt = (
+                        f"Kombiner disse agentsvarene til ett sammenhengende svar paa norsk.\n"
+                        f"Spoersmaal: {q['sporsmal']}\n\n{combined}\n\n"
+                        f"REGLER: Behold all faglig info. Ikke legg til egen kunnskap. "
+                        f"Strukturer logisk. Oppgi kilde: Helsedirektoratet."
+                    )
+                    try:
+                        openai = project.get_openai_client()
+                        synth_resp = await openai.responses.create(
+                            model="gpt-5.3-chat",
+                            input=synth_prompt,
+                        )
+                        result = {"success": True, "output": synth_resp.output_text, "duration_ms": total_duration}
+                        safe_print(f"  Syntetisert fra {len(successful_outputs)} agenter")
+                    except Exception as synth_err:
+                        # Fallback: konkatener
+                        result = {"success": True, "output": "\n\n".join(successful_outputs), "duration_ms": total_duration}
+                        safe_print(f"  Syntese feilet, bruker konkatenering: {synth_err}")
+                elif len(successful_outputs) == 1:
+                    ar = next(a for a in agent_results if not isinstance(a, Exception) and a.get("success") and a.get("output"))
+                    result = ar
+                else:
+                    err_msg = "; ".join(
+                        str(ar) if isinstance(ar, Exception) else ar.get("error", "tomt")
+                        for ar in agent_results
+                    )
+                    result = {"success": False, "output": "", "duration_ms": 0, "error": err_msg}
 
                 if result["success"]:
                     safe_print(f"  Svar mottatt: {result['duration_ms']}ms, {len(result['output'])} tegn")
