@@ -1,0 +1,185 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T11:20:31.757813",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 6,
+    "tag": "fase3-justert",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "5/6 (83%)",
+    "bestatt": 4,
+    "delvis": 1,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 4,
+    "snitt_responstid_ms": 127044
+  },
+  "resultater": [
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandling",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver psykoterapi og antidepressiv behandling (inkludert SSRI) og oppgir Helsedirektoratet som kilde. Ingen medisinske feil eller uforenlige anbefalinger er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "SSRI eller annen antidepressiv behandling",
+        "Psykoterapi som del av behandling",
+        "Kilde er Helsedirektoratet"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 30694,
+      "answer_length": 1805,
+      "answer_preview": "Helsedirektoratets anbefalinger beskriver behandling av depresjon hos voksne som en kombinasjon av psykososiale tiltak, psykoterapi og eventuelt legemidler, avhengig av alvorlighetsgrad.\n\nHovedpunkter fra anbefalingene:\n\n1. Grunnleggende tiltak  \nPasienter bør få et trygt og støttende behandlingsmil"
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni behandling",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver antibiotikabehandling for pneumoni og oppgir Helsedirektoratets nasjonale retningslinje som kilde. Ingen tydelige medisinske feil eller forbudte anbefalinger er inkludert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Antibiotika som behandling",
+        "Kilde er Helsedirektoratet"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 34271,
+      "answer_length": 2215,
+      "answer_preview": "Retningslinjen finnes i **Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten** under kapittelet *Pneumoni*. Nedenfor er hovedpunktene fra anbefalingen.\n\nIndikasjon for behandling  \n- Pasienter med klinisk mistanke om pneumoni bør behandles med antibiotika dersom det ikke er kla"
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir en reell NKI‑indikator for KOLS/astma med kilde til Helsedirektoratet og infoId. Ingen åpenbare faktafeil eller oppdiktede tall.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Oppgir en nasjonal kvalitetsindikator: reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS",
+        "Beskriver hva indikatoren måler",
+        "Oppgir kilde til Helsedirektoratet/Nasjonalt kvalitetsindikatorsystem",
+        "Oppgir infoId (236)"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Presiserer ikke tydelig formulert nasjonalt mål utover at lav reinnleggelse er ønskelig"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29894,
+      "answer_length": 1375,
+      "answer_preview": "I HAPI‑datagrunnlaget fra Helsedirektoratet fremkommer **én spesifikk nasjonal kvalitetsindikator direkte knyttet til KOLS** i Nasjonalt kvalitetsindikatorsystem.\n\nNedenfor er indikatoren og hva som måles.\n\n1) Reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS (eldre pasienter)\n\n- "
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "DELVIS",
+      "begrunnelse": "Flere reelle NKI for hjerneslag er korrekt nevnt (slagenhet, svelgtest, 30-dagers overlevelse), men minst én indikator virker ikke å være del av NKI-systemet, og én er feilklassifisert.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering/testing av svelgefunksjon etter hjerneslag",
+        "30-dagers overlevelse etter sykehusinnleggelse ved hjerneslag",
+        "Oppgir Helsedirektoratet / nasjonale kvalitetsindikatorer som kilde",
+        "Oppgir infoId/kildehenvisninger"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Blodtrykksbehandling etter hjerneslag er ikke en etablert nasjonal kvalitetsindikator i Helsedirektoratets NKI for hjerneslag",
+        "Trombolyse – tid fra innleggelse til behandling er beskrevet som pakkeforløpsindikator og ikke nødvendigvis en NKI i samme system"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 17950,
+      "answer_length": 1723,
+      "answer_preview": "Følgende **nasjonale kvalitetsindikatorer for hjerneslag** finnes i HAPI‑dataene fra Helsedirektoratet:\n\n1. **Behandlet i slagenhet etter akutt hjerneslag**  \n   – Andel pasienter med akutt hjerneslag som behandles i slagenhet.  \n   Kilde: Helsedirektoratet – kvalitetsindikator (infoId: 32)\n\n2. **Vu"
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI psykisk helse",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ingen konkrete nasjonale kvalitetsindikatorer for psykisk helsevern og ingen kilde eller infoId. Det inneholder heller ingen faktiske feil eller hallusinasjoner.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Minst én indikator for psykisk helsevern med navn",
+        "infoId eller kilde oppgitt fra Helsedirektoratet/NKI"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 19089,
+      "answer_length": 605,
+      "answer_preview": "Jeg har ikke tilgang til HAPI‑endepunktene for NKI i dette miljøet. De nødvendige kallene (`hent_kvalitetsindikatorer` og `hent_kvalitetsindikator`) er ikke tilgjengelige blant verktøyene jeg kan bruke her, så jeg får ikke listet eller verifisert nasjonale kvalitetsindikatorer direkte fra API-et.\n\nH"
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer relevante NKI‑indikatorer med infoId og oppgir korrekt at tallverdier ikke er tilgjengelige via HAPI. Det oppgir ingen oppdiktede tall eller tidsfrister og viser til Helsedirektoratet som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Indikator for hoftebrudd identifisert (navn og infoId oppgitt)",
+        "Aerlige om manglende data når verdier ikke finnes i HAPI"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 630369,
+      "answer_length": 1122,
+      "answer_preview": "Jeg fant to relevante nasjonale kvalitetsindikatorer (NKI) for hoftebrudd:\n\n1) Hoftebrudd operert innen henholdsvis 24 timer og 48 timer  \n   infoId: 0003-0010-119  \n   Definisjon: Andel pasienter over 65 år med hoftebrudd som blir operert innen 24 timer og innen 48 timer etter innleggelse ved behov"
+    }
+  ]
+}
