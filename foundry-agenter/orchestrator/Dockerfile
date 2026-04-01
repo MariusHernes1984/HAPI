@@ -2,10 +2,11 @@ FROM python:3.13-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY orchestrator/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY orchestrator/ .
+COPY evals/rapporter/ /app/evals/rapporter/
 
 EXPOSE 8000
 

@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:20:22.608400",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval006-strict-run3",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 44990
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret beskriver utredning og struktur i pakkeforløpet korrekt, men oppgir ikke de faktiske forløpstidene eller tidsfrister fra henvisning til utredningsstart. Dermed dekkes under 40 % av forventede fakta.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Utredning inkluderer bildediagnostikk og biopsi"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Pakkeforløp med definerte forløpstider",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 44990,
+      "answer_length": 3038,
+      "answer_preview": "**Pakkeforløp for brystkreft** beskriver et standardisert pasientforløp fra begrunnet mistanke om kreft til start av behandling eller avslutning av forløpet. Målet er rask og koordinert diagnostikk og behandling uten unødvendige forsinkelser.  \nKilde: Helsedirektoratet (nasjonalt pakkeforløp) – info"
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-30T09:05:58.943078",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 10,
+    "tag": "crm-baseline-auth",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/10 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 9,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 1,
+    "routing_korrekthet": 10,
+    "snitt_responstid_ms": 4277
+  },
+  "resultater": [
+    {
+      "id": "CRM-001",
+      "kategori": "crm-lesing",
+      "tema": "Salgspipeline oversikt",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Error code: 400 - {'error': {'message': 'Authentication failed when connecting to the MCP server: https://superofficep.yellowbeach-5bbd28ef.westeurope.azurecontainerapps.io:443/: Response status code does not indicate success: 401 (Unauthorized).. Verify your authentication headers. Suggestions: First verify the required permissions. If the access token is expired or revoked, recreate the connection. If this connection is shared by other users or workflows, recreate it carefully to avoid disruption.', 'type': 'invalid_request_error', 'param': None, 'code': 'tool_user_error'}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "duration_ms": 5075
+    },
+    {
+      "id": "CRM-002",
+      "kategori": "crm-lesing",
+      "tema": "Kontaktoppslag selskap",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret inneholder ingen informasjon om kontaktpersoner hos Atea. Ingen kilde er oppgitt og ingen forventede fakta er dekket.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Navn paa kontaktpersoner",
+        "Rolle eller stilling"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 3012,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-003",
+      "kategori": "crm-lesing",
+      "tema": "Vunne salg periode",
+      "score": "MANGLER",
+      "begrunnelse": "Agentens svar inneholder ingen informasjon om vunne salg. Ingen kilde til SuperOffice CRM via AI Search er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Salgsnavn og beloep for vunne salg",
+        "Dato i norsk format"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 3660,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-004",
+      "kategori": "crm-lesing",
+      "tema": "Kalender aktiviteter",
+      "score": "MANGLER",
+      "begrunnelse": "Agentens svar er tomt og inneholder ingen av de forventede fakta. Ingen kilde er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Moetetidspunkt og dato",
+        "Hvem moeterne er med eller tema"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 5739,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-005",
+      "kategori": "crm-lesing",
+      "tema": "Pipeline forecast",
+      "score": "MANGLER",
+      "begrunnelse": "Ingen svar fra agenten er oppgitt, så ingen av de forventede faktaene er dekket og kilde er ikke angitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Total verdi i NOK med tusenskilletegn",
+        "Refererer til Q2 periode (april-juni)"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 2633,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-006",
+      "kategori": "crm-lesing",
+      "tema": "Selskapsoppslag",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret inneholder ingen informasjon eller CRM-data. Det fremgår heller ikke om selskapet ble funnet i CRM.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Selskapsinformasjon fra CRM",
+        "Tydelig indikasjon paa om selskapet ble funnet eller ikke"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 4186,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-007",
+      "kategori": "crm-lesing",
+      "tema": "Salg forfallsdato",
+      "score": "MANGLER",
+      "begrunnelse": "Agentens svar inneholder ingen informasjon. De forventede faktaene og kildehenvisning mangler helt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Salgsnavn med forventet dato",
+        "Tabellformat med beloep og status"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 4135,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-008",
+      "kategori": "crm-feilhaandtering",
+      "tema": "Ikke-eksisterende kunde",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret inneholder ingen informasjon og dekker ikke de forventede punktene. Det finnes heller ingen fabrikkerte data.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Ingen treff eller kunde ikke funnet",
+        "Forslag om aa sjekke stavemaaten"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 3358,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-009",
+      "kategori": "crm-lesing",
+      "tema": "Salgsanalyse periode",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret inneholder ingen informasjon eller oppsummering. Det mangler helt CRM-data, tall og kildehenvisning.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Oppsummering basert paa faktisk CRM-data",
+        "Tall og verdier hentet fra CRM"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 5886,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-010",
+      "kategori": "crm-lesing",
+      "tema": "Kundeoppfoelging inaktive",
+      "score": "MANGLER",
+      "begrunnelse": "Agentens svar er tomt og inneholder verken kundeliste, forklaring om manglende data eller referanse til aktivitetshistorikk.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Liste over kunder eller melding om manglende data",
+        "Referanse til aktivitetshistorikk"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 5089,
+      "answer_length": 0,
+      "answer_preview": ""
+    }
+  ]
+}

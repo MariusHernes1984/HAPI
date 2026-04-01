@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:38:30.150080",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 2,
+    "tag": "crm-debug",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/2 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 2,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 2,
+    "snitt_responstid_ms": 3903
+  },
+  "resultater": [
+    {
+      "id": "CRM-001",
+      "kategori": "crm-lesing",
+      "tema": "Salgspipeline oversikt",
+      "score": "MANGLER",
+      "begrunnelse": "Agentens svar inneholder ingen informasjon og dekker dermed ingen av de forventede faktaene eller kildekravet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Tabellformat med salgsnavn, selskap, beloep, status",
+        "Verdier i NOK"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 4796,
+      "answer_length": 0,
+      "answer_preview": ""
+    },
+    {
+      "id": "CRM-008",
+      "kategori": "crm-feilhaandtering",
+      "tema": "Ikke-eksisterende kunde",
+      "score": "MANGLER",
+      "begrunnelse": "Agentens svar inneholder ingen informasjon og dekker ingen av de forventede fakta. Det er ingen hallusinasjoner, men svaret mangler helt relevant innhold.",
+      "routing_correct": true,
+      "actual_routing": [
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "crm-kundealias-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Ingen treff eller kunde ikke funnet",
+        "Forslag om aa sjekke stavemaaten"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 3011,
+      "answer_length": 0,
+      "answer_preview": ""
+    }
+  ]
+}

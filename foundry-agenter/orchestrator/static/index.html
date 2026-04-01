@@ -137,7 +137,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 10px;
-      max-width: 520px;
+      max-width: 620px;
       margin: 0 auto;
     }
 
@@ -524,12 +524,168 @@
       margin-right: auto;
     }
 
+    /* --- Header buttons --- */
+    .header-actions {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .header-badge {
+      margin-left: 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .header-badge:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    .header-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: white;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .header-btn:hover {
+      background: rgba(255,255,255,0.22);
+    }
+
+    /* --- Agent modal --- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 100;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-overlay.active { display: flex; align-items: center; justify-content: center; }
+
+    .modal {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      max-width: 520px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal-header {
+      padding: 20px 24px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .modal-header h3 {
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--text-light);
+      padding: 4px 8px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .modal-close:hover { background: #f0f5f4; }
+
+    .modal-body { padding: 16px 24px 24px; }
+
+    .agent-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      margin-bottom: 12px;
+      transition: border-color 0.2s;
+    }
+
+    .agent-card:last-child { margin-bottom: 0; }
+    .agent-card:hover { border-color: var(--primary-light); }
+
+    .agent-card-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .agent-card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .agent-card-icon.retningslinje { background: #dbeafe; }
+    .agent-card-icon.kodeverk { background: #fce7f3; }
+    .agent-card-icon.statistikk { background: #d1fae5; }
+
+    .agent-card-name {
+      font-weight: 600;
+      font-size: 0.92rem;
+      color: var(--text);
+    }
+
+    .agent-card-id {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      font-family: monospace;
+    }
+
+    .agent-card-desc {
+      font-size: 0.84rem;
+      color: var(--text-light);
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .agent-card-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .tool-chip {
+      background: #f0f5f4;
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 0.68rem;
+      font-family: monospace;
+    }
+
     /* --- Responsive --- */
     @media (max-width: 640px) {
       .suggestions { grid-template-columns: 1fr; }
       .chat-container { padding: 16px; }
       .input-area { padding: 12px 16px; }
-      .header-badge { display: none; }
+      .header-actions { display: none; }
       .bubble { max-width: 100%; }
     }
   </style>
@@ -546,11 +702,35 @@
       <h1>HAPI Helseassistent</h1>
       <p>Norsk helseinformasjon fra Helsedirektoratet</p>
     </div>
-    <div class="header-badge">
-      <span class="status-dot"></span>
-      <span>3 agenter aktive</span>
+    <div class="header-actions">
+      <div class="header-badge" onclick="openAgentModal()">
+        <span class="status-dot"></span>
+        <span>3 agenter aktive</span>
+      </div>
+      <a class="header-btn" href="/stats">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+        </svg>
+        Data Statistikk
+      </a>
     </div>
   </header>
+
+  <!-- Agent modal -->
+  <div class="modal-overlay" id="agentModal" onclick="closeAgentModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Tilkoblede agenter</h3>
+        <button class="modal-close" onclick="closeAgentModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="agentModalBody">
+        <div style="text-align:center; padding:24px; color:var(--text-light);">
+          <div class="spinner" style="margin:0 auto 12px;"></div>
+          Henter agentinformasjon...
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div class="chat-container" id="chat">
     <div class="welcome" id="welcome">
@@ -567,7 +747,7 @@
       <div class="suggestions">
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;</span>
-          <span>Hva er foerstevalg antibiotika ved akutt mellomoerebetennelse?</span>
+          <span>Hva er foerstevalg antibiotika ved akutt mellomoerebetennelse hos barn?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
@@ -579,7 +759,23 @@
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F9EC;</span>
-          <span>Hva er anbefalt behandling for KOLS?</span>
+          <span>Hva er pakkeforloepet for brystkreft?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;&#x1F48A;</span>
+          <span>Pasienten har ICD-10 E11 — hva sier retningslinjene om behandling, og hva er ATC-koden for metformin?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F4CA;&#x1F48A;</span>
+          <span>Hvordan ligger Norge an paa overlevelse ved hjerteinfarkt, og hva sier retningslinjene om akuttbehandling?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F4CA;</span>
+          <span>Hva er foerstevalg antibiotika ved pneumoni, og finnes det kvalitetsindikatorer for antibiotikabruk i sykehus?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
+          <span>Hva anbefales for behandling av hypertensjon, hvilke ATC-koder dekker blodtrykksmedisin, og hva viser statistikken for blodtrykkskontroll?</span>
         </div>
       </div>
     </div>
@@ -920,6 +1116,56 @@ Nytt oppfoelgingsspoersmaal: ${query}`;
         input.focus();
       }
     }
+
+    // --- Agent modal ---
+    const AGENT_ICONS = {
+      'hapi-retningslinje-agent': { icon: '\u{1F4D6}', css: 'retningslinje', label: 'Retningslinjer' },
+      'hapi-kodeverk-agent': { icon: '\u{1F3F7}\uFE0F', css: 'kodeverk', label: 'Kodeverk' },
+      'hapi-statistikk-agent': { icon: '\u{1F4CA}', css: 'statistikk', label: 'Statistikk' },
+    };
+
+    function openAgentModal() {
+      const modal = document.getElementById('agentModal');
+      modal.classList.add('active');
+      fetchAgents();
+    }
+
+    function closeAgentModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      document.getElementById('agentModal').classList.remove('active');
+    }
+
+    async function fetchAgents() {
+      const body = document.getElementById('agentModalBody');
+      try {
+        const resp = await fetch(`${API_BASE}/agents`);
+        const data = await resp.json();
+        body.innerHTML = data.agents.map(agent => {
+          const info = AGENT_ICONS[agent.name] || { icon: '\u{1F916}', css: '', label: agent.name };
+          const tools = (agent.mcp_tools || []).map(t => `<span class="tool-chip">${escapeHtml(t)}</span>`).join('');
+          return `
+            <div class="agent-card">
+              <div class="agent-card-header">
+                <div class="agent-card-icon ${info.css}">${info.icon}</div>
+                <div>
+                  <div class="agent-card-name">${escapeHtml(info.label)}</div>
+                  <div class="agent-card-id">${escapeHtml(agent.name)}</div>
+                </div>
+              </div>
+              <div class="agent-card-desc">${escapeHtml(agent.description)}</div>
+              <div class="agent-card-tools">${tools}</div>
+            </div>
+          `;
+        }).join('');
+      } catch (err) {
+        body.innerHTML = `<p style="color:#dc2626;">Kunne ikke hente agentdata: ${escapeHtml(err.message)}</p>`;
+      }
+    }
+
+    // Close modal on Escape
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.getElementById('agentModal').classList.remove('active');
+    });
 
     // Focus input on load
     input.focus();

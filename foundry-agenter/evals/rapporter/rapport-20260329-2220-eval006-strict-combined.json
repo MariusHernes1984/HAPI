@@ -1,0 +1,63 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:20:22.772519",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "antall_kjoringer": 3,
+    "tag": "eval006-strict",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat) — konsensus"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "stabilitet_prosent": 0.0,
+    "unanime_spoersmaal": 0,
+    "routing_korrekthet": 1
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "consensus_score": "MANGLER",
+      "unanimous": false,
+      "all_scores": [
+        "MANGLER",
+        "DELVIS",
+        "MANGLER"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver strukturen i pakkeforløpet og korrekt utredning med bildediagnostikk og biopsi, men oppgir ikke de faktiske forløpstidene eller tidsfristen fra henvisning til oppstart av utredning. Derfor dekker det under 40 % av forventede fakta.",
+          "duration_ms": 42047
+        },
+        {
+          "run": 2,
+          "score": "DELVIS",
+          "begrunnelse": "Svaret beskriver strukturen i pakkeforløpet og utredningen korrekt, men oppgir ikke de konkrete tidsfristene som er en sentral del av pakkeforløpet. Ingen faktiske feil er identifisert.",
+          "duration_ms": 40726
+        },
+        {
+          "run": 3,
+          "score": "MANGLER",
+          "begrunnelse": "Svaret beskriver utredning og struktur i pakkeforløpet korrekt, men oppgir ikke de faktiske forløpstidene eller tidsfrister fra henvisning til utredningsstart. Dermed dekkes under 40 % av forventede fakta.",
+          "duration_ms": 44990
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    }
+  ]
+}

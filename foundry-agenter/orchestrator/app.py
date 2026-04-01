@@ -13,6 +13,8 @@ Deploy som Azure Container App:
 """
 
 import os
+import re
+import json
 import asyncio
 import logging
 from pathlib import Path
@@ -201,6 +203,95 @@ async def list_agents():
             },
         ]
     }
+
+
+EVALS_DIR = Path("/app/evals/rapporter")
+
+
+@app.get("/api/evals/summary")
+async def evals_summary():
+    """Return eval report summaries over time for the stats dashboard."""
+    summaries = []
+    if not EVALS_DIR.exists():
+        return {"reports": summaries}
+
+    for f in sorted(EVALS_DIR.glob("rapport-*.json")):
+        try:
+            data = json.loads(f.read_text(encoding="utf-8"))
+        except Exception:
+            continue
+
+        # Newer format with metadata wrapper
+        if "metadata" in data and "oppsummering" in data:
+            meta = data["metadata"]
+            ops = data["oppsummering"]
+            # Parse percentage from "23/30 (77%)"
+            pct_match = re.search(r"\((\d+)%\)", ops.get("korrekthetsscore", ""))
+            pct = int(pct_match.group(1)) if pct_match else None
+            total_match = re.search(r"(\d+)/(\d+)", ops.get("korrekthetsscore", ""))
+            summaries.append({
+                "file": f.name,
+                "tidspunkt": meta.get("tidspunkt"),
+                "tag": meta.get("tag", ""),
+                "versjon": meta.get("versjon", ""),
+                "antall": meta.get("antall_spoersmaal", 0),
+                "korrekthet_pct": pct,
+                "bestatt": ops.get("bestatt", 0),
+                "delvis": ops.get("delvis", 0),
+                "mangler": ops.get("mangler", 0),
+                "feil": ops.get("feil", 0),
+                "hallusinering": ops.get("hallusinering", 0),
+                "routing_korrekthet": ops.get("routing_korrekthet", 0),
+                "total": int(total_match.group(2)) if total_match else meta.get("antall_spoersmaal", 0),
+            })
+        # Older format without metadata
+        elif "tidspunkt" in data and "resultater" in data:
+            resultater = data["resultater"]
+            total = len(resultater)
+            bestatt = sum(1 for r in resultater if r.get("score") == "BESTATT")
+            delvis = sum(1 for r in resultater if r.get("score") == "DELVIS")
+            mangler = sum(1 for r in resultater if r.get("score") == "MANGLER")
+            feil = sum(1 for r in resultater if r.get("score") == "FEIL")
+            hallusinering = sum(1 for r in resultater if r.get("score") == "HALLUSINERING")
+            pct = round(bestatt / total * 100) if total else 0
+            summaries.append({
+                "file": f.name,
+                "tidspunkt": data.get("tidspunkt"),
+                "tag": "",
+                "versjon": "",
+                "antall": total,
+                "korrekthet_pct": pct,
+                "bestatt": bestatt,
+                "delvis": delvis,
+                "mangler": mangler,
+                "feil": feil,
+                "hallusinering": hallusinering,
+                "routing_korrekthet": sum(1 for r in resultater if r.get("routing_correct")),
+                "total": total,
+            })
+
+    return {"reports": [s for s in summaries if s.get("antall", 0) > 10]}
+
+
+@app.get("/api/evals/report/{filename}")
+async def eval_report_detail(filename: str):
+    """Return full detail for a single eval report."""
+    if not re.match(r'^rapport-[\w\-]+\.json$', filename):
+        raise HTTPException(status_code=400, detail="Ugyldig filnavn")
+    filepath = EVALS_DIR / filename
+    if not filepath.exists():
+        raise HTTPException(status_code=404, detail="Rapport ikke funnet")
+    try:
+        data = json.loads(filepath.read_text(encoding="utf-8"))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    return data
+
+
+@app.get("/stats", include_in_schema=False)
+async def stats_page():
+    """Serve eval statistics page."""
+    return FileResponse(STATIC_DIR / "stats.html")
 
 
 @app.get("/", include_in_schema=False)

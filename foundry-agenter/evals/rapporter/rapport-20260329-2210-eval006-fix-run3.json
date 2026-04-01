@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:10:15.823630",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval006-fix-run3",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 26874
+  },
+  "resultater": [
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Svaret beskriver pakkeforløpet korrekt, men flere tidsfrister avviker fra Helsedirektoratets offisielle forløpstider. Dette innebærer fabrikerte/feil tidsangivelser.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Pakkeforløp med definerte forløpstider",
+        "Utredning inkluderer bildediagnostikk og biopsi",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [
+        "Oppgir 12 kalenderdager fra første fremmøte til avsluttet utredning; i Helsedirektoratets pakkeforløp er dette 7 dager",
+        "Total forløpstid henvisning til start kirurgi oppgis som 32 dager; korrekt er 27 dager",
+        "Total forløpstid henvisning til start medikamentell behandling oppgis som 29 dager; korrekt er 24 dager"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 26874,
+      "answer_length": 1459,
+      "answer_preview": "**Pakkeforløp for brystkreft** starter når spesialisthelsetjenesten mottar en henvisning med **begrunnet mistanke om brystkreft**. Formålet er et standardisert og koordinert utrednings- og behandlingsforløp uten unødvendig forsinkelse.\n\n### Hovedfaser i pakkeforløpet\n1. **Henvisning mottatt i spesia"
+    }
+  ]
+}

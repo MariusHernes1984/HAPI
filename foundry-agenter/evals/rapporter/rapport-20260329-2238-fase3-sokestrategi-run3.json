@@ -1,0 +1,98 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-03-29T22:38:29.853458",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 3,
+    "tag": "fase3-sokestrategi-run3",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/3 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 2,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 1,
+    "routing_korrekthet": 3,
+    "snitt_responstid_ms": 17489
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: substring not found",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 18688,
+      "answer_length": 964,
+      "answer_preview": "Ved **akutt otitis media hos barn** i primærhelsetjenesten:\n\nFørstevalg antibiotika  \n- **Fenoksymetylpenicillin (penicillin V)**\n\nDosering (barn)  \n- **25 mg/kg per dose x 4 daglig**  \n- **Behandlingsvarighet: 5 dager**\n\nAlternativ (ved penicillinallergi, ikke straksallergi vurderes individuelt)  \n"
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandlingsresistens",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir kun generell informasjon om SSRI og nevner psykoterapi, men dekker ikke anbefalte tiltak ved manglende effekt etter 6 uker. Dermed mangler hovedinnholdet som etterspørres i spørsmålet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Psykoterapi nevnes som tiltak som bør vurderes parallelt"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Doseøkning av antidepressiv ved manglende respons",
+        "Bytte av preparat eller kombinasjons/augmenteringsbehandling",
+        "Vurdering av henvisning til spesialisthelsetjenesten",
+        "Spesifikk omtale av kognitiv atferdsterapi som del av behandlingen"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 18025,
+      "answer_length": 1518,
+      "answer_preview": "Jeg finner dessverre **ingen normerende anbefaling i HAPI‑datagrunnlaget som spesifikt beskriver hva man gjør ved manglende effekt av SSRI etter ~6 uker**. Treffene i API‑søket gjelder hovedsakelig generelle anbefalinger om initial behandling av depresjon, ikke algoritmer for behandlingssvikt.\n\nDet "
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ikke anbefalt foerstevalg eller dosering for innlagte voksne med samfunnservervet pneumoni. Det inneholder ingen feil, men mangler de sentrale faglige opplysningene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Penicillin G (benzylpenicillin) intravenoes som foerstevalg",
+        "Dosering bor vaere oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 15756,
+      "answer_length": 1082,
+      "answer_preview": "HAPI-søket ga ikke direkte doseringsanbefalingen for **samfunnservervet pneumoni hos voksne innlagt i sykehus**, så jeg kan ikke hente komplett behandlingsregime fra tilgjengelige HAPI‑data i dette svaret. Det betyr at jeg ikke kan presentere et fullstendig doseringsregime uten å risikere å konstrue"
+    }
+  ]
+}
