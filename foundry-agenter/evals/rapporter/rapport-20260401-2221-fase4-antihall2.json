@@ -1,0 +1,139 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T22:21:24.109724",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 4,
+    "tag": "fase4-antihall2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "3/4 (75%)",
+    "bestatt": 2,
+    "delvis": 1,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 27726
+  },
+  "resultater": [
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer en reell nasjonal kvalitetsindikator fra Helsedirektoratets NKI og oppgir både kilde og infoId. Ingen tydelige medisinske eller faktiske feil fremkommer.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Oppgir en kvalitetsindikator for KOLS: reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS",
+        "Oppgir kilde til Helsedirektoratet/Nasjonalt kvalitetsindikatorsystem",
+        "Oppgir infoId (236) for indikatoren"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 22549,
+      "answer_length": 1253,
+      "answer_preview": "Basert på Helsedirektoratets nasjonale kvalitetsindikatorsystem finnes det en nasjonal kvalitetsindikator relatert til KOLS:\n\nIndikator  \n- Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/kronisk obstruktiv lungesykdom (KOLS).\n\nBeskrivelse  \n- Indikatoren måler sa"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Selv om noen reelle indikatorer nevnes, inneholder svaret flere sannsynlig oppdiktede indikatorer og identifikatorer samt feil klassifisering av pakkeforløpsmål som NKI.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag (nasjonal kvalitetsindikator)",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag (nasjonal kvalitetsindikator)",
+        "Vurdering/testing av svelgefunksjon etter hjerneslag (nasjonal kvalitetsindikator)",
+        "Kilde oppgitt: Helsedirektoratet / Nasjonalt kvalitetsindikatorsystem"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Oppgitt InfoId- og HAPI‑ID‑verdier fremstår som fabrikkerte og samsvarer ikke med kjente NKI‑identifikatorer",
+        "Blodtrykksbehandling etter hjerneslag er ikke en kjent nasjonal kvalitetsindikator i NKI for hjerneslag",
+        "Reinnleggelse innen 30 dager for eldre etter hjerneslag presenteres som spesifikk hjerneslagindikator, men NKI‑indikatoren gjelder generelt akutte reinnleggelser",
+        "Trombolyse innen 40 minutter presenteres som HAPI/NKI‑indikator, men dette er et pakkeforløpsmål fra hjerneslagforløpet/Norsk hjerneslagsregister, ikke en NKI‑indikator"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 22244,
+      "answer_length": 2318,
+      "answer_preview": "I HAPI-dataene fra Helsedirektoratet finnes flere nasjonale kvalitetsindikatorer knyttet til hjerneslag.\n\nFølgende indikatorer er registrert:\n\n• Behandlet i slagenhet etter akutt hjerneslag  \nBeskrivelse: Andel pasienter med akutt hjerneslag som er behandlet i slagenhet.  \nInfoId: 32  \nKilde: Helsed"
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret lister flere reelle nasjonale kvalitetsindikatorer for diabetes fra NKI og oppgir identifikatorer samt kilde til Helsedirektoratet. Ingen tydelige medisinske feil eller indikatorer for andre sykdommer.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst én kvalitetsindikator for diabetes er oppgitt (f.eks. underekstremitetsamputasjoner blant pasienter med diabetes, blodsukkerregulering ved type 1 diabetes)",
+        "infoId / identifikatorer er oppgitt for indikatorene",
+        "Kilde er oppgitt til Helsedirektoratet / Nasjonalt kvalitetsindikatorsystem (NKI)"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 33538,
+      "answer_length": 2444,
+      "answer_preview": "Ja. I HAPI finnes flere nasjonale kvalitetsindikatorer (NKI) for diabetes fra Helsedirektoratet. De viktigste er:\n\n1. Underekstremitetsamputasjoner blant pasienter med diabetes  \n- NKI‑ID: 0003-0010-15 (infoId: 15)  \n- Hovedmåltall: Andel underekstremitetsamputasjoner (over eller under ankelleddet) "
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer riktig NKI‑indikator og oppgir kilde, men dokumenterer ikke at tallene er de nyeste og svarer ikke tydelig på om nasjonale krav oppfylles.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Indikator for hoftebrudd identifisert (Hoftebrudd operert innen 24 timer og 48 timer)",
+        "Kilde oppgitt til Helsedirektoratet / Nasjonale kvalitetsindikatorer",
+        "Åpenhet om at tilgjengelige data ikke inneholder eksplisitt nasjonal målverdi"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Eksplisitt identifikator (f.eks. infoId) for NKI‑indikatoren",
+        "Klar vurdering av om nasjonale tidskrav faktisk oppfylles",
+        "Bekreftelse på at tallene representerer de nyeste publiserte NKI‑dataene"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 32576,
+      "answer_length": 1717,
+      "answer_preview": "Jeg fant én relevant NKI‑indikator for tidskrav ved hoftebrudd:\n\n• Indikator: “Hoftebrudd operert innen henholdsvis 24 timer og 48 timer”  \nKilde: Helsedirektoratet – Nasjonale kvalitetsindikatorer (datakilde: Norsk pasientregister)\n\nNyeste tall som ble returnert i MCP‑dataene:\n\nPeriode: 2. tertial "
+    }
+  ]
+}

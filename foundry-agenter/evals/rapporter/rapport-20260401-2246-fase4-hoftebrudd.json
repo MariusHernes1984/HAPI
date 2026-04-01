@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T22:46:46.300759",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "fase4-hoftebrudd",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 27885
+  },
+  "resultater": [
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer relevante NKI‑indikatorer og oppgir tall med kilde til Helsedirektoratet/NPR. Agenten er også tydelig på at nasjonale måltall ikke finnes i de tilgjengelige dataene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Indikator for hoftebrudd identifisert med navn og NKI‑ID",
+        "Oppgir tall for relevante NKI‑indikatorer (operasjon innen 24 og 48 timer, samt 30‑dagers overlevelse)",
+        "Kilde angitt til Helsedirektoratet/Norsk pasientregister",
+        "Ærlighet om manglende informasjon om nasjonale måltall i tilgjengelige data"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 27885,
+      "answer_length": 2155,
+      "answer_preview": "Jeg fant to relevante nasjonale kvalitetsindikatorer (NKI) for hoftebrudd i Helsedirektoratets data:\n\n1) Hoftebrudd operert innen 24 og 48 timer  \nNKI‑ID: 0003-0010-119  \nDefinisjon: Andel pasienter over 65 år med hoftebrudd som opereres innen 24 timer og innen 48 timer etter innleggelse ved øyeblik"
+    }
+  ]
+}

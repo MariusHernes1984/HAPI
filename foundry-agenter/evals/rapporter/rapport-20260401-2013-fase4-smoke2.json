@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-01T20:13:28.050971",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 5,
+    "tag": "fase4-smoke2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "4/5 (80%)",
+    "bestatt": 2,
+    "delvis": 2,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 2,
+    "snitt_responstid_ms": 17968
+  },
+  "resultater": [
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer korrekt at I10 er essensiell (primær) hypertensjon og oppgir relevant kilde. Det nevner ikke at koden tilhører kapittel IX (hjerte- og karsykdommer).",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Essensiell (primaer) hypertensjon"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "I10 tilhoerer kapittel IX (hjerte- og karsykdommer)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13236,
+      "answer_length": 188,
+      "answer_preview": "ICD-10 kode **I10** betyr:\n\n- **Essensiell (primær) hypertensjon**\n\nDette er diagnosen for **høyt blodtrykk uten identifiserbar sekundær årsak**.\n\nKilde: Helsedirektoratet / HAPI (ICD‑10)."
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ikke ATC-koden for metformin (A10BA02) og dekker dermed ingen av de forventede fakta. Det henviser til et API-oppslag, men ikke til ATC‑registeret/HAPI som kilde for ATC‑kode.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [
+        "A10BA02 er ATC-koden for metformin"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 21297,
+      "answer_length": 938,
+      "answer_preview": "Jeg fant **ingen ATC‑kode for metformin** i dataene som ble returnert fra Helsedirektoratets API i dette oppslaget.\n\nFra FEST‑relatert legemiddeldata ble følgende virkestoff‑oppføringer funnet:\n- Metformin tab 500 mg (infoType: legemiddelvirkestoff)  \n- Metformin tab 850 mg (infoType: legemiddelvirk"
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt virkestoff (apixaban) og riktig ATC-kode (B01AF02) og viser til FEST/Helsedirektoratet som kilde. Ingen medisinske feil er identifisert.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Apixaban er virkestoffet",
+        "B01AF02 er ATC-koden"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 11866,
+      "answer_length": 716,
+      "answer_preview": "For legemiddelet **Eliquis** oppgis følgende informasjon i Helsedirektoratets kodeverk (FEST):\n\n- **Virkestoff:** Apiksaban (engelsk: Apixaban)  \n- **ATC‑kode:** B01AF02  \n- **ATC‑navn:** Apiksaban  \n\nKilde: Helsedirektoratet / FEST (legemiddeloppføring «Eliquis tab 5 mg», infoType: legemiddel).\n\nSa"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere reelle nasjonale kvalitetsindikatorer for hjerneslag og viser til Helsedirektoratets NKI med identifikatorer. Ingen åpenbare medisinske feil eller utenlandske data.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Nevner kvalitetsindikatoren 'Behandlet i slagenhet etter akutt hjerneslag'",
+        "Nevner kvalitetsindikatoren '30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag'",
+        "Nevner kvalitetsindikatoren 'Vurdering og testing av svelgefunksjon etter hjerneslag'",
+        "Nevner 'Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for hjerneslag'",
+        "Oppgir kilde til Helsedirektoratet / Nasjonalt kvalitetsindikatorsystem",
+        "Oppgir infoId for indikatorer"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17257,
+      "answer_length": 2159,
+      "answer_preview": "I HAPI finnes flere **nasjonale kvalitetsindikatorer for hjerneslag**, basert på Helsedirektoratets nasjonale kvalitetsindikatorsystem.\n\nFølgende indikatorer er registrert:\n\n• **Behandlet i slagenhet etter akutt hjerneslag**  \nAndel pasienter med akutt hjerneslag som er behandlet i slagenhet.  \ninfo"
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver korrekt at Ozempic inneholder semaglutid og at GLP‑1‑agonister inngår i behandlingstrappen ved type 2‑diabetes. ATC-koden A10BJ06 er ikke nevnt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Semaglutid er virkestoffet i Ozempic",
+        "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "ATC-kode A10BJ06"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 26184,
+      "answer_length": 1470,
+      "answer_preview": "Flere pasienter spør om **Ozempic**, som er et legemiddel mot diabetes type 2. Ifølge legemiddeloppføringer i FEST (Helsedirektoratets legemiddeldatabase) er Ozempic en **injeksjonsvæske som inneholder virkestoffet semaglutid**. Preparatet finnes blant annet i styrkene 0,25 mg/0,19 ml, 0,5 mg/0,74 m"
+    }
+  ]
+}

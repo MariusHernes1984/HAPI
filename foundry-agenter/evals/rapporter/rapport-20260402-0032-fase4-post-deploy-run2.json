@@ -1,0 +1,728 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-02T00:32:16.730697",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 30,
+    "tag": "fase4-post-deploy-run2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "14/30 (47%)",
+    "bestatt": 8,
+    "delvis": 6,
+    "mangler": 5,
+    "feil": 1,
+    "hallusinering": 1,
+    "teknisk_feil": 9,
+    "routing_korrekthet": 16,
+    "snitt_responstid_ms": 20048
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret oppgir korrekt foerstevalg og behandlingsvarighet og refererer til riktig nasjonal retningslinje. Dosering mangler, som er et av de forventede fakta.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+        "Varighet typisk 5 dager"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 32946,
+      "answer_length": 1127,
+      "answer_preview": "Fra Helsedirektoratets **Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten**:\n\n• **Førstevalg antibiotika:** fenoksymetylpenicillin  \n• **Anbefalt behandlingsvarighet:** 5 døgn  \n\nRetningslinjen presiserer også at:\n\n• Hos barn med **ukomplisert akutt mellomørebetennelse** kan "
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "DELVIS",
+      "begrunnelse": "Svar nevner nitrofurantoin og mecillinam, men mangler behandlingsvarighet og korrekt plassering av trimetoprim som alternativ. Ingen alvorlige feil ellers.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Nitrofurantoin som førstelinjebehandling",
+        "Pivmecillinam/mecillinam som førstelinjebehandling"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Kort behandlingsvarighet (3-5 dager)",
+        "Trimetoprim som alternativ (ikke førstelinje)"
+      ],
+      "feil": [
+        "Trimetoprim fremstilles som førstelinjebehandling i stedet for alternativ ved ukomplisert UVI"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 24315,
+      "answer_length": 856,
+      "answer_preview": "Basert på innhold fra Helsedirektoratet:\n\nFørstelinjebehandling ved **ukomplisert urinveisinfeksjon (nedre UVI / cystitt) hos kvinner** i primærhelsetjenesten er antibiotika som anbefales som førstehåndspreparater.\n\n• **Mecillinam**  \n• **Trimetoprim**  \n• **Nitrofurantoin**\n\nRetningslinjen presiser"
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir at det finnes alternativer ved penicillinallergi, men nevner ikke hvilke antibiotika eller doseringer. Dermed dekker det ikke de forventede medisinske faktaene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Erytromycin, klaritromycin eller klindamycin som alternativer",
+        "Dosering bør være oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29025,
+      "answer_length": 1120,
+      "answer_preview": "**Kilde: Helsedirektoratet – Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten**\n\nTittel: *Streptokokkhalsinfeksjon og skarlagensfeber*  \ninfoId: dd48ee61-5a5f-4241-9e67-0b33a180a5f5  \nStyrkegrad: Anbefaling  \nSist faglig oppdatert: 16.11.2021\n\nRetningslinjen oppgir at:\n\n- **F"
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandling",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir korrekt kilde fra Helsedirektoratet, men beskriver ikke faktiske behandlingsanbefalinger som antidepressiva eller psykoterapi. Dermed dekker det ingen av de forventede faktaene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "SSRI eller annen antidepressiv behandling",
+        "Psykoterapi som del av behandling"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23659,
+      "answer_length": 1189,
+      "answer_preview": "Kilde: Helsedirektoratet  \nRetningslinje: **Nasjonal retningslinje for diagnostisering og behandling av voksne med depresjon i primær- og spesialisthelsetjenesten**  \ninfoId: cc86853d-dc3d-449b-99fe-59464c8e410b  \nStatus: Gjeldende  \nSist faglig oppdatert: 2009-12-01\n\nRetningslinjen beskriver behand"
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret dekker røykeslutt og bruk av bronkodilatorer, men beskriver ikke den trinnvise behandlingsalgoritmen for stabil KOLS basert på sykdomsgrad. Ingen medisinske feil er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Roeykelutt er viktigste tiltak",
+        "Inhalasjonsbehandling (bronkodilatorer)"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Trinnvis tilnaerming basert paa sykdomsgrad"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 41996,
+      "answer_length": 2836,
+      "answer_preview": "Dette er relevant innhold fra **Helsedirektoratets nasjonale faglige retningslinjer** om KOLS‑behandling og oppfølging.\n\n---\n\nANBEFALING: Vurder alvorlighetsgrad før valg av behandling  \nKilde: Helsedirektoratet  \ninfoId: 0f2b22d3-2cce-48e1-be95-d2cdd37caede  \nStyrkegrad: sterk anbefaling  \nSist fag"
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir sentrale forløpstider i pakkeforløp for brystkreft og viser til Helsedirektoratet. Det mangler kun en kort forklaring av hva utredningen består av (bildediagnostikk og biopsi).",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Pakkeforløp med definerte forløpstider",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Utredning inkluderer bildediagnostikk og biopsi"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 27854,
+      "answer_length": 967,
+      "answer_preview": "Kilde: Helsedirektoratet  \ninfoId: c2bb978f-73e6-4411-9a4c-81a985f3dd4b  \nTittel: Forløpstider i pakkeforløp for brystkreft  \nStatus: Gjeldende  \nSist faglig oppdatert: 29.04.2021\n\nHelsedirektoratet beskriver følgende anbefalte forløpstider i **Pakkeforløp for brystkreft**. Forløpstidene er en rette"
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver ikke‑medikamentell behandling inkludert CBT‑I og søvnhygiene, og presiserer at sovemedisin kun bør brukes kortvarig. Helsedirektoratet er oppgitt som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Kognitiv atferdsterapi for insomni (CBT-I) er foerstevalg",
+        "Soevnhygieniske raad",
+        "Sovemedisin kun kortvarig og med forsiktighet"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 37220,
+      "answer_length": 1613,
+      "answer_preview": "**Ikke‑medikamentell behandling anbefales ved insomni**, særlig ved langvarige søvnproblemer.\n\nKilde: Helsedirektoratet  \ninfoId: f7409e40-0329-4823-b7aa-38221df7f2ba  \nTittel: *Søvn og søvnvansker*  \nSist faglig oppdatert: 2017‑01‑16  \n\nIfølge Helsedirektoratet:\n\n- Sovemedisiner kan være nyttige ve"
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver tidlig oppstart av rehabilitering og tverrfaglig organisering i tråd med Helsedirektoratet. Det nevner imidlertid ikke eksplisitt individuell rehabiliteringsplan.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Tidlig rehabilitering (innen 24-48 timer)",
+        "Tverrfaglig team"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Individuell rehabiliteringsplan"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 46977,
+      "answer_length": 3271,
+      "answer_preview": "Følgende anbefalinger og beskrivelser om **rehabilitering etter hjerneslag** finnes i Helsedirektoratets nasjonale retningslinje.\n\nKilde: Helsedirektoratet  \nTittel: Rehabilitering etter hjerneslag  \ninfoId: 328f68a4-af5b-46a5-8414-55939e76be98  \nsistFagligOppdatert: 2017-12-21  \nStatus: Gjeldende\n\n"
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker alle sentrale elementer i sekundærprevensjon etter AKS med PCI og inneholder ingen medisinske feil. Helsedirektoratet er oppgitt som kilde.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Dobbel platehemming (ASA + P2Y12-hemmer)",
+        "Statin",
+        "Betablokker",
+        "Livsstilsendringer"
+      ],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29389,
+      "answer_length": 2586,
+      "answer_preview": "Retningslinjene beskriver behov for strukturert oppfølging og omfattende sekundærprevensjon etter akutt koronarsyndrom (AKS) behandlet med PCI.\n\nOppfølging  \nPasienten bør følges opp etter utskrivelse, vanligvis med en tidlig kontroll etter ca. 4–6 uker hos fastlege eller hjertespesialist. Ved kontr"
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni behandling",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver antibiotikabehandling for pneumoni og oppgir Helsedirektoratet som kilde. Innholdet er i tråd med nasjonale retningslinjer og inneholder ingen åpenbare medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Antibiotika som behandling",
+        "Kilde er Helsedirektoratet"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 31580,
+      "answer_length": 2442,
+      "answer_preview": "Dette er innhold fra Helsedirektoratets nasjonale retningslinjer.\n\nPneumoni – behandling  \nKilde: Helsedirektoratet  \ninfoId: 88c623dd-f6aa-4c02-ac05-8022fcae70c0  \nStyrkegrad: Anbefaling  \nSist faglig oppdatert: 27.06.2024\n\nHovedanbefaling  \nPasienter med klinisk mistanke om pneumoni bør behandles "
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ikke korrekt ICD-10-kode (E11) eller underkoder for diabetes type 2. Det gir kun en ICPC-2-kode og sier at ICD-10 ikke kunne bekreftes.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "E11 er hovedkoden for diabetes mellitus type 2",
+        "Underkoder som E11.0–E11.9 bør nevnes"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 23288,
+      "answer_length": 1068,
+      "answer_preview": "Basert på innhold hentet fra Helsedirektoratet i denne samtalen ble det **ikke funnet en direkte ICD‑10‑kode for diabetes mellitus type 2 i MCP‑treffene**. Søket returnerte kun læringsmål og referanser, ikke selve kodeoppføringen i ICD‑10. Derfor kan ICD‑10‑koden **ikke bekreftes fra dette datagrunn"
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ikke betydningen av ICD-10 kode I10 og dekker ingen av de forventede fakta. Det henviser til manglende funn i en søkekilde i stedet for å gi korrekt ICD-10‑definisjon.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Essensiell (primaer) hypertensjon",
+        "I10 tilhoerer kapittel IX (hjerte- og karsykdommer)"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 16766,
+      "answer_length": 560,
+      "answer_preview": "Jeg fant **ingen treff i Helsedirektoratets MCP‑data som direkte beskriver ICD‑10‑kode I10** i de tilgjengelige resultatene. Søket på både **“I10”** og **“hypertensjon”** ga kun læringsmål og generelle tekster, ikke selve kodeoppslaget.\n\nDerfor kan jeg ikke bekrefte betydningen av **ICD‑10 kode I10*"
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt ATC-kode for metformin (A10BA02) og inneholder ingen medisinske feil. Kilden som oppgis er ikke HAPI/ATC‑registeret som spesifisert i kildekravet.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "A10BA02 er ATC-koden for metformin"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 20482,
+      "answer_length": 632,
+      "answer_preview": "ATC‑koden for **metformin** er:\n\n- **A10BA02**  \n- Tittel: Metformin  \n\nI innhold fra **Helsedirektoratet – Nasjonal faglig retningslinje for diabetes** (InfoId: 97a4bb56-d6ab-48d7-852d-22459cb29755, sist faglig oppdatert 14.09.2016) omtales legemidlet i anbefalingen:\n\n«Metformin anbefales som først"
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Svaret identifiserer riktig ATC‑kode, men inkluderer preparater som ikke ser ut til å være registrert i norsk FEST og hevder samtidig at listen kommer fra FEST. Dette tyder på fabrikkert eller feilaktig kildebruk.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "J01CA04 er oppgitt som amoksicillin",
+        "Minst ett preparatnavn som inneholder amoksicillin er oppgitt (f.eks. Amoxicillin Viatris)"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Fullstendig liste over alle legemidler registrert i Norge med ATC J01CA04"
+      ],
+      "feil": [
+        "Preparatnavn som trolig ikke er registrert i Norge (f.eks. Amoxicillin aliud, Amoxicilline eg) presenteres som FEST‑registrerte legemidler"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 27027,
+      "answer_length": 1238,
+      "answer_preview": "Basert på HAPI‑oppslag (Helsedirektoratet/FEST) for **ATC‑kode J01CA04 – Amoksicillin**, ble følgende **legemidler registrert i Norge** funnet i treffene.\n\nATC  \n- Kode: **J01CA04**  \n- Tittel: **Amoksicillin**  \n- Kilde: Helsedirektoratet (ATC)\n\nLegemidler (preparater):\n\n- **Amoxicillin Viatris kap"
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt virkestoff (apixaban) og korrekt ATC‑kode (B01AF02) og refererer til HAPI/FEST som kilde.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Apixaban er virkestoffet",
+        "B01AF02 er ATC-koden"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 34612,
+      "answer_length": 250,
+      "answer_preview": "Legemiddel: Eliquis  \n\nVirkestoff:  \n- Apiksaban (Apixaban)\n\nATC‑klassifisering:  \n- B01AF02 — Apiksaban\n\nAdministrasjonsmåte:  \n- Oral bruk\n\nStatus:  \n- Aktiv oppføring  \n- Sist importert til HAPI: 2026‑04‑01\n\nKilde: Helsedirektoratet (FEST / HAPI)."
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt ICPC-2 kode (R95) for KOLS og forklarer mapping fra ICD-10 J44. Ingen medisinske feil er til stede og Helsedirektoratet er oppgitt som kilde.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "R95 er ICPC-2 koden for KOLS",
+        "Mapping mellom ICD-10 J44 og ICPC-2 R95 er beskrevet"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 22776,
+      "answer_length": 1155,
+      "answer_preview": "Tilsvarende kode i **ICPC‑2** for KOLS når du i spesialisthelsetjenesten bruker **ICD‑10: J44 (Kronisk obstruktiv lungesykdom)** er:\n\n- **ICPC‑2: R95 — Kronisk obstruktiv lungesykdom (KOLS)**\n\nPraktisk mapping som ofte brukes klinisk:\n- **ICD‑10:** J44 — Other chronic obstructive pulmonary disease ("
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret angir korrekt betydning av ICPC-2-koden K74 og inneholder ingen medisinske feil. Kilde til ICPC-2 er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "K74 i ICPC-2 betyr iskemisk hjertesykdom med angina"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 21003,
+      "answer_length": 917,
+      "answer_preview": "**ICPC‑2 kode:** K74  \n**Tittel:** Iskemisk hjertesykdom med angina (ofte kalt stabil angina / hjertekrampe)  \n**Kodeverk:** ICPC‑2  \n**Kilde:** Helsedirektoratet\n\nKort forklart:  \nK74 brukes for **iskemisk hjertesykdom som gir angina pectoris (hjertekrampe)**. Det beskriver vanligvis **stabil angin"
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "FEIL",
+      "begrunnelse": "Virkestoff og ATC‑kode er korrekt oppgitt og kilde er angitt. En av de oppgitte styrkene/dose‑volumene er imidlertid feil.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Semaglutid er virkestoffet",
+        "A10BJ06 er ATC-koden"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Oppgitt styrke 0,5 mg / 0,74 ml er feil (0,74 ml tilsvarer omtrent 1 mg dose ved vanlig konsentrasjon ~1,34 mg/ml)"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 18398,
+      "answer_length": 545,
+      "answer_preview": "Ozempic er et legemiddel registrert med følgende opplysninger (kilde: Helsedirektoratet / FEST og HAPI):\n\n- Virkestoff: Semaglutid  \n- ATC‑kode: A10BJ06  \n- Legemiddelform: Injeksjonsvæske, oppløsning  \n- Administrasjonsmåte: Subkutan bruk  \n- Reseptgruppe: C  \n\nRegistrerte styrker:\n- 0,25 mg / 0,19"
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret nevner en relevant indikator, men mangler spesifikk NKI‑kilde/infoId og dekker ikke indikatorer og målverdier tilstrekkelig.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Nevner en relevant nasjonal kvalitetsindikator: reinnleggelse innen 30 dager etter sykehusinnleggelse for astma/KOLS",
+        "Oppgir Helsedirektoratet som kilde"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Manglende infoId eller spesifikk NKI‑referanse til indikatoren",
+        "Gir ikke en tydelig nasjonal målverdi eller avklaring fra NKI om mål (hvis definert)",
+        "Nevner ikke eventuelle andre KOLS‑relaterte kvalitetsindikatorer"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 23656,
+      "answer_length": 1676,
+      "answer_preview": "For KOLS finnes det begrenset med nasjonale kvalitetsindikatorer i tilgjengelige data.\n\nEn nasjonal kvalitetsindikator som er identifisert er:\n\n• Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/KOLS  \nDenne indikatoren måler sannsynligheten for akutt reinnleggelse"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret nevner faktiske indikatorer for hjerneslag, men oppgir ikke infoId eller tydelig NKI/Helsedirektoratet‑kilde for indikatorene. Dermed oppfyller det bare deler av kravene.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for hjerneslag med navn (Behandlet i slagenhet etter akutt hjerneslag)",
+        "Minst en kvalitetsindikator for hjerneslag med navn (Blodtrykksbehandling etter hjerneslag)"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "infoId eller tydelig kilde (Helsedirektoratet/NKI) for kvalitetsindikatorene"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 40081,
+      "answer_length": 1664,
+      "answer_preview": "Jeg kan ikke liste eller presentere nasjonale kvalitetsindikatorer (NKI) eller statistikk fra HAPI.  \n\nVed søk etter **hjerneslag** i HAPI finnes det imidlertid elementer av typen *statistikkelement* knyttet til kvalitetsindikatorer. Disse inneholder NKI‑statistikk, som jeg ikke kan presentere. Søke"
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ingen konkret prosentverdi eller år for andel pasienter med god HbA1c-kontroll. Det beskriver bare indikatoren og henviser til kilde uten å gi faktiske måleresultater.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "HbA1c-indikator med verdi eller andel",
+        "Periode eller aarstall for maalingen"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 28414,
+      "answer_length": 2244,
+      "answer_preview": "Jeg kan ikke oppgi den siste målte verdien for andelen diabetespasienter med god HbA1c‑kontroll i Norge. Slike tall er statistikk fra nasjonale kvalitetsindikatorer.  \n\nDet ble søkt etter relevante indikatorer i HAPI. Indikatoren **“Blodsukkerregulering ved type 1 diabetes hos voksne”** (id: 0003-00"
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI; Timed out waiting for Azure CLI",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "crm-kundealias-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n; ERROR: The command failed with an unexpected error. Here is the traceback:\r\nERROR: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 204, in _new_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/connection.py\", line 60, in create_connection\r\n  File \"socket.py\", line 977, in getaddrinfo\r\nsocket.gaierror: [Errno 11001] getaddrinfo failed\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 787, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 488, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 464, in _make_request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 1093, in _validate_conn\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 759, in connect\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connection.py\", line 211, in _new_conn\r\nurllib3.exceptions.NameResolutionError: HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\r\n\r\nThe above exception was the direct cause of the following exception:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 667, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 871, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/connectionpool.py\", line 841, in urlopen\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\urllib3/util/retry.py\", line 535, in increment\r\nurllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\n\r\nDuring handling of the above exception, another exception occurred:\r\n\r\nTraceback (most recent call last):\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\knack/cli.py\", line 233, in invoke\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 682, in execute\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 812, in _run_jobs_serially\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 781, in _run_job\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/__init__.py\", line 336, in __call__\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/commands/command_operation.py\", line 120, in handler\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/command_modules/profile/custom.py\", line 89, in get_access_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/_profile.py\", line 384, in get_raw_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\azure/cli/core/auth/msal_credentials.py\", line 55, in acquire_token\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1475, in acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1507, in _acquire_token_silent_with_error\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1315, in _get_authority_aliases\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/application.py\", line 1300, in _get_instance_metadata\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/individual_cache.py\", line 273, in wrapper\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\msal/throttled_http_client.py\", line 99, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 602, in get\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 589, in request\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/sessions.py\", line 703, in send\r\n  File \"D:\\a\\_work\\1\\s\\build_scripts\\windows\\artifacts\\cli\\Lib\\site-packages\\requests/adapters.py\", line 700, in send\r\nrequests.exceptions.ConnectionError: HTTPSConnectionPool(host='login.microsoftonline.com', port=443): Max retries exceeded with url: /common/discovery/instance?api-version=1.1&authorization_endpoint=https://login.microsoftonline.com/common/oauth2/authorize (Caused by NameResolutionError(\"HTTPSConnection(host='login.microsoftonline.com', port=443): Failed to resolve 'login.microsoftonline.com' ([Errno 11001] getaddrinfo failed)\"))\r\nTo check existing issues, please visit: https://github.com/Azure/azure-cli/issues\r\n",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    }
+  ]
+}
