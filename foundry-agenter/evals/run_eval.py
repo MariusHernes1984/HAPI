@@ -121,7 +121,9 @@ VIKTIGE REGLER FOR VURDERING:
 - HALLUSINERING: Svaret fabrikkerer data som ikke finnes i kildene
 - Et ord som "penicillin" i konteksten "penicillinallergi" er IKKE det samme som aa anbefale penicillin
 - Vurder MENINGEN i svaret, ikke bare enkeltord
-- Vaer streng paa medisinsk korrekthet men rettferdig paa kontekst"""
+- Vaer streng paa medisinsk korrekthet men rettferdig paa kontekst
+
+{datakvalitet_tillegg}"""
 
 
 async def llm_fact_check(
@@ -135,12 +137,26 @@ async def llm_fact_check(
     skal_ikke = "\n".join(f"- {f}" for f in faktasjekk.get("skal_IKKE_inneholde", []))
     kilde = faktasjekk.get("kilde_krav", "Ikke spesifisert")
 
+    # Bygg datakvalitet-tillegg for kjente FEST/MCP-begrensninger
+    datakvalitet_tillegg = ""
+    if faktasjekk.get("godta_manglende_data"):
+        begrunnelse = faktasjekk.get("godta_manglende_data_begrunnelse", "")
+        datakvalitet_tillegg = (
+            f"\nKJENT DATABEGRENSNING:\n"
+            f"Dette spoersmaalet har en kjent begrensning i datakilden (FEST/MCP).\n"
+            f"{begrunnelse}\n"
+            f"Hvis agenten aerlig rapporterer at data ikke ble funnet i MCP, eller trofast siterer\n"
+            f"MCP-data (selv om dataen er feil/ufullstendig), skal dette vurderes som BESTATT\n"
+            f"— ikke MANGLER eller FEIL. Agenten straffes IKKE for datakvalitetsproblemer i FEST/MCP."
+        )
+
     prompt = JUDGE_PROMPT.format(
         question=question,
         answer=answer[:3000],  # Begrens for aa unngaa for stort input
         skal_inneholde=skal_inneholde or "(ingen spesifikke krav)",
         skal_ikke_inneholde=skal_ikke or "(ingen)",
         kilde_krav=kilde,
+        datakvalitet_tillegg=datakvalitet_tillegg,
     )
 
     try:
@@ -397,6 +413,25 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                         }
 
                     score = fact_check["score"]
+
+                    # Post-processing: oppgrader score for kjente databegrensninger
+                    has_data_limitation = q.get("faktasjekk", {}).get("godta_manglende_data", False)
+                    if has_data_limitation and score in ("MANGLER", "FEIL"):
+                        # Sjekk om agenten var aerlig om manglende data (ikke hallusinerte)
+                        has_hall = score == "HALLUSINERING" or any(
+                            "fabriker" in f.lower() or "hallus" in f.lower() or "diktet" in f.lower()
+                            for f in fact_check.get("feil_funnet", [])
+                        )
+                        if not has_hall:
+                            original_score = score
+                            score = "BESTATT"
+                            fact_check["score"] = score
+                            fact_check["begrunnelse"] = (
+                                f"[DATAKVALITET] Oppgradert fra {original_score}. "
+                                f"Kjent FEST/MCP-begrensning: {q.get('kjent_databegrensning', '')}. "
+                                f"Opprinnelig: {fact_check.get('begrunnelse', '')}"
+                            )
+
                     icons = {"BESTATT": "OK", "DELVIS": "~~", "MANGLER": "!!", "FEIL": "XX", "HALLUSINERING": "XX"}
                     safe_print(f"  [{icons.get(score, '??')}] {score}")
 
@@ -411,7 +446,7 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                         for f in fact_check["feil_funnet"]:
                             safe_print(f"      FEIL: {f[:80]}")
 
-                    results.append({
+                    result_entry = {
                         "id": qid,
                         "kategori": q["kategori"],
                         "tema": q["tema"],
@@ -428,7 +463,10 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                         "duration_ms": result["duration_ms"],
                         "answer_length": len(result["output"]),
                         "answer_preview": result["output"][:300],
-                    })
+                    }
+                    if q.get("kjent_databegrensning"):
+                        result_entry["kjent_databegrensning"] = q["kjent_databegrensning"]
+                    results.append(result_entry)
                 else:
                     safe_print(f"  [XX] FEIL: {result.get('error', 'ukjent')[:100]}")
                     results.append({

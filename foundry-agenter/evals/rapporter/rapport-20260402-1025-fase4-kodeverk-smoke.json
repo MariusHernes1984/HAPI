@@ -1,0 +1,75 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-02T10:25:45.594579",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 2,
+    "tag": "fase4-kodeverk-smoke",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/2 (50%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 1,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 25031
+  },
+  "resultater": [
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer korrekt at ATC-kode J01CA04 er amoksicillin og oppgir flere preparater som inneholder amoksicillin. Kilde (HAPI/FEST) er oppgitt, og ingen åpenbare medisinske feil forekommer.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "J01CA04 er amoxicillin",
+        "Minst ett preparatnavn registrert i Norge"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 30615,
+      "answer_length": 963,
+      "answer_preview": "Basert på HAPI/FEST‑data fra Helsedirektoratet for ATC‑kode **J01CA04 (Amoksicillin)** ble følgende **legemidler** funnet i treffene. Jeg lister kun preparater som eksplisitt ble returnert i MCP‑resultatene.\n\nLegemidler registrert:\n\n- Amoxicillin Viatris kaps 250 mg  \n- Amoxicillin Viatris kaps 500 "
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "FEIL",
+      "begrunnelse": "Virkestoff og ATC‑kode er korrekt angitt, men en av styrkeangivelsene er feil. Dermed inneholder svaret faktiske feil i legemiddelstyrke.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Semaglutid er virkestoffet",
+        "A10BJ06 er ATC-koden"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Oppgir styrken 0,5 mg / 0,74 ml, men korrekt dosevolum for 0,5 mg er ca. 0,37 ml (0,74 ml brukes for 1 mg-dosen)"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 19447,
+      "answer_length": 594,
+      "answer_preview": "Ozempic er et legemiddel i form av injeksjonsvæske, oppløsning til subkutan bruk.  \n\nVirkestoffet er semaglutid.  \n\nATC‑koden er A10BJ06, med ATC‑navn semaglutid.  \n\nRegistrerte styrker for Ozempic er:  \n- 0,25 mg / 0,19 ml injeksjonsvæske, oppløsning  \n- 0,5 mg / 0,74 ml injeksjonsvæske, oppløsning"
+    }
+  ]
+}
