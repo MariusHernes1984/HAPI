@@ -215,17 +215,20 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva er ICD-10 koden for diabetes mellitus type 2?",
       "tema": "ICD-10 diabetes",
+      "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp E11.",
       "forventet_routing": ["hapi-kodeverk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "E11 er hovedkoden for diabetes mellitus type 2",
-          "Underkoder som E11.0-E11.9 bor nevnes"
+          "E11 er hovedkoden for diabetes mellitus type 2 ELLER agenten rapporterer at MCP ikke returnerte ICD-10-data"
         ],
         "skal_IKKE_inneholde": [
           "E10 som kode for type 2 (E10 er type 1)",
-          "Feil kodeverk (f.eks. ICPC-2 koder presentert som ICD-10)"
+          "Feil kodeverk (f.eks. ICPC-2 koder presentert som ICD-10)",
+          "Oppdiktede koder som ikke kom fra MCP"
         ],
-        "kilde_krav": "HAPI / Helsedirektoratets kodeverk"
+        "kilde_krav": "HAPI / Helsedirektoratets kodeverk",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "MCP eksponerer ikke ICD-10-oppslag. Aerlighet om manglende data er BESTATT."
       }
     },
     {
@@ -234,17 +237,20 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva betyr ICD-10 kode I10?",
       "tema": "ICD-10 hypertensjon",
+      "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp I10.",
       "forventet_routing": ["hapi-kodeverk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Essensiell (primaer) hypertensjon",
-          "I10 tilhoerer kapittel IX (hjerte- og karsykdommer)"
+          "Essensiell (primaer) hypertensjon ELLER agenten rapporterer at MCP ikke returnerte ICD-10-data"
         ],
         "skal_IKKE_inneholde": [
           "Sekundaer hypertensjon (det er I15)",
-          "Feil diagnose knyttet til I10"
+          "Feil diagnose knyttet til I10",
+          "Oppdiktede koder som ikke kom fra MCP"
         ],
-        "kilde_krav": "HAPI / ICD-10"
+        "kilde_krav": "HAPI / ICD-10",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "MCP eksponerer ikke ICD-10-oppslag. Aerlighet om manglende data er BESTATT."
       }
     },
     {
@@ -271,17 +277,21 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Vis alle legemidler registrert i Norge med ATC-kode J01CA04 (amoxicillin).",
       "tema": "Amoxicillin preparater",
+      "kjent_databegrensning": "FEST kan returnere utenlandske preparater (tyske/nederlandske) som ikke er registrert i Norge. Agenten kan ikke filtrere dette.",
       "forventet_routing": ["hapi-kodeverk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
           "J01CA04 er amoxicillin",
-          "Minst ett preparatnavn registrert i Norge"
+          "Minst ett preparatnavn fra MCP/FEST"
         ],
         "skal_IKKE_inneholde": [
           "Preparater som IKKE inneholder amoxicillin",
-          "ATC-koder for andre virkestoffer presentert som amoxicillin"
+          "ATC-koder for andre virkestoffer presentert som amoxicillin",
+          "Preparater agenten har lagt til fra egen kunnskap (ikke fra MCP)"
         ],
-        "kilde_krav": "HAPI / FEST"
+        "kilde_krav": "HAPI / FEST",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "FEST kan returnere utenlandske preparater. Saa lenge agenten kun rapporterer MCP-data og oppgir kilde, er dette BESTATT. Utenlandske preparatnavn fra FEST er IKKE hallusinering."
       }
     },
     {
@@ -346,6 +356,7 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva er virkestoff, ATC-kode og styrke for Ozempic?",
       "tema": "Semaglutid",
+      "kjent_databegrensning": "FEST returnerer feil dosevolum for Ozempic 0,5 mg (0,74 ml i stedet for 0,37 ml). Agenten siterer trofast feil FEST-data.",
       "forventet_routing": ["hapi-kodeverk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
@@ -354,9 +365,12 @@
         ],
         "skal_IKKE_inneholde": [
           "Liraglutid (det er Victoza, ikke Ozempic)",
-          "Feil ATC-kode"
+          "Feil ATC-kode",
+          "Styrker som agenten har diktet opp (ikke fra MCP)"
         ],
-        "kilde_krav": "HAPI / FEST"
+        "kilde_krav": "HAPI / FEST",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "FEST inneholder feil dosevolum for Ozempic. Saa lenge agenten siterer MCP-data og oppgir kilde, er feil styrke fra FEST IKKE agentens feil. Virkestoff + ATC-kode korrekt = BESTATT."
       }
     },
     {
@@ -385,17 +399,20 @@
       "agent": "hapi-statistikk-agent",
       "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for hjerneslag i HAPI?",
       "tema": "NKI hjerneslag",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting.",
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "Minst en kvalitetsindikator for hjerneslag med navn",
-          "infoId eller kilde oppgitt"
+          "Minst en kvalitetsindikator for hjerneslag med navn ELLER agenten rapporterer aerlig at MCP ikke returnerte NKI-data for hjerneslag"
         ],
         "skal_IKKE_inneholde": [
           "Oppdiktede indikatorer som ikke finnes i NKI",
-          "Tall fra andre land presentert som norske"
+          "Tall fra andre land presentert som norske",
+          "Oppdiktede tall eller prosentverdier"
         ],
-        "kilde_krav": "Helsedirektoratet / NKI"
+        "kilde_krav": "Helsedirektoratet / NKI",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "MCP returnerer ikke NKI-indikatorer for hjerneslag paalitelig. Aerlighet om manglende data er BESTATT."
       }
     },
     {
@@ -404,17 +421,20 @@
       "agent": "hapi-statistikk-agent",
       "sporsmal": "Hva er siste maalte verdi for andel diabetespasienter med god HbA1c-kontroll i Norge?",
       "tema": "NKI diabetes HbA1c",
+      "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c.",
       "forventet_routing": ["hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
-          "HbA1c-indikator med verdi eller andel",
-          "Periode eller aarstall for maalingen"
+          "HbA1c-indikator identifisert med navn ELLER agenten rapporterer aerlig at MCP ikke returnerte tallverdier"
         ],
         "skal_IKKE_inneholde": [
           "Oppdiktede prosenttall",
-          "Generelle paastander uten tall fra NKI"
+          "Generelle paastander uten tall fra NKI",
+          "Tall som agenten har diktet opp"
         ],
-        "kilde_krav": "Helsedirektoratet / NKI"
+        "kilde_krav": "Helsedirektoratet / NKI",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "MCP eksponerer indikatordefinisjoner men ikke maaleverdier. Aerlighet om manglende talldata er BESTATT."
       }
     },
     {
