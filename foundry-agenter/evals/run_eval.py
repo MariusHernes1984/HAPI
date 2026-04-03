@@ -365,11 +365,21 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                 # Syntetiser hvis flere agenter svarte
                 if len(successful_outputs) > 1:
                     combined = "\n\n".join(successful_outputs)
+                    agent_names = ", ".join(
+                        a.replace("hapi-", "").replace("-agent", "")
+                        for a in agents_to_call
+                        if any(a in o for o in successful_outputs)
+                    ) or "hapi"
                     synth_prompt = (
-                        f"Kombiner disse agentsvarene til ett sammenhengende svar paa norsk.\n"
+                        f"Du er HAPI Helseassistent. Kombiner agentsvarene til ett svar paa norsk.\n\n"
                         f"Spoersmaal: {q['sporsmal']}\n\n{combined}\n\n"
-                        f"REGLER: Behold all faglig info. Ikke legg til egen kunnskap. "
-                        f"Strukturer logisk. Oppgi kilde: Helsedirektoratet."
+                        f"REGLER:\n"
+                        f"1. BEVAR ALL PRESIS DATA: ATC-koder, ICD-10-koder, prosenttall, doser "
+                        f"og preparatnavn skal gjengis ORDRETT. Aldri utelat en kode eller et tall.\n"
+                        f"2. LOGISK REKKEFOEGLE: diagnose/kode -> behandling -> statistikk/NKI\n"
+                        f"3. IKKE BLAND DOMENER: Retningslinje-innhold er ikke NKI-data.\n"
+                        f"4. Behold faglig presisjon. Ikke legg til egen kunnskap.\n"
+                        f"5. Oppgi kilde: Helsedirektoratet (agenter: {agent_names})."
                     )
                     try:
                         openai = project.get_openai_client()

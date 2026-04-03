@@ -82,10 +82,40 @@ COMPOUND_TRIGGERS = [
     (["medisin", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
 ]
 
-# Legemiddelnavn som trigger kodeverk+retningslinje (sammensatt)
+# Legemiddelnavn som trigger kodeverk (alltid) + retningslinje (kun med behandlings-intent)
 DRUG_NAMES = [
     "ozempic", "wegovy", "metformin", "eliquis", "xarelto",
     "paracetamol", "ibux", "ibuprofen", "voltaren",
+]
+
+# A1: Medisinske ord som blokkerer CRM-agenten fra aa trigges
+CRM_NEGATIVE_KEYWORDS = [
+    "pasient", "behandling", "retningslinje", "medisin", "diagnose",
+    "sykdom", "helse", "lege", "sykehus", "kols", "diabetes",
+    "antibiotika", "indikator", "kvalitet", "anbefaling", "pakkeforlop",
+    "pakkeforloep", "nki", "statistikk", "kodeverk", "icd", "icpc",
+    "atc", "snomed", "virkestoff", "legemiddel", "offentlig",
+    "drikker", "slutte", "rehabilitering", "rus",
+]
+
+# A2: NKI/statistikk-kontekst — naar disse er tilstede, skal sykdomsord
+# IKKE trigge retningslinje i keyword-steget
+STATISTIKK_CONTEXT = [
+    "kvalitetsindikator", "nki", "statistikk", "indikator",
+    "maaloppnaaelse", "nasjonalt maal", "andel", "maalte verdi",
+]
+
+# A3: Kodeverk-kontekst — naar disse er tilstede, skal sykdomsord
+# IKKE trigge retningslinje i keyword-steget
+KODEVERK_CONTEXT = [
+    "icd-10", "icd10", "icpc-2", "icpc2", "atc-kode", "atc kode",
+    "kodeverk", "mapping", "takstkode", "snomed",
+]
+
+# A4: Behandlings-intent — drug names trigger retningslinje KUN med disse
+TREATMENT_INTENT_KEYWORDS = [
+    "behandling", "anbefaling", "retningslinje", "bruk", "forskrive",
+    "dosering", "indikasjon", "terapi", "hva sier", "hva anbefaler",
 ]
 
 
@@ -119,14 +149,17 @@ def route(query: str) -> RoutingDecision:
         decision.reasoning += f"Fant kode(r): {codes}. "
 
     # Steg 1b: Sjekk om spoersmalet nevner et kjent legemiddelnavn
-    # Da trengs baade kodeverk (legemiddeldata) og retningslinje (behandlingsraad)
+    # A4: Alltid kodeverk, men retningslinje KUN med behandlings-intent
     for drug in DRUG_NAMES:
         if drug in q:
             if KODEVERK not in decision.agents:
                 decision.agents.append(KODEVERK)
-            if RETNINGSLINJE not in decision.agents:
+            has_treatment_intent = any(kw in q for kw in TREATMENT_INTENT_KEYWORDS)
+            if has_treatment_intent and RETNINGSLINJE not in decision.agents:
                 decision.agents.append(RETNINGSLINJE)
-            decision.reasoning += f"Legemiddel '{drug}' funnet — trenger kodeverk+retningslinje. "
+                decision.reasoning += f"Legemiddel '{drug}' + behandlings-intent — kodeverk+retningslinje. "
+            else:
+                decision.reasoning += f"Legemiddel '{drug}' — kun kodeverk (ingen behandlings-intent). "
             break
 
     # Steg 2: Sjekk sammensatte triggere foerst
@@ -138,13 +171,35 @@ def route(query: str) -> RoutingDecision:
             decision.reasoning += f"Sammensatt spoersmaal ({', '.join(triggers)}). "
             break
 
-    # Steg 3: Keyword-matching
+    # Bestem kontekst for aa unngaa over-routing
+    has_statistikk_context = any(kw in q for kw in STATISTIKK_CONTEXT)
+    has_kodeverk_context = any(kw in q for kw in KODEVERK_CONTEXT)
+    has_crm_negative = any(kw in q for kw in CRM_NEGATIVE_KEYWORDS)
+
+    # Steg 3: Keyword-matching (med kontekst-undertrykkelse)
     if len(decision.agents) <= 1:
         for keywords, agents in KEYWORD_RULES:
             if any(kw in q for kw in keywords):
                 for a in agents:
-                    if a not in decision.agents:
-                        decision.agents.append(a)
+                    if a in decision.agents:
+                        continue
+                    # A1: Blokker CRM naar medisinske ord er tilstede
+                    if a == CRM and has_crm_negative:
+                        continue
+                    # A2: Blokker retningslinje naar statistikk-kontekst er tilstede
+                    if a == RETNINGSLINJE and has_statistikk_context:
+                        continue
+                    # A3: Blokker retningslinje naar kodeverk-kontekst er tilstede
+                    if a == RETNINGSLINJE and has_kodeverk_context:
+                        continue
+                    # A5: "medisin" i behandlingskontekst skal ikke trigge kodeverk
+                    if a == KODEVERK and "medisin" in q and not has_kodeverk_context:
+                        # Sjekk om "medisin" er eneste kodeverk-trigger
+                        kodeverk_kws = KEYWORD_RULES[1][0]  # kodeverk keywords
+                        other_kodeverk_matches = [kw for kw in kodeverk_kws if kw in q and kw != "medisin"]
+                        if not other_kodeverk_matches:
+                            continue
+                    decision.agents.append(a)
 
     # Steg 4: Fallback — hvis ingen treff, bruk retningslinje som default
     if not decision.agents:
