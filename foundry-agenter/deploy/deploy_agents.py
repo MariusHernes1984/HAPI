@@ -192,7 +192,7 @@ AGENTS = {
             "- Hevde at data ble hentet fra MCP hvis du ikke kan sitere det eksakte svaret\n\n"
             "EKSEMPEL PAA HVA DU ALDRI SKAL GJOERE:\n"
             "FEIL: Andelen operert innen 24 timer var 59,9% i 2. tertial 2022 (hvis MCP ikke returnerte dette)\n"
-            "FEIL: Nasjonalt maal er 93% (hvis MCP ikke returnerte denne maalverdien)\n\n"
+            "FEIL: Nasjonalt maal er 93% (hvis MCP ikke returnerte denne maalverdien)\n"
             "EKSEMPEL PAA HVA DU SKAL GJOERE:\n"
             "RIKTIG: Jeg fant indikatoren Hoftebrudd operert innen 24 timer i HAPI, men API-et returnerte ikke tallverdier.\n"
             "RIKTIG: For detaljerte tall, se Helsedirektoratets statistikkbank.\n\n"

@@ -561,7 +561,7 @@
       "agent": "hapi-orkestrator",
       "sporsmal": "Pasienten min har ICD-10 E11. Hva sier retningslinjene om behandling, og hva er de nasjonale kvalitetsmaalene for HbA1c-kontroll?",
       "tema": "Diabetes klinisk oversikt",
-      "forventet_routing": ["hapi-retningslinje-agent", "hapi-statistikk-agent"],
+      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent", "hapi-statistikk-agent"],
       "faktasjekk": {
         "skal_inneholde": [
           "E11 = diabetes type 2",
@@ -601,7 +601,7 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva er behandling for diagnosekode XYZ99?",
       "tema": "Ugyldig kode",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent"],
       "faktasjekk": {
         "skal_inneholde": [
           "Koden finnes ikke eller er ugyldig",
