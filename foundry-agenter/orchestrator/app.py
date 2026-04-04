@@ -208,17 +208,9 @@ async def list_agents():
 EVALS_DIR = Path("/app/evals/rapporter")
 
 
-def _is_crm_result(r: dict) -> bool:
-    """Return True if a single eval result involves a CRM agent."""
-    for a in r.get("actual_routing", r.get("forventet_routing", r.get("expected_routing", []))):
-        if "crm" in a.lower():
-            return True
-    return r.get("kategori", "").lower() == "crm"
-
-
 def _hapi_stats(resultater: list[dict]) -> dict | None:
-    """Compute stats from only the HAPI results, excluding CRM and FEIL_TEKNISK. Returns None if <1 HAPI result."""
-    hapi = [r for r in resultater if not _is_crm_result(r)]
+    """Compute stats from eval results, excluding FEIL_TEKNISK. Returns None if <1 result."""
+    hapi = resultater
     if not hapi:
         return None
     # Skip reports where majority is FEIL_TEKNISK (broken runs)
@@ -294,9 +286,6 @@ async def eval_report_detail(filename: str):
         data = json.loads(filepath.read_text(encoding="utf-8"))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
-    # Filter out CRM results
-    if "resultater" in data:
-        data["resultater"] = [r for r in data["resultater"] if not _is_crm_result(r)]
     return data
 
 

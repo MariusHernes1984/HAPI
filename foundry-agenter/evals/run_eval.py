@@ -8,7 +8,6 @@ Rapporter lagres automatisk i evals/rapporter/ for progresjonssporing.
 
 Bruk:
   python run_eval.py                          # Kjoer alle HAPI-spoersmaal (default)
-  python run_eval.py --eval-file crm          # Kjoer CRM-evalueringen
   python run_eval.py --ids EVAL-001 EVAL-005  # Kjoer spesifikke
   python run_eval.py --kategori kodeverk      # Kjoer en kategori
   python run_eval.py --tag v2-llm             # Legg til tag i filnavn
@@ -46,39 +45,8 @@ PROJECT_ENDPOINT = os.environ.get(
 )
 
 EVAL_DIR = Path(__file__).parent
-EVAL_FILES = {
-    "hapi": EVAL_DIR / "eval-questions-hapi.json",
-    "crm": EVAL_DIR / "eval-questions-crm.json",
-}
-DEFAULT_EVAL = "hapi"
+EVAL_FILE = EVAL_DIR / "eval-questions-hapi.json"
 RAPPORTER_DIR = EVAL_DIR / "rapporter"
-
-# --- Sikkerhet: Skriveoperasjoner ---
-# CRM-agenten kan i teorien trigge skriveoperasjoner mot produksjon.
-# Evals skal KUN inneholde lesesporsmal. Denne sjekken blokkerer
-# spoersmaal som ser ut til aa be om skriving.
-WRITE_KEYWORDS = [
-    "opprett", "oppdater", "endre", "slett", "fjern", "registrer",
-    "flytt", "legg til", "lag", "book", "avlys", "kanseller",
-]
-# Eneste tillatte kunde-ID for fremtidige skrivetester
-SAFE_WRITE_CUSTOMER_ID = "33569291"
-
-
-def _check_write_safety(question: dict) -> bool:
-    """Returnerer True hvis spoersmaalet er trygt (lesing). False hvis det inneholder skriveord."""
-    q_lower = question["sporsmal"].lower()
-    agent = question.get("agent", "")
-    # Kun relevant for CRM-agenten
-    if "crm" not in agent:
-        return True
-    for kw in WRITE_KEYWORDS:
-        if kw in q_lower:
-            # Tillat hvis eksplisitt rettet mot test-kunde
-            if SAFE_WRITE_CUSTOMER_ID in question["sporsmal"]:
-                return True
-            return False
-    return True
 
 
 def safe_print(text: str):
@@ -309,20 +277,6 @@ async def run_eval(questions: list[dict]) -> list[dict]:
             for i, q in enumerate(questions, 1):
                 qid = q["id"]
                 safe_print(f"\n[{i}/{len(questions)}] {qid}: {q['sporsmal'][:80]}...")
-
-                # Sikkerhet: blokker skriveoperasjoner mot CRM-produksjon
-                if not _check_write_safety(q):
-                    safe_print(f"  BLOKKERT: Spoersmaal inneholder skriveord for CRM-agent. Hopper over.")
-                    safe_print(f"  (Skrivetester krever kunde-ID {SAFE_WRITE_CUSTOMER_ID})")
-                    results.append({
-                        "id": qid, "kategori": q.get("kategori", ""),
-                        "tema": q.get("tema", ""), "score": "BLOKKERT_SIKKERHET",
-                        "begrunnelse": "Skriveoperasjon blokkert av sikkerhetsjekk",
-                        "routing_correct": False, "actual_routing": [],
-                        "expected_routing": q.get("forventet_routing", []),
-                        "duration_ms": 0,
-                    })
-                    continue
 
                 # Route
                 routing = route(q["sporsmal"])
@@ -738,15 +692,13 @@ def build_combined_report(
 
 def main():
     parser = argparse.ArgumentParser(description="HAPI Agent Evaluering v2 (LLM-faktasjekk)")
-    parser.add_argument("--eval-file", choices=list(EVAL_FILES.keys()), default=DEFAULT_EVAL,
-                        help=f"Velg evalueringsfil: {', '.join(EVAL_FILES.keys())} (default: {DEFAULT_EVAL})")
     parser.add_argument("--ids", nargs="+", help="Kjoer spesifikke spoersmaal (f.eks. EVAL-001 EVAL-005)")
     parser.add_argument("--kategori", help="Kjoer en kategori (retningslinje, kodeverk, statistikk, pasient, sammensatt)")
     parser.add_argument("--tag", default="", help="Tag for rapportfilnavn (f.eks. v2-llm, post-mcp-fix)")
     parser.add_argument("--runs", type=int, default=1, help="Antall ganger aa kjoere eval (default: 1). Flere kjoringer gir konsensusrapport.")
     args = parser.parse_args()
 
-    eval_file = EVAL_FILES[args.eval_file]
+    eval_file = EVAL_FILE
     safe_print(f"Evalueringsfil: {eval_file.name}")
 
     with open(eval_file) as f:

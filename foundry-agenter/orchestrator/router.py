@@ -12,7 +12,6 @@ from dataclasses import dataclass, field
 RETNINGSLINJE = "hapi-retningslinje-agent"
 KODEVERK = "hapi-kodeverk-agent"
 STATISTIKK = "hapi-statistikk-agent"
-CRM = "crm-kundealias-agent"
 
 # --- Routing-regler ---
 
@@ -48,14 +47,6 @@ KEYWORD_RULES: list[tuple[list[str], list[str]]] = [
          "30-dagers", "epikrisetid", "pasientsikkerhet"],
         [STATISTIKK],
     ),
-    # CRM-triggere
-    (
-        ["crm", "superoffice", "kunde", "kundealias", "salg", "salgsmulighet",
-         "pipeline", "deal", "kontaktperson", "selskap", "firma",
-         "moete", "kalender", "oppfoelging", "forecast", "tilbud",
-         "vunnet", "tapt"],
-        [CRM],
-    ),
 ]
 
 # Diagnosekode-moenster som trigger kodeverk foerst
@@ -86,16 +77,6 @@ COMPOUND_TRIGGERS = [
 DRUG_NAMES = [
     "ozempic", "wegovy", "metformin", "eliquis", "xarelto",
     "paracetamol", "ibux", "ibuprofen", "voltaren",
-]
-
-# A1: Medisinske ord som blokkerer CRM-agenten fra aa trigges
-CRM_NEGATIVE_KEYWORDS = [
-    "pasient", "behandling", "retningslinje", "medisin", "diagnose",
-    "sykdom", "helse", "lege", "sykehus", "kols", "diabetes",
-    "antibiotika", "indikator", "kvalitet", "anbefaling", "pakkeforlop",
-    "pakkeforloep", "nki", "statistikk", "kodeverk", "icd", "icpc",
-    "atc", "snomed", "virkestoff", "legemiddel", "offentlig",
-    "drikker", "slutte", "rehabilitering", "rus",
 ]
 
 # A2: NKI/statistikk-kontekst — naar disse er tilstede, skal sykdomsord
@@ -174,7 +155,6 @@ def route(query: str) -> RoutingDecision:
     # Bestem kontekst for aa unngaa over-routing
     has_statistikk_context = any(kw in q for kw in STATISTIKK_CONTEXT)
     has_kodeverk_context = any(kw in q for kw in KODEVERK_CONTEXT)
-    has_crm_negative = any(kw in q for kw in CRM_NEGATIVE_KEYWORDS)
 
     # Steg 3: Keyword-matching (med kontekst-undertrykkelse)
     if len(decision.agents) <= 1:
@@ -182,9 +162,6 @@ def route(query: str) -> RoutingDecision:
             if any(kw in q for kw in keywords):
                 for a in agents:
                     if a in decision.agents:
-                        continue
-                    # A1: Blokker CRM naar medisinske ord er tilstede
-                    if a == CRM and has_crm_negative:
                         continue
                     # A2: Blokker retningslinje naar statistikk-kontekst er tilstede
                     if a == RETNINGSLINJE and has_statistikk_context:
@@ -226,7 +203,7 @@ Agenter:
 - hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforloep, antibiotika
 - hapi-kodeverk-agent: kodeverk (ICD-10, ICPC-2, SNOMED, ATC), legemiddeldata, kode-mapping
 - hapi-statistikk-agent: nasjonale kvalitetsindikatorer (NKI), statistikk, trender
-- crm-kundealias-agent: SuperOffice CRM, kunder, salg, pipeline, kontakter, moeter, forecast
+
 
 Svar BARE med JSON: {"agents": ["agent-navn-1", "agent-navn-2"]}
 

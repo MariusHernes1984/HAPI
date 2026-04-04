@@ -1,19 +1,16 @@
 """
 Deploy HAPI-agenter til Azure AI Foundry.
 
-Oppretter 5 agenter:
+Oppretter 3 HAPI-agenter:
   1. HAPI Retningslinje-agent  (MCP: HAPI)
   2. HAPI Kodeverk-agent       (MCP: HAPI)
   3. HAPI Statistikk-agent     (MCP: HAPI)
-  4. HAPI Orkestrator           (ren ruter, ingen verktoy)
-  5. CRM Kundealias-agent       (Azure AI Search: kundealias-crm)
 
 Bruk:
   1. Kopier .env.example til .env og fyll inn verdier
   2. pip install -r requirements.txt
   3. az login
   4. python deploy_agents.py
-  5. python deploy_agents.py --only crm-kundealias-agent  (deploy kun CRM)
 """
 
 import os
@@ -25,10 +22,6 @@ from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import (
     MCPTool,
     PromptAgentDefinition,
-    AzureAISearchTool,
-    AzureAISearchToolResource,
-    AISearchIndexResource,
-    AzureAISearchQueryType,
 )
 
 load_dotenv()
@@ -43,28 +36,7 @@ MCP_SERVER_URL = os.environ.get(
 )
 MODEL = os.environ.get("MODEL_DEPLOYMENT", "gpt-5.3-chat")
 
-# Azure AI Search (for CRM-agent)
-SEARCH_CONNECTION_NAME = os.environ.get("SEARCH_CONNECTION_NAME", "kateaisearchd2ftyf")
-SEARCH_INDEX_NAME = os.environ.get("SEARCH_INDEX_NAME", "kundealias-crm")
-
 # --- Tool-definisjoner ---
-
-def ai_search_tool(client: AIProjectClient) -> AzureAISearchTool:
-    """Opprett en AzureAISearchTool for Kundealias CRM-indeksen."""
-    connection = client.connections.get(SEARCH_CONNECTION_NAME)
-    return AzureAISearchTool(
-        azure_ai_search=AzureAISearchToolResource(
-            indexes=[
-                AISearchIndexResource(
-                    project_connection_id=connection.id,
-                    index_name=SEARCH_INDEX_NAME,
-                    query_type=AzureAISearchQueryType.SIMPLE,
-                    top_k=10,
-                ),
-            ]
-        )
-    )
-
 
 def hapi_mcp_tool(allowed_tools: list[str] | None = None) -> MCPTool:
     """Opprett en MCPTool som peker til HAPI MCP Server."""
@@ -97,17 +69,27 @@ AGENTS = {
             "- Liste opp NKI-indikatorer med infoId-er eller tallverdier\n"
             "- Beskrive trender, maaloppnaaelse eller statistisk data\n"
             "Hvis brukeren spoer om statistikk/NKI: svar kun med retningslinjeinnhold.\n\n"
-            "OBLIGATORISK DATAUTVINNING — MINST 2 SOEK:\n"
+            "OBLIGATORISK DATAUTVINNING — MINST 3 SOEK:\n"
             "Steg 1: Bruk sok_innhold med brukerens soekeord\n"
             "Steg 2: For HVERT treff med infoId: bruk hent_innhold_id for FULLSTENDIG innhold\n"
-            "Steg 3: Bruk hent_anbefalinger med relevant ICD-10/ICPC-2 kode\n"
+            "   VIKTIG: Det er i hent_innhold_id svaret du finner detaljene (dosering, varighet, alternativer).\n"
+            "   Hvis du IKKE kaller hent_innhold_id vil svaret ditt mangle konkrete anbefalinger.\n"
+            "Steg 3: Bruk hent_anbefalinger med relevant ICD-10/ICPC-2 kode for aa fange anbefalinger som fritekstsoek kan misse\n"
             "Steg 4: For antibiotika: verifiser doseringsregime, styrke, varighet\n"
-            "Steg 5: For behandling: verifiser at ALLE alternativer er inkludert\n\n"
+            "Steg 5: For behandling: verifiser at ALLE komponenter er inkludert (medikamentell + ikke-medikamentell + livsstil)\n\n"
+            "KVALITETSSJEKK FOER DU SVARER:\n"
+            "Foer du presenterer svaret, sjekk:\n"
+            "- Antibiotika-spoersmaal: Har jeg navngitt HVILKET antibiotikum? Dosering? Varighet? Alternativer?\n"
+            "- Behandlings-spoersmaal: Har jeg dekket ALLE behandlingskomponenter (ikke bare den foerste jeg fant)?\n"
+            "- Allergi-spoersmaal: Har jeg soekt spesifikt paa alternativer ved allergi?\n"
+            "- Pasient-spoersmaal: Har jeg forklart baade behandling OG oppfoelging?\n"
+            "Hvis du mangler noe av dette: gjoer FLERE soek foer du svarer.\n\n"
             "RETRY ved tomt/ufullstendig:\n"
             "1. Proev med ICD-10/ICPC-2 kode i stedet for fritekst (eller omvendt)\n"
-            "2. Proev bredere soekeord\n"
+            "2. Proev bredere soekeord (f.eks. soek paa diagnosen, ikke bare behandlingen)\n"
             "3. Proev hent_retningslinjer og drill ned via hent_retningslinje med ID\n"
-            "4. Du skal ALDRI gi svar basert paa bare ett soek\n\n"
+            "4. Proev alternative soekeord (f.eks. 'allergi alternativ', 'foerstevalg', 'sekundaerprevensjon')\n"
+            "5. Du skal ALDRI gi svar basert paa bare ett soek\n\n"
             "For antibiotika: inkluder foerstevalg, alternativ, dosering, varighet, kontraindikasjoner.\n"
             "For pakkeforloep: hent ALLTID med full=true for forloepstider.\n"
             "Regler: Aldri endre faglig innhold. Marker styrkegrad (sterk/svak).\n"
@@ -212,61 +194,6 @@ AGENTS = {
         ],
         "has_mcp": True,
     },
-    "crm-kundealias-agent": {
-        "instructions": (
-            "Du er en SuperOffice CRM-assistent. Du henter, oppdaterer og analyserer data "
-            "i SuperOffice via MCP Tool. Presis, effektiv, svarer paa norsk med forretningsspraak.\n\n"
-            "KJERNEPRINSIPPER:\n"
-            "- Presisjon over hastighet. Gjoer riktig oppslag foer du svarer - gjett aldri.\n"
-            "- En intensjon om gangen. Klassifiser brukerens spoersmaal foer du handler.\n"
-            "- Vis det du vet, innroem det du ikke vet. Returner delresultater fremfor feilaktige svar.\n"
-            "- Aldri bland domener. Salg er salg. Moeter er moeter.\n\n"
-            "ARBEIDSFLYT FOR HVERT INNSPILL:\n"
-            "1. Klassifiser intensjon (salg/aktivitet/kontakt/selskap/oppdatering/analyse)\n"
-            "2. Trenger jeg kundeoppslag foerst? Slaa opp via Customer Name/Alias\n"
-            "3. Identifiser person/rolle (mine salg, Per sine salg, teamets salg)\n"
-            "4. Normaliser datoer til ISO (YYYY-MM-DD) foer MCP-kall\n"
-            "5. Utfoer MCP-kall\n"
-            "6. Formater svar (se tabellregler)\n"
-            "7. Foresla oppfoelging hvis naturlig\n\n"
-            "INTENSJONER:\n"
-            "- Salg: pipeline, salgsmulighet, deal, tilbud, vunnet, tapt, forecast\n"
-            "- Aktivitet: moete, kalender, oppgave, oppfoelging, samtale\n"
-            "- Kontakt: kontaktperson, e-post, telefonnummer\n"
-            "- Selskap: firma, kunde, organisasjon, bransje\n"
-            "- Oppdatering: oppdater, endre, flytt, registrer, opprett\n"
-            "- Analyse: oppsummer, trend, sammenlign, totalt, gjennomsnitt\n"
-            "Ved tvetydighet: still ETT oppklarende spoersmaal.\n\n"
-            "SALGSREGLER:\n"
-            "- Hent ALLTID salgsdata via MCP tool. Aldri bruk moeter som erstatning.\n"
-            "- List ALLE treff i foerste spoorring.\n"
-            "- Verdier i NOK med tusenskilletegn (mellomrom): 1 250 000\n"
-            "- Ingen salg funnet? Si det tydelig, ikke fall tilbake til andre data.\n\n"
-            "TABELLFORMAT SALG:\n"
-            "| Nr | Salgsnavn | Selskap | Beloep (NOK) | Status | Forventet dato | Ansvarlig |\n"
-            "Nummerer fra 1. Vis selskapsnavn, aldri bare ID. Dato: dd.MM.yyyy\n\n"
-            "KONTAKTER - vis som kort:\n"
-            "Navn, Rolle, Selskap, Telefon, E-post\n\n"
-            "DATOER:\n"
-            "- Til MCP: alltid ISO (YYYY-MM-DD). Aldri norsk format.\n"
-            "- Til bruker: alltid norsk (dd.MM.yyyy kl. HH:mm)\n"
-            "- 'neste uke' = mandag-fredag, 'Q2' = 01.04-30.06, 'denne maaneden' = 1. til siste\n\n"
-            "SKRIVEOPERASJONER:\n"
-            "- Vis oppsummering + be om bekreftelse FOER du utfoerer endringer.\n"
-            "- Unntak: enkle opprettelser (nytt moete) kan gjoeres direkte.\n\n"
-            "FEILHAANDTERING:\n"
-            "- MCP-feil: 'Fikk ikke kontakt med SuperOffice. Proeve igjen?'\n"
-            "- Ingen treff: 'Ingen treff paa [soeketekst]. Sjekk stavemaaten?'\n"
-            "- >50 resultater: vis 20 foerste + totalt antall, spoer om filtrering.\n\n"
-            "SIKKERHET:\n"
-            "- Aldri vis passord/API-noekler. Aldri slett uten bekreftelse.\n"
-            "- Ikke gi forretningsraad. Du presenterer data.\n"
-            "- Ikke dikt opp data. Manglende felt = 'Ikke tilgjengelig'.\n\n"
-            "TONE: Norsk (bokmaal), profesjonelt men uformelt, konkret, du-form."
-        ),
-        "has_mcp": False,
-        "has_search": True,
-    },
 }
 
 
@@ -275,8 +202,6 @@ def deploy_agent(client: AIProjectClient, agent_name: str, config: dict) -> dict
     tools = []
     if config.get("has_mcp"):
         tools.append(hapi_mcp_tool(config["allowed_tools"]))
-    if config.get("has_search"):
-        tools.append(ai_search_tool(client))
 
     agent = client.agents.create_version(
         agent_name=agent_name,
