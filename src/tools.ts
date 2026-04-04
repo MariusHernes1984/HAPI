@@ -190,17 +190,103 @@ function normalizeCodesInResult(obj: unknown): unknown {
   return obj;
 }
 
+/**
+ * Progressivt forkort tekstfelter i et objekt til total JSON-lengde er under grensen.
+ * Returnerer ALLTID gyldig JSON — kutter aldri serialisert streng.
+ */
+function shrinkToFit(obj: unknown, maxLen: number): unknown {
+  let json = JSON.stringify(obj, null, 2);
+  if (json.length <= maxLen) return obj;
+
+  // Steg 1: Forkort alle tekstfelter progressivt (halvér maks lengde per runde)
+  let textLimit = MAX_ESSENTIAL_LENGTH;
+  while (json.length > maxLen && textLimit >= 200) {
+    textLimit = Math.floor(textLimit / 2);
+    obj = truncateTexts(obj, textLimit, 0);
+    json = JSON.stringify(obj, null, 2);
+  }
+
+  // Steg 2: Forkort arrays progressivt
+  let arrayLimit = MAX_ARRAY_ITEMS;
+  while (json.length > maxLen && arrayLimit >= 3) {
+    arrayLimit = Math.max(3, Math.floor(arrayLimit / 2));
+    obj = truncateArrays(obj, arrayLimit, 0);
+    json = JSON.stringify(obj, null, 2);
+  }
+
+  // Steg 3: Siste utvei — fjern ikke-essensielle felter
+  if (json.length > maxLen) {
+    obj = stripNonEssential(obj, 0);
+    json = JSON.stringify(obj, null, 2);
+  }
+
+  return obj;
+}
+
+function truncateTexts(obj: unknown, maxLen: number, depth: number): unknown {
+  if (depth > 8) return obj;
+  if (typeof obj === "string") {
+    return obj.length > maxLen
+      ? obj.slice(0, maxLen) + "… [forkortet]"
+      : obj;
+  }
+  if (Array.isArray(obj)) {
+    return obj.map((item) => truncateTexts(item, maxLen, depth + 1));
+  }
+  if (obj && typeof obj === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+      result[k] = truncateTexts(v, maxLen, depth + 1);
+    }
+    return result;
+  }
+  return obj;
+}
+
+function truncateArrays(obj: unknown, maxItems: number, depth: number): unknown {
+  if (depth > 8) return obj;
+  if (Array.isArray(obj)) {
+    const sliced = obj.slice(0, maxItems).map((item) => truncateArrays(item, maxItems, depth + 1));
+    if (obj.length > maxItems) {
+      sliced.push(`… og ${obj.length - maxItems} flere (bruk ID for detaljer)` as unknown);
+    }
+    return sliced;
+  }
+  if (obj && typeof obj === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+      result[k] = truncateArrays(v, maxItems, depth + 1);
+    }
+    return result;
+  }
+  return obj;
+}
+
+function stripNonEssential(obj: unknown, depth: number): unknown {
+  if (depth > 8) return obj;
+  if (Array.isArray(obj)) {
+    return obj.map((item) => stripNonEssential(item, depth + 1));
+  }
+  if (obj && typeof obj === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+      if (ESSENTIAL_FIELDS.has(k)) {
+        result[k] = stripNonEssential(v, depth + 1);
+      }
+      // Drop non-essential fields to save space
+    }
+    return result;
+  }
+  return obj;
+}
+
 function formatResult(data: unknown): string {
   const compressed = smartTruncate(data);
   const normalized = normalizeCodesInResult(compressed);
-  let json = JSON.stringify(normalized, null, 2);
 
-  // Siste sikkerhetsnett: kutt total lengde
-  if (json.length > MAX_TOTAL_LENGTH) {
-    json = json.slice(0, MAX_TOTAL_LENGTH) + "\n… [respons forkortet for å passe kontekstvindu]";
-  }
-
-  return json;
+  // Sikre at output alltid er gyldig JSON — trunkér strukturelt, aldri rå streng
+  const fitted = shrinkToFit(normalized, MAX_TOTAL_LENGTH);
+  return JSON.stringify(fitted, null, 2);
 }
 
 
