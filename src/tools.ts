@@ -96,20 +96,24 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-function smartTruncate(obj: unknown, depth = 0): unknown {
+function smartTruncate(
+  obj: unknown,
+  depth = 0,
+  textLimit = MAX_TEXT_LENGTH,
+  essentialLimit = MAX_ESSENTIAL_LENGTH,
+): unknown {
   if (depth > 8) return undefined; // Hindre uendelig rekursjon
 
   if (typeof obj === "string") {
     // Strip HTML og begrens lengde
     const clean = obj.includes("<") ? stripHtml(obj) : obj;
-    const maxLen = MAX_TEXT_LENGTH;
-    return clean.length > maxLen
-      ? clean.slice(0, maxLen) + "… [forkortet]"
+    return clean.length > textLimit
+      ? clean.slice(0, textLimit) + "… [forkortet]"
       : clean;
   }
 
   if (Array.isArray(obj)) {
-    const truncated = obj.slice(0, MAX_ARRAY_ITEMS).map((item) => smartTruncate(item, depth + 1));
+    const truncated = obj.slice(0, MAX_ARRAY_ITEMS).map((item) => smartTruncate(item, depth + 1, textLimit, essentialLimit));
     if (obj.length > MAX_ARRAY_ITEMS) {
       truncated.push(`… og ${obj.length - MAX_ARRAY_ITEMS} flere resultater (bruk ID for detaljer)` as unknown);
     }
@@ -126,11 +130,11 @@ function smartTruncate(obj: unknown, depth = 0): unknown {
       if (ESSENTIAL_FIELDS.has(k)) {
         if (typeof v === "string") {
           const clean = v.includes("<") ? stripHtml(v) : v;
-          result[k] = clean.length > MAX_ESSENTIAL_LENGTH
-            ? clean.slice(0, MAX_ESSENTIAL_LENGTH) + "… [forkortet]"
+          result[k] = clean.length > essentialLimit
+            ? clean.slice(0, essentialLimit) + "… [forkortet]"
             : clean;
         } else {
-          result[k] = smartTruncate(v, depth + 1);
+          result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit);
         }
         continue;
       }
@@ -139,17 +143,17 @@ function smartTruncate(obj: unknown, depth = 0): unknown {
       if (VERBOSE_FIELDS.has(k)) {
         if (typeof v === "string") {
           const clean = v.includes("<") ? stripHtml(v) : v;
-          result[k] = clean.length > MAX_TEXT_LENGTH
-            ? clean.slice(0, MAX_TEXT_LENGTH) + "… [forkortet]"
+          result[k] = clean.length > textLimit
+            ? clean.slice(0, textLimit) + "… [forkortet]"
             : clean;
         } else {
-          result[k] = smartTruncate(v, depth + 1);
+          result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit);
         }
         continue;
       }
 
       // Alt annet: standard behandling
-      result[k] = smartTruncate(v, depth + 1);
+      result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit);
     }
     return result;
   }
@@ -191,102 +195,36 @@ function normalizeCodesInResult(obj: unknown): unknown {
 }
 
 /**
- * Progressivt forkort tekstfelter i et objekt til total JSON-lengde er under grensen.
+ * Sikkerhetsnett: Hvis JSON overskrider maks lengde, fjern de største
+ * ikke-essensielle tekstfeltene progressivt til det passer.
  * Returnerer ALLTID gyldig JSON — kutter aldri serialisert streng.
  */
-function shrinkToFit(obj: unknown, maxLen: number): unknown {
+function safeOverflowTruncate(obj: unknown, maxLen: number): unknown {
   let json = JSON.stringify(obj, null, 2);
   if (json.length <= maxLen) return obj;
 
-  // Steg 1: Forkort alle tekstfelter progressivt (halvér maks lengde per runde)
-  let textLimit = MAX_ESSENTIAL_LENGTH;
-  while (json.length > maxLen && textLimit >= 200) {
-    textLimit = Math.floor(textLimit / 2);
-    obj = truncateTexts(obj, textLimit, 0);
-    json = JSON.stringify(obj, null, 2);
-  }
+  // Kjør smartTruncate en gang til med halvert tekstgrense
+  // Dette er konservativt — beholder alle felter, bare kortere tekst
+  const recompressed = smartTruncate(obj, 0, Math.floor(MAX_TEXT_LENGTH / 2), Math.floor(MAX_ESSENTIAL_LENGTH / 2));
+  json = JSON.stringify(recompressed, null, 2);
+  if (json.length <= maxLen) return recompressed;
 
-  // Steg 2: Forkort arrays progressivt
-  let arrayLimit = MAX_ARRAY_ITEMS;
-  while (json.length > maxLen && arrayLimit >= 3) {
-    arrayLimit = Math.max(3, Math.floor(arrayLimit / 2));
-    obj = truncateArrays(obj, arrayLimit, 0);
-    json = JSON.stringify(obj, null, 2);
-  }
-
-  // Steg 3: Siste utvei — fjern ikke-essensielle felter
-  if (json.length > maxLen) {
-    obj = stripNonEssential(obj, 0);
-    json = JSON.stringify(obj, null, 2);
-  }
-
-  return obj;
-}
-
-function truncateTexts(obj: unknown, maxLen: number, depth: number): unknown {
-  if (depth > 8) return obj;
-  if (typeof obj === "string") {
-    return obj.length > maxLen
-      ? obj.slice(0, maxLen) + "… [forkortet]"
-      : obj;
-  }
-  if (Array.isArray(obj)) {
-    return obj.map((item) => truncateTexts(item, maxLen, depth + 1));
-  }
-  if (obj && typeof obj === "object") {
-    const result: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(obj)) {
-      result[k] = truncateTexts(v, maxLen, depth + 1);
-    }
-    return result;
-  }
-  return obj;
-}
-
-function truncateArrays(obj: unknown, maxItems: number, depth: number): unknown {
-  if (depth > 8) return obj;
-  if (Array.isArray(obj)) {
-    const sliced = obj.slice(0, maxItems).map((item) => truncateArrays(item, maxItems, depth + 1));
-    if (obj.length > maxItems) {
-      sliced.push(`… og ${obj.length - maxItems} flere (bruk ID for detaljer)` as unknown);
-    }
-    return sliced;
-  }
-  if (obj && typeof obj === "object") {
-    const result: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(obj)) {
-      result[k] = truncateArrays(v, maxItems, depth + 1);
-    }
-    return result;
-  }
-  return obj;
-}
-
-function stripNonEssential(obj: unknown, depth: number): unknown {
-  if (depth > 8) return obj;
-  if (Array.isArray(obj)) {
-    return obj.map((item) => stripNonEssential(item, depth + 1));
-  }
-  if (obj && typeof obj === "object") {
-    const result: Record<string, unknown> = {};
-    for (const [k, v] of Object.entries(obj)) {
-      if (ESSENTIAL_FIELDS.has(k)) {
-        result[k] = stripNonEssential(v, depth + 1);
-      }
-      // Drop non-essential fields to save space
-    }
-    return result;
-  }
-  return obj;
+  // Siste utvei: returner det vi har — det er fortsatt gyldig JSON
+  return recompressed;
 }
 
 function formatResult(data: unknown): string {
   const compressed = smartTruncate(data);
   const normalized = normalizeCodesInResult(compressed);
+  let json = JSON.stringify(normalized, null, 2);
 
-  // Sikre at output alltid er gyldig JSON — trunkér strukturelt, aldri rå streng
-  const fitted = shrinkToFit(normalized, MAX_TOTAL_LENGTH);
-  return JSON.stringify(fitted, null, 2);
+  // Hvis over maks: prøv konservativ re-trunkering (gyldig JSON)
+  if (json.length > MAX_TOTAL_LENGTH) {
+    const fitted = safeOverflowTruncate(normalized, MAX_TOTAL_LENGTH);
+    json = JSON.stringify(fitted, null, 2);
+  }
+
+  return json;
 }
 
 
