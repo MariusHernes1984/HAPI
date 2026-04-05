@@ -739,15 +739,15 @@
           <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
         </svg>
       </div>
-      <h2>Hei! Hva lurer du paa?</h2>
+      <h2>Hei! Hva lurer du på?</h2>
       <p>
         Jeg henter faglig informasjon fra Helsedirektoratets retningslinjer, kodeverk og kvalitetsindikatorer.
-        Still et spoersmaal saa finner jeg svar fra riktig kilde.
+        Still et spørsmål så finner jeg svar fra riktig kilde.
       </p>
       <div class="suggestions">
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;</span>
-          <span>Hva er foerstevalg antibiotika ved akutt mellomoerebetennelse hos barn?</span>
+          <span>Hva er førstevalg antibiotika ved akutt mellomørebetennelse hos barn?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
@@ -759,7 +759,7 @@
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F9EC;</span>
-          <span>Hva er pakkeforloepet for brystkreft?</span>
+          <span>Hva er pakkeforløpet for brystkreft?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F3F7;&#xFE0F;&#x1F48A;</span>
@@ -767,11 +767,11 @@
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F4CA;&#x1F48A;</span>
-          <span>Hvordan ligger Norge an paa overlevelse ved hjerteinfarkt, og hva sier retningslinjene om akuttbehandling?</span>
+          <span>Hvordan ligger Norge an på overlevelse ved hjerteinfarkt, og hva sier retningslinjene om akuttbehandling?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;&#x1F4CA;</span>
-          <span>Hva er foerstevalg antibiotika ved pneumoni, og finnes det kvalitetsindikatorer for antibiotikabruk i sykehus?</span>
+          <span>Hva er førstevalg antibiotika ved pneumoni, og finnes det kvalitetsindikatorer for antibiotikabruk i sykehus?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
@@ -786,7 +786,7 @@
       <textarea
         id="input"
         class="input-field"
-        placeholder="Skriv et helsefaglig spoersmaal..."
+        placeholder="Skriv et helsefaglig spørsmål..."
         rows="1"
         onkeydown="handleKey(event)"
         oninput="autoResize(this)"
@@ -799,7 +799,7 @@
       </button>
     </div>
     <div class="disclaimer">
-      Informasjonen er hentet fra Helsedirektoratets offisielle kilder. Dette er ikke medisinsk raadgivning &mdash; kontakt lege for kliniske beslutninger.
+      Informasjonen er hentet fra Helsedirektoratets offisielle kilder. Dette er ikke medisinsk rådgivning &mdash; kontakt lege for kliniske beslutninger.
     </div>
   </div>
 
@@ -979,7 +979,7 @@
         <div class="bubble" style="border-color: #fecaca;">
           <strong style="color: #dc2626;">Beklager, noe gikk galt</strong>
           <p style="color: #7f1d1d; font-size: 0.85rem;">${escapeHtml(error)}</p>
-          <p style="font-size: 0.85rem;">Proev igjen, eller omformuler spoersmalet.</p>
+          <p style="font-size: 0.85rem;">Prøv igjen, eller omformuler spørsmålet.</p>
         </div>
       `;
       chat.appendChild(div);
@@ -1050,10 +1050,10 @@
 
       if (isFollowUp && conversationHistory.length > 0) {
         const lastExchange = conversationHistory[conversationHistory.length - 1];
-        return `Kontekst fra forrige spoersmaal: "${lastExchange.query}"
+        return `Kontekst fra forrige spørsmål: "${lastExchange.query}"
 Forrige svar handlet om: ${lastExchange.agents.map(a => AGENT_LABELS[a] || a).join(', ')}
 
-Nytt oppfoelgingsspoersmaal: ${query}`;
+Nytt oppfølgingsspørsmål: ${query}`;
       }
       return query;
     }

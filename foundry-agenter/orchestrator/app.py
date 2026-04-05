@@ -2,7 +2,7 @@
 FastAPI-app for HAPI Agent Orchestrator.
 
 Endepunkter:
-  POST /ask          — Send spoersmaal, faa orkestrert svar
+  POST /ask          — Send spørsmål, få orkestrert svar
   POST /ask/stream   — Streaming-versjon (SSE)
   GET  /health       — Helsesjekk
   GET  /agents       — List tilgjengelige agenter
@@ -41,7 +41,7 @@ PROJECT_ENDPOINT = os.environ.get(
 # --- Models ---
 
 class AskRequest(BaseModel):
-    query: str = Field(..., min_length=1, max_length=2000, description="Spoersmaal til HAPI-agentene")
+    query: str = Field(..., min_length=1, max_length=2000, description="Spørsmål til HAPI-agentene")
     use_llm_routing: bool = Field(False, description="Bruk LLM for routing ved lav konfidens")
 
 
@@ -103,7 +103,7 @@ STATIC_DIR = Path(__file__).parent / "static"
 
 @app.post("/ask", response_model=AskResponse)
 async def ask(request: AskRequest):
-    """Send et spoersmaal og faa et orkestrert svar fra HAPI-agentene."""
+    """Send et spørsmål og få et orkestrert svar fra HAPI-agentene."""
     logger.info(f"POST /ask: {request.query[:80]}")
 
     try:
@@ -182,12 +182,12 @@ async def health():
 
 @app.get("/agents")
 async def list_agents():
-    """List tilgjengelige agenter og deres formaal."""
+    """List tilgjengelige agenter og deres formål."""
     return {
         "agents": [
             {
                 "name": RETNINGSLINJE,
-                "description": "Retningslinjer, anbefalinger, pakkeforloep, antibiotika",
+                "description": "Retningslinjer, anbefalinger, pakkeforløp, antibiotika",
                 "mcp_tools": ["sok_innhold", "hent_retningslinje", "hent_anbefalinger", "hent_anbefaling",
                               "hent_innhold", "hent_innhold_id", "hent_pakkeforlop", "hent_pakkeforlop_id"],
             },

@@ -1,8 +1,8 @@
 """
 Router — klassifiserer brukerens intensjon og bestemmer hvilke agenter som skal kalles.
 
-Bruker keyword-matching som primaer metode (rask, deterministisk).
-Fallback til LLM-routing via orkestrator-agenten for tvetydige spoersmaal.
+Bruker keyword-matching som primær metode (rask, deterministisk).
+Fallback til LLM-routing via orkestrator-agenten for tvetydige spørsmål.
 """
 
 import re
@@ -49,7 +49,7 @@ KEYWORD_RULES: list[tuple[list[str], list[str]]] = [
     ),
 ]
 
-# Diagnosekode-moenster som trigger kodeverk foerst
+# Diagnosekode-mønster som trigger kodeverk først
 CODE_PATTERN = re.compile(
     r"\b([A-Z]\d{2}(?:\.\d{1,2})?)\b"  # ICD-10: J44, J44.1
     r"|\b(R\d{2})\b"                      # ICPC-2: R95
@@ -58,7 +58,7 @@ CODE_PATTERN = re.compile(
     re.IGNORECASE,
 )
 
-# Sammensatte spoersmaal — noekkelfaser som trigger flere agenter
+# Sammensatte spørsmål — nøkkelfaser som trigger flere agenter
 COMPOUND_TRIGGERS = [
     (["behandling", "statistikk"], [RETNINGSLINJE, STATISTIKK]),
     (["behandling", "kvalitet"], [RETNINGSLINJE, STATISTIKK]),
@@ -67,7 +67,7 @@ COMPOUND_TRIGGERS = [
     (["alt om", ""], [RETNINGSLINJE, KODEVERK, STATISTIKK]),
     (["sykehus", "maal"], [STATISTIKK, RETNINGSLINJE]),
     (["over", "under", "nasjonalt"], [STATISTIKK]),
-    # Legemiddel + behandling — trenger baade kodeverk og retningslinje
+    # Legemiddel + behandling — trenger både kodeverk og retningslinje
     (["legemiddel", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
     (["legemiddel", "behandling"], [KODEVERK, RETNINGSLINJE]),
     (["medisin", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
@@ -79,14 +79,14 @@ DRUG_NAMES = [
     "paracetamol", "ibux", "ibuprofen", "voltaren",
 ]
 
-# A2: NKI/statistikk-kontekst — naar disse er tilstede, skal sykdomsord
+# A2: NKI/statistikk-kontekst — når disse er tilstede, skal sykdomsord
 # IKKE trigge retningslinje i keyword-steget
 STATISTIKK_CONTEXT = [
     "kvalitetsindikator", "nki", "statistikk", "indikator",
     "maaloppnaaelse", "nasjonalt maal", "andel", "maalte verdi",
 ]
 
-# A3: Kodeverk-kontekst — naar disse er tilstede, skal sykdomsord
+# A3: Kodeverk-kontekst — når disse er tilstede, skal sykdomsord
 # IKKE trigge retningslinje i keyword-steget
 KODEVERK_CONTEXT = [
     "icd-10", "icd10", "icpc-2", "icpc2", "atc-kode", "atc kode",
@@ -106,13 +106,13 @@ class RoutingDecision:
     agents: list[str] = field(default_factory=list)
     requires_code_lookup: bool = False
     detected_codes: list[str] = field(default_factory=list)
-    confidence: str = "hoey"  # hoey, middels, lav
+    confidence: str = "høy"  # høy, middels, lav
     reasoning: str = ""
 
 
 def route(query: str) -> RoutingDecision:
     """
-    Klassifiser spoersmaal og bestem hvilke agenter som trengs.
+    Klassifiser spørsmål og bestem hvilke agenter som trengs.
 
     Returns:
         RoutingDecision med agenter, koder og konfidens.
@@ -120,7 +120,7 @@ def route(query: str) -> RoutingDecision:
     q = query.lower()
     decision = RoutingDecision()
 
-    # Steg 1: Sjekk for diagnosekoder i spoersmaalet
+    # Steg 1: Sjekk for diagnosekoder i spørsmålet
     code_matches = CODE_PATTERN.findall(query)
     if code_matches:
         codes = [c for group in code_matches for c in group if c]
@@ -129,7 +129,7 @@ def route(query: str) -> RoutingDecision:
         decision.agents.append(KODEVERK)
         decision.reasoning += f"Fant kode(r): {codes}. "
 
-    # Steg 1b: Sjekk om spoersmalet nevner et kjent legemiddelnavn
+    # Steg 1b: Sjekk om spørsmålet nevner et kjent legemiddelnavn
     # A4: Alltid kodeverk, men retningslinje KUN med behandlings-intent
     for drug in DRUG_NAMES:
         if drug in q:
@@ -143,16 +143,16 @@ def route(query: str) -> RoutingDecision:
                 decision.reasoning += f"Legemiddel '{drug}' — kun kodeverk (ingen behandlings-intent). "
             break
 
-    # Steg 2: Sjekk sammensatte triggere foerst
+    # Steg 2: Sjekk sammensatte triggere først
     for triggers, agents in COMPOUND_TRIGGERS:
         if all(t in q for t in triggers if t):
             for a in agents:
                 if a not in decision.agents:
                     decision.agents.append(a)
-            decision.reasoning += f"Sammensatt spoersmaal ({', '.join(triggers)}). "
+            decision.reasoning += f"Sammensatt spørsmål ({', '.join(triggers)}). "
             break
 
-    # Bestem kontekst for aa unngaa over-routing
+    # Bestem kontekst for å unngå over-routing
     has_statistikk_context = any(kw in q for kw in STATISTIKK_CONTEXT)
     has_kodeverk_context = any(kw in q for kw in KODEVERK_CONTEXT)
 
@@ -163,10 +163,10 @@ def route(query: str) -> RoutingDecision:
                 for a in agents:
                     if a in decision.agents:
                         continue
-                    # A2: Blokker retningslinje naar statistikk-kontekst er tilstede
+                    # A2: Blokker retningslinje når statistikk-kontekst er tilstede
                     if a == RETNINGSLINJE and has_statistikk_context:
                         continue
-                    # A3: Blokker retningslinje naar kodeverk-kontekst er tilstede
+                    # A3: Blokker retningslinje når kodeverk-kontekst er tilstede
                     if a == RETNINGSLINJE and has_kodeverk_context:
                         continue
                     # A5: "medisin" i behandlingskontekst skal ikke trigge kodeverk
@@ -186,7 +186,7 @@ def route(query: str) -> RoutingDecision:
 
     # Steg 5: Sett konfidens
     if len(decision.agents) == 1 and decision.confidence != "lav":
-        decision.confidence = "hoey"
+        decision.confidence = "høy"
         decision.reasoning += f"Entydig routing til {decision.agents[0]}."
     elif len(decision.agents) > 1:
         decision.confidence = "middels"
@@ -197,23 +197,23 @@ def route(query: str) -> RoutingDecision:
 
 # --- LLM-routing (fallback) ---
 
-LLM_ROUTING_PROMPT = """Du er en ruter. Klassifiser spoersmalet og returner KUN en JSON-liste med agenter.
+LLM_ROUTING_PROMPT = """Du er en ruter. Klassifiser spørsmålet og returner KUN en JSON-liste med agenter.
 
 Agenter:
-- hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforloep, antibiotika
+- hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforløp, antibiotika
 - hapi-kodeverk-agent: kodeverk (ICD-10, ICPC-2, SNOMED, ATC), legemiddeldata, kode-mapping
 - hapi-statistikk-agent: nasjonale kvalitetsindikatorer (NKI), statistikk, trender
 
 
 Svar BARE med JSON: {"agents": ["agent-navn-1", "agent-navn-2"]}
 
-Spoersmaal: {query}"""
+Spørsmål: {query}"""
 
 
 def route_with_llm(query: str, openai_client) -> RoutingDecision:
     """
-    Bruk LLM for aa rute tvetydige spoersmaal.
-    Kalles kun naar keyword-routing har lav konfidens.
+    Bruk LLM for å rute tvetydige spørsmål.
+    Kalles kun når keyword-routing har lav konfidens.
     """
     import json as json_mod
 

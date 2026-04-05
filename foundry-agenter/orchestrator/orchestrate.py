@@ -43,11 +43,11 @@ class OrchestrationResult:
 # --- Konfigurasjon ---
 
 SYNTHESIS_PROMPT = """Du er HAPI Helseassistent — et multi-agent orkestreringsystem.
-Du kombinerer svar fra spesialiserte agenter til ett sammenhengende svar paa norsk.
+Du kombinerer svar fra spesialiserte agenter til ett sammenhengende svar på norsk.
 
-Brukerens spoersmaal: {query}
+Brukerens spørsmål: {query}
 
-Foelgende agenter ble kalt via HAPI MCP Server (Helsedirektoratets API):
+Følgende agenter ble kalt via HAPI MCP Server (Helsedirektoratets API):
 {agent_outputs}
 
 REGLER:
@@ -55,29 +55,29 @@ REGLER:
    doseringsanbefalinger, preparatnavn og datoer skal gjengis ORDRETT fra agentsvarene.
    Aldri utelat en kode eller et tall som en agent oppga.
 
-2. LOGISK REKKEFOEGLE: diagnose/kode -> behandling/retningslinje -> statistikk/NKI
+2. LOGISK REKKEFØLGE: diagnose/kode -> behandling/retningslinje -> statistikk/NKI
 
 3. IKKE BLAND DOMENER: Presenter aldri retningslinje-innhold som NKI-indikatorer
    eller kodeverk-data som behandlingsanbefalinger. Hold domenene separate.
 
-4. KONFLIKTHAANDTERING: Hvis agenter gir motstridende info, presenter begge
-   versjoner og paapek uoverensstemmelsen.
+4. KONFLIKTHÅNDTERING: Hvis agenter gir motstridende info, presenter begge
+   versjoner og påpek uoverensstemmelsen.
 
 5. Behold faglig presisjon — ikke endre meningsinnhold. Ikke legg til egen kunnskap.
 
-6. Hold svaret konsist men komplett. Bruk overskrifter for aa strukturere.
+6. Hold svaret konsist men komplett. Bruk overskrifter for å strukturere.
 
 7. Avslutt ALLTID svaret med en kildelinje:
    "Kilde: Helsedirektoratets retningslinjer via HAPI (agenter: {agent_names})"
 
 8. Du skal ALDRI si at du ikke har orkestrert agenter — det HAR du.
-9. Du skal ALDRI si at du brukte web-soek — du brukte KUN HAPI MCP Server."""
+9. Du skal ALDRI si at du brukte web-søk — du brukte KUN HAPI MCP Server."""
 
 SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratets database via HAPI MCP Server (agent: {agent_name})*"
 
 
 AGENT_TIMEOUT_S = 120  # Maks ventetid per agent-kall (sekunder)
-AGENT_MAX_RETRIES = 2  # Antall forsoek per agent
+AGENT_MAX_RETRIES = 2  # Antall forsøk per agent
 
 
 async def _call_agent_once(
@@ -85,7 +85,7 @@ async def _call_agent_once(
     agent_name: str,
     query: str,
 ) -> AgentResult:
-    """Kall en Foundry-agent (ett forsoek)."""
+    """Kall en Foundry-agent (ett forsøk)."""
     start = time.monotonic()
 
     try:
@@ -106,7 +106,7 @@ async def _call_agent_once(
         output = response.output_text
         duration = int((time.monotonic() - start) * 1000)
 
-        # Rydd opp (ignorer feil ved sletting — conversation kan allerede vaere slettet)
+        # Rydd opp (ignorer feil ved sletting — conversation kan allerede være slettet)
         try:
             await openai.conversations.delete(conversation.id)
         except Exception:
@@ -141,7 +141,7 @@ async def call_agent(
     """Kall en Foundry-agent med timeout og retry.
 
     - Timeout: Avbryt kall som tar over AGENT_TIMEOUT_S sekunder.
-    - Retry: Proev paa nytt ved timeout eller nettverksfeil (opp til AGENT_MAX_RETRIES).
+    - Retry: Prøv på nytt ved timeout eller nettverksfeil (opp til AGENT_MAX_RETRIES).
     """
     retryable_keywords = ("timed out", "timeout", "credential", "token",
                           "connection", "502", "503", "504")
@@ -159,7 +159,7 @@ async def call_agent(
             # Agent returnerte feil — sjekk om den er retryable
             err_lower = (result.error or "").lower()
             if any(kw in err_lower for kw in retryable_keywords) and attempt < AGENT_MAX_RETRIES:
-                logger.warning(f"  {agent_name}: retryable feil (forsoek {attempt}), proever igjen...")
+                logger.warning(f"  {agent_name}: retryable feil (forsøk {attempt}), prøver igjen...")
                 await asyncio.sleep(2)
                 last_result = result
                 continue
@@ -167,7 +167,7 @@ async def call_agent(
 
         except asyncio.TimeoutError:
             duration = int(AGENT_TIMEOUT_S * 1000)
-            logger.warning(f"  {agent_name}: TIMEOUT etter {AGENT_TIMEOUT_S}s (forsoek {attempt})")
+            logger.warning(f"  {agent_name}: TIMEOUT etter {AGENT_TIMEOUT_S}s (forsøk {attempt})")
             last_result = AgentResult(
                 agent_name=agent_name,
                 output="",
@@ -181,7 +181,7 @@ async def call_agent(
 
         except Exception as e:
             duration = 0
-            logger.error(f"  {agent_name}: uventet feil (forsoek {attempt}): {e}")
+            logger.error(f"  {agent_name}: uventet feil (forsøk {attempt}): {e}")
             last_result = AgentResult(
                 agent_name=agent_name,
                 output="",
@@ -215,7 +215,7 @@ async def synthesize(
     successful = [r for r in results if r.success and r.output]
 
     if not successful:
-        return "Beklager, ingen av agentene klarte aa hente data for dette spoersmalet."
+        return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet."
 
     # Hvis bare ett resultat, legg til kildemarkering
     if len(successful) == 1:
@@ -265,7 +265,7 @@ async def orchestrate(
 
     Args:
         project_endpoint: Azure AI Foundry prosjekt-URL
-        query: Brukerens spoersmaal
+        query: Brukerens spørsmål
         use_llm_routing: Bruk LLM for routing ved lav konfidens
 
     Returns:
@@ -318,7 +318,7 @@ async def orchestrate(
 # --- CLI for testing ---
 
 async def _main():
-    """Kjor orkestrering fra kommandolinjen."""
+    """Kjør orkestrering fra kommandolinjen."""
     import os
     import sys
 
@@ -331,15 +331,13 @@ async def _main():
 
     query = " ".join(sys.argv[1:]) if len(sys.argv) > 1 else "Hva er anbefalt behandling for KOLS?"
 
-    print(f"\nSpoersmaal: {query}\n")
+    print(f"\nSpørsmål: {query}\n")
 
     result = await orchestrate(endpoint, query)
 
-    safe = lambda s: s.encode("ascii", errors="replace").decode("ascii")
-
     print(f"\n{'='*60}")
     print(f"SVAR:\n")
-    print(safe(result.final_answer))
+    print(result.final_answer)
     print(f"\n{'='*60}")
     print(f"Routing: {result.routing.agents} (konfidens: {result.routing.confidence})")
     print(f"Tid: {result.total_duration_ms}ms")
