@@ -60,6 +60,17 @@ const ESSENTIAL_FIELDS = new Set([
   "raadTekst", "intro", "ingress",
 ]);
 
+// Klinisk-kritiske arrayfelter — ALDRI trunkeres til MAX_ARRAY_ITEMS.
+// Disse inneholder dosering, behandlingsalternativer og tidsfrister
+// som er kjernedata for retningslinje-agenten.
+const CRITICAL_ARRAY_FIELDS = new Set([
+  "behandlingsregimer", "doseringsregimer", "kontraindikasjoner",
+  "forlopstider", "tidsfrister",
+  "anbefalinger", "tiltak",
+  "medikamenter", "legemidler",
+  "trinn", "steg",
+]);
+
 // Felter som ofte er store og kan trygt forkortes
 // NB: tekst, innhold, beskrivelse etc. er naa ESSENTIAL for aa bevare klinisk innhold
 const VERBOSE_FIELDS = new Set([
@@ -67,6 +78,7 @@ const VERBOSE_FIELDS = new Set([
 ]);
 
 // Felter som trygt kan fjernes for å spare plass
+// Utvidet aggressivt for å gi mer rom til klinisk innhold
 const DROPPABLE_FIELDS = new Set([
   "links", "lenker", "referanser", "references",
   "vedlegg", "attachments", "metadata",
@@ -75,11 +87,23 @@ const DROPPABLE_FIELDS = new Set([
   "sortering", "sorting", "order",
   "opphavsinformasjon", "endringshistorikk",
   "spraak", "language",
+  // Utvidet: felter som tar plass uten klinisk verdi
+  "relatertInnhold", "relatert", "related",
+  "historikk", "versjoner", "versions",
+  "publiseringsdata", "publiseringsinfo",
+  "redaksjoneltInnhold", "redaksjonell",
+  "kontaktinformasjon", "kontakt",
+  "ikrafttredelse", "hoeringsfrist",
+  "eier", "forfatter", "author", "owner",
+  "godkjenner", "godkjentAv",
+  "tags", "emneord", "tema", "tema2",
+  "eksterneLenker", "interneLenker",
+  "dokumentreferanser", "lovReferanser",
 ]);
 
-const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
+const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en vanlig array
 const MAX_TEXT_LENGTH = 2000;     // Maks tegn per tekstfelt
-const MAX_ESSENTIAL_LENGTH = 4000; // Lengre grense for essensielle felter (dosering, anbefalinger)
+const MAX_ESSENTIAL_LENGTH = 6000; // Økt fra 4000 — bevarer mer av dosering/anbefalinger/forløpstider
 const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde — 120K testet og feilet (agenter drukner i data)
 const DEFAULT_SEARCH_TOP = 15;    // Maks antall resultater fra HAPI søk-API
 
@@ -101,20 +125,29 @@ function smartTruncate(
   depth = 0,
   textLimit = MAX_TEXT_LENGTH,
   essentialLimit = MAX_ESSENTIAL_LENGTH,
+  parentKey?: string,
 ): unknown {
-  if (depth > 8) return undefined; // Hindre uendelig rekursjon
+  if (depth > 12) return undefined; // Økt fra 8 — doseringsdata kan ligge dypt
 
   if (typeof obj === "string") {
-    // Strip HTML og begrens lengde
     const clean = obj.includes("<") ? stripHtml(obj) : obj;
-    return clean.length > textLimit
-      ? clean.slice(0, textLimit) + "… [forkortet]"
+    // Bruk essential-grense hvis vi er inne i et klinisk-kritisk felt
+    const limit = parentKey && (ESSENTIAL_FIELDS.has(parentKey) || CRITICAL_ARRAY_FIELDS.has(parentKey))
+      ? essentialLimit
+      : textLimit;
+    return clean.length > limit
+      ? clean.slice(0, limit) + "… [forkortet]"
       : clean;
   }
 
   if (Array.isArray(obj)) {
-    const truncated = obj.slice(0, MAX_ARRAY_ITEMS).map((item) => smartTruncate(item, depth + 1, textLimit, essentialLimit));
-    if (obj.length > MAX_ARRAY_ITEMS) {
+    // Klinisk-kritiske arrays: behold ALLE elementer (dosering, behandlingsregimer etc.)
+    const isCritical = parentKey && CRITICAL_ARRAY_FIELDS.has(parentKey);
+    const maxItems = isCritical ? obj.length : MAX_ARRAY_ITEMS;
+    const truncated = obj.slice(0, maxItems).map((item) =>
+      smartTruncate(item, depth + 1, textLimit, essentialLimit, parentKey),
+    );
+    if (!isCritical && obj.length > MAX_ARRAY_ITEMS) {
       truncated.push(`… og ${obj.length - MAX_ARRAY_ITEMS} flere resultater (bruk ID for detaljer)` as unknown);
     }
     return truncated;
@@ -126,7 +159,7 @@ function smartTruncate(
       // Fjern felter som ikke tilfører klinisk verdi
       if (DROPPABLE_FIELDS.has(k)) continue;
 
-      // Essensielle felter: behold med høyere grense
+      // Essensielle felter: behold med høyere grense og propager parentKey
       if (ESSENTIAL_FIELDS.has(k)) {
         if (typeof v === "string") {
           const clean = v.includes("<") ? stripHtml(v) : v;
@@ -134,7 +167,8 @@ function smartTruncate(
             ? clean.slice(0, essentialLimit) + "… [forkortet]"
             : clean;
         } else {
-          result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit);
+          // Propager feltnavnet som parentKey slik at barn arver klinisk-kritisk status
+          result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit, k);
         }
         continue;
       }
@@ -147,13 +181,13 @@ function smartTruncate(
             ? clean.slice(0, textLimit) + "… [forkortet]"
             : clean;
         } else {
-          result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit);
+          result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit, k);
         }
         continue;
       }
 
       // Alt annet: standard behandling
-      result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit);
+      result[k] = smartTruncate(v, depth + 1, textLimit, essentialLimit, k);
     }
     return result;
   }
