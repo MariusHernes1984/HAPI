@@ -80,7 +80,7 @@ const DROPPABLE_FIELDS = new Set([
 const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
 const MAX_TEXT_LENGTH = 2000;     // Maks tegn per tekstfelt
 const MAX_ESSENTIAL_LENGTH = 4000; // Lengre grense for essensielle felter (dosering, anbefalinger)
-const MAX_TOTAL_LENGTH = 120000;  // Maks total JSON-lengde — testet opp fra 60K for bedre retningslinje-dekning
+const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde — 120K testet og feilet (agenter drukner i data)
 const DEFAULT_SEARCH_TOP = 15;    // Maks antall resultater fra HAPI søk-API
 
 function stripHtml(html: string): string {
@@ -195,22 +195,66 @@ function normalizeCodesInResult(obj: unknown): unknown {
 }
 
 /**
- * Sikkerhetsnett: Hvis JSON overskrider maks lengde, fjern de største
- * ikke-essensielle tekstfeltene progressivt til det passer.
+ * Fjern dype ikke-essensielle felter fra objekter.
+ * Beholder bare felter i ESSENTIAL_FIELDS + klinisk-relevante nøkler.
+ */
+function stripDeepNonEssentials(obj: unknown, depth = 0): unknown {
+  if (depth > 6) return undefined;
+  if (typeof obj === "string") return obj;
+  if (Array.isArray(obj)) {
+    return obj.map((item) => stripDeepNonEssentials(item, depth + 1)).filter(Boolean);
+  }
+  if (obj && typeof obj === "object") {
+    const result: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(obj)) {
+      if (DROPPABLE_FIELDS.has(k)) continue;
+      // På dype nivåer (>2): behold kun essensielle felter
+      if (depth > 2 && !ESSENTIAL_FIELDS.has(k) && !VERBOSE_FIELDS.has(k)) continue;
+      result[k] = stripDeepNonEssentials(v, depth + 1);
+    }
+    return Object.keys(result).length > 0 ? result : undefined;
+  }
+  return obj;
+}
+
+/**
+ * Differensiert overflow-håndtering:
+ * Trinn 1: Halver tekstgrenser (konservativt)
+ * Trinn 2: Reduser array-størrelse
+ * Trinn 3: Strip dype ikke-essensielle felter
  * Returnerer ALLTID gyldig JSON — kutter aldri serialisert streng.
  */
-function safeOverflowTruncate(obj: unknown, maxLen: number): unknown {
-  let json = JSON.stringify(obj, null, 2);
-  if (json.length <= maxLen) return obj;
+function adaptiveOverflowTruncate(obj: unknown, maxLen: number): unknown {
+  // Trinn 1: Halver tekstgrenser
+  let result = smartTruncate(obj, 0, Math.floor(MAX_TEXT_LENGTH / 2), Math.floor(MAX_ESSENTIAL_LENGTH / 2));
+  let json = JSON.stringify(result, null, 2);
+  if (json.length <= maxLen) return result;
 
-  // Kjør smartTruncate en gang til med halvert tekstgrense
-  // Dette er konservativt — beholder alle felter, bare kortere tekst
-  const recompressed = smartTruncate(obj, 0, Math.floor(MAX_TEXT_LENGTH / 2), Math.floor(MAX_ESSENTIAL_LENGTH / 2));
-  json = JSON.stringify(recompressed, null, 2);
-  if (json.length <= maxLen) return recompressed;
+  // Trinn 2: Ytterligere halvering + reduser arrays til 8 elementer
+  const aggressiveArrayLimit = 8;
+  result = smartTruncate(obj, 0, Math.floor(MAX_TEXT_LENGTH / 4), Math.floor(MAX_ESSENTIAL_LENGTH / 2));
+  if (Array.isArray(result)) {
+    result = (result as unknown[]).slice(0, aggressiveArrayLimit);
+  } else if (result && typeof result === "object") {
+    // Reduser arrays inne i toppnivå-objektet
+    const r = result as Record<string, unknown>;
+    for (const [k, v] of Object.entries(r)) {
+      if (Array.isArray(v) && v.length > aggressiveArrayLimit) {
+        r[k] = [...v.slice(0, aggressiveArrayLimit), `… og ${v.length - aggressiveArrayLimit} flere (bruk ID for detaljer)`];
+      }
+    }
+  }
+  json = JSON.stringify(result, null, 2);
+  if (json.length <= maxLen) return result;
+
+  // Trinn 3: Strip dype ikke-essensielle felter
+  result = stripDeepNonEssentials(result);
+  result = smartTruncate(result, 0, Math.floor(MAX_TEXT_LENGTH / 4), Math.floor(MAX_ESSENTIAL_LENGTH / 3));
+  json = JSON.stringify(result, null, 2);
+  if (json.length <= maxLen) return result;
 
   // Siste utvei: returner det vi har — det er fortsatt gyldig JSON
-  return recompressed;
+  return result;
 }
 
 function formatResult(data: unknown): string {
@@ -218,11 +262,12 @@ function formatResult(data: unknown): string {
   const normalized = normalizeCodesInResult(compressed);
   let json = JSON.stringify(normalized, null, 2);
 
-  // Hvis over maks: prøv konservativ re-trunkering (gyldig JSON)
-  if (json.length > MAX_TOTAL_LENGTH) {
-    const fitted = safeOverflowTruncate(normalized, MAX_TOTAL_LENGTH);
-    json = JSON.stringify(fitted, null, 2);
-  }
+  // Hvis under maks: returner direkte (vanlig case for kodeverk/statistikk)
+  if (json.length <= MAX_TOTAL_LENGTH) return json;
+
+  // Over maks: bruk adaptiv overflow-håndtering (retningslinje-innhold)
+  const fitted = adaptiveOverflowTruncate(normalized, MAX_TOTAL_LENGTH);
+  json = JSON.stringify(fitted, null, 2);
 
   return json;
 }
