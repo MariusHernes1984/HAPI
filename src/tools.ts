@@ -80,7 +80,7 @@ const DROPPABLE_FIELDS = new Set([
 const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en array
 const MAX_TEXT_LENGTH = 2000;     // Maks tegn per tekstfelt
 const MAX_ESSENTIAL_LENGTH = 4000; // Lengre grense for essensielle felter (dosering, anbefalinger)
-const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde — holdes lav for Azure AI Foundry MCP-kompatibilitet
+const MAX_TOTAL_LENGTH = 120000;  // Maks total JSON-lengde — testet opp fra 60K for bedre retningslinje-dekning
 const DEFAULT_SEARCH_TOP = 15;    // Maks antall resultater fra HAPI søk-API
 
 function stripHtml(html: string): string {
