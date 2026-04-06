@@ -1,7 +1,17 @@
 {
   "hapi-retningslinje-agent": {
     "name": "hapi-retningslinje-agent",
-    "id": "hapi-retningslinje-agent:19",
-    "version": "19"
+    "id": "hapi-retningslinje-agent:20",
+    "version": "20"
+  },
+  "hapi-kodeverk-agent": {
+    "name": "hapi-kodeverk-agent",
+    "id": "hapi-kodeverk-agent:13",
+    "version": "13"
+  },
+  "hapi-statistikk-agent": {
+    "name": "hapi-statistikk-agent",
+    "id": "hapi-statistikk-agent:17",
+    "version": "17"
   }
 }

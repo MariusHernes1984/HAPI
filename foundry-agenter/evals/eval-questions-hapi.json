@@ -175,6 +175,7 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva sier retningslinjene om oppfoelging og sekundaerprevensjon etter akutt koronarsyndrom med PCI?",
       "tema": "AKS sekundaerprevensjon",
+      "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICD-10 I21 (AKS) og sok/infobit gir irrelevante treff. Medikamentell sekundaerprevensjon finnes ikke i datagrunnlaget.",
       "forventet_routing": ["hapi-retningslinje-agent"],
       "faktasjekk": {
         "skal_inneholde": [
@@ -187,7 +188,9 @@
           "Kun livsstilsendringer uten medikamenter",
           "Antikoagulasjon som standard (kun ved tilleggsindikasjoner)"
         ],
-        "kilde_krav": "Helsedirektoratet"
+        "kilde_krav": "Helsedirektoratet",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "HAPI QA-API har ingen data om medikamentell sekundaerprevensjon etter AKS. Aerlighet om manglende data er BESTATT."
       }
     },
     {
@@ -502,6 +505,7 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Barnet mitt paa 8 aar har astma og vi er redde for aa gi for mye medisin. Han har hatt tre innleggelser i aar. Hva anbefales for barn med daarlig kontrollert astma?",
       "tema": "Astma barn",
+      "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICPC-2 R96 (astma) og sok/infobit gir irrelevante treff. Trinnvis behandlingsplan for barn finnes ikke i datagrunnlaget.",
       "forventet_routing": ["hapi-retningslinje-agent"],
       "faktasjekk": {
         "skal_inneholde": [
@@ -513,7 +517,9 @@
           "Anbefaling om aa stoppe medisin uten legevurdering",
           "At astmamedisin generelt er farlig for barn"
         ],
-        "kilde_krav": "Helsedirektoratet"
+        "kilde_krav": "Helsedirektoratet",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "HAPI QA-API har ingen trinnvis astmabehandling for barn. Aerlighet om manglende data er BESTATT."
       }
     },
     {

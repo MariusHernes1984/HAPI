@@ -136,9 +136,11 @@ async def llm_fact_check(
         text = response.output_text.strip()
 
         # Ekstraher JSON fra svaret
-        start = text.index("{")
-        end = text.rindex("}") + 1
-        result = json.loads(text[start:end])
+        start = text.find("{")
+        end = text.rfind("}")
+        if start == -1 or end == -1 or end < start:
+            raise ValueError(f"Ingen JSON funnet i LLM-svar: {text[:200]}")
+        result = json.loads(text[start:end + 1])
 
         # Valider at alle noedvendige felter finnes
         result.setdefault("score", "MANGLER")
