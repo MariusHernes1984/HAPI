@@ -30,7 +30,17 @@ async function hapiGet(
     throw new Error(`HAPI API ${res.status}: ${res.statusText} — ${body}`);
   }
 
-  return res.json();
+  const text = await res.text();
+  if (!text) {
+    return { _empty: true, _note: `HAPI returnerte tom body for ${path}` };
+  }
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    throw new Error(
+      `HAPI API ${path}: ugyldig JSON-respons (${(err as Error).message}). Body: ${text.slice(0, 200)}`
+    );
+  }
 }
 
 // Felter som er viktige for klinisk kvalitet — beholdes alltid
