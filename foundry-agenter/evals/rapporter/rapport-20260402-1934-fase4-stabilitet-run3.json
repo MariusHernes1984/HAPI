@@ -834,5 +834,19 @@
       "answer_length": 1232,
       "answer_preview": "Jeg finner ingen behandlingsanbefalinger for diagnosekode **XYZ99** i Helsedirektoratets innhold eller kodeverk.\n\nOppslag som er gjort:\n- Søk i Helsedirektoratets innhold etter **“XYZ99”** → ingen treff  \n- Bredere søk etter **“XYZ”** → ingen treff  \n- Oppslag i anbefalinger med **ICD‑10‑kode XYZ99*"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 1177580,
+    "tokens_output": 35386,
+    "tokens_total": 1212966,
+    "kostnad_nok": 28.1179,
+    "kostnad_per_spoersmaal_nok": 0.9373,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

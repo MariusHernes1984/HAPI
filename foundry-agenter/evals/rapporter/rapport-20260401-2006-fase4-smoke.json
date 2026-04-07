@@ -105,5 +105,19 @@
       "answer_length": 1578,
       "answer_preview": "Jeg finner **ingen nasjonale anbefalinger om GLP‑1‑reseptoragonister eller Ozempic** i treffene fra Helsedirektoratets API i denne samtalen. Derfor kan jeg ikke presentere en retningslinjeanbefaling om disse legemidlene basert på tilgjengelige MCP‑data.\n\nDet som faktisk finnes i retningslinjeinnhold"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 36240,
+    "tokens_output": 1140,
+    "tokens_total": 37380,
+    "kostnad_nok": 0.8732,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

@@ -101,5 +101,19 @@
       ],
       "duration_ms": 0
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 48320,
+    "tokens_output": 1520,
+    "tokens_total": 49840,
+    "kostnad_nok": 1.1642,
+    "kostnad_per_spoersmaal_nok": 0.291,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

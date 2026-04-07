@@ -820,5 +820,19 @@
       "answer_length": 1024,
       "answer_preview": "Jeg finner ingen treff for diagnosekode **XYZ99** i Helsedirektoratets innhold. Det finnes verken retningslinjer, faglige råd eller kodeverksoppføringer for denne koden i tilgjengelige data.\n\nSøk som er gjort:\n- Søk etter kode **“XYZ99”** → ingen treff  \n- Søk etter fritekst **“XYZ99 diagnosekode”**"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 127833,
+    "tokens_output": 3629,
+    "tokens_total": 131462,
+    "kostnad_nok": 3.0197,
+    "kostnad_per_spoersmaal_nok": 0.1007,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

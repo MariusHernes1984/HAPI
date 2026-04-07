@@ -816,5 +816,19 @@
       "answer_length": 934,
       "answer_preview": "For diagnosekode **XYZ99** finnes det ingen oppføringer eller behandlingsanbefalinger i Helsedirektoratets tilgjengelige innhold.\n\nDiagnose/kode  \nSøk i Helsedirektoratets materiale ga ingen treff for **XYZ99**. Dette gjelder både:\n- fritekstsøk på **“XYZ99”**\n- bredere søk på **“XYZ”**\n- oppslag fi"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 362400,
+    "tokens_output": 11400,
+    "tokens_total": 373800,
+    "kostnad_nok": 8.7318,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

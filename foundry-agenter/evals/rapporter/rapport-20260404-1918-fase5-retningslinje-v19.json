@@ -814,5 +814,19 @@
       "answer_length": 981,
       "answer_preview": "**Diagnosekode: XYZ99**\n\nJeg fant **ingen gyldig diagnosekode “XYZ99”** i Helsedirektoratets innhold.\n\nSøk som er gjort:\n- Fritekstsøk i Helsedirektoratets innhold: **ingen treff**\n- Bredere fritekstsøk: **ingen treff**\n- Filtrering av anbefalinger på **ICD‑10 kode XYZ99**: **ingen treff**\n- MCP‑søk"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 370594,
+    "tokens_output": 12876,
+    "tokens_total": 383470,
+    "kostnad_nok": 9.1168,
+    "kostnad_per_spoersmaal_nok": 0.3039,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

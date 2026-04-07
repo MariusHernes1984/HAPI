@@ -97,5 +97,19 @@
       "answer_length": 1259,
       "answer_preview": "**Førstevalg ved samfunnservervet pneumoni hos voksen innlagt på sengepost (ikke intensiv):**\n\n**Standard behandlingsregime (førstevalg)**  \n- **Benzylpenicillin (penicillin G)**  \n- **Dose:** 1,2 g intravenøst x 4\n\nDette dekker primært **Streptococcus pneumoniae**, som er vanligste årsak til samfun"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 36240,
+    "tokens_output": 1140,
+    "tokens_total": 37380,
+    "kostnad_nok": 0.8732,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

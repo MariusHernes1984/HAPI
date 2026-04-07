@@ -833,5 +833,19 @@
       "answer_length": 1032,
       "answer_preview": "**Diagnose/kode**  \nJeg finner ingen diagnosekode **“XYZ99”** i Helsedirektoratets tilgjengelige innhold via HAPI/MCP‑søk.\n\nUtførte søk:  \n- Fritekstsøk: **“XYZ99”**  \n- Fritekstsøk: **“diagnosekode XYZ99”**  \n- Søk etter anbefalinger med **ICD‑10 kode = XYZ99**  \n- Søk: **“XYZ99 diagnose”**\n\nResult"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 45610,
+    "tokens_output": 1498,
+    "tokens_total": 47108,
+    "kostnad_nok": 1.1087,
+    "kostnad_per_spoersmaal_nok": 0.037,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

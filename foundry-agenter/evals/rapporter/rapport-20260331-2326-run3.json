@@ -827,5 +827,19 @@
       "answer_length": 387,
       "answer_preview": "Jeg finner ikke diagnosekoden **XYZ99** i vanlige kodeverk som **ICD‑10** eller **ICPC‑2**.\n\nDet kan være at:\n- koden er skrevet feil  \n- den tilhører et annet kodeverk  \n- eller det er en lokal/eksempel‑kode\n\nOppgi gjerne:\n- hvilket **kodeverk** (ICD‑10, ICPC‑2, SNOMED, annet)  \n- eller **diagnosen"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 362400,
+    "tokens_output": 11400,
+    "tokens_total": 373800,
+    "kostnad_nok": 8.7318,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

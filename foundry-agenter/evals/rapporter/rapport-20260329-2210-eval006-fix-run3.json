@@ -48,5 +48,19 @@
       "answer_length": 1459,
       "answer_preview": "**Pakkeforløp for brystkreft** starter når spesialisthelsetjenesten mottar en henvisning med **begrunnet mistanke om brystkreft**. Formålet er et standardisert og koordinert utrednings- og behandlingsforløp uten unødvendig forsinkelse.\n\n### Hovedfaser i pakkeforløpet\n1. **Henvisning mottatt i spesia"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

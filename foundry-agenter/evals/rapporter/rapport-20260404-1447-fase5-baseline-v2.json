@@ -819,5 +819,19 @@
       "answer_length": 1063,
       "answer_preview": "**Diagnosekode:** XYZ99\n\nJeg finner ingen innhold i Helsedirektoratets kilder for diagnosekode **XYZ99**, og dermed heller ingen behandlingsanbefalinger.\n\nGjennomførte oppslag:\n- Søk i Helsedirektoratets innhold på **“XYZ99”** → ingen treff  \n- Bredere søk på **“XYZ”** → ingen treff  \n- Oppslag i an"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 362400,
+    "tokens_output": 11400,
+    "tokens_total": 373800,
+    "kostnad_nok": 8.7318,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

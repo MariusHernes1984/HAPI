@@ -44,5 +44,19 @@
       "answer_length": 2570,
       "answer_preview": "Ja. HAPI inneholder flere **nasjonale kvalitetsindikatorer for diabetes** fra Helsedirektoratets nasjonale kvalitetsindikatorsystem. De viktigste som finnes i datagrunnlaget er:\n\n1. **Blodsukkerregulering hos voksne med type 1 diabetes**  \n   - Måler andel pasienter ved årskontroll med:  \n     - HbA"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

@@ -45,5 +45,19 @@
       "answer_length": 2197,
       "answer_preview": "**Pakkeforløp for brystkreft** beskriver et standardisert pasientforløp fra **begrunnet mistanke om kreft til oppstart av behandling**, for å redusere ikke‑medisinsk ventetid og sikre koordinert utredning og behandling.\n\nHovedstruktur i pakkeforløpet:\n\n1. **Mistanke om brystkreft**\n   - Oppstår typi"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

@@ -154,5 +154,19 @@
       "answer_length": 1470,
       "answer_preview": "Flere pasienter spør om **Ozempic**, som er et legemiddel mot diabetes type 2. Ifølge legemiddeloppføringer i FEST (Helsedirektoratets legemiddeldatabase) er Ozempic en **injeksjonsvæske som inneholder virkestoffet semaglutid**. Preparatet finnes blant annet i styrkene 0,25 mg/0,19 ml, 0,5 mg/0,74 m"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 60400,
+    "tokens_output": 1900,
+    "tokens_total": 62300,
+    "kostnad_nok": 1.4553,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

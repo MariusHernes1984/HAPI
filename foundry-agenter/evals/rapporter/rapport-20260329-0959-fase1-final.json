@@ -806,5 +806,19 @@
       "answer_length": 478,
       "answer_preview": "Jeg finner ingen anbefalinger i Helsedirektoratets HAPI-data for:\n\n- ICD‑10 kode: **XYZ99**\n\nDet tyder på at én av disse er tilfelle:\n- Koden finnes ikke i ICD‑10\n- Koden er skrevet feil\n- Eller det finnes ingen nasjonale anbefalinger knyttet til akkurat denne koden i HAPI\n\nHvis du vil kan du:\n- sen"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 362400,
+    "tokens_output": 11400,
+    "tokens_total": 373800,
+    "kostnad_nok": 8.7318,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

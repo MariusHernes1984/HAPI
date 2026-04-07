@@ -44,5 +44,19 @@
       "answer_length": 922,
       "answer_preview": "**Førstevalg antibiotika ved akutt otitis media hos barn (primærhelsetjenesten):**\n\n• **Fenoksymetylpenicillin (penicillin V)**\n\n**Dosering (barn < 40 kg):**  \n• **25 mg/kg per dose × 3 daglig**  \n• **Behandlingsvarighet: 5 døgn**\n\n**Alternativ (ved penicillinallergi):**  \n• **Erytromycin** (doserin"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

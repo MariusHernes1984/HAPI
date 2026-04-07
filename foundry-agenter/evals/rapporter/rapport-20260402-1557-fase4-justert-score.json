@@ -827,5 +827,19 @@
       "answer_length": 1049,
       "answer_preview": "Det finnes ingen oppføringer hos Helsedirektoratet som beskriver behandling eller anbefalinger for diagnosekode **XYZ99**.\n\nSøk i Helsedirektoratets innhold (HAPI/MCP) ga følgende resultater:\n- Fritekstsøk etter «XYZ99» ga ingen relevante treff.\n- Oppslag i anbefalinger filtrert på ICD‑10‑kode «XYZ9"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 299806,
+    "tokens_output": 11443,
+    "tokens_total": 311249,
+    "kostnad_nok": 7.5335,
+    "kostnad_per_spoersmaal_nok": 0.2511,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

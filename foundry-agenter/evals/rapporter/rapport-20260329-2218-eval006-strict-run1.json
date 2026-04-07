@@ -45,5 +45,19 @@
       "answer_length": 2645,
       "answer_preview": "**Pakkeforløp for brystkreft** beskriver hvordan pasienter med begrunnet mistanke om brystkreft skal utredes og behandles i spesialisthelsetjenesten. Forløpet starter når sykehuset mottar henvisning med begrunnet mistanke om kreft eller når sykehuset selv starter utredning.  \nKilde: Helsedirektorate"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

@@ -127,5 +127,19 @@
       "answer_length": 3401,
       "answer_preview": "Ja. Helsedirektoratet har flere **nasjonale kvalitetsindikatorer (NKI)** for psykisk helsevern. Jeg fant følgende indikatorer i NKI‑registeret (infoId som starter med `0003-0010-`, altså ekte NKI‑indikatorer).\n\nViktig: HAPI‑responsen inneholder **indikatornavn og definisjon**, men **ingen konkrete t"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 48320,
+    "tokens_output": 1520,
+    "tokens_total": 49840,
+    "kostnad_nok": 1.1642,
+    "kostnad_per_spoersmaal_nok": 0.291,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

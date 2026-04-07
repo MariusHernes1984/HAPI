@@ -803,5 +803,19 @@
       ],
       "duration_ms": 313554
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 1289,
+    "tokens_output": 52,
+    "tokens_total": 1341,
+    "kostnad_nok": 0.0328,
+    "kostnad_per_spoersmaal_nok": 0.0011,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

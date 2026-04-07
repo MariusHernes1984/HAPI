@@ -45,5 +45,19 @@
       "answer_length": 2155,
       "answer_preview": "Jeg fant to relevante nasjonale kvalitetsindikatorer (NKI) for hoftebrudd i Helsedirektoratets data:\n\n1) Hoftebrudd operert innen 24 og 48 timer  \nNKI‑ID: 0003-0010-119  \nDefinisjon: Andel pasienter over 65 år med hoftebrudd som opereres innen 24 timer og innen 48 timer etter innleggelse ved øyeblik"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

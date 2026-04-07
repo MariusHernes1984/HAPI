@@ -73,5 +73,19 @@
       "answer_length": 1819,
       "answer_preview": "**Hva er Ozempic?**  \nOzempic er et legemiddel som inneholder **semaglutid**, en **GLP‑1‑reseptoragonist**. Det gis vanligvis som **ukentlig subkutan injeksjon**.\n\nVirkningsmekanismer:\n- Stimulerer **glukoseavhengig insulinsekresjon**\n- Hemmer **glukagon**\n- **Forsinker ventrikkeltømming**\n- Øker **"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 24160,
+    "tokens_output": 760,
+    "tokens_total": 24920,
+    "kostnad_nok": 0.5821,
+    "kostnad_per_spoersmaal_nok": 0.291,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

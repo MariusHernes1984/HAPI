@@ -818,5 +818,19 @@
       "answer_length": 487,
       "answer_preview": "Jeg finner ingen anbefalinger i Helsedirektoratets HAPI for **ICD‑10‑kode XYZ99**. Koden ser heller ikke ut til å være en gyldig ICD‑10‑diagnosekode.\n\nMulige forklaringer:\n- Koden er skrevet feil\n- Det er en lokal/administrativ kode (ikke ICD‑10)\n- Det er en kode fra et annet kodeverk (f.eks. ICPC‑2"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 362400,
+    "tokens_output": 11400,
+    "tokens_total": 373800,
+    "kostnad_nok": 8.7318,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

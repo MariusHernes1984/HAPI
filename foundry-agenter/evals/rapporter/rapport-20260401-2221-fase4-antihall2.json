@@ -135,5 +135,19 @@
       "answer_length": 1717,
       "answer_preview": "Jeg fant én relevant NKI‑indikator for tidskrav ved hoftebrudd:\n\n• Indikator: “Hoftebrudd operert innen henholdsvis 24 timer og 48 timer”  \nKilde: Helsedirektoratet – Nasjonale kvalitetsindikatorer (datakilde: Norsk pasientregister)\n\nNyeste tall som ble returnert i MCP‑dataene:\n\nPeriode: 2. tertial "
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 48320,
+    "tokens_output": 1520,
+    "tokens_total": 49840,
+    "kostnad_nok": 1.1642,
+    "kostnad_per_spoersmaal_nok": 0.291,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

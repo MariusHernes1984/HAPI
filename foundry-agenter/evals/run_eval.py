@@ -48,6 +48,51 @@ EVAL_DIR = Path(__file__).parent
 EVAL_FILE = EVAL_DIR / "eval-questions-hapi.json"
 RAPPORTER_DIR = EVAL_DIR / "rapporter"
 
+# --- Token-bruk og kostnad (gpt-5.3-chat, USD->NOK kurs 11) ---
+PRIS_INPUT_USD_PER_1M = 1.75
+PRIS_OUTPUT_USD_PER_1M = 14.00
+USD_NOK = 11.0
+NOK_PER_INPUT_TOKEN = PRIS_INPUT_USD_PER_1M * USD_NOK / 1_000_000
+NOK_PER_OUTPUT_TOKEN = PRIS_OUTPUT_USD_PER_1M * USD_NOK / 1_000_000
+
+# Mutable counter; nullstilles ved start av hvert run_eval-kall.
+TOKEN_USAGE = {"input": 0, "output": 0, "calls": 0}
+
+
+def _add_usage(resp) -> None:
+    """Plukk token-tall fra et OpenAI Responses-svar."""
+    try:
+        u = getattr(resp, "usage", None)
+        if u is None:
+            return
+        tin = getattr(u, "input_tokens", 0) or 0
+        tout = getattr(u, "output_tokens", 0) or 0
+        TOKEN_USAGE["input"] += int(tin)
+        TOKEN_USAGE["output"] += int(tout)
+        TOKEN_USAGE["calls"] += 1
+    except Exception:
+        pass
+
+
+def _build_statistikk(usage: dict) -> dict:
+    tin = usage.get("input", 0)
+    tout = usage.get("output", 0)
+    kost = round(tin * NOK_PER_INPUT_TOKEN + tout * NOK_PER_OUTPUT_TOKEN, 4)
+    return {
+        "tokens_input": tin,
+        "tokens_output": tout,
+        "tokens_total": tin + tout,
+        "llm_kall": usage.get("calls", 0),
+        "kostnad_nok": kost,
+        "kilde": "maalt-runtime",
+        "prismodell": {
+            "model": "gpt-5.3-chat",
+            "input_usd_per_1m": PRIS_INPUT_USD_PER_1M,
+            "output_usd_per_1m": PRIS_OUTPUT_USD_PER_1M,
+            "kurs_usd_nok": USD_NOK,
+        },
+    }
+
 
 def safe_print(text: str):
     """Print som haandterer unicode paa Windows."""
@@ -133,6 +178,7 @@ async def llm_fact_check(
             model="gpt-5.3-chat",
             input=prompt,
         )
+        _add_usage(response)
         text = response.output_text.strip()
 
         # Ekstraher JSON fra svaret
@@ -174,6 +220,7 @@ async def call_agent(project, agent_name: str, query: str) -> dict:
             input=query,
             extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
         )
+        _add_usage(resp)
         output = resp.output_text
         duration = int((time.monotonic() - start) * 1000)
         try:
@@ -269,9 +316,18 @@ async def _retry_on_auth_error(coro_factory, max_retries: int = 2, delay: float 
     raise last_error  # should not reach here, but just in case
 
 
-async def run_eval(questions: list[dict]) -> list[dict]:
-    """Kjoer evaluering mot alle spoersmaal med LLM-faktasjekk."""
+async def run_eval(questions: list[dict]) -> tuple[list[dict], dict]:
+    """Kjoer evaluering mot alle spoersmaal med LLM-faktasjekk.
+
+    Returnerer (results, token_usage) der token_usage er en kopi av
+    TOKEN_USAGE-telleren etter at runet er ferdig.
+    """
     results = []
+
+    # Nullstill token-teller for dette runet
+    TOKEN_USAGE["input"] = 0
+    TOKEN_USAGE["output"] = 0
+    TOKEN_USAGE["calls"] = 0
 
     cred = await _acquire_credential()
     try:
@@ -343,6 +399,7 @@ async def run_eval(questions: list[dict]) -> list[dict]:
                             model="gpt-5.3-chat",
                             input=synth_prompt,
                         )
+                        _add_usage(synth_resp)
                         result = {"success": True, "output": synth_resp.output_text, "duration_ms": total_duration}
                         safe_print(f"  Syntetisert fra {len(successful_outputs)} agenter")
                     except Exception as synth_err:
@@ -449,7 +506,7 @@ async def run_eval(questions: list[dict]) -> list[dict]:
     finally:
         await cred.close()
 
-    return results
+    return results, dict(TOKEN_USAGE)
 
 
 def print_summary(results: list[dict]):
@@ -509,7 +566,7 @@ def print_summary(results: list[dict]):
         safe_print(f"\nGjennomsnittlig responstid: {avg/1000:.1f}s")
 
 
-def save_report(results: list[dict], tag: str = ""):
+def save_report(results: list[dict], tag: str = "", usage: dict | None = None):
     """Lagre rapport til evals/rapporter/ med tidsstempel."""
     RAPPORTER_DIR.mkdir(exist_ok=True)
 
@@ -547,6 +604,12 @@ def save_report(results: list[dict], tag: str = ""):
         "resultater": results,
     }
 
+    if usage is not None:
+        stat = _build_statistikk(usage)
+        if total:
+            stat["kostnad_per_spoersmaal_nok"] = round(stat["kostnad_nok"] / total, 4)
+        report["statistikk"] = stat
+
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
@@ -578,6 +641,7 @@ def _consensus_score(scores: list[str]) -> str:
 def build_combined_report(
     all_run_results: list[list[dict]],
     tag: str = "",
+    all_usages: list[dict] | None = None,
 ) -> str:
     """Build and save a combined consensus report from multiple runs.
 
@@ -685,6 +749,19 @@ def build_combined_report(
         "resultater": combined_results,
     }
 
+    if all_usages:
+        agg = {
+            "input": sum(u.get("input", 0) for u in all_usages),
+            "output": sum(u.get("output", 0) for u in all_usages),
+            "calls": sum(u.get("calls", 0) for u in all_usages),
+        }
+        stat = _build_statistikk(agg)
+        # Aggregert: alle kjoringer x antall spoersmaal
+        n_total = total * n_runs
+        if n_total:
+            stat["kostnad_per_spoersmaal_nok"] = round(stat["kostnad_nok"] / n_total, 4)
+        report["statistikk"] = stat
+
     with open(filepath, "w", encoding="utf-8") as f:
         json.dump(report, f, ensure_ascii=False, indent=2)
 
@@ -723,28 +800,30 @@ def main():
 
     if n_runs == 1:
         # Original single-run behaviour
-        results = asyncio.run(run_eval(questions))
+        results, usage = asyncio.run(run_eval(questions))
         print_summary(results)
-        save_report(results, tag=args.tag)
+        save_report(results, tag=args.tag, usage=usage)
     else:
         # Multi-run with consensus
         all_run_results = []
+        all_usages = []
         for run_num in range(1, n_runs + 1):
             safe_print(f"\n{'#'*60}")
             safe_print(f"# KJOERING {run_num}/{n_runs}")
             safe_print(f"{'#'*60}")
 
-            results = asyncio.run(run_eval(questions))
+            results, usage = asyncio.run(run_eval(questions))
             print_summary(results)
 
             # Save individual run report with -runN suffix
             run_tag = f"{args.tag}-run{run_num}" if args.tag else f"run{run_num}"
-            save_report(results, tag=run_tag)
+            save_report(results, tag=run_tag, usage=usage)
 
             all_run_results.append(results)
+            all_usages.append(usage)
 
         # Generate combined consensus report
-        build_combined_report(all_run_results, tag=args.tag)
+        build_combined_report(all_run_results, tag=args.tag, all_usages=all_usages)
 
 
 if __name__ == "__main__":

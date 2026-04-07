@@ -813,5 +813,19 @@
       "answer_length": 486,
       "answer_preview": "Jeg finner ingen treff på kode **XYZ99** i Helsedirektoratets innhold via HAPI.\n\nDet betyr at:\n- Koden ikke finnes i de aktuelle kodeverkene (ICD-10, ICPC-2 osv.), eller  \n- Det ikke finnes noen normerende anbefalinger knyttet til den i Helsedirektoratets materiale.\n\nHvis du har:\n- et annet kodeverk"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 120683,
+    "tokens_output": 5854,
+    "tokens_total": 126537,
+    "kostnad_nok": 3.2247,
+    "kostnad_per_spoersmaal_nok": 0.1075,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

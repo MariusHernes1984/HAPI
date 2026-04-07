@@ -811,5 +811,19 @@
       "answer_length": 713,
       "answer_preview": "Jeg finner ingen anbefalinger eller retningslinjeinnhold i Helsedirektoratets HAPI‑data for diagnosekode **XYZ99** (ICD‑10). Både kodebasert søk etter anbefalinger og fritekstsøk ga **ingen treff**, så det ser ikke ut til å være en gyldig eller brukt kode i dette datasettet.\n\nMulige forklaringer:\n- "
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 336642,
+    "tokens_output": 14127,
+    "tokens_total": 350769,
+    "kostnad_nok": 8.6559,
+    "kostnad_per_spoersmaal_nok": 0.2885,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

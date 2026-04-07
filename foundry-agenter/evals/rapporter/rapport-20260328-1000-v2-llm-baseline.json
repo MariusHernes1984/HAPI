@@ -820,5 +820,19 @@
       "answer_length": 47,
       "answer_preview": "Fant ingen treff i Helsedirektoratets database."
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 392101,
+    "tokens_output": 14856,
+    "tokens_total": 406957,
+    "kostnad_nok": 9.8358,
+    "kostnad_per_spoersmaal_nok": 0.3279,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

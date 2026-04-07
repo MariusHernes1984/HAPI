@@ -93,5 +93,19 @@
       "answer_length": 2662,
       "answer_preview": "Basert på **Nasjonal faglig retningslinje for diagnostisering og behandling av KOLS** fra Helsedirektoratet:\n\nKilde: Helsedirektoratet  \nRetningslinje infoId: 52970834-1ab0-41ea-b206-fd5c5435931d  \nStatus: Gjeldende  \nSist faglig oppdatert: 15.02.2022\n\nFor en **68‑åring med KOLS som fortsatt røyker*"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 36240,
+    "tokens_output": 1140,
+    "tokens_total": 37380,
+    "kostnad_nok": 0.8732,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

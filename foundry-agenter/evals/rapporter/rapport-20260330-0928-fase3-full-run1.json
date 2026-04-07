@@ -823,5 +823,19 @@
       "answer_length": 580,
       "answer_preview": "Diagnosekoden **XYZ99** finnes ikke i vanlige kodeverk som brukes i helsetjenesten (ICD‑10, ICPC‑2, SNOMED CT). Derfor finnes det heller ingen behandlingsanbefalinger fra Helsedirektoratet knyttet til denne koden.\n\nMulige forklaringer:\n- Det kan være en **feilskrevet ICD‑10‑kode** (f.eks. Z99, X99 o"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 303949,
+    "tokens_output": 15581,
+    "tokens_total": 319530,
+    "kostnad_nok": 8.2505,
+    "kostnad_per_spoersmaal_nok": 0.275,
+    "kilde": "maalt-app-insights",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

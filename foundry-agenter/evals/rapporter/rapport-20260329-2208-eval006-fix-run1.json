@@ -45,5 +45,19 @@
       "answer_length": 1873,
       "answer_preview": "**Pakkeforløp for brystkreft** beskriver et standardisert pasientforløp fra begrunnet mistanke om kreft til start av behandling. Målet er rask utredning og behandling uten unødvendig ventetid, og tydelig koordinering mellom fastlege og spesialisthelsetjenesten.\n\nHovedtrinn i pakkeforløpet:\n\n• **Begr"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 12080,
+    "tokens_output": 380,
+    "tokens_total": 12460,
+    "kostnad_nok": 0.2911,
+    "kostnad_per_spoersmaal_nok": 0.2911,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }

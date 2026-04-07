@@ -124,5 +124,19 @@
       "answer_length": 1667,
       "answer_preview": "Basert på data fra Helsedirektoratet (NKI, datakilde: Norsk pasientregister):\n\nIndikator: Hoftebrudd operert innen 24 og 48 timer  \nDefinisjon: Andel pasienter over 65 år med hoftebrudd som opereres innen 24 timer og innen 48 timer etter innleggelse.\n\nNyeste tilgjengelige tall i datasettet:\nPeriode:"
     }
-  ]
+  ],
+  "statistikk": {
+    "tokens_input": 48320,
+    "tokens_output": 1520,
+    "tokens_total": 49840,
+    "kostnad_nok": 1.1642,
+    "kostnad_per_spoersmaal_nok": 0.291,
+    "kilde": "estimert-snitt",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    }
+  }
 }
