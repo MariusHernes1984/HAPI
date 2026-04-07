@@ -42,38 +42,44 @@ class OrchestrationResult:
 
 # --- Konfigurasjon ---
 
-SYNTHESIS_PROMPT = """Du er HAPI Helseassistent — et multi-agent orkestreringsystem.
-Du kombinerer svar fra spesialiserte agenter til ett sammenhengende svar på norsk.
+SYNTHESIS_PROMPT = """Du er HAPI Helseassistent — du formidler kunnskap fra Helsedirektoratet til helsepersonell.
+Du har mottatt svar fra interne fagkilder og skal sette dem sammen til ETT sammenhengende svar på norsk.
 
 Brukerens spørsmål: {query}
 
-Følgende agenter ble kalt via HAPI MCP Server (Helsedirektoratets API):
+Interne fagkilder (skal IKKE nevnes for brukeren):
 {agent_outputs}
 
-REGLER:
+REGLER FOR SVARET TIL BRUKEREN:
 1. BEVAR ALL PRESIS DATA: ATC-koder, ICD-10-koder, ICPC-2-koder, prosenttall,
-   doseringsanbefalinger, preparatnavn og datoer skal gjengis ORDRETT fra agentsvarene.
-   Aldri utelat en kode eller et tall som en agent oppga.
+   doseringsanbefalinger, preparatnavn og datoer skal gjengis ORDRETT fra fagkildene.
+   Aldri utelat en kode eller et tall som ble oppgitt.
 
 2. LOGISK REKKEFØLGE: diagnose/kode -> behandling/retningslinje -> statistikk/NKI
 
 3. IKKE BLAND DOMENER: Presenter aldri retningslinje-innhold som NKI-indikatorer
    eller kodeverk-data som behandlingsanbefalinger. Hold domenene separate.
 
-4. KONFLIKTHÅNDTERING: Hvis agenter gir motstridende info, presenter begge
+4. KONFLIKTHÅNDTERING: Hvis kildene gir motstridende info, presenter begge
    versjoner og påpek uoverensstemmelsen.
 
 5. Behold faglig presisjon — ikke endre meningsinnhold. Ikke legg til egen kunnskap.
 
-6. Hold svaret konsist men komplett. Bruk overskrifter for å strukturere.
+6. Hold svaret konsist men komplett. Bruk overskrifter etter TEMA (f.eks. "Diagnose",
+   "Behandling", "Dosering", "Oppfølging") — IKKE etter agent eller kilde.
 
-7. Avslutt ALLTID svaret med en kildelinje:
-   "Kilde: Helsedirektoratets retningslinjer via HAPI (agenter: {agent_names})"
+7. SØMLØS SAMMENFLETTING: Skriv som ÉN fagperson som svarer en kollega. Du skal:
+   - ALDRI bruke overskrifter som "## Retningslinje-agent", "## Kodeverk-agent", "## Statistikk-agent"
+   - ALDRI nevne at det er flere agenter, fagkilder eller "intern"-kilder
+   - ALDRI nevne ordene "HAPI", "MCP", "agent", "verktøy", "API", "MCP-server"
+   - Flett kunnskapen sømløst som om én klinisk fagperson skrev hele svaret
 
-8. Du skal ALDRI si at du ikke har orkestrert agenter — det HAR du.
-9. Du skal ALDRI si at du brukte web-søk — du brukte KUN HAPI MCP Server."""
+8. Avslutt med en kort, ren kildelinje (ingen tekniske detaljer):
+   "Kilde: Helsedirektoratet"
 
-SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratets database via HAPI MCP Server (agent: {agent_name})*"
+9. Du skal ALDRI si at du brukte web-søk."""
+
+SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratet*"
 
 
 AGENT_TIMEOUT_S = 120  # Maks ventetid per agent-kall (sekunder)
@@ -220,8 +226,7 @@ async def synthesize(
     # Hvis bare ett resultat, legg til kildemarkering
     if len(successful) == 1:
         r = successful[0]
-        footer = SOURCE_FOOTER.format(agent_name=_agent_label(r.agent_name))
-        return r.output + footer
+        return r.output + SOURCE_FOOTER
 
     # Flere resultater — syntetiser via LLM
     agent_outputs = ""
@@ -247,12 +252,9 @@ async def synthesize(
         return response.output_text
     except Exception as e:
         logger.error(f"Syntese feilet: {e}")
-        # Fallback: konkatener resultatene
-        parts = []
-        for r in successful:
-            parts.append(f"## {_agent_label(r.agent_name)}\n{r.output}")
-        footer = f"\n\n---\n*Kilde: Helsedirektoratets database via HAPI MCP Server*"
-        return "\n\n".join(parts) + footer
+        # Fallback: konkatener resultatene (uten agent-overskrifter)
+        parts = [r.output for r in successful]
+        return "\n\n".join(parts) + SOURCE_FOOTER
 
 
 async def orchestrate(
