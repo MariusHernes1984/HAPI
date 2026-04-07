@@ -141,6 +141,10 @@
       margin: 0 auto;
     }
 
+    .suggestion.full {
+      grid-column: span 2;
+    }
+
     .suggestion {
       background: white;
       border: 1px solid var(--border);
@@ -754,28 +758,32 @@
           <span>Hva er ICD-10 koden for diabetes type 2?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1FAC1;</span>
+          <span>Legen sa jeg har KOLS. Hva betyr det for meg fremover, og hva slags behandling finnes?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
+          <span>En kollega brukte ICPC-2 kode K74 i en epikrise. Hva betyr det?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F4CA;</span>
-          <span>Finnes det kvalitetsindikatorer for psykisk helsevern?</span>
+          <span>Finnes det nasjonale kvalitetsindikatorer for diabetes? Vis de viktigste.</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F9EC;</span>
-          <span>Hva er pakkeforløpet for brystkreft?</span>
+          <span class="suggestion-icon">&#x1F48A;</span>
+          <span>Eliquis — hva er virkestoffet og ATC-klassifiseringen?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;&#x1F48A;</span>
-          <span>Pasienten har ICD-10 E11 — hva sier retningslinjene om behandling, og hva er ATC-koden for metformin?</span>
+          <span class="suggestion-icon">&#x1F9D2;</span>
+          <span>Barnet mitt på 8 år har astma og vi er redde for å gi for mye medisin. Hva anbefales?</span>
         </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F4CA;&#x1F48A;</span>
-          <span>Hvordan ligger Norge an på overlevelse ved hjerteinfarkt, og hva sier retningslinjene om akuttbehandling?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;&#x1F4CA;</span>
-          <span>Hva er førstevalg antibiotika ved pneumoni, og finnes det kvalitetsindikatorer for antibiotikabruk i sykehus?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
+        <div class="suggestion full" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
-          <span>Hva anbefales for behandling av hypertensjon, hvilke ATC-koder dekker blodtrykksmedisin, og hva viser statistikken for blodtrykkskontroll?</span>
+          <span>Pasient med nyoppdaget diabetes type 2 (E11) — hva anbefaler retningslinjene som førstelinjebehandling, hva er ATC-koden for metformin, og finnes det kvalitetsindikatorer for HbA1c-kontroll?</span>
+        </div>
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;</span>
+          <span>En pasient bruker Ozempic. Hva er virkestoffet og ATC-koden, og hva sier retningslinjene om indikasjonen ved type 2 diabetes?</span>
         </div>
       </div>
     </div>
