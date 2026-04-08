@@ -16,7 +16,8 @@ from dataclasses import dataclass, field
 from azure.identity.aio import DefaultAzureCredential as AsyncCredential
 from azure.ai.projects.aio import AIProjectClient as AsyncProjectClient
 
-from router import route, route_with_llm, RoutingDecision
+from router import route, route_with_llm, RoutingDecision, KJERNEJOURNAL
+import kjernejournal
 
 logger = logging.getLogger(__name__)
 
@@ -46,7 +47,7 @@ SYNTHESIS_PROMPT = """Du er HAPI Helseassistent — du formidler kunnskap fra He
 Du har mottatt svar fra interne fagkilder og skal sette dem sammen til ETT sammenhengende svar på norsk.
 
 Brukerens spørsmål: {query}
-
+{patient_block}
 Interne fagkilder (skal IKKE nevnes for brukeren):
 {agent_outputs}
 
@@ -77,7 +78,16 @@ REGLER FOR SVARET TIL BRUKEREN:
 8. Avslutt med en kort, ren kildelinje (ingen tekniske detaljer):
    "Kilde: Helsedirektoratet"
 
-9. Du skal ALDRI si at du brukte web-søk."""
+9. Du skal ALDRI si at du brukte web-søk.
+
+10. PERSONALISERING VED AKTIV PASIENT: Hvis en pasientkontekst er oppgitt over,
+    MÅ du vurdere pasientens diagnoser, faste medisiner og allergier opp mot
+    spørsmålet. Hvis noe er relevant (f.eks. blodfortynnende + smertestillende,
+    astma + NSAIDs, nyresvikt + dosering) — nevn det EKSPLISITT og advar om
+    kontraindikasjoner/interaksjoner. Bruk pasientens navn eller "pasienten"
+    naturlig i svaret. Ikke nevn ordet "kjernejournal" — bare fletter inn
+    opplysningene som kliniske fakta. Hvis ingen pasientkontekst er oppgitt:
+    svar generelt."""
 
 SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratet*"
 
@@ -208,6 +218,7 @@ def _agent_label(name: str) -> str:
         "hapi-retningslinje-agent": "Retningslinje-agent",
         "hapi-kodeverk-agent": "Kodeverk-agent",
         "hapi-statistikk-agent": "Statistikk-agent",
+        "hapi-kjernejournal-agent": "Kjernejournal-agent",
     }
     return labels.get(name, name)
 
@@ -223,15 +234,35 @@ async def synthesize(
     if not successful:
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet."
 
-    # Hvis bare ett resultat, legg til kildemarkering
-    if len(successful) == 1:
-        r = successful[0]
-        return r.output + SOURCE_FOOTER
+    # Separer kjernejournal-output fra de andre fagkildene
+    journal_results = [r for r in successful if r.agent_name == KJERNEJOURNAL]
+    knowledge_results = [r for r in successful if r.agent_name != KJERNEJOURNAL]
 
-    # Flere resultater — syntetiser via LLM
+    if journal_results:
+        patient_block = (
+            "\nAKTIV PASIENT (bruk dette til å personalisere svaret):\n"
+            + journal_results[0].output
+            + "\nVIKTIG: Hvis pasientens medisiner, diagnoser eller allergier er "
+            "relevant for spørsmålet, MÅ du nevne det eksplisitt og advare om "
+            "kontraindikasjoner eller interaksjoner.\n"
+        )
+    else:
+        patient_block = ""
+
+    # Hvis ingen fagkunnskap-kilder (bare journal eller tom), fallback
+    if not knowledge_results:
+        if journal_results:
+            return journal_results[0].output + SOURCE_FOOTER
+        return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet."
+
+    # Hvis bare én fagkunnskap-kilde og ingen pasient, bruk direkte
+    if len(knowledge_results) == 1 and not journal_results:
+        return knowledge_results[0].output + SOURCE_FOOTER
+
+    # Syntetiser via LLM
     agent_outputs = ""
     agent_names_list = []
-    for r in successful:
+    for r in knowledge_results:
         label = _agent_label(r.agent_name)
         agent_names_list.append(label)
         agent_outputs += f"\n--- {label} ---\n{r.output}\n"
@@ -239,6 +270,7 @@ async def synthesize(
     agent_names = ", ".join(agent_names_list)
     prompt = SYNTHESIS_PROMPT.format(
         query=query,
+        patient_block=patient_block,
         agent_outputs=agent_outputs,
         agent_names=agent_names,
     )
@@ -252,8 +284,8 @@ async def synthesize(
         return response.output_text
     except Exception as e:
         logger.error(f"Syntese feilet: {e}")
-        # Fallback: konkatener resultatene (uten agent-overskrifter)
-        parts = [r.output for r in successful]
+        # Fallback: konkatener fagkunnskap-resultatene
+        parts = [r.output for r in knowledge_results]
         return "\n\n".join(parts) + SOURCE_FOOTER
 
 
@@ -261,6 +293,7 @@ async def orchestrate(
     project_endpoint: str,
     query: str,
     use_llm_routing: bool = False,
+    patient_id: str | None = None,
 ) -> OrchestrationResult:
     """
     Hovedfunksjon: rut, kall agenter parallelt, syntetiser.
@@ -276,8 +309,8 @@ async def orchestrate(
     start = time.monotonic()
 
     # Steg 1: Routing
-    logger.info(f"Routing: '{query[:80]}...'")
-    decision = route(query)
+    logger.info(f"Routing: '{query[:80]}...' (patient_id={patient_id})")
+    decision = route(query, patient_id=patient_id)
     logger.info(f"  -> {decision.agents} (konfidens: {decision.confidence})")
 
     # Valgfritt: LLM-routing ved lav konfidens
@@ -297,10 +330,13 @@ async def orchestrate(
         async with AsyncProjectClient(
             endpoint=project_endpoint, credential=cred
         ) as project:
-            tasks = [
-                call_agent(project, agent_name, query)
-                for agent_name in decision.agents
-            ]
+            tasks = []
+            for agent_name in decision.agents:
+                if agent_name == KJERNEJOURNAL:
+                    # Lokalt oppslag — ikke Foundry-agent
+                    tasks.append(kjernejournal.call_kjernejournal_agent(patient_id))
+                else:
+                    tasks.append(call_agent(project, agent_name, query))
             results = await asyncio.gather(*tasks)
 
             # Steg 3: Syntetiser

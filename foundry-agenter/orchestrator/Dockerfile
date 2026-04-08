@@ -7,6 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY orchestrator/ .
 COPY evals/rapporter/ /app/evals/rapporter/
+COPY mock-data/ /app/mock-data/
 
 EXPOSE 8000
 

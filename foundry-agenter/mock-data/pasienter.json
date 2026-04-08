@@ -1,0 +1,743 @@
+{
+  "_disclaimer": "MOCK-DATA for demo. Ingen ekte pasienter. Kun til bruk i HAPI multi-agent-demo.",
+  "pasienter": [
+    {
+      "id": "P-001",
+      "navn": "Kari Nordmann",
+      "alder": 72,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2019" },
+        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Essensiell hypertensjon", "siden": "2015" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "2.5 mg daglig", "indikasjon": "Antikoagulasjon ved atrieflimmer" },
+        { "navn": "Ramipril", "atc": "C09AA05", "dose": "5 mg daglig", "indikasjon": "Hypertensjon" }
+      ],
+      "allergier": [],
+      "merknader": "Antikoagulert - NSAIDs kontraindisert. Bruk paracetamol ved smerter. INR kontrolleres månedlig."
+    },
+    {
+      "id": "P-002",
+      "navn": "Ola Hansen",
+      "alder": 68,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2022" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Apixaban (Eliquis)", "atc": "B01AF02", "dose": "5 mg x 2 daglig", "indikasjon": "Antikoagulasjon" }
+      ],
+      "allergier": [],
+      "merknader": "DOAK-behandling. Unngå NSAIDs - økt blødningsrisiko."
+    },
+    {
+      "id": "P-003",
+      "navn": "Astrid Berg",
+      "alder": 81,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "I63", "kodeverk": "ICD-10", "tekst": "Hjerneinfarkt", "siden": "2023" },
+        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2010" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Rivaroksaban (Xarelto)", "atc": "B01AF01", "dose": "20 mg daglig", "indikasjon": "Sekundærprofylakse slag" },
+        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "40 mg daglig", "indikasjon": "Hyperkolesterolemi" }
+      ],
+      "allergier": [],
+      "merknader": "Post-slag. Blodfortynnende - NSAIDs kontraindisert."
+    },
+    {
+      "id": "P-004",
+      "navn": "Per Olsen",
+      "alder": 75,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I25", "kodeverk": "ICD-10", "tekst": "Kronisk iskemisk hjertesykdom", "siden": "2018" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "3 mg daglig", "indikasjon": "Antikoagulasjon" },
+        { "navn": "Acetylsalisylsyre (Albyl-E)", "atc": "B01AC06", "dose": "75 mg daglig", "indikasjon": "Platehemming" },
+        { "navn": "Metoprolol", "atc": "C07AB02", "dose": "50 mg x 2", "indikasjon": "Angina pectoris" }
+      ],
+      "allergier": [],
+      "merknader": "Dobbel blødningsrisiko (Warfarin + ASA). Unngå NSAIDs absolutt."
+    },
+    {
+      "id": "P-005",
+      "navn": "Liv Jensen",
+      "alder": 66,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "I26", "kodeverk": "ICD-10", "tekst": "Lungeemboli", "siden": "2024" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Dabigatran (Pradaxa)", "atc": "B01AE07", "dose": "150 mg x 2", "indikasjon": "VTE-profylakse" }
+      ],
+      "allergier": ["Penicillin"],
+      "merknader": "DOAK etter LE. NSAIDs frarådes."
+    },
+    {
+      "id": "P-006",
+      "navn": "Knut Larsen",
+      "alder": 70,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2020" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Edoksaban (Lixiana)", "atc": "B01AF03", "dose": "60 mg daglig", "indikasjon": "Antikoagulasjon" }
+      ],
+      "allergier": [],
+      "merknader": "DOAK. NSAIDs kontraindisert."
+    },
+    {
+      "id": "P-007",
+      "navn": "Marit Svendsen",
+      "alder": 78,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "I82", "kodeverk": "ICD-10", "tekst": "Dyp venetrombose", "siden": "2023" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "2 mg daglig", "indikasjon": "Antikoagulasjon" }
+      ],
+      "allergier": [],
+      "merknader": "Warfarin-behandling. INR-mål 2-3."
+    },
+    {
+      "id": "P-008",
+      "navn": "Erik Dahl",
+      "alder": 62,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2024" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Apixaban (Eliquis)", "atc": "B01AF02", "dose": "5 mg x 2", "indikasjon": "Antikoagulasjon" }
+      ],
+      "allergier": [],
+      "merknader": "Nyoppstartet DOAK. Unngå NSAIDs."
+    },
+    {
+      "id": "P-009",
+      "navn": "Ingrid Haugen",
+      "alder": 84,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "I50", "kodeverk": "ICD-10", "tekst": "Hjertesvikt", "siden": "2021" },
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2021" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "1.5 mg daglig", "indikasjon": "Antikoagulasjon" },
+        { "navn": "Furosemid", "atc": "C03CA01", "dose": "40 mg daglig", "indikasjon": "Hjertesvikt" },
+        { "navn": "Spironolakton", "atc": "C03DA01", "dose": "25 mg daglig", "indikasjon": "Hjertesvikt" }
+      ],
+      "allergier": [],
+      "merknader": "Hjertesvikt + antikoagulasjon. NSAIDs absolutt kontraindisert (forverrer både svikt og blødning)."
+    },
+    {
+      "id": "P-010",
+      "navn": "Trond Kristiansen",
+      "alder": 73,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I74", "kodeverk": "ICD-10", "tekst": "Arteriell tromboembolisme", "siden": "2022" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Rivaroksaban (Xarelto)", "atc": "B01AF01", "dose": "20 mg daglig", "indikasjon": "Antikoagulasjon" }
+      ],
+      "allergier": [],
+      "merknader": "DOAK. NSAIDs frarådes."
+    },
+
+    {
+      "id": "P-011",
+      "navn": "Solveig Pedersen",
+      "alder": 64,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes mellitus type 2", "siden": "2018" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
+        { "navn": "Semaglutid (Ozempic)", "atc": "A10BJ06", "dose": "1 mg ukentlig s.c.", "indikasjon": "DM type 2" }
+      ],
+      "allergier": [],
+      "merknader": "Velregulert DM2. HbA1c 52 mmol/mol."
+    },
+    {
+      "id": "P-012",
+      "navn": "Bjørn Andersen",
+      "alder": 58,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes mellitus type 2", "siden": "2020" },
+        { "kode": "E66", "kodeverk": "ICD-10", "tekst": "Fedme", "siden": "2015" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
+        { "navn": "Empagliflozin (Jardiance)", "atc": "A10BK03", "dose": "25 mg daglig", "indikasjon": "DM type 2" }
+      ],
+      "allergier": [],
+      "merknader": "Steroider kan gi betydelig hyperglykemi - krever tett monitorering."
+    },
+    {
+      "id": "P-013",
+      "navn": "Wenche Moen",
+      "alder": 71,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2012" },
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "Kronisk nyresykdom stadium 3", "siden": "2020" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Insulin glargin (Lantus)", "atc": "A10AE04", "dose": "20 E kveld", "indikasjon": "DM type 2" },
+        { "navn": "Gliklazid", "atc": "A10BB09", "dose": "60 mg daglig", "indikasjon": "DM type 2" }
+      ],
+      "allergier": [],
+      "merknader": "Metformin seponert pga nedsatt nyrefunksjon (eGFR 42). NSAIDs frarådes ved CKD."
+    },
+    {
+      "id": "P-014",
+      "navn": "Geir Iversen",
+      "alder": 55,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2023" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "500 mg x 2", "indikasjon": "DM type 2" }
+      ],
+      "allergier": [],
+      "merknader": "Nyoppdaget DM2. Livsstilsintervensjon pågår."
+    },
+    {
+      "id": "P-015",
+      "navn": "Turid Bakken",
+      "alder": 69,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2017" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
+        { "navn": "Liraglutid (Victoza)", "atc": "A10BJ02", "dose": "1.8 mg daglig s.c.", "indikasjon": "DM type 2" }
+      ],
+      "allergier": [],
+      "merknader": "GLP-1 agonist. Kvalme bedret etter opptrapping."
+    },
+    {
+      "id": "P-016",
+      "navn": "Arild Johansen",
+      "alder": 76,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2010" },
+        { "kode": "I25", "kodeverk": "ICD-10", "tekst": "Iskemisk hjertesykdom", "siden": "2015" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
+        { "navn": "Empagliflozin (Jardiance)", "atc": "A10BK03", "dose": "10 mg daglig", "indikasjon": "DM2 + kardiovaskulær beskyttelse" },
+        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "80 mg daglig", "indikasjon": "Sekundærprofylakse" },
+        { "navn": "Acetylsalisylsyre", "atc": "B01AC06", "dose": "75 mg daglig", "indikasjon": "Platehemming" }
+      ],
+      "allergier": [],
+      "merknader": "DM2 med kardiovaskulær komorbiditet. NSAIDs frarådes pga hjertesykdom + ASA."
+    },
+    {
+      "id": "P-017",
+      "navn": "Mona Lie",
+      "alder": 60,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2019" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "850 mg x 2", "indikasjon": "DM type 2" }
+      ],
+      "allergier": ["Sulfonamid"],
+      "merknader": "Velregulert på metformin monoterapi."
+    },
+    {
+      "id": "P-018",
+      "navn": "Tor Eide",
+      "alder": 67,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2014" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
+        { "navn": "Sitagliptin (Januvia)", "atc": "A10BH01", "dose": "100 mg daglig", "indikasjon": "DM type 2" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+
+    {
+      "id": "P-019",
+      "navn": "Magnus Holm",
+      "alder": 74,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2016" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Tiotropium (Spiriva)", "atc": "R03BB04", "dose": "18 mcg inh daglig", "indikasjon": "KOLS" },
+        { "navn": "Salmeterol/flutikason (Seretide)", "atc": "R03AK06", "dose": "50/500 x 2", "indikasjon": "KOLS" }
+      ],
+      "allergier": [],
+      "merknader": "KOLS GOLD 3. Ikke-selektive betablokkere kontraindisert."
+    },
+    {
+      "id": "P-020",
+      "navn": "Reidun Strand",
+      "alder": 79,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2014" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Salbutamol", "atc": "R03AC02", "dose": "v/behov inh", "indikasjon": "KOLS" },
+        { "navn": "Budesonid/formoterol (Symbicort)", "atc": "R03AK07", "dose": "160/4.5 x 2", "indikasjon": "KOLS" }
+      ],
+      "allergier": [],
+      "merknader": "Eks-røyker. 2 eksaserbasjoner siste år."
+    },
+    {
+      "id": "P-021",
+      "navn": "Harald Rønning",
+      "alder": 82,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2010" },
+        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2005" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Tiotropium", "atc": "R03BB04", "dose": "18 mcg daglig", "indikasjon": "KOLS" },
+        { "navn": "Amlodipin", "atc": "C08CA01", "dose": "5 mg daglig", "indikasjon": "Hypertensjon" }
+      ],
+      "allergier": [],
+      "merknader": "Unngå ikke-selektive betablokkere."
+    },
+    {
+      "id": "P-022",
+      "navn": "Berit Sand",
+      "alder": 77,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2018" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Indakaterol (Onbrez)", "atc": "R03AC18", "dose": "150 mcg daglig", "indikasjon": "KOLS" }
+      ],
+      "allergier": [],
+      "merknader": "KOLS GOLD 2."
+    },
+    {
+      "id": "P-023",
+      "navn": "Jan Vik",
+      "alder": 70,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2019" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Salmeterol/flutikason", "atc": "R03AK06", "dose": "50/250 x 2", "indikasjon": "KOLS" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+    {
+      "id": "P-024",
+      "navn": "Gunhild Myhre",
+      "alder": 85,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2012" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Tiotropium", "atc": "R03BB04", "dose": "18 mcg daglig", "indikasjon": "KOLS" },
+        { "navn": "Prednisolon", "atc": "H02AB06", "dose": "5 mg daglig", "indikasjon": "Vedlikehold" }
+      ],
+      "allergier": [],
+      "merknader": "Langtids steroidbruk - økt infeksjonsrisiko."
+    },
+
+    {
+      "id": "P-025",
+      "navn": "Siri Fossum",
+      "alder": 63,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "Kronisk nyresykdom stadium 4", "siden": "2022" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Erytropoietin", "atc": "B03XA01", "dose": "4000 IE x 1/uke", "indikasjon": "Anemi ved CKD" },
+        { "navn": "Kalsiumkarbonat", "atc": "A12AA04", "dose": "500 mg x 3", "indikasjon": "Fosfatbinder" }
+      ],
+      "allergier": [],
+      "merknader": "eGFR 22. NSAIDs absolutt kontraindisert. Kontrastmidler frarådes."
+    },
+    {
+      "id": "P-026",
+      "navn": "Oddvar Lund",
+      "alder": 72,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "Kronisk nyresykdom stadium 3b", "siden": "2020" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Ramipril", "atc": "C09AA05", "dose": "2.5 mg daglig", "indikasjon": "Nefroprotektiv" }
+      ],
+      "allergier": [],
+      "merknader": "eGFR 35. NSAIDs frarådes. Dosejuster renalt utskilte medikamenter."
+    },
+    {
+      "id": "P-027",
+      "navn": "Tone Sveen",
+      "alder": 68,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 3", "siden": "2021" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Losartan", "atc": "C09CA01", "dose": "50 mg daglig", "indikasjon": "Nefroprotektiv + HT" }
+      ],
+      "allergier": [],
+      "merknader": "eGFR 48. NSAIDs frarådes."
+    },
+    {
+      "id": "P-028",
+      "navn": "Kåre Birkeland",
+      "alder": 80,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 4", "siden": "2019" },
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2018" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Apixaban (Eliquis)", "atc": "B01AF02", "dose": "2.5 mg x 2 (redusert dose)", "indikasjon": "Antikoagulasjon" },
+        { "navn": "Furosemid", "atc": "C03CA01", "dose": "40 mg daglig", "indikasjon": "Ødem" }
+      ],
+      "allergier": [],
+      "merknader": "Dobbel kontraindikasjon mot NSAIDs (CKD + antikoagulasjon). eGFR 28."
+    },
+    {
+      "id": "P-029",
+      "navn": "Hilde Grønli",
+      "alder": 66,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 3", "siden": "2023" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Ramipril", "atc": "C09AA05", "dose": "5 mg daglig", "indikasjon": "HT + nefroprotektiv" }
+      ],
+      "allergier": [],
+      "merknader": "eGFR 52."
+    },
+
+    {
+      "id": "P-030",
+      "navn": "Eivind Tangen",
+      "alder": 34,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2005" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Budesonid/formoterol (Symbicort)", "atc": "R03AK07", "dose": "160/4.5 v/behov", "indikasjon": "Astma (MART)" }
+      ],
+      "allergier": ["Acetylsalisylsyre (ASA)", "NSAIDs"],
+      "merknader": "ASA-indusert astma (AERD). NSAIDs og ASA absolutt kontraindisert - kan utløse alvorlig bronkospasme."
+    },
+    {
+      "id": "P-031",
+      "navn": "Marianne Skog",
+      "alder": 42,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2010" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Flutikason (Flutide)", "atc": "R03BA05", "dose": "125 mcg x 2 inh", "indikasjon": "Astma" },
+        { "navn": "Salbutamol", "atc": "R03AC02", "dose": "v/behov", "indikasjon": "Astma" }
+      ],
+      "allergier": ["Pollen", "Katt"],
+      "merknader": "Allergisk astma. Ikke-selektive betablokkere kontraindisert."
+    },
+    {
+      "id": "P-032",
+      "navn": "Lars Aas",
+      "alder": 28,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2000" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Budesonid/formoterol", "atc": "R03AK07", "dose": "160/4.5 x 2", "indikasjon": "Astma" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+    {
+      "id": "P-033",
+      "navn": "Anne Lise Furu",
+      "alder": 51,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "1995" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Flutikason/vilanterol (Relvar)", "atc": "R03AK10", "dose": "92/22 daglig", "indikasjon": "Astma" },
+        { "navn": "Montelukast", "atc": "R03DC03", "dose": "10 mg kveld", "indikasjon": "Astma" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+    {
+      "id": "P-034",
+      "navn": "Pål Skaar",
+      "alder": 19,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2010" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Salbutamol", "atc": "R03AC02", "dose": "v/behov", "indikasjon": "Astma" }
+      ],
+      "allergier": ["Peanøtter"],
+      "merknader": "Mild intermitterende astma."
+    },
+
+    {
+      "id": "P-035",
+      "navn": "Olav Refsdal",
+      "alder": 83,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I50", "kodeverk": "ICD-10", "tekst": "Hjertesvikt", "siden": "2018" },
+        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2005" },
+        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 3", "siden": "2020" },
+        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2019" },
+        { "kode": "M81", "kodeverk": "ICD-10", "tekst": "Osteoporose", "siden": "2017" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Warfarin", "atc": "B01AA03", "dose": "2 mg daglig", "indikasjon": "Antikoagulasjon" },
+        { "navn": "Furosemid", "atc": "C03CA01", "dose": "40 mg x 2", "indikasjon": "Hjertesvikt" },
+        { "navn": "Metoprolol", "atc": "C07AB02", "dose": "50 mg x 2", "indikasjon": "Hjertesvikt/AF" },
+        { "navn": "Ramipril", "atc": "C09AA05", "dose": "2.5 mg daglig", "indikasjon": "Hjertesvikt" },
+        { "navn": "Empagliflozin", "atc": "A10BK03", "dose": "10 mg daglig", "indikasjon": "DM2/hjertesvikt" },
+        { "navn": "Alendronat", "atc": "M05BA04", "dose": "70 mg ukentlig", "indikasjon": "Osteoporose" },
+        { "navn": "Kolekalsiferol + kalsium", "atc": "A12AX", "dose": "1 x 2", "indikasjon": "Osteoporose" }
+      ],
+      "allergier": [],
+      "merknader": "Polyfarmasi - 7 faste medisiner. NSAIDs absolutt kontraindisert (hjertesvikt + CKD + Warfarin). Høy fallrisiko."
+    },
+    {
+      "id": "P-036",
+      "navn": "Randi Nesbø",
+      "alder": 87,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "F03", "kodeverk": "ICD-10", "tekst": "Demens", "siden": "2021" },
+        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2000" },
+        { "kode": "M81", "kodeverk": "ICD-10", "tekst": "Osteoporose", "siden": "2018" },
+        { "kode": "F32", "kodeverk": "ICD-10", "tekst": "Depresjon", "siden": "2019" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Donepezil", "atc": "N06DA02", "dose": "10 mg daglig", "indikasjon": "Demens" },
+        { "navn": "Amlodipin", "atc": "C08CA01", "dose": "5 mg daglig", "indikasjon": "HT" },
+        { "navn": "Sertralin", "atc": "N06AB06", "dose": "50 mg daglig", "indikasjon": "Depresjon" },
+        { "navn": "Alendronat", "atc": "M05BA04", "dose": "70 mg ukentlig", "indikasjon": "Osteoporose" },
+        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g x 3 v/behov", "indikasjon": "Smerter" },
+        { "navn": "Melatonin", "atc": "N05CH01", "dose": "2 mg kveld", "indikasjon": "Søvn" }
+      ],
+      "allergier": [],
+      "merknader": "Sårbar eldre. Antikolinerge medikamenter bør unngås (STOPP/START). Høy fallrisiko."
+    },
+    {
+      "id": "P-037",
+      "navn": "Finn Grimstad",
+      "alder": 79,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I25", "kodeverk": "ICD-10", "tekst": "Iskemisk hjertesykdom", "siden": "2010" },
+        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "1998" },
+        { "kode": "E78", "kodeverk": "ICD-10", "tekst": "Hyperkolesterolemi", "siden": "2005" },
+        { "kode": "M17", "kodeverk": "ICD-10", "tekst": "Knegonartrose", "siden": "2015" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Acetylsalisylsyre", "atc": "B01AC06", "dose": "75 mg daglig", "indikasjon": "Platehemming" },
+        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "40 mg daglig", "indikasjon": "Sekundærprofylakse" },
+        { "navn": "Metoprolol", "atc": "C07AB02", "dose": "50 mg x 2", "indikasjon": "Angina" },
+        { "navn": "Nitroglyserin spray", "atc": "C01DA02", "dose": "v/behov", "indikasjon": "Angina" },
+        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g x 3", "indikasjon": "Artrose" }
+      ],
+      "allergier": [],
+      "merknader": "Lever med knesmerter. NSAIDs bør unngås pga ASA + iskemisk hjertesykdom - bruker paracetamol."
+    },
+
+    {
+      "id": "P-038",
+      "navn": "Nora Eng",
+      "alder": 35,
+      "kjonn": "K",
+      "diagnoser": [],
+      "faste_medisiner": [],
+      "allergier": [],
+      "merknader": "Frisk. Ingen faste medisiner."
+    },
+    {
+      "id": "P-039",
+      "navn": "Henrik Røed",
+      "alder": 42,
+      "kjonn": "M",
+      "diagnoser": [],
+      "faste_medisiner": [],
+      "allergier": [],
+      "merknader": "Frisk."
+    },
+    {
+      "id": "P-040",
+      "navn": "Ida Holmen",
+      "alder": 29,
+      "kjonn": "K",
+      "diagnoser": [],
+      "faste_medisiner": [],
+      "allergier": ["Penicillin"],
+      "merknader": "Frisk. Penicillinallergi dokumentert."
+    },
+    {
+      "id": "P-041",
+      "navn": "Sindre Aune",
+      "alder": 51,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2022" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Amlodipin", "atc": "C08CA01", "dose": "5 mg daglig", "indikasjon": "HT" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+    {
+      "id": "P-042",
+      "navn": "Kristin Aas",
+      "alder": 45,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "F32", "kodeverk": "ICD-10", "tekst": "Depresjon", "siden": "2023" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Sertralin", "atc": "N06AB06", "dose": "100 mg daglig", "indikasjon": "Depresjon" }
+      ],
+      "allergier": [],
+      "merknader": "SSRI - øker blødningsrisiko ved samtidig NSAID."
+    },
+    {
+      "id": "P-043",
+      "navn": "Stein Ø. Moe",
+      "alder": 38,
+      "kjonn": "M",
+      "diagnoser": [],
+      "faste_medisiner": [],
+      "allergier": [],
+      "merknader": "Frisk."
+    },
+    {
+      "id": "P-044",
+      "navn": "Vigdis Bø",
+      "alder": 56,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "E03", "kodeverk": "ICD-10", "tekst": "Hypotyreose", "siden": "2019" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Levotyroksin", "atc": "H03AA01", "dose": "75 mcg daglig", "indikasjon": "Hypotyreose" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+    {
+      "id": "P-045",
+      "navn": "Ola Bakke",
+      "alder": 23,
+      "kjonn": "M",
+      "diagnoser": [],
+      "faste_medisiner": [],
+      "allergier": [],
+      "merknader": "Frisk."
+    },
+    {
+      "id": "P-046",
+      "navn": "Elin Torp",
+      "alder": 61,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "M06", "kodeverk": "ICD-10", "tekst": "Revmatoid artritt", "siden": "2015" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Metotreksat", "atc": "L01BA01", "dose": "15 mg ukentlig", "indikasjon": "RA" },
+        { "navn": "Folsyre", "atc": "B03BB01", "dose": "1 mg daglig", "indikasjon": "MTX-komplement" }
+      ],
+      "allergier": [],
+      "merknader": "Immunsupprimert. NSAIDs kan brukes ved behov, men følg nyrefunksjon."
+    },
+    {
+      "id": "P-047",
+      "navn": "Geir Tangen",
+      "alder": 49,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "K25", "kodeverk": "ICD-10", "tekst": "Ulcus ventriculi", "siden": "2020" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Pantoprazol", "atc": "A02BC02", "dose": "40 mg daglig", "indikasjon": "Ulcus" }
+      ],
+      "allergier": [],
+      "merknader": "Tidligere magesår - NSAIDs bør unngås pga residivrisiko."
+    },
+    {
+      "id": "P-048",
+      "navn": "Kjersti Dale",
+      "alder": 32,
+      "kjonn": "K",
+      "diagnoser": [
+        { "kode": "G43", "kodeverk": "ICD-10", "tekst": "Migrene", "siden": "2018" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Sumatriptan", "atc": "N02CC01", "dose": "50 mg v/anfall", "indikasjon": "Migrene" }
+      ],
+      "allergier": [],
+      "merknader": "Episodisk migrene."
+    },
+    {
+      "id": "P-049",
+      "navn": "Roar Sund",
+      "alder": 57,
+      "kjonn": "M",
+      "diagnoser": [
+        { "kode": "M54", "kodeverk": "ICD-10", "tekst": "Ryggsmerter", "siden": "2021" }
+      ],
+      "faste_medisiner": [
+        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g v/behov", "indikasjon": "Smerter" }
+      ],
+      "allergier": [],
+      "merknader": ""
+    },
+    {
+      "id": "P-050",
+      "navn": "Anita Lund",
+      "alder": 39,
+      "kjonn": "K",
+      "diagnoser": [],
+      "faste_medisiner": [],
+      "allergier": [],
+      "merknader": "Frisk. Årskontroll uten funn."
+    }
+  ]
+}

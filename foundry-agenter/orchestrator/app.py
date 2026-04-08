@@ -27,7 +27,8 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from orchestrate import orchestrate, OrchestrationResult
-from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK
+from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL
+import kjernejournal
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -43,6 +44,7 @@ PROJECT_ENDPOINT = os.environ.get(
 class AskRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=2000, description="Spørsmål til HAPI-agentene")
     use_llm_routing: bool = Field(False, description="Bruk LLM for routing ved lav konfidens")
+    patient_id: str | None = Field(None, description="Valgfri aktiv pasient-ID (mock kjernejournal)")
 
 
 class AgentResultResponse(BaseModel):
@@ -111,6 +113,7 @@ async def ask(request: AskRequest):
             project_endpoint=PROJECT_ENDPOINT,
             query=request.query,
             use_llm_routing=request.use_llm_routing,
+            patient_id=request.patient_id,
         )
 
         return AskResponse(
@@ -147,7 +150,7 @@ async def ask_stream(request: AskRequest):
         import json
 
         # Steg 1: Routing
-        decision = route(request.query)
+        decision = route(request.query, patient_id=request.patient_id)
         yield f"data: {json.dumps({'type': 'routing', 'agents': decision.agents, 'confidence': decision.confidence})}\n\n"
 
         # Steg 2: Kall agenter
@@ -155,6 +158,7 @@ async def ask_stream(request: AskRequest):
             project_endpoint=PROJECT_ENDPOINT,
             query=request.query,
             use_llm_routing=request.use_llm_routing,
+            patient_id=request.patient_id,
         )
 
         for r in result.agent_results:
@@ -176,7 +180,7 @@ async def health():
     return HealthResponse(
         status="ok",
         project_endpoint=PROJECT_ENDPOINT,
-        agents=[RETNINGSLINJE, KODEVERK, STATISTIKK],
+        agents=[RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL],
     )
 
 
@@ -201,8 +205,30 @@ async def list_agents():
                 "description": "Nasjonale kvalitetsindikatorer (NKI), statistikk, trender",
                 "mcp_tools": ["sok_innhold", "hent_innhold_id"],
             },
+            {
+                "name": KJERNEJOURNAL,
+                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo)",
+                "mcp_tools": ["lokal_pasientoppslag"],
+            },
         ]
     }
+
+
+# --- Kjernejournal endpoints ---
+
+@app.get("/patients")
+async def list_patients():
+    """Liste over mock-pasienter for UI-dropdown."""
+    return {"patients": kjernejournal.list_patients_summary()}
+
+
+@app.get("/patients/{patient_id}")
+async def get_patient(patient_id: str):
+    """Full mock-pasientdata (til debug/info-panel)."""
+    p = kjernejournal.get_patient(patient_id)
+    if not p:
+        raise HTTPException(status_code=404, detail="Pasient ikke funnet")
+    return p
 
 
 EVALS_DIR = Path("/app/evals/rapporter")

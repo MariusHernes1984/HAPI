@@ -12,6 +12,7 @@ from dataclasses import dataclass, field
 RETNINGSLINJE = "hapi-retningslinje-agent"
 KODEVERK = "hapi-kodeverk-agent"
 STATISTIKK = "hapi-statistikk-agent"
+KJERNEJOURNAL = "hapi-kjernejournal-agent"
 
 # --- Routing-regler ---
 
@@ -110,9 +111,14 @@ class RoutingDecision:
     reasoning: str = ""
 
 
-def route(query: str) -> RoutingDecision:
+def route(query: str, patient_id: str | None = None) -> RoutingDecision:
     """
     Klassifiser spørsmål og bestem hvilke agenter som trengs.
+
+    Args:
+        query: Brukerens spørsmål
+        patient_id: Valgfri aktiv pasient-ID. Hvis satt, legges kjernejournal-
+                    agenten alltid til i routing-listen.
 
     Returns:
         RoutingDecision med agenter, koder og konfidens.
@@ -183,6 +189,12 @@ def route(query: str) -> RoutingDecision:
         decision.agents = [RETNINGSLINJE]
         decision.confidence = "lav"
         decision.reasoning += "Ingen eksakt match — bruker retningslinje-agent som default. "
+
+    # Steg 4b: Kjernejournal — trigges av aktiv pasient, ikke nøkkelord
+    if patient_id:
+        if KJERNEJOURNAL not in decision.agents:
+            decision.agents.append(KJERNEJOURNAL)
+        decision.reasoning += f"Aktiv pasient {patient_id} — kjernejournal-agent aktivert. "
 
     # Steg 5: Sett konfidens
     if len(decision.agents) == 1 and decision.confidence != "lav":

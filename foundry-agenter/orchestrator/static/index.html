@@ -566,6 +566,46 @@
       background: rgba(255,255,255,0.22);
     }
 
+    .patient-select {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      max-width: 260px;
+      transition: background 0.2s;
+    }
+    .patient-select:hover {
+      background: rgba(255,255,255,0.22);
+    }
+    .patient-select option {
+      background: #0d6e6e;
+      color: #fff;
+    }
+
+    .patient-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      border-radius: 14px;
+      padding: 4px 10px;
+      font-size: 12px;
+      margin: 0 auto 10px;
+      cursor: pointer;
+    }
+    .patient-badge:hover { background: #fde68a; }
+
+    .agent-card-icon.kjernejournal {
+      background: #fee2e2;
+      color: #dc2626;
+    }
+
     /* --- Agent modal --- */
     .modal-overlay {
       display: none;
@@ -707,9 +747,12 @@
       <p>Norsk helseinformasjon fra Helsedirektoratet</p>
     </div>
     <div class="header-actions">
+      <select id="patientSelect" class="patient-select" onchange="onPatientChange()" title="Velg aktiv pasient (mock-demo)">
+        <option value="">Ingen aktiv pasient</option>
+      </select>
       <div class="header-badge" onclick="openAgentModal()">
         <span class="status-dot"></span>
-        <span>3 agenter aktive</span>
+        <span id="agentBadge">4 agenter aktive</span>
       </div>
       <a class="header-btn" href="/stats">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -825,7 +868,59 @@
       'hapi-retningslinje-agent': 'Retningslinjer',
       'hapi-kodeverk-agent': 'Kodeverk',
       'hapi-statistikk-agent': 'Statistikk',
+      'hapi-kjernejournal-agent': 'Kjernejournal',
     };
+
+    // --- Pasient-state ---
+    let selectedPatientId = localStorage.getItem('hapi_patient_id') || '';
+    let patientsCache = [];
+
+    async function loadPatients() {
+      try {
+        const resp = await fetch(`${API_BASE}/patients`);
+        const data = await resp.json();
+        patientsCache = data.patients || [];
+        const sel = document.getElementById('patientSelect');
+        patientsCache.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = `${p.id} — ${p.navn}, ${p.alder} år (${p.beskrivelse})`;
+          sel.appendChild(opt);
+        });
+        if (selectedPatientId) {
+          sel.value = selectedPatientId;
+        }
+      } catch (err) {
+        console.error('Kunne ikke laste pasienter:', err);
+      }
+    }
+
+    function onPatientChange() {
+      const sel = document.getElementById('patientSelect');
+      selectedPatientId = sel.value;
+      if (selectedPatientId) {
+        localStorage.setItem('hapi_patient_id', selectedPatientId);
+      } else {
+        localStorage.removeItem('hapi_patient_id');
+      }
+    }
+
+    async function showPatientDetails() {
+      if (!selectedPatientId) return;
+      try {
+        const resp = await fetch(`${API_BASE}/patients/${selectedPatientId}`);
+        const p = await resp.json();
+        alert(
+          `${p.navn} (${p.id}), ${p.alder} år\n\n` +
+          `Diagnoser:\n` + (p.diagnoser?.length ? p.diagnoser.map(d => `  • ${d.tekst} (${d.kodeverk}:${d.kode})`).join('\n') : '  Ingen') +
+          `\n\nFaste medisiner:\n` + (p.faste_medisiner?.length ? p.faste_medisiner.map(m => `  • ${m.navn} ${m.dose}`).join('\n') : '  Ingen') +
+          `\n\nAllergier: ${(p.allergier || []).join(', ') || 'Ingen'}` +
+          (p.merknader ? `\n\nMerknad: ${p.merknader}` : '')
+        );
+      } catch (err) {
+        console.error(err);
+      }
+    }
 
     function autoResize(el) {
       el.style.height = 'auto';
@@ -1086,7 +1181,7 @@ Nytt oppfølgingsspørsmål: ${query}`;
         const resp = await fetch(`${API_BASE}/ask`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query }),
+          body: JSON.stringify({ query, patient_id: selectedPatientId || null }),
         });
 
         if (!resp.ok) {
@@ -1130,6 +1225,7 @@ Nytt oppfølgingsspørsmål: ${query}`;
       'hapi-retningslinje-agent': { icon: '\u{1F4D6}', css: 'retningslinje', label: 'Retningslinjer' },
       'hapi-kodeverk-agent': { icon: '\u{1F3F7}\uFE0F', css: 'kodeverk', label: 'Kodeverk' },
       'hapi-statistikk-agent': { icon: '\u{1F4CA}', css: 'statistikk', label: 'Statistikk' },
+      'hapi-kjernejournal-agent': { icon: '\u{1FAC0}', css: 'kjernejournal', label: 'Kjernejournal' },
     };
 
     function openAgentModal() {
@@ -1174,6 +1270,9 @@ Nytt oppfølgingsspørsmål: ${query}`;
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') document.getElementById('agentModal').classList.remove('active');
     });
+
+    // Load pasienter for dropdown
+    loadPatients();
 
     // Focus input on load
     input.focus();
