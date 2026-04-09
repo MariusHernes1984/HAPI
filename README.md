@@ -2,7 +2,7 @@
 
 MCP server for Helsedirektoratets HAPI innholdstjenester — gir AI-agenter tilgang til norske nasjonale faglige retningslinjer, veiledere, anbefalinger og pakkeforløp.
 
-<img width="488" height="696" alt="image" src="https://github.com/user-attachments/assets/0dfb34b1-a2ad-463a-95cc-89bc23c4fd5d" />
+<img width="817" height="1162" alt="HAPI infographic" src="https://github.com/user-attachments/assets/7b7a5a30-c07f-46af-94e3-3a61171478fb" />
 
 
 ## Arkitektur
