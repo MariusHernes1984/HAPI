@@ -33,6 +33,8 @@ Helsedirektoratets HAPI API (api-qa.helsedirektoratet.no)
 | `hent_kvalitetsindikatorer` | Nasjonale kvalitetsindikatorer |
 | `hent_kvalitetsindikator` | Spesifikk kvalitetsindikator etter ID |
 | `hent_endringer` | Endringer siden et gitt tidspunkt |
+| `sok_legemidler` | Søk i FEST-legemiddelregisteret etter navn, virkestoff, ATC-kode eller form |
+| `hent_legemiddel` | Hent detaljert legemiddelinfo etter ID (virkestoff, styrke, pakninger) |
 
 ## Forutsetninger
 

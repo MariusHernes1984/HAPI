@@ -1,14 +1,17 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
-const BASE_URL = "https://api-qa.helsedirektoratet.no/innhold";
+const API_HOST = "https://api-qa.helsedirektoratet.no";
+const BASE_URL = `${API_HOST}/innhold`;
+const LEGEMIDDEL_URL = `${API_HOST}/legemidler`;
 const SUBSCRIPTION_KEY = process.env.HAPI_SUBSCRIPTION_KEY ?? "";
 
-async function hapiGet(
+async function apiGet(
+  baseUrl: string,
   path: string,
   params?: Record<string, string | undefined>
 ): Promise<unknown> {
-  const url = new URL(`${BASE_URL}${path}`);
+  const url = new URL(`${baseUrl}${path}`);
   if (params) {
     for (const [key, value] of Object.entries(params)) {
       if (value !== undefined && value !== "") {
@@ -41,6 +44,59 @@ async function hapiGet(
       `HAPI API ${path}: ugyldig JSON-respons (${(err as Error).message}). Body: ${text.slice(0, 200)}`
     );
   }
+}
+
+/** Bakoverkompatibel wrapper — henter fra /innhold */
+async function hapiGet(
+  path: string,
+  params?: Record<string, string | undefined>
+): Promise<unknown> {
+  return apiGet(BASE_URL, path, params);
+}
+
+/** Henter fra /legemidler */
+async function legemiddelGet(
+  path: string,
+  params?: Record<string, string | undefined>
+): Promise<unknown> {
+  return apiGet(LEGEMIDDEL_URL, path, params);
+}
+
+// --- Legemiddel-cache (2 176 oppføringer, ~2 MB, TTL 30 min) ---
+interface LegemiddelItem {
+  legemiddelMerkevareId: string;
+  varenavn: string;
+  navnFormStyrke: string;
+  atcKode: string;
+  atcNavn: string;
+  form: string;
+  registreringsstatus: string;
+  administrasjonsmåter?: string[];
+  virkestoffMedStyrke?: Array<{
+    navn: string;
+    navnEngelsk: string;
+    styrkeVerdi: string;
+    styrkeEnhet: string;
+  }>;
+  pakninger?: Array<{
+    legemiddelPakningId: string;
+    navnFormStyrke: string;
+    varenummer: string;
+  }>;
+}
+
+let legemiddelCache: LegemiddelItem[] = [];
+let legemiddelCacheTime = 0;
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutter
+
+async function getLegemiddelCache(): Promise<LegemiddelItem[]> {
+  if (legemiddelCache.length > 0 && Date.now() - legemiddelCacheTime < CACHE_TTL_MS) {
+    return legemiddelCache;
+  }
+  const data = await legemiddelGet("/legemiddelvirkestoff", { take: "5000" });
+  legemiddelCache = (data as LegemiddelItem[]) ?? [];
+  legemiddelCacheTime = Date.now();
+  return legemiddelCache;
 }
 
 // Felter som er viktige for klinisk kvalitet — beholdes alltid
@@ -529,6 +585,117 @@ export function createServer(): McpServer {
     },
     async ({ since, producerId }) => {
       const data = await hapiGet("/GetChanges", { since, producerId });
+      return { content: [{ type: "text", text: formatResult(data) }] };
+    }
+  );
+
+  // ====================================================================
+  // Legemidler (FEST-data fra /legemidler)
+  // ====================================================================
+
+  // 15. Søk legemidler
+  server.tool(
+    "sok_legemidler",
+    "Søk i Helsedirektoratets legemiddelregister (FEST). Filtrer på legemiddelnavn, virkestoff, ATC-kode eller legemiddelform. Returnerer treff med varenavn, ATC-kode, virkestoff og styrke.",
+    {
+      navn: z
+        .string()
+        .optional()
+        .describe("Søk i varenavn / navnFormStyrke (delvis treff, case-insensitive)"),
+      virkestoff: z
+        .string()
+        .optional()
+        .describe("Søk etter virkestoffnavn (norsk eller engelsk, delvis treff)"),
+      atcKode: z
+        .string()
+        .optional()
+        .describe("Filtrer på ATC-kode (eksakt eller prefiks, f.eks. 'N02BE' for paracetamol-gruppen)"),
+      form: z
+        .string()
+        .optional()
+        .describe("Filtrer på legemiddelform, f.eks. 'Tablett', 'Injeksjon'"),
+      maxResults: z
+        .number()
+        .optional()
+        .describe("Maks antall resultater (default 20, maks 50)"),
+    },
+    async ({ navn, virkestoff, atcKode, form, maxResults }) => {
+      const all = await getLegemiddelCache();
+      const max = Math.min(maxResults ?? 20, 50);
+
+      let results = all;
+
+      if (navn) {
+        const q = navn.toLowerCase();
+        results = results.filter(
+          (item) =>
+            item.varenavn?.toLowerCase().includes(q) ||
+            item.navnFormStyrke?.toLowerCase().includes(q)
+        );
+      }
+
+      if (virkestoff) {
+        const q = virkestoff.toLowerCase();
+        results = results.filter((item) =>
+          item.virkestoffMedStyrke?.some(
+            (v) =>
+              v.navn?.toLowerCase().includes(q) ||
+              v.navnEngelsk?.toLowerCase().includes(q)
+          )
+        );
+      }
+
+      if (atcKode) {
+        const q = atcKode.toUpperCase();
+        results = results.filter((item) =>
+          item.atcKode?.toUpperCase().startsWith(q)
+        );
+      }
+
+      if (form) {
+        const q = form.toLowerCase();
+        results = results.filter((item) =>
+          item.form?.toLowerCase().includes(q)
+        );
+      }
+
+      const truncated = results.slice(0, max);
+      const output = {
+        antallTreff: results.length,
+        vist: truncated.length,
+        totalLegemidler: all.length,
+        resultater: truncated.map((item) => ({
+          id: item.legemiddelMerkevareId,
+          varenavn: item.varenavn,
+          navnFormStyrke: item.navnFormStyrke,
+          atcKode: item.atcKode,
+          atcNavn: item.atcNavn,
+          form: item.form,
+          virkestoff: item.virkestoffMedStyrke?.map(
+            (v) => `${v.navn} ${v.styrkeVerdi} ${v.styrkeEnhet}`
+          ),
+        })),
+      };
+
+      return { content: [{ type: "text", text: formatResult(output) }] };
+    }
+  );
+
+  // 16. Hent legemiddel etter ID
+  server.tool(
+    "hent_legemiddel",
+    "Hent detaljert informasjon om et spesifikt legemiddel fra FEST-registeret. Returnerer virkestoff, styrke, pakninger, ATC-kode, administrasjonsmåte m.m.",
+    {
+      id: z
+        .string()
+        .describe(
+          "Legemiddel-ID (legemiddelMerkevareId), f.eks. 'ID_0E05AAB7-FA34-4B16-97EB-E29A910524F8'"
+        ),
+    },
+    async ({ id }) => {
+      const data = await legemiddelGet(
+        `/legemiddelvirkestoff/${encodeURIComponent(id)}`
+      );
       return { content: [{ type: "text", text: formatResult(data) }] };
     }
   );
