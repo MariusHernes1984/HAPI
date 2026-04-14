@@ -197,18 +197,21 @@ async def list_agents():
             },
             {
                 "name": KODEVERK,
-                "description": "Kodeverk (ICD-10, ICPC-2, SNOMED, ATC), legemiddeldata, mapping",
-                "mcp_tools": ["sok_innhold", "hent_innhold_id"],
+                "description": "Kodeverk (ICD-10, ICPC-2, SNOMED, ATC), legemiddeldata fra FEST, mapping",
+                "mcp_tools": ["sok_innhold", "hent_innhold_id", "sok_legemidler", "hent_legemiddel",
+                              "sjekk_interaksjoner", "hent_interaksjon"],
             },
             {
                 "name": STATISTIKK,
                 "description": "Nasjonale kvalitetsindikatorer (NKI), statistikk, trender",
-                "mcp_tools": ["sok_innhold", "hent_innhold_id"],
+                "mcp_tools": ["sok_innhold", "hent_innhold_id", "hent_kvalitetsindikatorer",
+                              "hent_kvalitetsindikator"],
             },
             {
                 "name": KJERNEJOURNAL,
-                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo)",
-                "mcp_tools": ["lokal_pasientoppslag"],
+                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo). "
+                               "Interaksjoner sjekkes automatisk mot FEST/Statens legemiddelverk.",
+                "mcp_tools": ["lokal_pasientoppslag", "interaksjonssjekk (FEST/SLV, automatisk)"],
             },
         ]
     }
