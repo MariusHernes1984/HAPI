@@ -41,6 +41,7 @@ class OrchestrationResult:
     routing: RoutingDecision
     agent_results: list[AgentResult] = field(default_factory=list)
     total_duration_ms: int = 0
+    interaksjonssjekk: bool = False
 
 
 # --- Konfigurasjon ---
@@ -319,12 +320,16 @@ async def synthesize(
     project: AsyncProjectClient,
     query: str,
     results: list[AgentResult],
-) -> str:
-    """Kombiner agent-resultater til ett svar via LLM."""
+) -> tuple[str, bool]:
+    """Kombiner agent-resultater til ett svar via LLM.
+
+    Returns:
+        (answer, has_interaksjoner) — svartekst og om interaksjonssjekk ble brukt.
+    """
     successful = [r for r in results if r.success and r.output]
 
     if not successful:
-        return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet."
+        return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False
 
     # Separer kjernejournal-output fra de andre fagkildene
     journal_results = [r for r in successful if r.agent_name == KJERNEJOURNAL]
@@ -364,12 +369,12 @@ async def synthesize(
     # Hvis ingen fagkunnskap-kilder (bare journal eller tom), fallback
     if not knowledge_results:
         if journal_results:
-            return journal_results[0].output + footer
-        return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet."
+            return journal_results[0].output + footer, has_interaksjoner
+        return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False
 
     # Hvis bare én fagkunnskap-kilde og ingen pasient, bruk direkte
     if len(knowledge_results) == 1 and not journal_results:
-        return knowledge_results[0].output + footer
+        return knowledge_results[0].output + footer, False
 
     # Syntetiser via LLM
     agent_outputs = ""
@@ -393,12 +398,12 @@ async def synthesize(
             model="gpt-5.3-chat",
             input=prompt,
         )
-        return response.output_text
+        return response.output_text, has_interaksjoner
     except Exception as e:
         logger.error(f"Syntese feilet: {e}")
         # Fallback: konkatener fagkunnskap-resultatene
         parts = [r.output for r in knowledge_results]
-        return "\n\n".join(parts) + SOURCE_FOOTER
+        return "\n\n".join(parts) + SOURCE_FOOTER, has_interaksjoner
 
 
 async def orchestrate(
@@ -453,7 +458,7 @@ async def orchestrate(
 
             # Steg 3: Syntetiser
             logger.info("Syntetiserer svar...")
-            final_answer = await synthesize(project, query, list(results))
+            final_answer, has_interaksjoner = await synthesize(project, query, list(results))
 
     total_ms = int((time.monotonic() - start) * 1000)
 
@@ -462,6 +467,7 @@ async def orchestrate(
         routing=decision,
         agent_results=list(results),
         total_duration_ms=total_ms,
+        interaksjonssjekk=has_interaksjoner,
     )
 
 

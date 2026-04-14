@@ -67,6 +67,7 @@ class AskResponse(BaseModel):
     routing: RoutingResponse
     agent_results: list[AgentResultResponse]
     total_duration_ms: int
+    interaksjonssjekk: bool = False
 
 
 class HealthResponse(BaseModel):
@@ -135,6 +136,7 @@ async def ask(request: AskRequest):
                 for r in result.agent_results
             ],
             total_duration_ms=result.total_duration_ms,
+            interaksjonssjekk=result.interaksjonssjekk,
         )
 
     except Exception as e:

@@ -389,6 +389,11 @@
       50% { opacity: 0.6; }
     }
 
+    .orch-step.interaksjon {
+      background: #fce7f3;
+      color: #9d174d;
+    }
+
     .orch-step.synth {
       background: #fef3c7;
       color: #92400e;
@@ -1029,7 +1034,7 @@
       if (el) el.remove();
     }
 
-    function finishOrchFlow(agents, totalMs) {
+    function finishOrchFlow(agents, totalMs, interaksjonssjekk) {
       const el = document.getElementById('orchFlow');
       if (!el) return;
 
@@ -1038,6 +1043,10 @@
       const agentChips = agents.map(a =>
         `<span class="orch-step agent"><span class="step-icon">&#x2705;</span> ${AGENT_LABELS[a] || a}</span>`
       ).join('<span class="orch-arrow">&#x2192;</span>');
+
+      const ixChip = interaksjonssjekk
+        ? '<span class="orch-arrow">&#x2192;</span><span class="orch-step interaksjon"><span class="step-icon">&#x26A0;&#xFE0F;</span> Interaksjonssjekk</span>'
+        : '';
 
       el.innerHTML = `
         <div class="orch-flow-inner">
@@ -1048,6 +1057,7 @@
             <span class="orch-step routing"><span class="step-icon">&#x1F9ED;</span> Router</span>
             <span class="orch-arrow">&#x2192;</span>
             ${agentChips}
+            ${ixChip}
             <span class="orch-arrow">&#x2192;</span>
             <span class="orch-step synth"><span class="step-icon">&#x2728;</span> Syntese</span>
           </div>
@@ -1055,12 +1065,12 @@
       `;
     }
 
-    function addBotMessage(answer, routing, agentResults, totalMs) {
+    function addBotMessage(answer, routing, agentResults, totalMs, interaksjonssjekk) {
       removeLoading();
 
       // Update orch flow to completed
       if (routing && routing.agents) {
-        finishOrchFlow(routing.agents, totalMs);
+        finishOrchFlow(routing.agents, totalMs, interaksjonssjekk);
       }
 
       const div = document.createElement('div');
@@ -1218,7 +1228,7 @@ Nytt oppfølgingsspørsmål: ${query}`;
         // Keep max 5 exchanges
         if (conversationHistory.length > 5) conversationHistory.shift();
 
-        addBotMessage(data.answer, data.routing, data.agent_results, data.total_duration_ms);
+        addBotMessage(data.answer, data.routing, data.agent_results, data.total_duration_ms, data.interaksjonssjekk);
 
       } catch (err) {
         addErrorMessage(err.message);
