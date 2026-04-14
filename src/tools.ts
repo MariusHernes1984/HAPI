@@ -700,5 +700,152 @@ export function createServer(): McpServer {
     }
   );
 
+  // ====================================================================
+  // Interaksjoner (FEST interaksjonsdata via interaksjoner.no)
+  // ====================================================================
+
+  const INTERAKSJON_SEARCH_URL = "https://www.interaksjoner.no/Analyze.asp";
+  const INTERAKSJON_DETAIL_URL = "https://interaksjoner.azurewebsites.net/InteraksjonJson.asp";
+
+  const FAREGRAD_LABELS: Record<number, string> = {
+    4: "BØR IKKE KOMBINERES",
+    3: "TA FORHOLDSREGLER",
+    2: "MODERAT RISIKO",
+    1: "LAV RISIKO",
+  };
+
+  async function interaksjonGet(url: string): Promise<unknown> {
+    const res = await fetch(url, {
+      headers: { Accept: "application/json", "Cache-Control": "no-cache" },
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      throw new Error(`Interaksjoner.no ${res.status}: ${res.statusText} — ${body}`);
+    }
+    const text = await res.text();
+    if (!text) return {};
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error(`Interaksjoner.no: ugyldig JSON. Body: ${text.slice(0, 200)}`);
+    }
+  }
+
+  // 17. Sjekk legemiddelinteraksjoner
+  server.tool(
+    "sjekk_interaksjoner",
+    "Sjekk legemiddelinteraksjoner mellom to eller flere legemidler/virkestoff. " +
+    "Bruker FEST-interaksjonsdata fra Statens legemiddelverk (SLV) via interaksjoner.no. " +
+    "Aksepterer norske preparatnavn, substansnavn eller ATC-koder (mellomrom-separert). " +
+    "Returnerer faregrad (1–4), klinisk konsekvens og situasjonskriterier. " +
+    "Eksempel: 'warfarin ibuprofen' eller 'metformin enalapril furosemid'.",
+    {
+      legemidler: z
+        .string()
+        .describe(
+          "Legemiddel-/substansnavn eller ATC-koder, mellomrom-separert. " +
+          "Bruk understrek for flerordsnavn (f.eks. 'Paralgin_Forte'). " +
+          "Eksempler: 'warfarin ibuprofen', 'metotreksat trimetoprim', 'B01AA03 M01AE01'"
+        ),
+    },
+    async ({ legemidler }) => {
+      const url = `${INTERAKSJON_SEARCH_URL}?PreparatNavn=${encodeURIComponent(legemidler)}`;
+      const raw = (await interaksjonGet(url)) as {
+        Recognized?: Array<{ Word: string; ATC: string; Substance: string; Maintained: number }>;
+        Unrecognized?: Array<{ Word: string }>;
+        Interactions?: Array<{
+          ATC1: string; ATC2: string; Name1: string; Name2: string;
+          Level: number; Description: string; Situation?: string; DruidId: number;
+        }>;
+      };
+
+      const output: Record<string, unknown> = {
+        sokeord: legemidler,
+      };
+
+      if (raw.Unrecognized?.length && raw.Unrecognized[0].Word) {
+        output.ikkeGjenkjent = raw.Unrecognized.map((u) => u.Word);
+      }
+
+      if (raw.Recognized?.length) {
+        output.gjenkjent = raw.Recognized.map((r) => ({
+          navn: r.Word,
+          atcKode: r.ATC,
+          substans: r.Substance,
+          vedlikeholdt: r.Maintained === 1,
+        }));
+      }
+
+      if (raw.Interactions?.length && raw.Interactions[0].ATC1) {
+        output.antallInteraksjoner = raw.Interactions.length;
+        output.interaksjoner = raw.Interactions.map((ix) => ({
+          legemiddel1: `${ix.Name1} (${ix.ATC1})`,
+          legemiddel2: `${ix.Name2} (${ix.ATC2})`,
+          faregrad: ix.Level,
+          faregradTekst: FAREGRAD_LABELS[ix.Level] ?? `Ukjent (${ix.Level})`,
+          kliniskKonsekvens: ix.Description,
+          situasjon: ix.Situation ?? null,
+          detaljId: ix.DruidId,
+        }));
+      } else {
+        output.antallInteraksjoner = 0;
+        output.interaksjoner = [];
+        output.merknad = "Ingen interaksjoner funnet i FEST-databasen for denne kombinasjonen.";
+      }
+
+      output.kilde = "FEST interaksjonsdata, Statens legemiddelverk (SLV) via interaksjoner.no";
+
+      return { content: [{ type: "text", text: formatResult(output) }] };
+    }
+  );
+
+  // 18. Hent interaksjonsdetaljer
+  server.tool(
+    "hent_interaksjon",
+    "Hent detaljert informasjon om en spesifikk legemiddelinteraksjon. " +
+    "Returnerer interaksjonsmekanisme, klinisk håndtering, legemiddelalternativer " +
+    "og vitenskapelige referanser (PubMed). Bruk detaljId fra sjekk_interaksjoner.",
+    {
+      druidId: z
+        .number()
+        .describe("Interaksjons-ID (DruidId / detaljId fra sjekk_interaksjoner-resultatet)"),
+    },
+    async ({ druidId }) => {
+      const url = `${INTERAKSJON_DETAIL_URL}?DruidId=${druidId}`;
+      const raw = (await interaksjonGet(url)) as {
+        InteraksjonId?: number;
+        Atc1?: string; Atc2?: string;
+        Navn1?: string; Navn2?: string;
+        Faregrad?: number; FaregradTekst?: string;
+        KliniskKonsekvens?: string;
+        Interaksjonsmekanisme?: string;
+        Handtering?: string;
+        Situasjonskriterium?: string;
+        Kildegrunnlag?: string;
+        Referanser?: Array<{ Kilde: string; Lenke: string }>;
+      };
+
+      const output = {
+        interaksjonId: raw.InteraksjonId,
+        legemiddel1: `${raw.Navn1} (${raw.Atc1})`,
+        legemiddel2: `${raw.Navn2} (${raw.Atc2})`,
+        faregrad: raw.Faregrad,
+        faregradTekst: raw.FaregradTekst ?? FAREGRAD_LABELS[raw.Faregrad ?? 0],
+        kliniskKonsekvens: raw.KliniskKonsekvens,
+        interaksjonsmekanisme: raw.Interaksjonsmekanisme,
+        handtering: raw.Handtering,
+        situasjonskriterium: raw.Situasjonskriterium ?? null,
+        kildegrunnlag: raw.Kildegrunnlag,
+        referanser: raw.Referanser?.map((r) => ({
+          kilde: r.Kilde,
+          pubmed: r.Lenke,
+        })),
+        kilde: "FEST interaksjonsdata, Statens legemiddelverk (SLV)",
+      };
+
+      return { content: [{ type: "text", text: formatResult(output) }] };
+    }
+  );
+
   return server;
 }
