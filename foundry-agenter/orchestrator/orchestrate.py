@@ -99,6 +99,120 @@ SOURCE_FOOTER_INTERAKSJON = "\n\n---\n*Kilder: Helsedirektoratet · Interaksjons
 
 INTERAKSJON_URL = "https://www.interaksjoner.no/Analyze.asp"
 
+# Alias-ordbok: vanlige legemiddelnavn, merkenavn og gruppenavn → normalisert navn
+# for interaksjoner.no.  Brukes til å fange medisiner nevnt i spørsmål og agent-output.
+LEGEMIDDEL_ALIASES: dict[str, str] = {
+    # NSAIDs
+    "ibux": "Ibuprofen", "ibuprofen": "Ibuprofen", "brufen": "Ibuprofen",
+    "voltaren": "Diklofenak", "diklofenak": "Diklofenak", "diclofenac": "Diklofenak",
+    "naproxen": "Naproxen", "napren": "Naproxen",
+    "piroksikam": "Piroksikam", "meloksikam": "Meloksikam",
+    "celecoxib": "Celecoxib", "celebra": "Celecoxib",
+    "indometacin": "Indometacin",
+    "aspirin": "Acetylsalisylsyre", "acetylsalisylsyre": "Acetylsalisylsyre",
+    "albyl": "Acetylsalisylsyre", "asa": "Acetylsalisylsyre",
+    # Paracetamol
+    "paracetamol": "Paracetamol", "paracet": "Paracetamol", "panodil": "Paracetamol",
+    # Opioider
+    "tramadol": "Tramadol", "kodein": "Kodein", "morfin": "Morfin",
+    "oxycontin": "Oksykodon", "oksykodon": "Oksykodon", "oxynorm": "Oksykodon",
+    "palexia": "Tapentadol", "tapentadol": "Tapentadol",
+    # Antikoagulantia
+    "warfarin": "Warfarin", "marevan": "Warfarin",
+    "eliquis": "Apiksaban", "apiksaban": "Apiksaban", "apixaban": "Apiksaban",
+    "xarelto": "Rivaroksaban", "rivaroksaban": "Rivaroksaban", "rivaroxaban": "Rivaroksaban",
+    "pradaxa": "Dabigatran", "dabigatran": "Dabigatran",
+    # Platehemmere
+    "klopidogrel": "Klopidogrel", "plavix": "Klopidogrel",
+    "dipyridamol": "Dipyridamol", "persantin": "Dipyridamol",
+    # Betablokkere
+    "metoprolol": "Metoprolol", "selo-zok": "Metoprolol",
+    "atenolol": "Atenolol", "propranolol": "Propranolol",
+    "bisoprolol": "Bisoprolol", "karvedilol": "Karvedilol",
+    # ACE-hemmere / ARB
+    "ramipril": "Ramipril", "enalapril": "Enalapril", "lisinopril": "Lisinopril",
+    "losartan": "Losartan", "valsartan": "Valsartan", "candesartan": "Kandesartan",
+    # Statiner
+    "atorvastatin": "Atorvastatin", "simvastatin": "Simvastatin",
+    "rosuvastatin": "Rosuvastatin",
+    # Diabetes
+    "metformin": "Metformin", "insulin": "Insulin",
+    "ozempic": "Semaglutid", "semaglutid": "Semaglutid",
+    "jardiance": "Empagliflozin", "empagliflozin": "Empagliflozin",
+    "forxiga": "Dapagliflozin", "dapagliflozin": "Dapagliflozin",
+    # Steroider
+    "prednisolon": "Prednisolon", "prednison": "Prednisolon",
+    "deksametason": "Deksametason", "kortison": "Prednisolon",
+    "metylprednisolon": "Metylprednisolon",
+    # Antibiotika
+    "amoxicillin": "Amoxicillin", "penicillin": "Penicillin",
+    "ciprofloxacin": "Ciprofloxacin", "doksycyklin": "Doksycyklin",
+    "erytromycin": "Erytromycin", "metronidazol": "Metronidazol",
+    "trimetoprim": "Trimetoprim", "klindamycin": "Klindamycin",
+    # Antidepressiva / psykofarmaka
+    "sertralin": "Sertralin", "escitalopram": "Escitalopram",
+    "fluoksetin": "Fluoksetin", "venlafaksin": "Venlafaksin",
+    "mirtazapin": "Mirtazapin", "duloksetin": "Duloksetin",
+    # Diuretika
+    "furosemid": "Furosemid", "hydroklortiazid": "Hydroklortiazid",
+    "spironolakton": "Spironolakton",
+    # PPI
+    "omeprazol": "Omeprazol", "pantoprazol": "Pantoprazol",
+    "esomeprazol": "Esomeprazol", "lanzoprazol": "Lanzoprazol",
+    # Annet
+    "alendronat": "Alendronat", "levaxin": "Levotyroksin",
+    "levotyroksin": "Levotyroksin",
+    "ventoline": "Salbutamol", "salbutamol": "Salbutamol",
+    "amlodipin": "Amlodipin", "nifedipin": "Nifedipin",
+    "gabapentin": "Gabapentin", "pregabalin": "Pregabalin", "lyrica": "Pregabalin",
+    "karbamazepin": "Karbamazepin", "fenytoin": "Fenytoin",
+    "litium": "Litium", "valproat": "Valproat",
+    "digoksin": "Digoksin", "amiodaron": "Amiodaron",
+}
+
+# Gruppenavn → representativt legemiddel (for å trigge interaksjonssjekk)
+GRUPPE_ALIASES: dict[str, str] = {
+    "nsaid": "Ibuprofen", "nsaids": "Ibuprofen",
+    "betablokker": "Metoprolol", "betablokkere": "Metoprolol",
+    "ace-hemmer": "Ramipril", "ace-hemmere": "Ramipril",
+    "statin": "Atorvastatin", "statiner": "Atorvastatin",
+    "kortikosteroid": "Prednisolon", "kortikosteroider": "Prednisolon",
+    "ssri": "Sertralin", "snri": "Venlafaksin",
+    "opioid": "Tramadol", "opioider": "Tramadol",
+    "blodfortynnende": "Warfarin",
+    "platehemmer": "Klopidogrel", "platehemmere": "Klopidogrel",
+}
+
+
+def _extract_mentioned_meds(texts: list[str]) -> list[str]:
+    """
+    Skann fritekst (spørsmål + agent-output) for kjente legemiddelnavn.
+
+    Returnerer en deduplisert liste med normaliserte navn som kan brukes
+    mot interaksjoner.no sammen med pasientens faste medisiner.
+    """
+    found: set[str] = set()
+
+    combined = " ".join(texts).lower()
+    # Fjern noen tegn som kan hindre matching
+    combined = re.sub(r"[/\-–]", " ", combined)
+
+    # Sjekk enkeltord mot alias-ordbøkene
+    words = set(re.findall(r"[a-zæøå]+", combined))
+    for word in words:
+        if word in LEGEMIDDEL_ALIASES:
+            found.add(LEGEMIDDEL_ALIASES[word])
+        elif word in GRUPPE_ALIASES:
+            found.add(GRUPPE_ALIASES[word])
+
+    # Sjekk også flerords-aliaser (f.eks. "selo-zok" → "selo zok" etter normalisering)
+    for alias, norm in LEGEMIDDEL_ALIASES.items():
+        if " " in alias and alias in combined:
+            found.add(norm)
+
+    return list(found)
+
+
 FAREGRAD_LABELS = {
     4: "BØR IKKE KOMBINERES",
     3: "TA FORHOLDSREGLER",
@@ -109,7 +223,8 @@ FAREGRAD_LABELS = {
 
 async def _sjekk_interaksjoner(medikament_navn: list[str]) -> str | None:
     """
-    Kall interaksjoner.no med pasientens faste medisiner.
+    Kall interaksjoner.no med en kombinert liste av medisiner
+    (pasientens faste + nevnte i spørsmål/agent-output).
     Returnerer en formatert tekstblokk for syntese-prompten, eller None.
     """
     if len(medikament_navn) < 2:
@@ -342,10 +457,22 @@ async def synthesize(
         journal_output = journal_results[0].output
 
         # Automatisk interaksjonssjekk mot FEST/SLV
-        med_names = _extract_med_names(journal_output)
-        if med_names:
-            logger.info(f"  Interaksjonssjekk for {len(med_names)} medisiner: {med_names}")
-            ix_result = await _sjekk_interaksjoner(med_names)
+        # 1) Pasientens faste medisiner
+        patient_meds = _extract_med_names(journal_output)
+        # 2) Medisiner nevnt i spørsmål og fagkilde-output
+        mention_texts = [query] + [r.output for r in knowledge_results]
+        mentioned_meds = _extract_mentioned_meds(mention_texts)
+        # 3) Kombiner og dedupliser (case-insensitive)
+        seen = {m.lower() for m in patient_meds}
+        for m in mentioned_meds:
+            if m.lower() not in seen:
+                patient_meds.append(m)
+                seen.add(m.lower())
+        all_meds = patient_meds
+
+        if all_meds:
+            logger.info(f"  Interaksjonssjekk for {len(all_meds)} medisiner: {all_meds}")
+            ix_result = await _sjekk_interaksjoner(all_meds)
             if ix_result:
                 interaksjon_block = f"\n{ix_result}\n"
                 has_interaksjoner = True
