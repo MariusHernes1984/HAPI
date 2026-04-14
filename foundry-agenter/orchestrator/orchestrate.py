@@ -11,7 +11,9 @@ Flyten:
 import asyncio
 import time
 import logging
+import re
 from dataclasses import dataclass, field
+from urllib.parse import quote
 
 from azure.identity.aio import DefaultAzureCredential as AsyncCredential
 from azure.ai.projects.aio import AIProjectClient as AsyncProjectClient
@@ -75,8 +77,10 @@ REGLER FOR SVARET TIL BRUKEREN:
    - ALDRI nevne ordene "HAPI", "MCP", "agent", "verktøy", "API", "MCP-server"
    - Flett kunnskapen sømløst som om én klinisk fagperson skrev hele svaret
 
-8. Avslutt med en kort, ren kildelinje (ingen tekniske detaljer):
-   "Kilde: Helsedirektoratet"
+8. Avslutt med en kort, ren kildelinje (ingen tekniske detaljer).
+   Hvis interaksjonsdata fra FEST/SLV er brukt:
+   "Kilder: Helsedirektoratet · Interaksjonsdata fra FEST/Statens legemiddelverk"
+   Ellers: "Kilde: Helsedirektoratet"
 
 9. Du skal ALDRI si at du brukte web-søk.
 
@@ -90,6 +94,94 @@ REGLER FOR SVARET TIL BRUKEREN:
     svar generelt."""
 
 SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratet*"
+SOURCE_FOOTER_INTERAKSJON = "\n\n---\n*Kilder: Helsedirektoratet · Interaksjonsdata fra FEST/Statens legemiddelverk*"
+
+INTERAKSJON_URL = "https://www.interaksjoner.no/Analyze.asp"
+
+FAREGRAD_LABELS = {
+    4: "BØR IKKE KOMBINERES",
+    3: "TA FORHOLDSREGLER",
+    2: "MODERAT RISIKO",
+    1: "LAV RISIKO",
+}
+
+
+async def _sjekk_interaksjoner(medikament_navn: list[str]) -> str | None:
+    """
+    Kall interaksjoner.no med pasientens faste medisiner.
+    Returnerer en formatert tekstblokk for syntese-prompten, eller None.
+    """
+    if len(medikament_navn) < 2:
+        return None  # Trenger minst 2 legemidler for interaksjonssjekk
+
+    søkeord = " ".join(medikament_navn)
+    url = f"{INTERAKSJON_URL}?PreparatNavn={quote(søkeord)}"
+
+    try:
+        import aiohttp
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                if resp.status != 200:
+                    logger.warning(f"Interaksjoner.no returnerte {resp.status}")
+                    return None
+                data = await resp.json(content_type=None)
+    except ImportError:
+        # Fallback: synkront kall via urllib
+        import urllib.request
+        import json as _json
+        try:
+            req = urllib.request.Request(url, headers={"Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                data = _json.loads(resp.read())
+        except Exception as e:
+            logger.warning(f"Interaksjonssjekk feilet (urllib): {e}")
+            return None
+    except Exception as e:
+        logger.warning(f"Interaksjonssjekk feilet: {e}")
+        return None
+
+    interactions = data.get("Interactions") or []
+    # Filtrer bort tomme
+    interactions = [ix for ix in interactions if ix.get("ATC1")]
+    if not interactions:
+        return None
+
+    linjer = [f"INTERAKSJONSDATA FRA FEST/SLV ({len(interactions)} funnet):"]
+    for ix in interactions:
+        level = ix.get("Level", 0)
+        label = FAREGRAD_LABELS.get(level, f"Ukjent ({level})")
+        linjer.append(
+            f"  ⚠ {ix.get('Name1', '?')} ({ix.get('ATC1', '?')}) ↔ "
+            f"{ix.get('Name2', '?')} ({ix.get('ATC2', '?')}): "
+            f"Faregrad {level} ({label}) — {ix.get('Description', '')}"
+        )
+        if ix.get("Situation"):
+            linjer.append(f"    Merk: {ix['Situation']}")
+
+    return "\n".join(linjer)
+
+
+def _extract_med_names(patient_output: str) -> list[str]:
+    """Ekstraher medikamentnavn fra kjernejournal-output."""
+    # Matcher navn før dose-parentes, f.eks. "Warfarin (Marevan) 2.5 mg"
+    # og enkle navn som "Ramipril 5 mg"
+    names = []
+    meds_match = re.search(r"Faste medisiner:\s*(.+)", patient_output)
+    if not meds_match:
+        return names
+    meds_line = meds_match.group(1)
+    # Splitt på ";" og hent første ord(ene) fra hvert segment
+    for segment in meds_line.split(";"):
+        segment = segment.strip()
+        if not segment:
+            continue
+        # Ta alt før dose (tall + mg/ml/etc) eller "(ATC"
+        name = re.split(r"\s+\d+[\.,]?\d*\s*(?:mg|ml|µg|IE|g|mcg)|(?:\(ATC)", segment)[0].strip()
+        # Fjern parentes-alias f.eks. "(Marevan)" — behold hovednavnet
+        base = re.split(r"\s*\(", name)[0].strip()
+        if base and base.lower() != "ingen":
+            names.append(base)
+    return names
 
 
 AGENT_TIMEOUT_S = 120  # Maks ventetid per agent-kall (sekunder)
@@ -238,26 +330,46 @@ async def synthesize(
     journal_results = [r for r in successful if r.agent_name == KJERNEJOURNAL]
     knowledge_results = [r for r in successful if r.agent_name != KJERNEJOURNAL]
 
+    interaksjon_block = ""
+    has_interaksjoner = False
+
     if journal_results:
+        journal_output = journal_results[0].output
+
+        # Automatisk interaksjonssjekk mot FEST/SLV
+        med_names = _extract_med_names(journal_output)
+        if med_names:
+            logger.info(f"  Interaksjonssjekk for {len(med_names)} medisiner: {med_names}")
+            ix_result = await _sjekk_interaksjoner(med_names)
+            if ix_result:
+                interaksjon_block = f"\n{ix_result}\n"
+                has_interaksjoner = True
+                logger.info(f"  Interaksjoner funnet — injiserer i syntese")
+
         patient_block = (
             "\nAKTIV PASIENT (bruk dette til å personalisere svaret):\n"
-            + journal_results[0].output
+            + journal_output
+            + interaksjon_block
             + "\nVIKTIG: Hvis pasientens medisiner, diagnoser eller allergier er "
             "relevant for spørsmålet, MÅ du nevne det eksplisitt og advare om "
-            "kontraindikasjoner eller interaksjoner.\n"
+            "kontraindikasjoner eller interaksjoner. Hvis INTERAKSJONSDATA er oppgitt "
+            "over, bruk denne informasjonen — den er evidensbasert fra FEST/Statens "
+            "legemiddelverk. Nevn faregrad og klinisk konsekvens i svaret.\n"
         )
     else:
         patient_block = ""
 
+    footer = SOURCE_FOOTER_INTERAKSJON if has_interaksjoner else SOURCE_FOOTER
+
     # Hvis ingen fagkunnskap-kilder (bare journal eller tom), fallback
     if not knowledge_results:
         if journal_results:
-            return journal_results[0].output + SOURCE_FOOTER
+            return journal_results[0].output + footer
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet."
 
     # Hvis bare én fagkunnskap-kilde og ingen pasient, bruk direkte
     if len(knowledge_results) == 1 and not journal_results:
-        return knowledge_results[0].output + SOURCE_FOOTER
+        return knowledge_results[0].output + footer
 
     # Syntetiser via LLM
     agent_outputs = ""
