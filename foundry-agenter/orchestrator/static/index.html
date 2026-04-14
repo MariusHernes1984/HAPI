@@ -174,6 +174,12 @@
       margin-top: 1px;
     }
 
+    .suggestion.kjernejournal {
+      border-left: 3px solid var(--primary);
+      position: relative;
+    }
+
+
     /* --- Messages --- */
     .message {
       display: flex;
@@ -792,37 +798,31 @@
         Still et spørsmål så finner jeg svar fra riktig kilde.
       </p>
       <div class="suggestions">
+        <!-- Kjernejournal-demoer (auto-velger pasient) -->
+        <div class="suggestion kjernejournal" data-patient="P-001" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F4CB;</span>
+          <span>Pasienten har vondt i kneet etter en falltur. Hva kan hun ta?</span>
+        </div>
+        <div class="suggestion kjernejournal" data-patient="P-030" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F4CB;</span>
+          <span>Han plages av hodepine. Hva kan han bruke?</span>
+        </div>
+        <div class="suggestion kjernejournal full" data-patient="P-013" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;&#x1F4CB;</span>
+          <span>HbA1c er 64 mmol/mol. Bør jeg starte metformin igjen, hva er ATC-koden, og finnes det nasjonale mål for HbA1c-kontroll?</span>
+        </div>
+        <div class="suggestion kjernejournal" data-patient="P-036" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1F48A;&#x1F4CB;</span>
+          <span>Hjemmesykepleien melder at hun er forvirret og urolig om kveldene. Hva tenker dere?</span>
+        </div>
+        <!-- Multi-agent uten kjernejournal -->
+        <div class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon">&#x1FAC1;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
+          <span>Hva er ICD-10-koden for KOLS, hva sier retningslinjene om førstelinjebehandling, og finnes det kvalitetsindikatorer for KOLS-oppfølging?</span>
+        </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;</span>
           <span>Hva er førstevalg antibiotika ved akutt mellomørebetennelse hos barn?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
-          <span>Hva er ICD-10 koden for diabetes type 2?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1FAC1;</span>
-          <span>Legen sa jeg har KOLS. Hva betyr det for meg fremover, og hva slags behandling finnes?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
-          <span>En kollega brukte ICPC-2 kode K74 i en epikrise. Hva betyr det?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F4CA;</span>
-          <span>Finnes det nasjonale kvalitetsindikatorer for diabetes? Vis de viktigste.</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;</span>
-          <span>Eliquis — hva er virkestoffet og ATC-klassifiseringen?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F9D2;</span>
-          <span>Barnet mitt på 8 år har astma og vi er redde for å gi for mye medisin. Hva anbefales?</span>
-        </div>
-        <div class="suggestion full" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
-          <span>Pasient med nyoppdaget diabetes type 2 (E11) — hva anbefaler retningslinjene som førstelinjebehandling, hva er ATC-koden for metformin, og finnes det kvalitetsindikatorer for HbA1c-kontroll?</span>
         </div>
         <div class="suggestion" onclick="askSuggestion(this)">
           <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;</span>
@@ -935,7 +935,15 @@
     }
 
     function askSuggestion(el) {
-      const text = el.querySelector('span:last-child').textContent;
+      const patientId = el.dataset.patient || '';
+      if (patientId) {
+        const sel = document.getElementById('patientSelect');
+        sel.value = patientId;
+        selectedPatientId = patientId;
+        localStorage.setItem('hapi_patient_id', patientId);
+      }
+      const spans = el.querySelectorAll('span');
+      const text = spans[1].textContent;
       input.value = text;
       sendMessage();
     }

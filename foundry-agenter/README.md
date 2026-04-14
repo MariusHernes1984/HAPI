@@ -13,7 +13,8 @@ Bruker
 HAPI Orkestrator          ← Ruter forespørsler til riktig agent
   ├── HAPI Retningslinje-agent  ← Retningslinjer, anbefalinger, pakkeforløp, antibiotika
   ├── HAPI Kodeverk-agent       ← ICD-10, ICPC-2, SNOMED CT, ATC, legemiddeldata
-  └── HAPI Statistikk-agent     ← Nasjonale kvalitetsindikatorer (NKI)
+  ├── HAPI Statistikk-agent     ← Nasjonale kvalitetsindikatorer (NKI)
+  └── HAPI Kjernejournal-agent  ← Pasientens journal (mock, 50 pasienter)
          │
          ▼
   HAPI MCP Server (Azure Container Apps)
@@ -36,6 +37,7 @@ Koordinerer forespørsler og ruter til riktig spesialistagent. Bruker `sok_innho
 | `hapi-retningslinje-agent` | Behandling, anbefalinger, retningslinjer, pakkeforløp, antibiotika |
 | `hapi-kodeverk-agent` | Kodeverk (ICD-10/ICPC-2/SNOMED/ATC), mapping, legemiddeldata |
 | `hapi-statistikk-agent` | Kvalitetsindikatorer (NKI), statistikk, trender |
+| `hapi-kjernejournal-agent` | Aktiv pasient valgt i dropdown → journal-kontekst |
 
 **MCP-verktøy:** `sok_innhold`
 
@@ -83,6 +85,31 @@ Henter og presenterer nasjonale kvalitetsindikatorer (NKI).
 - Kobling mellom statistikk og diagnosekoder
 
 **MCP-verktøy:** `hent_kvalitetsindikatorer`, `hent_kvalitetsindikator`, `sok_innhold`
+
+---
+
+### HAPI Kjernejournal-agent
+**Navn:** `hapi-kjernejournal-agent`
+
+Lokal mock-agent (ikke Foundry) som returnerer pasientens journaldata. Aktiveres automatisk når en pasient er valgt i dropdown.
+
+**Håndterer:**
+- Diagnoser, faste medisiner, allergier og kliniske merknader for 50 fiktive pasienter
+- Personalisert kontekst til syntese-steget slik at anbefalinger tar hensyn til pasientens legemidler og kontraindikasjoner
+
+**Pasientkategorier (50 stk):**
+
+| Kategori | Antall | ID-er |
+|---|---|---|
+| Blodfortynnende (warfarin/DOAK) | 10 | P-001 – P-010 |
+| Diabetes type 2 | 8 | P-011 – P-018 |
+| KOLS | 6 | P-019 – P-024 |
+| Nyresvikt (CKD) | 5 | P-025 – P-029 |
+| Astma | 5 | P-030 – P-034 |
+| Polyfarmasi eldre | 3 | P-035 – P-037 |
+| Friske / lett sykdom | 13 | P-038 – P-050 |
+
+**Datakilde:** `mock-data/pasienter.json` (fiktive data, ingen ekte personopplysninger)
 
 ---
 
@@ -213,6 +240,17 @@ foundry-agenter/
 │   ├── requirements.txt
 │   ├── .env.example
 │   └── deployed_agents.json         ← Generert ved deploy
+├── mock-data/
+│   ├── pasienter.json               ← 50 fiktive pasienter (JSON)
+│   ├── generate_pasient_pdf.py      ← PDF-generator
+│   └── HAPI-mock-pasienter.pdf      ← Pasientoversikt (generert)
+├── orchestrator/
+│   ├── app.py                       ← FastAPI web-app
+│   ├── orchestrate.py               ← Multi-agent orkestrering + syntese
+│   ├── router.py                    ← Spørsmålsrouter
+│   ├── kjernejournal.py             ← Lokal mock-agent for pasientjournal
+│   ├── static/index.html            ← Web-UI
+│   └── Dockerfile
 └── test-questions/
     └── sporsmal.json                ← 100 demo/testspørsmål
 ```
