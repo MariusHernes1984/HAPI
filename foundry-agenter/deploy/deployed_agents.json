@@ -1,7 +1,7 @@
 {
-  "hapi-kodeverk-agent": {
-    "name": "hapi-kodeverk-agent",
-    "id": "hapi-kodeverk-agent:17",
-    "version": "17"
+  "hapi-statistikk-agent": {
+    "name": "hapi-statistikk-agent",
+    "id": "hapi-statistikk-agent:19",
+    "version": "19"
   }
 }
