@@ -9,6 +9,7 @@ Flyten:
 """
 
 import asyncio
+import re
 import time
 import logging
 import re
@@ -431,6 +432,45 @@ def _agent_label(name: str) -> str:
     return labels.get(name, name)
 
 
+# --- Statistikk hallusinerings-guard ---
+
+# Mønster som indikerer suspekte NKI-tall (prosenter med desimal, tertial-referanser)
+_SUSPECT_NKI_PCT = re.compile(r'\d{1,3}[,.]\d\s*%')      # f.eks. "59,9 %"
+_SUSPECT_TERTIAL = re.compile(r'\d\.\s*tertial\s+\d{4}', re.IGNORECASE)  # "2. tertial 2022"
+_SUSPECT_YEAR_PCT = re.compile(r'(i|fra|per|år)\s+\d{4}.*?\d{1,3}[,.]\d\s*%', re.IGNORECASE)
+_STATISTIKK_DISCLAIMER = (
+    "\n\nFor oppdaterte tallverdier, se Helsedirektoratets statistikkbank "
+    "(https://www.helsedirektoratet.no/statistikk)."
+)
+
+
+def _sanitize_statistikk(output: str) -> str:
+    """Erstatt suspekte NKI-tallverdier fra statistikk-agent med trygg henvisning.
+
+    Strategien:
+    - Erstatter spesifikke prosent-tall (59,9%) med '[tall ikke verifisert]'
+    - Erstatter tertial-referanser med generisk tekst
+    - Legger til disclaimer om statistikkbanken
+    """
+    if not (_SUSPECT_NKI_PCT.search(output) or _SUSPECT_TERTIAL.search(output)):
+        return output  # Ingen suspekte tall — returner uendret
+
+    sanitized = output
+    # Erstatt "59,9 %" -> "[se statistikkbanken for oppdaterte tall]"
+    sanitized = _SUSPECT_NKI_PCT.sub(
+        '[se statistikkbanken for oppdaterte tall]', sanitized
+    )
+    # Erstatt "2. tertial 2022" -> "[periode]"
+    sanitized = _SUSPECT_TERTIAL.sub('[nyeste periode]', sanitized)
+
+    # Legg til disclaimer hvis ikke allerede der
+    if 'statistikkbank' not in sanitized.lower().split('for oppdaterte tall')[-1]:
+        sanitized += _STATISTIKK_DISCLAIMER
+
+    logger.info("  Statistikk-guard: suspekte NKI-tall sanitisert")
+    return sanitized
+
+
 async def synthesize(
     project: AsyncProjectClient,
     query: str,
@@ -442,6 +482,11 @@ async def synthesize(
         (answer, has_interaksjoner) — svartekst og om interaksjonssjekk ble brukt.
     """
     successful = [r for r in results if r.success and r.output]
+
+    # Sanitiser statistikk-agent output FØR syntese
+    for r in successful:
+        if r.agent_name == "hapi-statistikk-agent":
+            r.output = _sanitize_statistikk(r.output)
 
     if not successful:
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False

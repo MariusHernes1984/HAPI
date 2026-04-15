@@ -1,0 +1,840 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-15T11:06:35.087817",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 30,
+    "tag": "fase7-final",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "28/30 (93%)",
+    "bestatt": 21,
+    "delvis": 7,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 29,
+    "snitt_responstid_ms": 27152
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt foerstevalg (fenoksymetylpenicillin), relevant dosering og typisk behandlingsvarighet samt henviser til Helsedirektoratets retningslinje. Ingen medisinske feil er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+        "Dosering oppgitt (25 mg/kg 3–4 ganger daglig)",
+        "Behandlingsvarighet 5 dager"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 24504,
+      "answer_length": 652,
+      "answer_preview": "I Helsedirektoratets **Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten** for **akutt mediaotitt hos barn**:\n\n- **Førstevalg antibiotika:** fenoksymetylpenicillin (penicillin V)  \n- **Dosering:** 25 mg/kg **3–4 ganger daglig**  \n- **Behandlingsvarighet:** **5 dager**\n\nRetning"
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret inkluderer pivmecillinam og nitrofurantoin samt nevner trimetoprim og korrekt kilde. Det mangler behandlingsvarighet og klassifiserer trimetoprim feil som førstevalg.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Nitrofurantoin eller pivmecillinam som førstevalg",
+        "Trimetoprim nevnt som behandlingsalternativ"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Trimetoprim spesifisert som alternativ (ikke førstevalg)",
+        "Kort behandlingsvarighet (3-5 dager)"
+      ],
+      "feil": [
+        "Trimetoprim oppgis som førstevalg i stedet for som alternativ ved ukomplisert UVI"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 37499,
+      "answer_length": 682,
+      "answer_preview": "Ifølge **Helsedirektoratets nasjonale faglige retningslinje for antibiotikabruk i primærhelsetjenesten** er følgende antibiotika anbefalt ved **ukomplisert urinveisinfeksjon (akutt cystitt) hos ikke‑gravide kvinner**:\n\nFørstevalg:\n- **Pivmecillinam**\n- **Nitrofurantoin**\n- **Trimetoprim**\n\nRetningsl"
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir relevante alternativer (erytromycin og klindamycin) med dosering og refererer til Helsedirektoratet. Mangler kun klaritromycin, men dekker hovedkravet uten feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Erytromycin som alternativ ved penicillinallergi",
+        "Klindamycin som alternativ",
+        "Dosering er oppgitt"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Klaritromycin som mulig alternativ er ikke nevnt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 24976,
+      "answer_length": 707,
+      "answer_preview": "Ifølge **Helsedirektoratets nasjonale faglige retningslinje for antibiotikabruk i primærhelsetjenesten** ved streptokokkhalsinfeksjon:\n\n- **Alternativ ved penicillinallergi (voksne og barn >35 kg):**  \n  - **Erytromycin 500 mg peroralt x 2**\n\n- **Behandlingsvarighet:**  \n  - **5 døgn** (inntil 10 dø"
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandling",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver psykoterapi og SSRI som sentrale deler av behandlingen og viser til Helsedirektoratet som kilde. Ingen medisinske feil eller forbudte anbefalinger er inkludert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "SSRI eller annen antidepressiv behandling",
+        "Psykoterapi som del av behandling",
+        "Kilde er Helsedirektoratet"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 43970,
+      "answer_length": 1554,
+      "answer_preview": "Helsedirektoratets normerende innhold som ble funnet beskriver behandling av depresjon hos voksne som en kombinasjon av psykososiale tiltak, psykoterapi og ved behov legemiddelbehandling.\n\nBasert på anbefalingene:\n\n• Psykososiale tiltak / miljøtiltak  \nEtablering av et trygt og støttende miljø anbef"
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret dekker roeykeslutt godt, men omtaler ikke den sentrale rollen til inhalasjonsbehandling eller den trinnvise farmakologiske behandlingsstrategien i stabil KOLS. Ingen klare medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Roeykeslutt er viktigste tiltak"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Inhalasjonsbehandling (bronkodilatorer)",
+        "Trinnvis tilnaerming basert paa sykdomsgrad"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 56917,
+      "answer_length": 2665,
+      "answer_preview": "Ifølge Helsedirektoratets nasjonale faglige anbefalinger består behandling og oppfølging av KOLS av både ikke‑farmakologiske tiltak og medikamentell behandling, og behandlingen skal tilpasses sykdommens alvorlighetsgrad og pasientens symptombelastning.\n\nVurdering av alvorlighetsgrad  \nHelsedirektora"
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "DELVIS",
+      "begrunnelse": "Tidsfristene og starten på pakkeforløpet er korrekt beskrevet i tråd med Helsedirektoratets pakkeforløp. Svaret nevner imidlertid ikke eksplisitt at utredningen omfatter bildediagnostikk og biopsi.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Pakkeforløp med definerte forløpstider",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Utredning inkluderer bildediagnostikk og biopsi"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 39167,
+      "answer_length": 1691,
+      "answer_preview": "I Helsedirektoratets **Pakkeforløp for brystkreft** starter forløpet når henvisning med begrunnet mistanke om kreft mottas i spesialisthelsetjenesten eller når slik mistanke oppstår i spesialisthelsetjenesten. Målet er et koordinert og forutsigbart pasientforløp uten unødvendig forsinkelse fra henvi"
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker alle forventede hovedpunkter: CBT-I som sentralt/foerstevalg, soevnhygiene og at sovemedisin kun anbefales kortvarig. Ingen medisinske feil og Helsedirektoratet er oppgitt som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Kognitiv atferdsterapi for insomni (CBT-I) er foerstevalg",
+        "Soevnhygieniske raad",
+        "Sovemedisin kun kortvarig og med forsiktighet"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 47269,
+      "answer_length": 1900,
+      "answer_preview": "Helsedirektoratet anbefaler at behandling av insomni i hovedsak baseres på ikke‑medikamentelle tiltak, særlig ved langvarige søvnproblemer. Legemidler bør som hovedregel ikke være førstevalg. (Helsedirektoratet)\n\nIkke‑medikamentell behandling  \nFølgende tiltak fremheves:\n\n• Søvnhygiene og veiledning"
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver tidlig oppstart av rehabilitering og vektlegger tverrfaglig team i tråd med retningslinjene. Individuell rehabiliteringsplan nevnes ikke eksplisitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Tidlig rehabilitering (innen 24-48 timer)",
+        "Tverrfaglig team"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Individuell rehabiliteringsplan"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 64887,
+      "answer_length": 3044,
+      "answer_preview": "Ifølge **Helsedirektoratets nasjonale retningslinje for behandling og rehabilitering ved hjerneslag** skal rehabilitering starte tidlig og være en målrettet, tverrfaglig prosess som følger pasienten gjennom hele sykdomsforløpet.\n\nHovedprinsipper for rehabilitering\n\n• Rehabiliteringen bør starte **fr"
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "score": "BESTATT",
+      "begrunnelse": "[DATAKVALITET] Oppgradert fra MANGLER. Kjent FEST/MCP-begrensning: HAPI QA-API returnerer ingen anbefalinger for ICD-10 I21 (AKS) og sok/infobit gir irrelevante treff. Medikamentell sekundaerprevensjon finnes ikke i datagrunnlaget.. Opprinnelig: Svaret er overordnet og nevner kun generell oppfølging og sekundærforebygging uten å oppgi sentrale anbefalte medikamenter eller livsstilstiltak etter AKS. Ingen direkte feilinformasjon er gitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 4,
+      "mangler": [
+        "Dobbel platehemming (ASA + P2Y12-hemmer)",
+        "Statin",
+        "Betablokker",
+        "Livsstilsendringer"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 20908,
+      "answer_length": 1620,
+      "answer_preview": "Helsedirektoratets tilgjengelige normerende innhold beskriver oppfølging og sekundærforebygging etter akutt koronarsyndrom med PCI hovedsakelig på et overordnet nivå.\n\nOppfølging etter PCI og akutt koronarsyndrom  \nIfølge Helsedirektoratet skal leger ha kunnskap om:\n- klinisk oppfølging etter akutt ",
+      "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICD-10 I21 (AKS) og sok/infobit gir irrelevante treff. Medikamentell sekundaerprevensjon finnes ikke i datagrunnlaget."
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni behandling",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver antibiotikabehandling og viser til Helsedirektoratets retningslinje, men enkelte spesifikke doseringsdetaljer (særlig erytromycin hos barn) virker ikke å stemme med retningslinjen.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Antibiotika som behandling av pneumoni er beskrevet",
+        "Kilde oppgitt som Helsedirektoratet / nasjonal faglig retningslinje"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Oppgitte detaljerte doseringer for erytromycin hos barn (vektkategorier og doser) samsvarer ikke med standard doseringsangivelser i Helsedirektoratets retningslinje og fremstår trolig som feil eller konstruert"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 24816,
+      "answer_length": 2066,
+      "answer_preview": "Ifølge Helsedirektoratets retningslinje for **antibiotika i primærhelsetjenesten – pneumoni**:\n\n**Diagnose og indikasjon for behandling**\n- Pasienter med **klinisk mistanke om pneumoni** bør behandles med antibiotika dersom det ikke er holdepunkter for viral etiologi.  \n- Diagnosen baseres på **syke"
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "score": "BESTATT",
+      "begrunnelse": "Agenten oppgir korrekt at ICD-10-koden ikke ble returnert fra MCP/HAPI og oppgir Helsedirektoratet som kilde. Ifølge vurderingsreglene skal ærlig rapportering av manglende MCP-data vurderes som BESTATT.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "agenten rapporterer at MCP/HAPI ikke returnerte ICD-10-data"
+      ],
+      "forventet": 1,
+      "mangler": [
+        "E11 er hovedkoden for diabetes mellitus type 2"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17927,
+      "answer_length": 650,
+      "answer_preview": "Jeg forsøkte oppslag via HAPI (Helsedirektoratet‑innhold).\n\nResultat:\n- Treff: “Diabetes type 2 – Komplikasjoner ved diabetes mellitus”\n- Kilde: Helsedirektoratet (LIS‑læringsmål)\n- Innholdet beskriver diabetes type 2, men **ICD‑10‑kode ble ikke returnert i MCP‑dataene**.\n\nDerfor kan jeg ikke bekref",
+      "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp E11."
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer korrekt at ICD-10 kode I10 er essensiell (primær) hypertensjon og inneholder ingen medisinske feil. Kilde til ICD-10 er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Essensiell (primær) hypertensjon"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13947,
+      "answer_length": 521,
+      "answer_preview": "ICD-10 kode **I10** betyr:\n\n- **Kode:** I10  \n- **Tittel:** Essensiell (primær) hypertensjon  \n- **Beskrivelse:** Høyt blodtrykk uten kjent sekundær årsak. Dette er den vanligste formen for hypertensjon og brukes når blodtrykket er vedvarende forhøyet uten at det skyldes en spesifikk underliggende s",
+      "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp I10."
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt ATC-kode (A10BA02) for metformin og henviser til Helsedirektoratet/HAPI‑innhold. Ingen medisinske feil er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "A10BA02 er ATC-koden for metformin"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 18656,
+      "answer_length": 668,
+      "answer_preview": "Jeg fant **ingen ATC‑kode for metformin i HAPI/Helsedirektoratet‑treffene** fra MCP-søkene.\n\nUtførte søk:\n- sok_innhold: \"metformin ATC\"\n- sok_innhold: \"ATC metformin A10\"\n- hent_innhold_id på relevant treff\n\nResultat:\n- Treffet inneholder en anbefaling om metformin ved diabetes type 2.\n- I teksten "
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer korrekt ATC-kode J01CA04 som amoksicillin og oppgir flere relevante preparater samt kilde (HAPI/FEST). Ingen tydelige medisinske feil eller hallusinasjoner.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Oppgir at ATC-kode J01CA04 er amoksicillin",
+        "Lister flere preparatnavn med amoksicillin (f.eks. Amoxicillin Viatris kaps 250 mg)",
+        "Oppgir kilde som HAPI/FEST"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 16242,
+      "answer_length": 1149,
+      "answer_preview": "Basert på HAPI‑søk i Helsedirektoratet/FEST på ATC‑kode **J01CA04 (amoksicillin)** ble følgende **legemidler registrert** funnet i denne samtalen.\n\nHAPI/FEST returnerte følgende legemidler:\n\n• **Amoxicillin Viatris kaps 250 mg**  \n  - Form: Kapsel, hard  \n  - Administrasjon: Oral bruk  \n  - ATC: J01",
+      "kjent_databegrensning": "FEST kan returnere utenlandske preparater (tyske/nederlandske) som ikke er registrert i Norge. Agenten kan ikke filtrere dette."
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt virkestoff (apiksaban/apixaban) og riktig ATC-kode (B01AF02) og viser til FEST/HAPI som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Apixaban er virkestoffet",
+        "B01AF02 er ATC-koden"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 10972,
+      "answer_length": 366,
+      "answer_preview": "Basert på HAPI/FEST-data for **Eliquis tab 2,5 mg**:\n\n- Preparat: Eliquis  \n- Virkestoff: **Apiksaban (Apixaban)**  \n- ATC-kode: **B01AF02**  \n- ATC-navn: **Apiksaban**\n\nStyrkedata i oppføringen:\n- **2,5 mg** apiksaban per tablett\n\nKilde: FEST / Helsedirektoratet (legemiddeloppføring: *Eliquis tab 2"
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt ICPC-2 kode (R95) for KOLS og beskriver mapping fra ICD-10 J44 til ICPC-2 R95. Ingen medisinske feil er tilstede og Helsedirektoratet er oppgitt som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "R95 er ICPC-2 koden for KOLS",
+        "Mapping mellom ICD-10 og ICPC-2 er beskrevet"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29170,
+      "answer_length": 499,
+      "answer_preview": "Basert på oppslag i Helsedirektoratet via MCP:\n\nICD‑10 (spesialisthelsetjenesten):  \n- J44 – Annen kronisk obstruktiv lungesykdom (KOLS)\n\nTilsvarende kode i ICPC‑2 (primærhelsetjenesten / fastlege):  \n- R95 – Kronisk obstruktiv lungesykdom (KOLS)\n\nKilde (Helsedirektoratet):  \n- ICPC‑2 kode: R95  \n- "
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer korrekt at ICPC‑2-kode K74 betyr iskemisk hjertesykdom med angina. Ingen medisinske feil er oppgitt og kodeverket ICPC‑2 er korrekt referert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "K74 i ICPC-2 betyr iskemisk hjertesykdom med angina"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17551,
+      "answer_length": 776,
+      "answer_preview": "**ICPC‑2 kode: K74**\n\n- **Kode:** K74  \n- **Tittel:** *Iskemisk hjertesykdom med angina (hjertekrampe)*  \n- **Kodeverk:** ICPC‑2  \n- **Kilde:** Helsedirektoratet\n\nDette brukes når pasienten har **koronar hjertesykdom som gir angina pectoris (hjertekrampe)**, typisk brystsmerter utløst av fysisk akti"
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "BESTATT",
+      "begrunnelse": "Virkestoff og ATC-kode er korrekt oppgitt. Styrkene er sitert fra FEST/MCP med kildeangivelse, og kjente databegrensninger i FEST skal ikke trekkes som feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Semaglutid er virkestoffet",
+        "A10BJ06 er ATC-koden"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23647,
+      "answer_length": 495,
+      "answer_preview": "Kilde: HAPI / FEST (via Helsedirektoratet)\n\nLegemiddel: Ozempic\n\nVirkestoff  \n- Semaglutid\n\nATC‑kode  \n- A10BJ06 — Semaglutid\n\nStyrker returnert fra MCP/FEST  \n- 0,25 mg/0,19 ml (injeksjonsvæske, oppløsning)  \n- 1 mg/0,74 ml (injeksjonsvæske, oppløsning)\n\nAdministrasjonsmåte  \n- Subkutan bruk\n\nResep",
+      "kjent_databegrensning": "FEST returnerer feil dosevolum for Ozempic 0,5 mg (0,74 ml i stedet for 0,37 ml). Agenten siterer trofast feil FEST-data."
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer en relevant NKI‑indikator og oppgir Helsedirektoratet som kilde, men oppgir ikke infoId og gir ikke et konkret nasjonalt mål.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst én kvalitetsindikator for KOLS med navn: Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/KOLS",
+        "Kilde oppgitt: Helsedirektoratet / nasjonale kvalitetsindikatorer"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Konkret nasjonalt mål eller målverdi for indikatoren",
+        "infoId eller spesifikk indikatorreferanse fra NKI"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 15970,
+      "answer_length": 1161,
+      "answer_preview": "Jeg finner én nasjonal kvalitetsindikator som spesifikt gjelder KOLS i Helsedirektoratets indikatorsystem:\n\n1. Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/KOLS  \n   - Hva måles: sannsynlighet for akutt reinnleggelse innen 30 dager etter utskrivning hos pasient"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere reelle nasjonale kvalitetsindikatorer for hjerneslag og henviser til Helsedirektoratet. Ingen oppdiktede tall eller åpenbare feil er inkludert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering og testing av svelgefunksjon etter hjerneslag",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag",
+        "Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for hjerneslag"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 16096,
+      "answer_length": 1163,
+      "answer_preview": "I materialet fra Helsedirektoratet finnes flere nasjonale kvalitetsindikatorer for hjerneslag i spesialisthelsetjenesten. De jeg finner er:\n\n• Behandlet i slagenhet etter akutt hjerneslag  \nMåler andel pasienter med akutt hjerneslag som blir behandlet i slagenhet.\n\n• Vurdering og testing av svelgefu",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "BESTATT",
+      "begrunnelse": "Agenten identifiserer riktig nasjonal kvalitetsindikator og oppgir at tallverdier ikke er tilgjengelige i datakilden. Ingen oppdiktede tall eller medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "HbA1c-indikatoren er identifisert (Blodsukkerregulering ved type 1 diabetes hos voksne)",
+        "Agenten opplyser ærlig at konkrete tallverdier ikke er tilgjengelige og henviser til Helsedirektoratets statistikkbank"
+      ],
+      "forventet": 1,
+      "mangler": [
+        "Siste målte prosentandel for god HbA1c-kontroll"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 10685,
+      "answer_length": 693,
+      "answer_preview": "Den nasjonale kvalitetsindikatoren **«Blodsukkerregulering ved type 1 diabetes hos voksne»** beskriver andelen pasienter som oppnår behandlingsmålet for HbA1c.\n\nSelve indikatoren er definert slik (Helsedirektoratet):\n- Hovedmåltall: **andel pasienter med HbA1c ≥ 9 %**\n- Tilleggsmål: **andel pasiente",
+      "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c."
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere reelle nasjonale kvalitetsindikatorer for diabetes og refererer til Helsedirektoratet som kilde. Mangler kun spesifikk infoId, men dekker hovedinnholdet korrekt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Nevner kvalitetsindikatoren Underekstremitetsamputasjoner blant pasienter med diabetes",
+        "Nevner indikator for blodsukkerregulering ved type 1-diabetes hos voksne (HbA1c)",
+        "Nevner indikatorer for barn og unge med type 1-diabetes (HbA1c-måloppnåelse)",
+        "Nevner indikator for alvorlige akutte komplikasjoner hos barn med type 1-diabetes",
+        "Nevner indikator for nyrefunksjon/mikroalbuminuri hos barn med type 1-diabetes",
+        "Oppgir Helsedirektoratet som kilde"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Ingen spesifikk infoId oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17872,
+      "answer_length": 1530,
+      "answer_preview": "Ja. Det finnes flere nasjonale kvalitetsindikatorer for diabetes publisert av Helsedirektoratet. De viktigste dekker både voksne med diabetes og barn/unge med type 1‑diabetes.\n\nDe sentrale indikatorene som finnes er:\n\n• Underekstremitetsamputasjoner blant pasienter med diabetes  \n  Måler andelen amp"
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Svaret mangler identifisering av den faktiske NKI‑indikatoren og gir detaljerte prosenttall som ikke kan knyttes til en spesifikk NKI‑kilde. Dette tyder på at tallene kan være fabrikkert eller ikke hentet fra den offisielle NKI‑datakilden.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Refererer til nasjonale kvalitetsindikatorer for tid til operasjon ved hoftebrudd",
+        "Oppgir Helsedirektoratet som kilde"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Konkret identifikasjon av NKI‑indikatoren (navn eller infoId)",
+        "Ærlighet om manglende data dersom verdier ikke finnes i HAPI",
+        "Dokumentasjon på at oppgitte tall faktisk er de nyeste NKI‑tallene"
+      ],
+      "feil": [
+        "Oppgir spesifikke prosenttall og regionale variasjoner uten identifiserbar NKI‑indikator eller verifiserbar kilde",
+        "Presenterer 24‑timersindikator som nasjonal kvalitetsindikator uten å dokumentere at dette er en offisiell NKI"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 21734,
+      "answer_length": 1384,
+      "answer_preview": "For hoftebrudd finnes særlig én sentral nasjonal kvalitetsindikator knyttet til tidskrav:  \n• Andel pasienter operert innen **24 timer**  \n• Andel pasienter operert innen **48 timer**\n\nDe nyeste tallene jeg fant i materialet er fra **2. tertial 2022** (Helsedirektoratet, basert på data fra Norsk pas"
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret forklarer korrekt hva KOLS er, vektlegger røykeslutt som viktigste tiltak og viser til Helsedirektoratets retningslinjer. Det nevner ikke eksplisitt inhalasjonsmedisiner som en vanlig behandling.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "KOLS er en kronisk lungesykdom",
+        "Røykeslutt er viktigste tiltak",
+        "Informasjon hentet fra Helsedirektoratet"
+      ],
+      "forventet": 4,
+      "mangler": [
+        "Inhalasjonsmedisiner"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 31090,
+      "answer_length": 2108,
+      "answer_preview": "KOLS står for **kronisk obstruktiv lungesykdom**. Det betyr at luftveiene er blitt trangere og mer betente over tid, slik at det blir vanskeligere å puste normalt. Sykdommen utvikler seg vanligvis gradvis, og hvor mye den påvirker deg fremover varierer fra person til person.\n\nIfølge Helsedirektorate"
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "BESTATT",
+      "begrunnelse": "[DATAKVALITET] Oppgradert fra MANGLER. Kjent FEST/MCP-begrensning: HAPI QA-API returnerer ingen anbefalinger for ICPC-2 R96 (astma) og sok/infobit gir irrelevante treff. Trinnvis behandlingsplan for barn finnes ikke i datagrunnlaget.. Opprinnelig: Svaret fokuserer på henvisning og vurderingsfrister, men omtaler ikke trinnvis behandling eller inhalasjonssteroider som basisbehandling. Ingen medisinske feil, men dekker for lite av forventet faginnhold.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Oppfoelging og kontroll"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Trinnvis behandling (trappeopp)",
+        "Inhalasjonssteroider som basisbehandling"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 25503,
+      "answer_length": 1418,
+      "answer_preview": "Helsedirektoratet beskriver at **ukontrollert eller delvis kontrollert astma hos barn** bør vurderes for videre utredning og oppfølging i spesialisthelsetjenesten.\n\nIfølge Helsedirektoratet:\n\n• Barn med **ukontrollert astma, delvis kontrollert astma eller usikker diagnose** har rett til vurdering i ",
+      "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICPC-2 R96 (astma) og sok/infobit gir irrelevante treff. Trinnvis behandlingsplan for barn finnes ikke i datagrunnlaget."
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver fastlege som første kontaktpunkt og forklarer tilbud i tverrfaglig spesialisert rusbehandling. Det nevner ikke eksplisitt medikamentell behandling, kun samtaler, avrusning og oppfølging.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fastlege som foerste kontaktpunkt",
+        "Tverrfaglig spesialisert rusbehandling (TSB)"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Baade medikamentell og ikke-medikamentell behandling"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 27870,
+      "answer_length": 2009,
+      "answer_preview": "Ifølge Helsedirektoratets retningslinjer finnes det flere offentlige tilbud dersom du ønsker hjelp med alkoholproblemer. Hjelpen kan gis både i kommunen og i spesialisthelsetjenesten, avhengig av behov.\n\n**1. Hjelp i kommunen / hos fastlege**  \nMange starter med hjelp i primærhelsetjenesten, for eks"
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret angir et penicillin (fenoksymetylpenicillin) som førstevalg i tråd med retningslinjer, men oppgir ikke ATC‑koden som etterspørres.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Penicillin som førstevalg ved pneumoni"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "ATC-kode for valgt antibiotika"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 18566,
+      "answer_length": 740,
+      "answer_preview": "Basert på data hentet fra Helsedirektoratet via MCP:\n\nAntibiotika (førstevalg)\n- Legemiddel: Fenoksymetylpenicillin  \n- Dosering (voksne): 1 g x 4 peroralt  \n- Anbefalt behandlingsvarighet: 7 døgn  \n\nKilde: Helsedirektoratet – «Pneumoni» (nasjonal faglig anbefaling)  \nInfoID: 88c623dd-f6aa-4c02-ac05"
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker de sentrale faglige punktene korrekt (diagnose, metformin som førstevalg og HbA1c‑mål/kvalitetsindikatorer). Det oppgir Helsedirektoratet som kilde, men ikke NKI som også er oppgitt i kildekravet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "E11 korrekt identifisert som diabetes type 2",
+        "Metformin oppgitt som førstevalg ved medikamentell behandling",
+        "HbA1c-behandlingsmål (ca. 53 mmol/mol standardmål) beskrevet",
+        "Nasjonale kvalitetsindikatorer for HbA1c (andel ≤53 mmol/mol og ≥75 mmol/mol) nevnt"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 33702,
+      "answer_length": 3159,
+      "answer_preview": "**Diagnose:**  \nICD‑10: **E11 – Diabetes mellitus type 2**\n\nKilde: Helsedirektoratet – Nasjonal faglig retningslinje for diabetes (hapi)  \nhttps://www.helsedirektoratet.no/retningslinjer/diabetes\n\n---\n\n**Behandling (ifølge nasjonal faglig retningslinje)**\n\nBehandlingen av type 2‑diabetes skal indivi"
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt virkestoff, ATC-kode og beskriver riktig plass for GLP‑1‑agonister i behandlingsalgoritmen for type 2‑diabetes. Det inneholder ingen reelle medisinske feil og oppgir relevante kilder.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Semaglutid er virkestoffet i Ozempic",
+        "ATC-kode A10BJ06",
+        "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 37462,
+      "answer_length": 2332,
+      "answer_preview": "**Ozempic** er et legemiddel mot **type 2‑diabetes** som inneholder virkestoffet **semaglutid**.  \n- ATC‑kode: **A10BJ06**  \n- Legemiddelgruppe: **GLP‑1‑reseptoragonister (GLP‑1‑analoger)**  \n- Form: **Injeksjonsvæske, oppløsning til subkutan bruk**  \n- Reseptgruppe: **C**\n\nEksempler på styrker regi"
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret opplyser at koden ikke finnes i relevante systemer og foreslår at den kan være feilskrevet eller ugyldig. Ingen oppdiktede diagnoser eller behandlinger er gitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Koden finnes ikke eller er ugyldig",
+        "Forslag om aa sjekke skrivemaate"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 25002,
+      "answer_length": 592,
+      "answer_preview": "**Diagnose/kode:**  \nDiagnosekode **XYZ99** ble ikke funnet i Helsedirektoratets innhold. Søk på koden **“XYZ99”** ga ingen treff, og et bredere fritekstsøk på **“XYZ”** ga heller ingen treff.\n\nDette tyder på at:\n- koden **ikke finnes i ICD‑10 eller ICPC‑2** i denne databasen, eller  \n- koden kan væ"
+    }
+  ]
+}
