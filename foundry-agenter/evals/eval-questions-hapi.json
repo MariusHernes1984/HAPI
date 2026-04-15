@@ -17,7 +17,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva er foerstevalg antibiotika ved akutt otitis media hos barn?",
       "tema": "Otitt antibiotika",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
@@ -37,7 +39,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva er anbefalt foerstelinjebehandling ved ukomplisert urinveisinfeksjon hos ikke-gravide kvinner?",
       "tema": "UVI antibiotika",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Nitrofurantoin eller pivmecillinam som foerstevalg",
@@ -57,7 +61,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "En pasient med bekreftet streptokokk-tonsillitt er allergisk mot penicillin. Hva er anbefalt alternativ?",
       "tema": "Tonsillitt penicillinallergi",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Erytromycin, klaritromycin eller klindamycin som alternativer",
@@ -76,7 +82,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva anbefaler retningslinjene for behandling av depresjon hos voksne?",
       "tema": "Depresjon behandling",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "SSRI eller annen antidepressiv behandling",
@@ -96,7 +104,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva sier de nasjonale retningslinjene om behandling av KOLS? Jeg har en pasient paa 68 aar som fortsatt roeyker.",
       "tema": "KOLS behandling",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Roeykelutt er viktigste tiltak",
@@ -114,19 +124,21 @@
       "id": "EVAL-006",
       "kategori": "retningslinje",
       "agent": "hapi-retningslinje-agent",
-      "sporsmal": "Hva er pakkeforleopet for brystkreft? Hvilke tidsfrister gjelder?",
-      "tema": "Brystkreft pakkeforloep",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "sporsmal": "Hva sier retningslinjene om ikke-medikamentell behandling av hypertensjon?",
+      "tema": "Hypertensjon ikke-medikamentell",
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
-          "Pakkeforloep med definerte forloepstider",
-          "Utredning inkluderer bildediagnostikk og biopsi",
-          "Tidsfrister fra henvisning til utredningsstart"
+          "Livsstilsraad (fysisk aktivitet, kosthold, vektreduksjon)",
+          "Saltreduksjon anbefales",
+          "Alkoholmodersjon"
         ],
         "skal_IKKE_inneholde": [
-          "Oppdiktede tidsfrister som ikke stemmer med Helsedirektoratets pakkeforloep"
+          "Oppdiktede retningslinjeraad som ikke finnes i Helsedirektoratets anbefalinger"
         ],
-        "kilde_krav": "Helsedirektoratet / Pakkeforloep for kreft"
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje"
       }
     },
     {
@@ -135,7 +147,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva anbefales for behandling av insomni? Finnes det ikke-medikamentelle alternativer?",
       "tema": "Insomni",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Kognitiv atferdsterapi for insomni (CBT-I) er foerstevalg",
@@ -155,7 +169,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva anbefaler retningslinjene for rehabilitering etter hjerneslag?",
       "tema": "Hjerneslag rehabilitering",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Tidlig rehabilitering (innen 24-48 timer)",
@@ -176,7 +192,9 @@
       "sporsmal": "Hva sier retningslinjene om oppfoelging og sekundaerprevensjon etter akutt koronarsyndrom med PCI?",
       "tema": "AKS sekundaerprevensjon",
       "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICD-10 I21 (AKS) og sok/infobit gir irrelevante treff. Medikamentell sekundaerprevensjon finnes ikke i datagrunnlaget.",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Dobbel platehemming (ASA + P2Y12-hemmer)",
@@ -199,7 +217,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hva sier retningslinjene om behandling av pneumoni (lungebetennelse)?",
       "tema": "Pneumoni behandling",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Antibiotika som behandling",
@@ -219,7 +239,9 @@
       "sporsmal": "Hva er ICD-10 koden for diabetes mellitus type 2?",
       "tema": "ICD-10 diabetes",
       "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp E11.",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "E11 er hovedkoden for diabetes mellitus type 2 ELLER agenten rapporterer at MCP ikke returnerte ICD-10-data"
@@ -241,7 +263,9 @@
       "sporsmal": "Hva betyr ICD-10 kode I10?",
       "tema": "ICD-10 hypertensjon",
       "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp I10.",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Essensiell (primaer) hypertensjon ELLER agenten rapporterer at MCP ikke returnerte ICD-10-data"
@@ -262,7 +286,9 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva er ATC-koden for metformin?",
       "tema": "ATC metformin",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "A10BA02 er ATC-koden for metformin"
@@ -281,7 +307,9 @@
       "sporsmal": "Vis alle legemidler registrert i Norge med ATC-kode J01CA04 (amoxicillin).",
       "tema": "Amoxicillin preparater",
       "kjent_databegrensning": "FEST kan returnere utenlandske preparater (tyske/nederlandske) som ikke er registrert i Norge. Agenten kan ikke filtrere dette.",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "J01CA04 er amoxicillin",
@@ -303,7 +331,9 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva er virkestoff og ATC-klassifisering for Eliquis?",
       "tema": "Apixaban ATC",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Apixaban er virkestoffet",
@@ -322,7 +352,9 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Jeg bruker ICD-10 kode J44 for KOLS paa sykehuset. Hva er tilsvarende kode i ICPC-2 for fastlegen?",
       "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "R95 er ICPC-2 koden for KOLS",
@@ -341,7 +373,9 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "En kollega brukte ICPC-2 kode K74 i en epikrise. Hva betyr det?",
       "tema": "ICPC-2 K74",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "K74 i ICPC-2 betyr iskemisk hjertesykdom med angina"
@@ -360,7 +394,9 @@
       "sporsmal": "Hva er virkestoff, ATC-kode og styrke for Ozempic?",
       "tema": "Semaglutid",
       "kjent_databegrensning": "FEST returnerer feil dosevolum for Ozempic 0,5 mg (0,74 ml i stedet for 0,37 ml). Agenten siterer trofast feil FEST-data.",
-      "forventet_routing": ["hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Semaglutid er virkestoffet",
@@ -382,7 +418,9 @@
       "agent": "hapi-statistikk-agent",
       "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for KOLS, og hva er de nasjonale maalene?",
       "tema": "NKI KOLS",
-      "forventet_routing": ["hapi-statistikk-agent"],
+      "forventet_routing": [
+        "hapi-statistikk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Minst en kvalitetsindikator for KOLS med navn",
@@ -403,7 +441,9 @@
       "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for hjerneslag i HAPI?",
       "tema": "NKI hjerneslag",
       "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting.",
-      "forventet_routing": ["hapi-statistikk-agent"],
+      "forventet_routing": [
+        "hapi-statistikk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Minst en kvalitetsindikator for hjerneslag med navn ELLER agenten rapporterer aerlig at MCP ikke returnerte NKI-data for hjerneslag"
@@ -425,7 +465,9 @@
       "sporsmal": "Hva er siste maalte verdi for andel diabetespasienter med god HbA1c-kontroll i Norge?",
       "tema": "NKI diabetes HbA1c",
       "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c.",
-      "forventet_routing": ["hapi-statistikk-agent"],
+      "forventet_routing": [
+        "hapi-statistikk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "HbA1c-indikator identifisert med navn ELLER agenten rapporterer aerlig at MCP ikke returnerte tallverdier"
@@ -446,7 +488,9 @@
       "agent": "hapi-statistikk-agent",
       "sporsmal": "Finnes det nasjonale kvalitetsindikatorer for diabetes i HAPI? Vis de viktigste.",
       "tema": "NKI diabetes",
-      "forventet_routing": ["hapi-statistikk-agent"],
+      "forventet_routing": [
+        "hapi-statistikk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Minst en kvalitetsindikator for diabetes med navn",
@@ -465,7 +509,9 @@
       "agent": "hapi-statistikk-agent",
       "sporsmal": "Hva er de nyeste NKI-tallene for hoftebrudd? Holder vi de nasjonale tidskravene?",
       "tema": "NKI hoftebrudd (mangler-test)",
-      "forventet_routing": ["hapi-statistikk-agent"],
+      "forventet_routing": [
+        "hapi-statistikk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Indikator for hoftebrudd identifisert (navn eller infoId)",
@@ -484,7 +530,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Legen sa jeg har KOLS. Hva betyr det for meg fremover, og hva slags behandling finnes?",
       "tema": "KOLS pasientperspektiv",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "KOLS er en kronisk lungesykdom",
@@ -506,7 +554,9 @@
       "sporsmal": "Barnet mitt paa 8 aar har astma og vi er redde for aa gi for mye medisin. Han har hatt tre innleggelser i aar. Hva anbefales for barn med daarlig kontrollert astma?",
       "tema": "Astma barn",
       "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICPC-2 R96 (astma) og sok/infobit gir irrelevante treff. Trinnvis behandlingsplan for barn finnes ikke i datagrunnlaget.",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Trinnvis behandling (trappeopp)",
@@ -528,7 +578,9 @@
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Jeg drikker for mye og vil slutte. Hva slags hjelp kan jeg faa, og hva er det offentlige tilbudet?",
       "tema": "Alkoholavhengighet",
-      "forventet_routing": ["hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Fastlege som foerste kontaktpunkt",
@@ -548,7 +600,10 @@
       "agent": "hapi-orkestrator",
       "sporsmal": "Vi behandler en pasient med pneumoni og skal sette opp rekvirering. Hvilken antibiotika anbefales som foerstevalg, og hva er ATC-koden jeg skal bruke?",
       "tema": "Pneumoni antibiotika + ATC",
-      "forventet_routing": ["hapi-retningslinje-agent", "hapi-kodeverk-agent"],
+      "forventet_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Penicillin/benzylpenicillin som foerstevalg",
@@ -567,7 +622,11 @@
       "agent": "hapi-orkestrator",
       "sporsmal": "Pasienten min har ICD-10 E11. Hva sier retningslinjene om behandling, og hva er de nasjonale kvalitetsmaalene for HbA1c-kontroll?",
       "tema": "Diabetes klinisk oversikt",
-      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent", "hapi-statistikk-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "E11 = diabetes type 2",
@@ -587,7 +646,10 @@
       "agent": "hapi-orkestrator",
       "sporsmal": "Flere pasienter spoer meg om Ozempic. Hva er dette legemidlet, og hva sier retningslinjene om bruk av GLP-1-agonister ved diabetes?",
       "tema": "Semaglutid retningslinje + legemiddel",
-      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Semaglutid er virkestoffet i Ozempic",
@@ -607,7 +669,10 @@
       "agent": "hapi-kodeverk-agent",
       "sporsmal": "Hva er behandling for diagnosekode XYZ99?",
       "tema": "Ugyldig kode",
-      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent"],
+      "forventet_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
       "faktasjekk": {
         "skal_inneholde": [
           "Koden finnes ikke eller er ugyldig",
