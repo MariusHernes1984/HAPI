@@ -20,6 +20,7 @@ from dotenv import load_dotenv
 from azure.identity import DefaultAzureCredential
 from azure.ai.projects import AIProjectClient
 from azure.ai.projects.models import (
+    FileSearchTool,
     MCPTool,
     PromptAgentDefinition,
 )
@@ -35,6 +36,15 @@ MCP_SERVER_URL = os.environ.get(
     "https://hapitest.nicefield-3933b657.norwayeast.azurecontainerapps.io/mcp",
 )
 MODEL = os.environ.get("MODEL_DEPLOYMENT", "gpt-5.3-chat")
+
+# Vector store for retningslinje file_search (opprettet via create_vectorstore.py)
+VECTORSTORE_CONFIG_FILE = os.path.join(os.path.dirname(__file__), "vectorstore_config.json")
+RETNINGSLINJE_VECTOR_STORE_ID = None
+if os.path.exists(VECTORSTORE_CONFIG_FILE):
+    with open(VECTORSTORE_CONFIG_FILE, "r", encoding="utf-8") as _f:
+        _vs_config = json.load(_f)
+        RETNINGSLINJE_VECTOR_STORE_ID = _vs_config.get("vector_store_id")
+        print(f"Vector store: {RETNINGSLINJE_VECTOR_STORE_ID}")
 
 # --- Tool-definisjoner ---
 
@@ -59,24 +69,27 @@ AGENTS = {
             "Håndterer: retningslinjer, anbefalinger, faglige råd, pakkeforløp, veiledere, rundskriv.\n\n"
             "REGEL 1 — KUN MCP-DATA:\n"
             "Du er en formidler av Helsedirektoratets innhold, ikke en medisinsk kunnskapskilde.\n"
-            "Alt du presenterer skal komme DIREKTE fra MCP-verktøyenes svar i denne samtalen.\n"
+            "Alt du presenterer skal komme DIREKTE fra verktøyenes svar (file_search eller MCP) i denne samtalen.\n"
             "- Ikke legg til indikasjoner, bruksområder, doseringsforslag eller behandlingsråd fra egen kunnskap.\n"
-            "- Ikke beskriv legemidler utover det MCP returnerer.\n"
-            "- Hvis MCP ikke returnerer informasjonen brukeren spør om: si det tydelig. Ikke fyll inn hull.\n\n"
+            "- Ikke beskriv legemidler utover det verktøyene returnerer.\n"
+            "- Hvis verktøyene ikke returnerer informasjonen brukeren spør om: si det tydelig. Ikke fyll inn hull.\n\n"
             "REGEL 2 — IKKE PRESENTER STATISTIKK ELLER NKI:\n"
             "Du er IKKE statistikk-agenten. Du skal ALDRI:\n"
             "- Presentere tall, prosenter eller målverdier for kvalitetsindikatorer\n"
             "- Liste opp NKI-indikatorer med infoId-er eller tallverdier\n"
             "- Beskrive trender, måloppnåelse eller statistisk data\n"
             "Hvis brukeren spør om statistikk/NKI: svar kun med retningslinjeinnhold.\n\n"
-            "OBLIGATORISK DATAUTVINNING — MINST 3 SØK:\n"
-            "Steg 1: Bruk sok_innhold med brukerens søkeord\n"
-            "Steg 2: For HVERT treff med infoId: bruk hent_innhold_id for FULLSTENDIG innhold\n"
+            "OBLIGATORISK DATAUTVINNING — BRUK BEGGE KILDER:\n"
+            "Du har TO datakilder: file_search (semantisk søk i alle 96 retningslinjer) og MCP-verktøy (strukturert API).\n"
+            "BRUK BEGGE for best resultat.\n\n"
+            "Steg 1: Bruk file_search FØRST — den gir semantiske treff i komplett retningslinjetekst.\n"
+            "   File_search er BEST for: behandlingsanbefalinger, faglige råd, kliniske vurderinger, dosering.\n"
+            "Steg 2: Bruk sok_innhold via MCP for å supplere med strukturert data\n"
+            "Steg 3: For HVERT MCP-treff med infoId: bruk hent_innhold_id for FULLSTENDIG innhold\n"
             "   VIKTIG: Det er i hent_innhold_id svaret du finner detaljene (dosering, varighet, alternativer).\n"
-            "   Hvis du IKKE kaller hent_innhold_id vil svaret ditt mangle konkrete anbefalinger.\n"
-            "Steg 3: Bruk hent_anbefalinger med relevant ICD-10/ICPC-2 kode for å fange anbefalinger som fritekstsøk kan misse\n"
-            "Steg 4: For antibiotika: verifiser doseringsregime, styrke, varighet\n"
-            "Steg 5: For behandling: verifiser at ALLE komponenter er inkludert (medikamentell + ikke-medikamentell + livsstil)\n\n"
+            "Steg 4: Bruk hent_anbefalinger med relevant ICD-10/ICPC-2 kode for å fange anbefalinger som fritekstsøk kan misse\n"
+            "Steg 5: For antibiotika: verifiser doseringsregime, styrke, varighet\n"
+            "Steg 6: For behandling: verifiser at ALLE komponenter er inkludert (medikamentell + ikke-medikamentell + livsstil)\n\n"
             "KVALITETSSJEKK FØR DU SVARER:\n"
             "Før du presenterer svaret, sjekk:\n"
             "- Antibiotika-spørsmål: Har jeg navngitt HVILKET antibiotikum? Dosering? Varighet? Alternativer?\n"
@@ -121,6 +134,7 @@ AGENTS = {
             "hent_pakkeforlop_id",
         ],
         "has_mcp": True,
+        "has_file_search": True,  # Hybrid: MCP + file_search over retningslinjer
     },
     "hapi-kodeverk-agent": {
         "instructions": (
@@ -215,6 +229,9 @@ def deploy_agent(client: AIProjectClient, agent_name: str, config: dict) -> dict
     tools = []
     if config.get("has_mcp"):
         tools.append(hapi_mcp_tool(config["allowed_tools"]))
+    if config.get("has_file_search") and RETNINGSLINJE_VECTOR_STORE_ID:
+        tools.append(FileSearchTool(vector_store_ids=[RETNINGSLINJE_VECTOR_STORE_ID]))
+        print(f"    + file_search (vector store: {RETNINGSLINJE_VECTOR_STORE_ID})")
 
     agent = client.agents.create_version(
         agent_name=agent_name,

@@ -1,0 +1,263 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-05T08:19:07.718818",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 9,
+    "tag": "adaptive-v1",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "4/9 (44%)",
+    "bestatt": 3,
+    "delvis": 1,
+    "mangler": 3,
+    "feil": 1,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 9,
+    "snitt_responstid_ms": 29327
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret oppgir korrekt foerstevalg og behandlingsvarighet samt henviser til Helsedirektoratet. Dosering for barn mangler, som er et forventet kjernepunkt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+        "Varighet typisk 5 dager"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 34370,
+      "answer_length": 1239,
+      "answer_preview": "**Førstevalg antibiotika ved akutt otitis media hos barn** ifølge Helsedirektoratet:\n\n- **Antibiotikum:** Fenoksymetylpenicillin (penicillin V)  \n- **Behandlingsvarighet:** **5 døgn**\n\nDette gjelder når det **er indikasjon for antibiotikabehandling**. Retningslinjen beskriver at man ved **ukompliser"
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ikke hvilke antibiotika som anbefales ved penicillinallergi og mangler dosering. Dermed dekker det under 40 % av forventede fakta, men inneholder ingen direkte feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Erytromycin, klaritromycin eller klindamycin som alternativer",
+        "Dosering bor vaere oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 36048,
+      "answer_length": 1323,
+      "answer_preview": "**Alternativ ved penicillinallergi ved streptokokkhalsinfeksjon (GAS‑tonsillitt)**\n\nKilde: Helsedirektoratet – *Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten*  \ninfoId: **dd48ee61-5a5f-4241-9e67-0b33a180a5f5**  \nStatus: Gjeldende  \nStyrkegrad: **Anbefaling**  \nSist faglig "
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret dekker røykeavvenning og noe om vurdering av alvorlighetsgrad, men mangler sentrale retningslinjer om inhalasjonsbehandling og trinnvis behandling ved stabil KOLS. Ingen klare medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Røykeavvenning er viktigste tiltak"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Inhalasjonsbehandling med bronkodilatorer ved stabil KOLS",
+        "Trinnvis tilnærming til legemiddelbehandling basert på sykdomsgrad/symptomer"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 44923,
+      "answer_length": 2630,
+      "answer_preview": "Følgende anbefalinger fra **Helsedirektoratet** er relevante for behandling og oppfølging av en pasient med KOLS som fortsatt røyker.\n\n---\n\nANBEFALING: Vurder alvorlighetsgrad for å styre behandling  \nKilde: Helsedirektoratet  \ninfoId: 0f2b22d3-2cce-48e1-be95-d2cdd37caede  \nStyrkegrad: sterk anbefal"
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "FEIL",
+      "begrunnelse": "Svaret beskriver pakkeforløpet og oppgir kilde, men flere av de konkrete tidsfristene samsvarer ikke med Helsedirektoratets forløpstider for brystkreft.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Pakkeforløp med definerte forløpstider",
+        "Tidsfrister fra henvisning til utredningsstart"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Utredning inkluderer bildediagnostikk og biopsi"
+      ],
+      "feil": [
+        "Oppgitt tidsfrist fra første fremmøte til avsluttet utredning (12 dager) stemmer ikke med Helsedirektoratets pakkeforløp",
+        "Oppgitte tider til start kirurgisk og medikamentell behandling samt total forløpstid (13/10 dager og 32/29 dager totalt) avviker fra Helsedirektoratets standard forløpstider"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 20292,
+      "answer_length": 1450,
+      "answer_preview": "Følgende informasjon er hentet fra Helsedirektoratets **Pakkeforløp for brystkreft**.\n\nPakkeforløpet starter når spesialisthelsetjenesten mottar en henvisning med **begrunnet mistanke om brystkreft**, eller når slik mistanke oppstår i spesialisthelsetjenesten og dokumenteres i journal.\n\nForløpet ska"
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt ATC-kode (A10BA02) for metformin og knytter den til riktig legemiddel. Kilden er Helsedirektoratet og ikke eksplisitt ATC-registeret/HAPI.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "A10BA02 er ATC-koden for metformin"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 17115,
+      "answer_length": 662,
+      "answer_preview": "Jeg fant **ingen ATC‑kode for metformin i HAPI/Helsedirektoratet‑dataene som ble returnert**.\n\nResultater fra MCP:\n- Tittel: “Metformin som førstevalg ved diabetes type 2”\n- Kilde: Helsedirektoratet\n- I teksten står ATC‑referansen **“metformin (A10BA02)”**, men dette fremkommer kun inne i anbefaling"
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt ICPC-2 kode (R95) for KOLS og beskriver tydelig mapping fra ICD-10 J44. Ingen medisinske feil er tilstede og Helsedirektoratet/HAPI er oppgitt som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "R95 er ICPC-2 koden for KOLS",
+        "Mapping mellom ICD-10 (J44) og ICPC-2 (R95) er beskrevet"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 14006,
+      "answer_length": 546,
+      "answer_preview": "Basert på oppslag i Helsedirektoratet (HAPI):\n\n• ICD‑10: **J44 – Annen kronisk obstruktiv lungesykdom (KOLS)**  \n• Tilsvarende kode i ICPC‑2: **R95 – Kronisk obstruktiv lungesykdom**\n\nKilde (Helsedirektoratet):  \n- ICPC‑2 kode: **R95 – Kronisk obstruktiv lungesykdom**  \n- Dokument: “KOLS (R95 Kronis"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Flere reelle NKI for hjerneslag er korrekt nevnt, men svaret inkluderer også en indikator som ikke finnes i de nasjonale kvalitetsindikatorene. Dette regnes som fabrikasjon av indikator.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering og testing av svelgefunksjon etter hjerneslag",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag",
+        "Reinnleggelse innen 30 dager etter hjerneslag"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [
+        "Blodtrykksbehandling etter hjerneslag oppgis som nasjonal kvalitetsindikator, men dette er ikke en kjent NKI fra Helsedirektoratet for hjerneslag"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 19027,
+      "answer_length": 1587,
+      "answer_preview": "Jeg fant følgende nasjonale kvalitetsindikatorer (NKI) for hjerneslag i HAPI. Alle er bekreftet via `sok_innhold` og deretter hentet med `hent_innhold_id`.\n\n1. Behandlet i slagenhet etter akutt hjerneslag  \n   - infoId: 32  \n   - Beskrivelse: Andel pasienter med akutt hjerneslag som er behandlet i s",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "BESTATT",
+      "begrunnelse": "Agenten identifiserer riktig NKI-indikator og oppgir eksplisitt at API-et ikke returnerte måltallet. Dette er i tråd med den kjente databegrensningen og anses som korrekt håndtering.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "HbA1c-indikator identifisert med navn (Blodsukkerregulering ved type 1 diabetes hos voksne)",
+        "Agenten oppgir ærlig at MCP/HAPI ikke returnerte siste målte verdi for indikatoren"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 32743,
+      "answer_length": 1131,
+      "answer_preview": "Jeg fant relevante NKI‑oppføringer i HAPI, men for **voksne diabetespasienter** returnerte API‑et ikke selve måltallet (prosentandelen) – bare indikatorbeskrivelsen.\n\n- Kvalitetsindikator: **“Blodsukkerregulering ved type 1 diabetes hos voksne”**  \n  - Hentet via MCP: `hent_innhold_id` med id **0003",
+      "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c."
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret beskriver henvisning og generell oppfølging, men mangler sentrale anbefalinger om trinnvis behandling og inhalasjonssteroider som basisbehandling ved dårlig kontrollert astma.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Oppfoelging og kontroll"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Trinnvis behandling (trappeopp)",
+        "Inhalasjonssteroider som basisbehandling"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 45424,
+      "answer_length": 2141,
+      "answer_preview": "Basert på innhold fra Helsedirektoratet:\n\n1) Vurdering ved ukontrollert astma hos barn  \nKilde: Helsedirektoratet  \nTittel: «Astma – ukontrollert, delvis kontrollert og ved usikker diagnose (veiledende frist 8 uker)»  \ninfoId: 6e817dbb-433f-4ff6-8863-ec629fdc41c2  \nsistFagligOppdatert: 2015-09-28  \n"
+    }
+  ]
+}
