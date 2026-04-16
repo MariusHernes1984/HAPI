@@ -28,6 +28,23 @@
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* Accessibility: respect user motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Accessibility: visible focus for keyboard users */
+    :focus-visible {
+      outline: 2px solid var(--primary-light);
+      outline-offset: 2px;
+      border-radius: 6px;
     }
 
     header {
@@ -150,6 +167,13 @@
       cursor: pointer;
       user-select: none;
       transition: background 0.15s;
+      width: 100%;
+      background: white;
+      border: none;
+      font-family: inherit;
+      color: inherit;
+      text-align: left;
+      min-height: 60px;
     }
     .phase-header:hover { background: #f8fafa; }
 
@@ -197,14 +221,20 @@
     }
     .phase-group.open .phase-body { display: block; }
 
+    .phase-runs-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
     .phase-runs {
       width: 100%; border-collapse: collapse; font-size: 0.8rem;
+      min-width: 520px;
     }
     .phase-runs th {
       text-align: left; padding: 8px 14px;
       background: #f0f5f4; color: var(--primary);
       font-weight: 600; border-bottom: 2px solid var(--border);
       font-size: 0.76rem;
+      white-space: nowrap;
     }
     .phase-runs td {
       padding: 8px 14px; border-bottom: 1px solid var(--border);
@@ -353,20 +383,76 @@
     }
 
     @media (max-width: 640px) {
+      header { padding: 12px 14px; gap: 10px; }
+      .logo { width: 38px; height: 38px; }
+      .header-text h1 { font-size: 1rem; }
+      .header-text p { font-size: 0.7rem; }
+      .header-back {
+        width: 40px; height: 40px; padding: 0;
+        border-radius: 50%; justify-content: center;
+      }
+      .header-back .back-text { display: none; }
+
       .container { padding: 16px; }
-      .kpi-hero { grid-template-columns: repeat(2, 1fr); }
-      .phase-chart-container { height: 200px; }
+      .kpi-hero { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .kpi-value { font-size: 1.8rem; }
+      .kpi-card { padding: 16px 12px; }
+
+      .phase-timeline { padding: 16px; }
+      .phase-chart-container { height: 240px; }
+
+      /* Stack accordion header on mobile */
+      .phase-header {
+        flex-wrap: wrap;
+        gap: 10px 12px;
+        padding: 14px 16px;
+      }
       .phase-sparkline { display: none; }
-      .phase-meta { gap: 8px; }
-      .modal { max-height: calc(100vh - 32px); }
+      .phase-name { min-width: 0; flex: 1; }
+      .phase-score { margin-left: auto; }
+      .phase-meta {
+        order: 3;
+        flex-basis: 100%;
+        gap: 12px;
+        font-size: 0.74rem;
+      }
+      .phase-bar { width: 100%; flex: 1; min-width: 80px; }
+
+      /* Hide secondary columns on mobile — data is in the bar */
+      .col-secondary { display: none; }
+      .phase-runs { min-width: 340px; font-size: 0.78rem; }
+      .phase-runs th, .phase-runs td { padding: 6px 10px; }
+
+      .modal-overlay { padding: 0; }
+      .modal {
+        max-height: 100dvh;
+        border-radius: 0;
+      }
+      .modal-header { border-radius: 0; }
       .modal-body { padding: 16px; }
+      .detail-table { font-size: 0.76rem; }
+      .detail-table th, .detail-table td { padding: 6px 8px; }
+      .modal-summary { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* Ultra-narrow */
+    @media (max-width: 380px) {
+      .kpi-hero { gap: 8px; }
+      .kpi-value { font-size: 1.5rem; }
+      .kpi-card { padding: 14px 10px; }
+      .kpi-label { font-size: 0.72rem; }
+      .kpi-sub { font-size: 0.66rem; }
+      .phase-chart-container { height: 200px; }
+      .phase-header { padding: 12px 14px; min-height: 56px; }
+      .phase-name { font-size: 0.92rem; }
+      .phase-score { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">
+    <div class="logo" aria-hidden="true">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
       </svg>
@@ -375,11 +461,11 @@
       <h1>Data Statistikk</h1>
       <p>Eval-resultater over tid</p>
     </div>
-    <a class="header-back" href="/">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <a class="header-back" href="/" aria-label="Tilbake til chat">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
       </svg>
-      Tilbake til chat
+      <span class="back-text">Tilbake til chat</span>
     </a>
   </header>
 
@@ -406,14 +492,14 @@
   </div>
 
   <!-- Drill-down modal -->
-  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()" role="dialog" aria-labelledby="modalTitle" aria-modal="true">
     <div class="modal">
       <div class="modal-header">
         <div>
           <h2 id="modalTitle">Rapport</h2>
           <p id="modalSubtitle"></p>
         </div>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <button class="modal-close" onclick="closeModal()" aria-label="Lukk rapport">&times;</button>
       </div>
       <div class="modal-body" id="modalBody">
         <div class="loading-state"><div class="spinner"></div>Henter detaljer...</div>
@@ -552,6 +638,11 @@
         runs: phases[k],
       }));
 
+      // Accessibility: dynamic aria-label describing chart contents
+      const ariaSummary = phaseData.map(pd => `${pd.info.label}: ${pd.stats.avg}%`).join(', ');
+      canvas.setAttribute('role', 'img');
+      canvas.setAttribute('aria-label', `Gjennomsnittlig korrekthetsscore per fase. ${ariaSummary}.`);
+
       // Background
       ctx.fillStyle = '#fafcfc';
       ctx.fillRect(0, 0, W, H);
@@ -655,6 +746,12 @@
 
     // --- Phase Accordion ---
 
+    function togglePhase(btn) {
+      const group = btn.parentElement;
+      const isOpen = group.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    }
+
     function renderAccordion(phases, reports) {
       const phaseKeys = Object.keys(phases);
       const html = phaseKeys.map((key, pi) => {
@@ -688,49 +785,62 @@
             </div>`;
           const date = r.tidspunkt ? r.tidspunkt.substring(5, 16).replace('T', ' ') : '-';
           const tag = r.tag ? r.tag.replace(/fase\d+-?/i, '') : '';
-          const hallHtml = r.hallusinering > 0 ? `<span class="hall-dot" title="${r.hallusinering} hallusinasjoner"></span> ${r.hallusinering}` : '<span style="color:#9ca3af">0</span>';
-          return `<tr onclick="openReport('${esc(r.file)}')">
+          const hallHtml = r.hallusinering > 0
+            ? `<span class="hall-dot" aria-hidden="true"></span> <span aria-label="${r.hallusinering} hallusinasjoner">${r.hallusinering}</span>`
+            : '<span style="color:#9ca3af">0</span>';
+          return `<tr tabindex="0" onclick="openReport('${esc(r.file)}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openReport('${esc(r.file)}')}">
             <td style="white-space:nowrap">${esc(date)}</td>
-            <td>${tag ? '<span class="tag-chip">' + esc(tag) + '</span>' : ''}</td>
+            <td class="col-secondary">${tag ? '<span class="tag-chip">' + esc(tag) + '</span>' : ''}</td>
             <td style="font-weight:600;color:${r.korrekthet_pct >= 95 ? '#16a34a' : r.korrekthet_pct >= 85 ? '#0d6e6e' : '#ca8a04'}">${r.korrekthet_pct != null ? r.korrekthet_pct + '%' : '-'}</td>
             <td>${barHtml}</td>
-            <td style="color:#16a34a">${r.bestatt}</td>
-            <td style="color:#ca8a04">${r.delvis}</td>
-            <td style="color:#dc2626">${r.feil}</td>
+            <td class="col-secondary" style="color:#16a34a">${r.bestatt}</td>
+            <td class="col-secondary" style="color:#ca8a04">${r.delvis}</td>
+            <td class="col-secondary" style="color:#dc2626">${r.feil}</td>
             <td>${hallHtml}</td>
-            <td>${r.antall}</td>
+            <td class="col-secondary">${r.antall}</td>
           </tr>`;
         }).join('');
 
+        const barAriaLabel = `Bestaatt ${bPct}%, Delvis ${dPct}%, Mangler ${mPct}%, Feil ${fPct}%`;
+
         return `
         <div class="phase-group${isLast ? ' open' : ''}" data-phase="${key}">
-          <div class="phase-header" onclick="this.parentElement.classList.toggle('open')">
-            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <button type="button" class="phase-header" aria-expanded="${isLast ? 'true' : 'false'}" aria-controls="phase-body-${key}" onclick="togglePhase(this)">
+            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="9 18 15 12 9 6"/>
             </svg>
             <div class="phase-name">${esc(info.label)}</div>
             <div class="phase-meta">
               <span>${runs.length} evalueringer</span>
               <span>${stats.totalHall > 0 ? stats.totalHall + ' hall.' : '0 hall.'}</span>
-              <div class="phase-bar">
+              <div class="phase-bar" role="img" aria-label="${barAriaLabel}">
                 <div class="seg-b" style="width:${bPct}%"></div>
                 <div class="seg-d" style="width:${dPct}%"></div>
                 <div class="seg-m" style="width:${mPct}%"></div>
                 <div class="seg-f" style="width:${fPct}%"></div>
               </div>
             </div>
-            <div class="phase-sparkline">${sparkSvg}</div>
-            <div class="phase-score" style="color:${scoreColor}">${stats.avg}%</div>
-          </div>
-          <div class="phase-body">
+            <div class="phase-sparkline" aria-hidden="true">${sparkSvg}</div>
+            <div class="phase-score" style="color:${scoreColor}" aria-label="Gjennomsnitt ${stats.avg} prosent">${stats.avg}%</div>
+          </button>
+          <div class="phase-body" id="phase-body-${key}">
             ${info.desc ? '<div class="phase-desc">' + esc(info.desc) + '</div>' : ''}
-            <table class="phase-runs">
-              <thead><tr>
-                <th>Dato</th><th>Tag</th><th>Score</th><th>Fordeling</th>
-                <th>OK</th><th>Delvis</th><th>Feil</th><th>Hall.</th><th>N</th>
-              </tr></thead>
-              <tbody>${runRows}</tbody>
-            </table>
+            <div class="phase-runs-wrap">
+              <table class="phase-runs">
+                <thead><tr>
+                  <th>Dato</th>
+                  <th class="col-secondary">Tag</th>
+                  <th>Score</th>
+                  <th>Fordeling</th>
+                  <th class="col-secondary">OK</th>
+                  <th class="col-secondary">Delvis</th>
+                  <th class="col-secondary">Feil</th>
+                  <th>Hall.</th>
+                  <th class="col-secondary">N</th>
+                </tr></thead>
+                <tbody>${runRows}</tbody>
+              </table>
+            </div>
           </div>
         </div>`;
       }).join('');

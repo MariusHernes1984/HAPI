@@ -30,9 +30,27 @@
       font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
-      height: 100vh;
+      height: 100vh; /* fallback */
+      height: 100dvh; /* fixes iOS keyboard pushing input off-screen */
       display: flex;
       flex-direction: column;
+    }
+
+    /* Accessibility: respect user motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    /* Accessibility: visible focus for keyboard users */
+    :focus-visible {
+      outline: 2px solid var(--primary-light);
+      outline-offset: 2px;
+      border-radius: 6px;
     }
 
     /* --- Header --- */
@@ -77,10 +95,15 @@
       align-items: center;
       gap: 6px;
       background: rgba(255,255,255,0.12);
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 20px;
       font-size: 0.72rem;
       font-weight: 500;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      min-height: 36px;
     }
 
     .status-dot {
@@ -159,6 +182,9 @@
       align-items: flex-start;
       gap: 10px;
       line-height: 1.4;
+      font-family: inherit;
+      width: 100%;
+      min-height: 48px;
     }
 
     .suggestion:hover {
@@ -221,6 +247,21 @@
       line-height: 1.65;
       font-size: 0.9rem;
       max-width: 680px;
+      /* Prevent long URLs, ICD/ATC codes from breaking layout */
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      min-width: 0;
+    }
+
+    /* Wrapper for markdown tables inside bubbles — enables horizontal scroll on narrow screens */
+    .bubble-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      margin: 10px 0;
+      border-radius: 8px;
+    }
+    .bubble-table-wrap > table {
+      margin: 0;
     }
 
     .message.user .bubble {
@@ -551,7 +592,7 @@
       align-items: center;
       gap: 6px;
       background: rgba(255,255,255,0.12);
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 20px;
       font-size: 0.72rem;
       font-weight: 500;
@@ -560,6 +601,7 @@
       border: none;
       cursor: pointer;
       transition: background 0.2s;
+      min-height: 36px;
     }
 
     .header-btn:hover {
@@ -684,20 +726,87 @@
       font-family: monospace;
     }
 
-    /* --- Responsive --- */
+    /* --- Responsive: tablet + mobile --- */
     @media (max-width: 640px) {
+      header {
+        padding: 12px 14px;
+        gap: 10px;
+      }
+      .logo { width: 38px; height: 38px; }
+      .header-text h1 { font-size: 1rem; }
+      .header-text p { font-size: 0.7rem; }
+
+      /* Keep header-actions visible — collapse to icon-only circular buttons */
+      .header-actions { display: flex; gap: 6px; }
+      .header-badge .badge-text,
+      .header-btn .btn-text { display: none; }
+      .header-badge, .header-btn {
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+      }
+
       .suggestions { grid-template-columns: 1fr; }
+      .suggestion.full { grid-column: span 1; }
       .chat-container { padding: 16px; }
-      .input-area { padding: 12px 16px; }
-      .header-actions { display: none; }
+      .input-area { padding: 10px 14px 14px; }
       .bubble { max-width: 100%; }
+
+      .welcome { padding: 32px 16px; }
+      .welcome-icon { font-size: 44px; margin-bottom: 12px; }
+      .welcome h2 { font-size: 1.25rem; }
+      .welcome p { font-size: 0.88rem; }
+
+      /* P3-I: collapse extra suggestions behind "Se flere" toggle */
+      .suggestions.collapsed .suggestion.extra { display: none; }
+      .suggestions-toggle {
+        display: block;
+        margin: 8px auto 0;
+        background: none;
+        border: 1px dashed var(--border);
+        color: var(--primary);
+        padding: 10px 16px;
+        border-radius: var(--radius-sm);
+        font-size: 0.82rem;
+        font-weight: 500;
+        cursor: pointer;
+        min-height: 44px;
+        width: 100%;
+      }
+      .suggestions-toggle:hover { background: #f0faf8; }
+
+      /* P3-G: bigger disclaimer text for older users */
+      .disclaimer { font-size: 0.78rem; }
+
+      /* Bigger send button for touch */
+      .send-btn { width: 48px; height: 48px; }
+      .input-field { font-size: 1rem; padding: 12px 14px; } /* prevents iOS zoom on focus */
+    }
+
+    /* Hide desktop-only toggle by default */
+    .suggestions-toggle { display: none; }
+
+    /* Ultra-narrow (<380px) — iPhone SE and older */
+    @media (max-width: 380px) {
+      header { padding: 10px 10px; gap: 8px; }
+      .logo { width: 34px; height: 34px; }
+      .logo svg { width: 22px; height: 22px; }
+      .header-text h1 { font-size: 0.95rem; }
+      .header-text p { display: none; }
+      .header-badge, .header-btn { width: 36px; height: 36px; }
+      .chat-container { padding: 12px; gap: 16px; }
+      .bubble { padding: 12px 14px; font-size: 0.88rem; }
+      .avatar { width: 32px; height: 32px; }
+      .message { gap: 8px; }
     }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">
+    <div class="logo" aria-hidden="true">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
       </svg>
@@ -707,25 +816,25 @@
       <p>Norsk helseinformasjon fra Helsedirektoratet</p>
     </div>
     <div class="header-actions">
-      <div class="header-badge" onclick="openAgentModal()">
-        <span class="status-dot"></span>
-        <span>3 agenter aktive</span>
-      </div>
-      <a class="header-btn" href="/stats">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button type="button" class="header-badge" onclick="openAgentModal()" aria-label="Vis tilkoblede agenter">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="badge-text">3 agenter aktive</span>
+      </button>
+      <a class="header-btn" href="/stats" aria-label="Data Statistikk">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
         </svg>
-        Data Statistikk
+        <span class="btn-text">Data Statistikk</span>
       </a>
     </div>
   </header>
 
   <!-- Agent modal -->
-  <div class="modal-overlay" id="agentModal" onclick="closeAgentModal(event)">
+  <div class="modal-overlay" id="agentModal" onclick="closeAgentModal(event)" role="dialog" aria-labelledby="agentModalTitle" aria-modal="true">
     <div class="modal" onclick="event.stopPropagation()">
       <div class="modal-header">
-        <h3>Tilkoblede agenter</h3>
-        <button class="modal-close" onclick="closeAgentModal()">&times;</button>
+        <h3 id="agentModalTitle">Tilkoblede agenter</h3>
+        <button class="modal-close" onclick="closeAgentModal()" aria-label="Lukk">&times;</button>
       </div>
       <div class="modal-body" id="agentModalBody">
         <div style="text-align:center; padding:24px; color:var(--text-light);">
@@ -748,44 +857,47 @@
         Jeg henter faglig informasjon fra Helsedirektoratets retningslinjer, kodeverk og kvalitetsindikatorer.
         Still et spørsmål så finner jeg svar fra riktig kilde.
       </p>
-      <div class="suggestions">
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;</span>
+      <div class="suggestions collapsed" id="suggestionList">
+        <button type="button" class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;</span>
           <span>Hva anbefaler retningslinjene for behandling av insomni hos voksne?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
+        </button>
+        <button type="button" class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F3F7;&#xFE0F;</span>
           <span>Hva er ICD-10 koden for diabetes type 2?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1FAC1;</span>
+        </button>
+        <button type="button" class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1FAC1;</span>
           <span>Legen sa jeg har KOLS. Hva betyr det for meg fremover, og hva slags behandling finnes?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F3F7;&#xFE0F;</span>
-          <span>En kollega brukte ICPC-2 kode K74 i en epikrise. Hva betyr det?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F4CA;</span>
+        </button>
+        <button type="button" class="suggestion" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F4CA;</span>
           <span>Finnes det nasjonale kvalitetsindikatorer for diabetes? Vis de viktigste.</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;</span>
+        </button>
+        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F3F7;&#xFE0F;</span>
+          <span>En kollega brukte ICPC-2 kode K74 i en epikrise. Hva betyr det?</span>
+        </button>
+        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;</span>
           <span>Eliquis — hva er virkestoffet og ATC-klassifiseringen?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F9D2;</span>
+        </button>
+        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F9D2;</span>
           <span>Barnet mitt på 8 år har astma og vi er redde for å gi for mye medisin. Hva anbefales?</span>
-        </div>
-        <div class="suggestion full" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
+        </button>
+        <button type="button" class="suggestion extra full" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
           <span>Pasient med nyoppdaget diabetes type 2 (E11) — hva anbefaler retningslinjene som førstelinjebehandling, hva er ATC-koden for metformin, og finnes det kvalitetsindikatorer for HbA1c-kontroll?</span>
-        </div>
-        <div class="suggestion" onclick="askSuggestion(this)">
-          <span class="suggestion-icon">&#x1F48A;&#x1F3F7;&#xFE0F;</span>
+        </button>
+        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F3F7;&#xFE0F;</span>
           <span>En pasient bruker Ozempic. Hva er virkestoffet og ATC-koden, og hva sier retningslinjene om indikasjonen ved type 2 diabetes?</span>
-        </div>
+        </button>
       </div>
+      <button type="button" class="suggestions-toggle" id="suggestionsToggle" onclick="toggleSuggestions(this)" aria-expanded="false" aria-controls="suggestionList">
+        Se flere forslag
+      </button>
     </div>
   </div>
 
@@ -798,9 +910,10 @@
         rows="1"
         onkeydown="handleKey(event)"
         oninput="autoResize(this)"
+        aria-label="Still et helsefaglig spørsmål"
       ></textarea>
-      <button class="send-btn" id="sendBtn" onclick="sendMessage()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button class="send-btn" id="sendBtn" onclick="sendMessage()" aria-label="Send spørsmål">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <line x1="22" y1="2" x2="11" y2="13"/>
           <polygon points="22 2 15 22 11 13 2 9 22 2"/>
         </svg>
@@ -844,6 +957,28 @@
       input.value = text;
       sendMessage();
     }
+
+    function toggleSuggestions(btn) {
+      const list = document.getElementById('suggestionList');
+      const isCollapsed = list.classList.toggle('collapsed');
+      btn.setAttribute('aria-expanded', String(!isCollapsed));
+      btn.textContent = isCollapsed ? 'Se flere forslag' : 'Skjul ekstra forslag';
+    }
+
+    // Initialize suggestions-toggle visibility and ESC for modal
+    document.addEventListener('DOMContentLoaded', () => {
+      // Only show "Se flere" button if there are extra suggestions hidden on mobile
+      const extras = document.querySelectorAll('.suggestion.extra');
+      const toggle = document.getElementById('suggestionsToggle');
+      if (toggle && extras.length === 0) toggle.style.display = 'none';
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('agentModal');
+        if (modal && modal.classList.contains('active')) closeAgentModal();
+      }
+    });
 
     function scrollToBottom() {
       chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
@@ -1030,7 +1165,7 @@
         const row = cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('');
         return `<tr>${row}</tr>`;
       });
-      html = html.replace(/(<tr>.*<\/tr>\n?)+/g, '<table>$&</table>');
+      html = html.replace(/(<tr>.*<\/tr>\n?)+/g, '<div class="bubble-table-wrap"><table>$&</table></div>');
 
       // Line breaks
       html = html.replace(/\n\n/g, '</p><p>');
@@ -1043,6 +1178,8 @@
       html = html.replace(/(<\/h[234]>)\s*<\/p>/g, '$1');
       html = html.replace(/<p>\s*(<ul>)/g, '$1');
       html = html.replace(/(<\/ul>)\s*<\/p>/g, '$1');
+      html = html.replace(/<p>\s*(<div class="bubble-table-wrap">)/g, '$1');
+      html = html.replace(/(<\/div>)\s*<\/p>/g, '$1');
       html = html.replace(/<p>\s*(<table>)/g, '$1');
       html = html.replace(/(<\/table>)\s*<\/p>/g, '$1');
 
