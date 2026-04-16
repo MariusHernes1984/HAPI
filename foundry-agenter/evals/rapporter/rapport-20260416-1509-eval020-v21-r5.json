@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T15:09:17.577759",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval020-v21-r5",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 23572
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere kjente nasjonale kvalitetsindikatorer relatert til hjerneslag og henviser til Helsedirektoratet som kilde. Kravet om minst én indikator er tydelig oppfylt og ingen åpenbare feil eller oppdiktede tall er inkludert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for hjerneslag med navn"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23572,
+      "answer_length": 1452,
+      "answer_preview": "Indikatornavn: Blodtrykksbehandling etter hjerneslag.  \nBeskrivelse: Andel pasienter som har fått blodtrykksbehandling etter hjerneslag  \nTallverdi: Se Helsedirektoratets statistikkbank for oppdaterte tall  \nKilde: Helsedirektoratet\n\nIndikatornavn: Behandlet i slagenhet etter akutt hjerneslag  \nBesk",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    }
+  ]
+}
