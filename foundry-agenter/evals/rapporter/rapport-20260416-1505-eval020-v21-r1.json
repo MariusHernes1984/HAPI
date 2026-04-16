@@ -1,0 +1,48 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T15:05:42.259268",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval020-v21-r1",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 23471
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere kjente nasjonale kvalitetsindikatorer for hjerneslag brukt av Helsedirektoratet/NKI og oppgir kilde. Ingen åpenbare medisinske feil eller hallusinasjoner.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for hjerneslag med navn",
+        "Kilde oppgitt til Helsedirektoratet/NKI"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23471,
+      "answer_length": 2114,
+      "answer_preview": "Indikatornavn: Hjerneslag - blodtrykksbehandling etter hjerneslag  \nBeskrivelse: Indikatoren viser andel av pasienter som får blodtrykksbehandling etter gjennomgått hjerneslag.  \nTallverdi: Tall fra 2021 viser at på landsbasis fikk 71,8 prosent av pasientene blodtrykksbehandling etter gjennomgått hj",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    }
+  ]
+}

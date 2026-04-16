@@ -1,0 +1,52 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T15:02:56.594533",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval020-fix-r3",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 18543
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Flere reelle NKI‑indikatorer for hjerneslag er korrekt nevnt, men én indikator virker oppdiktet og finnes ikke som nasjonal kvalitetsindikator. Dermed inneholder svaret en hallusinasjon.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering og testing av svelgefunksjon etter hjerneslag",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag",
+        "Reinnleggelse innen 30 dager etter sykehusinnleggelse for hjerneslag"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [
+        "Blodtrykksbehandling etter hjerneslag er ikke en etablert nasjonal kvalitetsindikator i NKI for hjerneslag"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 18543,
+      "answer_length": 1456,
+      "answer_preview": "Indikatornavn: Blodtrykksbehandling etter hjerneslag.  \nBeskrivelse: Andel pasienter som har fått blodtrykksbehandling etter hjerneslag  \nTallverdi: Se Helsedirektoratets statistikkbank for oppdaterte tall  \nKilde: Helsedirektoratet\n\nIndikatornavn: Behandlet i slagenhet etter akutt hjerneslag  \nBesk",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    }
+  ]
+}

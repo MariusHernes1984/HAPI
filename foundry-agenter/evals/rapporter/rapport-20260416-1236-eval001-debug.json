@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T12:36:41.922010",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval001-debug",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 19792
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Riktig foerstevalg og korrekt henvisning til Helsedirektoratets retningslinje, men mangler dosering og behandlingsvarighet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)",
+        "Varighet typisk 5 dager"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 19792,
+      "answer_length": 896,
+      "answer_preview": "I Helsedirektoratets **Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten**:\n\n- **Førstevalg:**  \n  **Fenoksymetylpenicillin (penicillin V)** ved akutt otitis media hos barn.   \n\nBegrunnelse i retningslinjen:  \n- God effekt mot de vanligste agens, særlig **Streptococcus pneumon"
+    }
+  ]
+}

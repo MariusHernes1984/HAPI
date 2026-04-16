@@ -41,15 +41,11 @@
     }
 
     .logo {
-      width: 44px;
-      height: 44px;
+      width: 44px; height: 44px;
       background: rgba(255,255,255,0.15);
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
     }
 
     .header-text h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
@@ -57,63 +53,64 @@
 
     .header-back {
       margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 6px;
+      display: flex; align-items: center; gap: 6px;
       background: rgba(255,255,255,0.12);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: white;
-      text-decoration: none;
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 500;
+      color: white; text-decoration: none;
       transition: background 0.2s;
     }
-
     .header-back:hover { background: rgba(255,255,255,0.22); }
 
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 24px;
-    }
+    .container { max-width: 1060px; margin: 0 auto; padding: 24px; }
 
-    /* --- Summary cards --- */
-    .summary-cards {
+    /* --- KPI Hero --- */
+    .kpi-hero {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 12px;
-      margin-bottom: 28px;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
     }
 
-    .summary-card {
+    .kpi-card {
       background: white;
       border-radius: var(--radius-sm);
-      padding: 18px 16px;
+      padding: 20px 18px;
       text-align: center;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
     }
 
-    .summary-card .value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--primary);
-      line-height: 1.2;
+    .kpi-card.highlight {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      border-color: transparent;
+    }
+    .kpi-card.highlight .kpi-label { color: rgba(255,255,255,0.8); }
+    .kpi-card.highlight .kpi-value { color: white; }
+    .kpi-card.highlight .kpi-sub { color: rgba(255,255,255,0.7); }
+
+    .kpi-value {
+      font-size: 2.2rem; font-weight: 700;
+      color: var(--primary); line-height: 1.1;
+    }
+    .kpi-value.green { color: #16a34a; }
+    .kpi-value.red { color: #dc2626; }
+
+    .kpi-label {
+      font-size: 0.78rem; color: var(--text-light);
+      margin-top: 4px; font-weight: 500;
     }
 
-    .summary-card .value.green { color: #16a34a; }
-    .summary-card .value.yellow { color: #ca8a04; }
-    .summary-card .value.red { color: #dc2626; }
-
-    .summary-card .label {
-      font-size: 0.76rem;
-      color: var(--text-light);
-      margin-top: 4px;
+    .kpi-sub {
+      font-size: 0.7rem; color: var(--text-light);
+      margin-top: 2px;
     }
 
-    /* --- Chart section --- */
-    .chart-section {
+    /* --- Phase Timeline --- */
+    .phase-timeline {
       background: white;
       border-radius: var(--radius);
       padding: 24px;
@@ -122,75 +119,103 @@
       margin-bottom: 24px;
     }
 
-    .chart-section h2 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 4px;
+    .phase-timeline h2 {
+      font-size: 1.05rem; color: var(--primary); margin-bottom: 4px;
+    }
+    .phase-timeline .subtitle {
+      font-size: 0.78rem; color: var(--text-light); margin-bottom: 20px;
     }
 
-    .chart-section .subtitle {
-      font-size: 0.78rem;
-      color: var(--text-light);
-      margin-bottom: 20px;
+    .phase-chart-container {
+      position: relative; width: 100%; height: 280px;
     }
 
-    .chart-container {
-      position: relative;
-      width: 100%;
-      height: 320px;
-    }
+    canvas { width: 100% !important; height: 100% !important; }
 
-    canvas {
-      width: 100% !important;
-      height: 100% !important;
-    }
-
-    /* --- Report table --- */
-    .table-section {
+    /* --- Phase Accordion --- */
+    .phase-group {
       background: white;
       border-radius: var(--radius);
-      padding: 24px;
       box-shadow: var(--shadow);
       border: 1px solid var(--border);
-    }
-
-    .table-section h2 {
-      font-size: 1.05rem;
-      color: var(--primary);
-      margin-bottom: 16px;
-    }
-
-    .report-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.82rem;
-    }
-
-    .report-table th {
-      text-align: left;
-      padding: 10px 12px;
-      background: #f0f5f4;
-      color: var(--primary);
-      font-weight: 600;
-      border-bottom: 2px solid var(--border);
-    }
-
-    .report-table td {
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .report-table tr:hover td { background: #f8fafa; }
-
-    .score-bar {
-      display: flex;
-      height: 8px;
-      border-radius: 4px;
+      margin-bottom: 12px;
       overflow: hidden;
-      background: #e5e7eb;
+    }
+
+    .phase-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
+    .phase-header:hover { background: #f8fafa; }
+
+    .phase-chevron {
+      width: 20px; height: 20px;
+      transition: transform 0.2s;
+      color: var(--text-light);
+      flex-shrink: 0;
+    }
+    .phase-group.open .phase-chevron { transform: rotate(90deg); }
+
+    .phase-name {
+      font-size: 1rem; font-weight: 600; color: var(--primary);
       min-width: 80px;
     }
 
+    .phase-meta {
+      display: flex; gap: 16px; align-items: center;
+      font-size: 0.78rem; color: var(--text-light);
+      flex: 1;
+    }
+
+    .phase-score {
+      font-size: 1.1rem; font-weight: 700;
+      min-width: 50px; text-align: right;
+    }
+
+    .phase-sparkline {
+      width: 120px; height: 32px; flex-shrink: 0;
+    }
+
+    .phase-bar {
+      display: flex; height: 6px; border-radius: 3px;
+      overflow: hidden; background: #e5e7eb; width: 100px;
+      flex-shrink: 0;
+    }
+    .phase-bar .seg-b { background: #16a34a; }
+    .phase-bar .seg-d { background: #eab308; }
+    .phase-bar .seg-m { background: #f97316; }
+    .phase-bar .seg-f { background: #dc2626; }
+
+    .phase-body {
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+    .phase-group.open .phase-body { display: block; }
+
+    .phase-runs {
+      width: 100%; border-collapse: collapse; font-size: 0.8rem;
+    }
+    .phase-runs th {
+      text-align: left; padding: 8px 14px;
+      background: #f0f5f4; color: var(--primary);
+      font-weight: 600; border-bottom: 2px solid var(--border);
+      font-size: 0.76rem;
+    }
+    .phase-runs td {
+      padding: 8px 14px; border-bottom: 1px solid var(--border);
+    }
+    .phase-runs tr { cursor: pointer; }
+    .phase-runs tr:hover td { background: #f8fafa; }
+
+    .score-bar {
+      display: flex; height: 8px; border-radius: 4px;
+      overflow: hidden; background: #e5e7eb; min-width: 80px;
+    }
     .score-bar .seg-bestatt { background: #16a34a; }
     .score-bar .seg-delvis { background: #eab308; }
     .score-bar .seg-mangler { background: #f97316; }
@@ -200,88 +225,65 @@
       display: inline-block;
       background: var(--accent-light);
       color: var(--primary-dark);
-      padding: 2px 8px;
-      border-radius: 8px;
-      font-size: 0.7rem;
-      font-weight: 500;
+      padding: 2px 8px; border-radius: 8px;
+      font-size: 0.7rem; font-weight: 500;
     }
 
-    .report-table tr { cursor: pointer; }
+    .hall-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: #dc2626;
+    }
 
     .loading-state {
-      text-align: center;
-      padding: 48px;
-      color: var(--text-light);
+      text-align: center; padding: 48px; color: var(--text-light);
     }
-
     .loading-state .spinner {
-      width: 24px;
-      height: 24px;
+      width: 24px; height: 24px;
       border: 3px solid var(--border);
       border-top-color: var(--primary);
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin: 0 auto 12px;
     }
-
     @keyframes spin { to { transform: rotate(360deg); } }
 
     /* --- Drill-down modal --- */
     .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 100;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 32px 16px;
-      overflow-y: auto;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45); z-index: 100;
+      justify-content: center; align-items: flex-start;
+      padding: 32px 16px; overflow-y: auto;
     }
-
     .modal-overlay.active { display: flex; }
 
     .modal {
-      background: white;
-      border-radius: var(--radius);
+      background: white; border-radius: var(--radius);
       box-shadow: var(--shadow-lg);
-      max-width: 900px;
-      width: 100%;
-      max-height: calc(100vh - 64px);
-      overflow-y: auto;
+      max-width: 900px; width: 100%;
+      max-height: calc(100vh - 64px); overflow-y: auto;
     }
 
     .modal-header {
-      position: sticky;
-      top: 0;
+      position: sticky; top: 0;
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-      color: white;
-      padding: 18px 24px;
+      color: white; padding: 18px 24px;
       border-radius: var(--radius) var(--radius) 0 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       z-index: 1;
     }
-
     .modal-header h2 { font-size: 1.05rem; font-weight: 600; }
     .modal-header p { font-size: 0.78rem; opacity: 0.8; margin-top: 2px; }
 
     .modal-close {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: white;
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      font-size: 1.2rem;
+      background: rgba(255,255,255,0.15); border: none;
+      color: white; width: 32px; height: 32px;
+      border-radius: 8px; font-size: 1.2rem;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-
     .modal-close:hover { background: rgba(255,255,255,0.25); }
 
     .modal-body { padding: 24px; }
@@ -289,46 +291,32 @@
     .modal-summary {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 10px;
-      margin-bottom: 20px;
+      gap: 10px; margin-bottom: 20px;
     }
-
-    .modal-summary .summary-card { padding: 12px 10px; }
-    .modal-summary .summary-card .value { font-size: 1.3rem; }
-
-    .detail-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 0.8rem;
+    .modal-summary .summary-card {
+      background: white; border-radius: var(--radius-sm);
+      padding: 12px 10px; text-align: center;
+      box-shadow: var(--shadow); border: 1px solid var(--border);
     }
+    .modal-summary .summary-card .value { font-size: 1.3rem; font-weight: 700; color: var(--primary); }
 
+    .detail-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
     .detail-table th {
-      text-align: left;
-      padding: 8px 10px;
-      background: #f0f5f4;
-      color: var(--primary);
-      font-weight: 600;
-      border-bottom: 2px solid var(--border);
-      position: sticky;
-      top: 0;
+      text-align: left; padding: 8px 10px;
+      background: #f0f5f4; color: var(--primary);
+      font-weight: 600; border-bottom: 2px solid var(--border);
+      position: sticky; top: 0;
     }
-
     .detail-table td {
-      padding: 8px 10px;
-      border-bottom: 1px solid var(--border);
+      padding: 8px 10px; border-bottom: 1px solid var(--border);
       vertical-align: top;
     }
-
     .detail-table tr:hover td { background: #f8fafa; }
 
     .score-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.72rem;
-      font-weight: 600;
+      display: inline-block; padding: 2px 8px;
+      border-radius: 6px; font-size: 0.72rem; font-weight: 600;
     }
-
     .score-badge.bestatt { background: #dcfce7; color: #15803d; }
     .score-badge.delvis { background: #fef9c3; color: #a16207; }
     .score-badge.mangler { background: #ffedd5; color: #c2410c; }
@@ -336,49 +324,40 @@
     .score-badge.hallusinering { background: #fce7f3; color: #be185d; }
 
     .detail-reasoning {
-      font-size: 0.75rem;
-      color: var(--text-light);
-      margin-top: 4px;
-      line-height: 1.4;
+      font-size: 0.75rem; color: var(--text-light);
+      margin-top: 4px; line-height: 1.4;
     }
-
     .detail-answer {
-      font-size: 0.74rem;
-      color: var(--text);
-      background: #f8fafa;
-      padding: 8px 10px;
-      border-radius: 6px;
-      margin-top: 6px;
-      max-height: 120px;
-      overflow-y: auto;
-      white-space: pre-wrap;
-      border: 1px solid var(--border);
+      font-size: 0.74rem; color: var(--text);
+      background: #f8fafa; padding: 8px 10px;
+      border-radius: 6px; margin-top: 6px;
+      max-height: 120px; overflow-y: auto;
+      white-space: pre-wrap; border: 1px solid var(--border);
     }
-
-    .routing-info {
-      display: flex;
-      gap: 4px;
-      flex-wrap: wrap;
-    }
-
+    .routing-info { display: flex; gap: 4px; flex-wrap: wrap; }
     .routing-chip {
-      font-size: 0.68rem;
-      padding: 1px 6px;
-      border-radius: 4px;
-      background: #e0f2fe;
-      color: #0369a1;
+      font-size: 0.68rem; padding: 1px 6px;
+      border-radius: 4px; background: #e0f2fe; color: #0369a1;
     }
-
     .routing-chip.wrong { background: #fee2e2; color: #dc2626; }
 
     .expandable { cursor: pointer; }
     .expandable .expand-content { display: none; }
     .expandable.open .expand-content { display: block; }
 
+    /* Phase description */
+    .phase-desc {
+      font-size: 0.74rem; color: var(--text-light);
+      padding: 10px 20px; background: #f8fafa;
+      border-bottom: 1px solid var(--border);
+    }
+
     @media (max-width: 640px) {
       .container { padding: 16px; }
-      .summary-cards { grid-template-columns: repeat(2, 1fr); }
-      .chart-container { height: 240px; }
+      .kpi-hero { grid-template-columns: repeat(2, 1fr); }
+      .phase-chart-container { height: 200px; }
+      .phase-sparkline { display: none; }
+      .phase-meta { gap: 8px; }
       .modal { max-height: calc(100vh - 32px); }
       .modal-body { padding: 16px; }
     }
@@ -405,27 +384,28 @@
   </header>
 
   <div class="container">
-    <div id="summaryCards" class="summary-cards"></div>
+    <!-- KPI Hero -->
+    <div id="kpiHero" class="kpi-hero"></div>
 
-    <div class="chart-section">
-      <h2>Korrekthetsscore over tid</h2>
-      <p class="subtitle">Prosentandel korrekte svar per eval-rapport</p>
-      <div class="chart-container">
-        <canvas id="evalChart"></canvas>
+    <!-- Phase Timeline Chart -->
+    <div class="phase-timeline">
+      <h2>Utvikling per fase</h2>
+      <p class="subtitle">Gjennomsnittlig korrekthetsscore per fase med trend</p>
+      <div class="phase-chart-container">
+        <canvas id="phaseChart"></canvas>
       </div>
     </div>
 
-    <div class="table-section">
-      <h2>Alle eval-rapporter</h2>
-      <div id="reportTable">
-        <div class="loading-state">
-          <div class="spinner"></div>
-          Henter eval-data...
-        </div>
+    <!-- Phase Accordion -->
+    <div id="phaseAccordion">
+      <div class="loading-state">
+        <div class="spinner"></div>
+        Henter eval-data...
       </div>
     </div>
   </div>
 
+  <!-- Drill-down modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
     <div class="modal">
       <div class="modal-header">
@@ -444,69 +424,139 @@
   <script>
     const API_BASE = window.location.origin;
 
+    // Phase descriptions
+    const PHASE_INFO = {
+      'pre':   { label: 'Baseline',  desc: 'Innledende tester foer faseinndeling' },
+      'fase1': { label: 'Fase 1',    desc: 'Keyword-routing og grunnleggende agenter' },
+      'fase2': { label: 'Fase 2',    desc: 'Kildehenvisninger og stabilitetstest' },
+      'fase3': { label: 'Fase 3',    desc: 'Soekestrategi, anti-hallusinering, klinisk presisjon' },
+      'fase4': { label: 'Fase 4',    desc: 'Konsensus-eval, routing-optimalisering, kodeverk' },
+      'fase5': { label: 'Fase 5',    desc: 'MCP-fikser, retningslinje v19, klinisk beskyttelse' },
+      'fase6': { label: 'Fase 6',    desc: 'Validering og stabilitetstest' },
+      'fase7': { label: 'Fase 7',    desc: 'Vector store og hybrid soek' },
+      'fase8': { label: 'Fase 8',    desc: 'Agentic retrieval, EVAL-001 og EVAL-020 fikser' },
+    };
+
+    // --- Data loading & grouping ---
+
     async function loadData() {
       const resp = await fetch(`${API_BASE}/api/evals/summary`);
       const data = await resp.json();
       return data.reports;
     }
 
-    function renderSummaryCards(reports) {
-      if (reports.length === 0) return;
+    function detectPhase(tag) {
+      if (!tag) return 'pre';
+      const m = tag.match(/fase(\d+)/i);
+      if (m) return 'fase' + m[1];
+      // Some tags don't include "fase" but were from early phases
+      if (/v[12]-keyword|v2-llm-baseline|post-mcp-fix|smarttruncate|retest|post-fix/i.test(tag)) return 'pre';
+      if (/clinical-protect|adaptive|120k/i.test(tag)) return 'fase5';
+      if (/eval00[16]-|crm-|run\d/i.test(tag)) return 'pre';
+      return 'pre';
+    }
 
-      const latest = reports[reports.length - 1];
-      const first = reports[0];
-      const trend = latest.korrekthet_pct - first.korrekthet_pct;
-      const avgPct = Math.round(reports.reduce((s, r) => s + (r.korrekthet_pct || 0), 0) / reports.length);
-      const totalHall = reports.reduce((s, r) => s + (r.hallusinering || 0), 0);
+    function groupByPhase(reports) {
+      const groups = {};
+      reports.forEach(r => {
+        const phase = detectPhase(r.tag);
+        if (!groups[phase]) groups[phase] = [];
+        groups[phase].push(r);
+      });
+      // Sort phases
+      const order = ['pre','fase1','fase2','fase3','fase4','fase5','fase6','fase7','fase8'];
+      const sorted = {};
+      order.forEach(p => { if (groups[p]) sorted[p] = groups[p]; });
+      // Any unknown phases
+      Object.keys(groups).forEach(p => { if (!sorted[p]) sorted[p] = groups[p]; });
+      return sorted;
+    }
 
-      document.getElementById('summaryCards').innerHTML = `
-        <div class="summary-card">
-          <div class="value">${reports.length}</div>
-          <div class="label">Eval-rapporter</div>
+    function phaseStats(runs) {
+      const scores = runs.map(r => r.korrekthet_pct).filter(x => x != null);
+      const avg = scores.length ? Math.round(scores.reduce((a,b) => a+b, 0) / scores.length) : 0;
+      const best = scores.length ? Math.max(...scores) : 0;
+      const worst = scores.length ? Math.min(...scores) : 0;
+      const totalHall = runs.reduce((s,r) => s + (r.hallusinering || 0), 0);
+      const totalBestatt = runs.reduce((s,r) => s + (r.bestatt || 0), 0);
+      const totalDelvis = runs.reduce((s,r) => s + (r.delvis || 0), 0);
+      const totalMangler = runs.reduce((s,r) => s + (r.mangler || 0), 0);
+      const totalFeil = runs.reduce((s,r) => s + (r.feil || 0), 0);
+      const total = totalBestatt + totalDelvis + totalMangler + totalFeil;
+      return { avg, best, worst, totalHall, totalBestatt, totalDelvis, totalMangler, totalFeil, total, scores };
+    }
+
+    // --- KPI Hero ---
+
+    function renderKPI(reports, phases) {
+      const last5 = reports.slice(-5);
+      const last5Avg = last5.length
+        ? Math.round(last5.reduce((s,r) => s + (r.korrekthet_pct || 0), 0) / last5.length)
+        : 0;
+      const latest = reports.length ? reports[reports.length - 1] : null;
+      const totalRuns = reports.length;
+      const totalHall = reports.reduce((s,r) => s + (r.hallusinering || 0), 0);
+
+      // Phase count
+      const phaseKeys = Object.keys(phases);
+      const latestPhase = phaseKeys[phaseKeys.length - 1] || '-';
+      const latestPhaseInfo = PHASE_INFO[latestPhase] || { label: latestPhase };
+
+      document.getElementById('kpiHero').innerHTML = `
+        <div class="kpi-card highlight">
+          <div class="kpi-value">${last5Avg}%</div>
+          <div class="kpi-label">Naaværende nivaa</div>
+          <div class="kpi-sub">Snitt siste 5 evalueringer</div>
         </div>
-        <div class="summary-card">
-          <div class="value green">${latest.korrekthet_pct != null ? latest.korrekthet_pct + '%' : '-'}</div>
-          <div class="label">Siste korrekthet</div>
+        <div class="kpi-card">
+          <div class="kpi-value green">${latest ? latest.korrekthet_pct + '%' : '-'}</div>
+          <div class="kpi-label">Siste evaluering</div>
+          <div class="kpi-sub">${latest ? (latest.tag || '') : ''}</div>
         </div>
-        <div class="summary-card">
-          <div class="value ${trend >= 0 ? 'green' : 'red'}">${trend >= 0 ? '+' : ''}${trend}%</div>
-          <div class="label">Trend (start til naa)</div>
+        <div class="kpi-card">
+          <div class="kpi-value">${totalRuns}</div>
+          <div class="kpi-label">Totalt evalueringer</div>
+          <div class="kpi-sub">${phaseKeys.length} faser</div>
         </div>
-        <div class="summary-card">
-          <div class="value yellow">${avgPct}%</div>
-          <div class="label">Gjennomsnitt</div>
-        </div>
-        <div class="summary-card">
-          <div class="value red">${totalHall}</div>
-          <div class="label">Hallusinasjoner totalt</div>
+        <div class="kpi-card">
+          <div class="kpi-value ${totalHall > 0 ? 'red' : 'green'}">${totalHall}</div>
+          <div class="kpi-label">Hallusinasjoner totalt</div>
+          <div class="kpi-sub">Over alle kjoeringer</div>
         </div>
       `;
     }
 
-    function renderChart(reports) {
-      const canvas = document.getElementById('evalChart');
+    // --- Phase Chart ---
+
+    function renderPhaseChart(phases) {
+      const canvas = document.getElementById('phaseChart');
       const ctx = canvas.getContext('2d');
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.parentElement.getBoundingClientRect();
       canvas.width = rect.width * dpr;
       canvas.height = rect.height * dpr;
       ctx.scale(dpr, dpr);
-      const W = rect.width;
-      const H = rect.height;
+      const W = rect.width, H = rect.height;
 
-      const pad = { top: 20, right: 20, bottom: 60, left: 50 };
+      const pad = { top: 24, right: 30, bottom: 50, left: 50 };
       const chartW = W - pad.left - pad.right;
       const chartH = H - pad.top - pad.bottom;
 
-      // Filter reports with valid percentage
-      const pts = reports.filter(r => r.korrekthet_pct != null);
-      if (pts.length === 0) return;
+      const phaseKeys = Object.keys(phases);
+      if (phaseKeys.length === 0) return;
+
+      const phaseData = phaseKeys.map(k => ({
+        key: k,
+        info: PHASE_INFO[k] || { label: k, desc: '' },
+        stats: phaseStats(phases[k]),
+        runs: phases[k],
+      }));
 
       // Background
       ctx.fillStyle = '#fafcfc';
       ctx.fillRect(0, 0, W, H);
 
-      // Grid lines
+      // Grid
       ctx.strokeStyle = '#e5e7eb';
       ctx.lineWidth = 1;
       ctx.setLineDash([4, 4]);
@@ -516,7 +566,6 @@
         ctx.moveTo(pad.left, y);
         ctx.lineTo(W - pad.right, y);
         ctx.stroke();
-
         ctx.fillStyle = '#5a7272';
         ctx.font = '11px Segoe UI, system-ui, sans-serif';
         ctx.textAlign = 'right';
@@ -524,134 +573,210 @@
       }
       ctx.setLineDash([]);
 
-      // Data points
-      const xStep = pts.length > 1 ? chartW / (pts.length - 1) : chartW / 2;
+      const barW = Math.min(60, chartW / phaseData.length * 0.6);
+      const step = chartW / phaseData.length;
 
-      // Area fill
-      ctx.beginPath();
-      pts.forEach((p, i) => {
-        const x = pad.left + (pts.length > 1 ? i * xStep : chartW / 2);
-        const y = pad.top + chartH - (p.korrekthet_pct / 100) * chartH;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      });
-      const lastX = pad.left + (pts.length > 1 ? (pts.length - 1) * xStep : chartW / 2);
-      ctx.lineTo(lastX, pad.top + chartH);
-      ctx.lineTo(pad.left, pad.top + chartH);
-      ctx.closePath();
-      const grad = ctx.createLinearGradient(0, pad.top, 0, pad.top + chartH);
-      grad.addColorStop(0, 'rgba(13,110,110,0.2)');
-      grad.addColorStop(1, 'rgba(13,110,110,0.02)');
-      ctx.fillStyle = grad;
-      ctx.fill();
+      phaseData.forEach((pd, i) => {
+        const cx = pad.left + step * i + step / 2;
+        const avg = pd.stats.avg;
+        const best = pd.stats.best;
+        const worst = pd.stats.worst;
 
-      // Line
-      ctx.beginPath();
-      pts.forEach((p, i) => {
-        const x = pad.left + (pts.length > 1 ? i * xStep : chartW / 2);
-        const y = pad.top + chartH - (p.korrekthet_pct / 100) * chartH;
-        if (i === 0) ctx.moveTo(x, y);
-        else ctx.lineTo(x, y);
-      });
-      ctx.strokeStyle = '#0d6e6e';
-      ctx.lineWidth = 2.5;
-      ctx.lineJoin = 'round';
-      ctx.stroke();
+        // Range bar (worst to best)
+        if (pd.stats.scores.length > 1) {
+          const yTop = pad.top + chartH - (best / 100) * chartH;
+          const yBot = pad.top + chartH - (worst / 100) * chartH;
+          ctx.fillStyle = 'rgba(13,110,110,0.1)';
+          ctx.beginPath();
+          ctx.roundRect(cx - barW/2, yTop, barW, yBot - yTop, 4);
+          ctx.fill();
 
-      // Dots and labels
-      pts.forEach((p, i) => {
-        const x = pad.left + (pts.length > 1 ? i * xStep : chartW / 2);
-        const y = pad.top + chartH - (p.korrekthet_pct / 100) * chartH;
+          // Range whiskers
+          ctx.strokeStyle = 'rgba(13,110,110,0.3)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(cx - barW/4, yTop);
+          ctx.lineTo(cx + barW/4, yTop);
+          ctx.moveTo(cx, yTop);
+          ctx.lineTo(cx, yBot);
+          ctx.moveTo(cx - barW/4, yBot);
+          ctx.lineTo(cx + barW/4, yBot);
+          ctx.stroke();
+        }
 
-        // Dot
+        // Average bar
+        const yAvg = pad.top + chartH - (avg / 100) * chartH;
+        const barHeight = (avg / 100) * chartH;
+
+        // Gradient fill
+        const grad = ctx.createLinearGradient(0, yAvg, 0, pad.top + chartH);
+        const hue = avg >= 95 ? '158' : avg >= 85 ? '170' : avg >= 70 ? '45' : '0';
+        const sat = avg >= 95 ? '60%' : avg >= 85 ? '50%' : '70%';
+        grad.addColorStop(0, `hsla(${hue}, ${sat}, 45%, 0.8)`);
+        grad.addColorStop(1, `hsla(${hue}, ${sat}, 45%, 0.3)`);
+        ctx.fillStyle = grad;
         ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fillStyle = '#0d6e6e';
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(x, y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = 'white';
+        ctx.roundRect(cx - barW/2, yAvg, barW, barHeight, [4,4,0,0]);
         ctx.fill();
 
-        // Value label
+        // Average value label
         ctx.fillStyle = '#1a2e2e';
-        ctx.font = 'bold 11px Segoe UI, system-ui, sans-serif';
+        ctx.font = 'bold 12px Segoe UI, system-ui, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(p.korrekthet_pct + '%', x, y - 12);
+        ctx.fillText(avg + '%', cx, yAvg - 8);
 
-        // X-axis label (tag or date)
-        ctx.save();
-        ctx.translate(x, H - pad.bottom + 14);
-        ctx.rotate(-Math.PI / 4);
+        // X-axis label
         ctx.fillStyle = '#5a7272';
+        ctx.font = '11px Segoe UI, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        const label = pd.info.label;
+        ctx.fillText(label, cx, pad.top + chartH + 18);
+
+        // Run count
+        ctx.fillStyle = '#9ca3af';
         ctx.font = '10px Segoe UI, system-ui, sans-serif';
-        ctx.textAlign = 'right';
-        const label = p.tag || (p.tidspunkt ? p.tidspunkt.substring(5, 16).replace('T', ' ') : 'rapport ' + (i + 1));
-        ctx.fillText(label, 0, 0);
-        ctx.restore();
+        ctx.fillText(pd.runs.length + ' runs', cx, pad.top + chartH + 32);
       });
+
+      // Trend line connecting averages
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(13,110,110,0.6)';
+      ctx.lineWidth = 2;
+      ctx.setLineDash([6, 4]);
+      phaseData.forEach((pd, i) => {
+        const cx = pad.left + step * i + step / 2;
+        const y = pad.top + chartH - (pd.stats.avg / 100) * chartH;
+        if (i === 0) ctx.moveTo(cx, y);
+        else ctx.lineTo(cx, y);
+      });
+      ctx.stroke();
+      ctx.setLineDash([]);
     }
 
-    function renderTable(reports) {
-      if (reports.length === 0) {
-        document.getElementById('reportTable').innerHTML = '<p style="color:var(--text-light); text-align:center; padding:24px;">Ingen eval-rapporter funnet.</p>';
-        return;
-      }
+    // --- Phase Accordion ---
 
-      const rows = reports.slice().reverse().map(r => {
-        const total = r.total || r.antall || 1;
-        const barHtml = `
-          <div class="score-bar">
-            <div class="seg-bestatt" style="width:${(r.bestatt/total)*100}%"></div>
-            <div class="seg-delvis" style="width:${(r.delvis/total)*100}%"></div>
-            <div class="seg-mangler" style="width:${((r.mangler||0)/total)*100}%"></div>
-            <div class="seg-feil" style="width:${(r.feil/total)*100}%"></div>
+    function renderAccordion(phases, reports) {
+      const phaseKeys = Object.keys(phases);
+      const html = phaseKeys.map((key, pi) => {
+        const runs = phases[key];
+        const stats = phaseStats(runs);
+        const info = PHASE_INFO[key] || { label: key, desc: '' };
+        const isLast = pi === phaseKeys.length - 1;
+
+        // Sparkline SVG
+        const sparkSvg = renderSparklineSVG(stats.scores);
+
+        // Score color
+        const scoreColor = stats.avg >= 95 ? '#16a34a' : stats.avg >= 85 ? '#0d6e6e' : stats.avg >= 70 ? '#ca8a04' : '#dc2626';
+
+        // Aggregate bar widths
+        const total = stats.total || 1;
+        const bPct = (stats.totalBestatt / total * 100).toFixed(1);
+        const dPct = (stats.totalDelvis / total * 100).toFixed(1);
+        const mPct = (stats.totalMangler / total * 100).toFixed(1);
+        const fPct = (stats.totalFeil / total * 100).toFixed(1);
+
+        // Run table rows
+        const runRows = runs.slice().reverse().map(r => {
+          const t = r.total || r.antall || 1;
+          const barHtml = `
+            <div class="score-bar">
+              <div class="seg-bestatt" style="width:${(r.bestatt/t)*100}%"></div>
+              <div class="seg-delvis" style="width:${(r.delvis/t)*100}%"></div>
+              <div class="seg-mangler" style="width:${((r.mangler||0)/t)*100}%"></div>
+              <div class="seg-feil" style="width:${(r.feil/t)*100}%"></div>
+            </div>`;
+          const date = r.tidspunkt ? r.tidspunkt.substring(5, 16).replace('T', ' ') : '-';
+          const tag = r.tag ? r.tag.replace(/fase\d+-?/i, '') : '';
+          const hallHtml = r.hallusinering > 0 ? `<span class="hall-dot" title="${r.hallusinering} hallusinasjoner"></span> ${r.hallusinering}` : '<span style="color:#9ca3af">0</span>';
+          return `<tr onclick="openReport('${esc(r.file)}')">
+            <td style="white-space:nowrap">${esc(date)}</td>
+            <td>${tag ? '<span class="tag-chip">' + esc(tag) + '</span>' : ''}</td>
+            <td style="font-weight:600;color:${r.korrekthet_pct >= 95 ? '#16a34a' : r.korrekthet_pct >= 85 ? '#0d6e6e' : '#ca8a04'}">${r.korrekthet_pct != null ? r.korrekthet_pct + '%' : '-'}</td>
+            <td>${barHtml}</td>
+            <td style="color:#16a34a">${r.bestatt}</td>
+            <td style="color:#ca8a04">${r.delvis}</td>
+            <td style="color:#dc2626">${r.feil}</td>
+            <td>${hallHtml}</td>
+            <td>${r.antall}</td>
+          </tr>`;
+        }).join('');
+
+        return `
+        <div class="phase-group${isLast ? ' open' : ''}" data-phase="${key}">
+          <div class="phase-header" onclick="this.parentElement.classList.toggle('open')">
+            <svg class="phase-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+            <div class="phase-name">${esc(info.label)}</div>
+            <div class="phase-meta">
+              <span>${runs.length} evalueringer</span>
+              <span>${stats.totalHall > 0 ? stats.totalHall + ' hall.' : '0 hall.'}</span>
+              <div class="phase-bar">
+                <div class="seg-b" style="width:${bPct}%"></div>
+                <div class="seg-d" style="width:${dPct}%"></div>
+                <div class="seg-m" style="width:${mPct}%"></div>
+                <div class="seg-f" style="width:${fPct}%"></div>
+              </div>
+            </div>
+            <div class="phase-sparkline">${sparkSvg}</div>
+            <div class="phase-score" style="color:${scoreColor}">${stats.avg}%</div>
           </div>
-        `;
-        const date = r.tidspunkt ? r.tidspunkt.substring(0, 16).replace('T', ' ') : '-';
-        const tag = r.tag ? `<span class="tag-chip">${esc(r.tag)}</span>` : '';
-        return `<tr onclick="openReport('${esc(r.file)}')">
-          <td>${esc(date)}</td>
-          <td>${tag}</td>
-          <td>${r.korrekthet_pct != null ? r.korrekthet_pct + '%' : '-'}</td>
-          <td>${barHtml}</td>
-          <td style="color:#16a34a">${r.bestatt}</td>
-          <td style="color:#ca8a04">${r.delvis}</td>
-          <td style="color:#c2410c">${r.mangler || 0}</td>
-          <td style="color:#dc2626">${r.feil}</td>
-          <td style="color:#7c2d12">${r.hallusinering}</td>
-          <td>${r.antall}</td>
-        </tr>`;
+          <div class="phase-body">
+            ${info.desc ? '<div class="phase-desc">' + esc(info.desc) + '</div>' : ''}
+            <table class="phase-runs">
+              <thead><tr>
+                <th>Dato</th><th>Tag</th><th>Score</th><th>Fordeling</th>
+                <th>OK</th><th>Delvis</th><th>Feil</th><th>Hall.</th><th>N</th>
+              </tr></thead>
+              <tbody>${runRows}</tbody>
+            </table>
+          </div>
+        </div>`;
       }).join('');
 
-      document.getElementById('reportTable').innerHTML = `
-        <table class="report-table">
-          <thead>
-            <tr>
-              <th>Dato</th>
-              <th>Tag</th>
-              <th>Score</th>
-              <th>Fordeling</th>
-              <th>Bestatt</th>
-              <th>Delvis</th>
-              <th>Mangler</th>
-              <th>Feil</th>
-              <th>Hall.</th>
-              <th>Antall</th>
-            </tr>
-          </thead>
-          <tbody>${rows}</tbody>
-        </table>
-      `;
+      document.getElementById('phaseAccordion').innerHTML = html;
     }
+
+    function renderSparklineSVG(scores) {
+      if (scores.length < 2) {
+        return '<svg viewBox="0 0 120 32" style="width:100%;height:100%"><text x="60" y="20" text-anchor="middle" font-size="10" fill="#9ca3af">' + (scores[0] || '-') + '%</text></svg>';
+      }
+
+      const w = 120, h = 32, padY = 4;
+      const min = Math.min(...scores) - 2;
+      const max = Math.max(...scores) + 2;
+      const range = max - min || 1;
+
+      const pts = scores.map((s, i) => {
+        const x = (i / (scores.length - 1)) * w;
+        const y = h - padY - ((s - min) / range) * (h - padY * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+
+      const areaPath = `M0,${h} L${pts.join(' L')} L${w},${h} Z`;
+      const linePath = `M${pts.join(' L')}`;
+
+      return `<svg viewBox="0 0 ${w} ${h}" style="width:100%;height:100%" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="rgba(13,110,110,0.2)"/>
+            <stop offset="100%" stop-color="rgba(13,110,110,0.02)"/>
+          </linearGradient>
+        </defs>
+        <path d="${areaPath}" fill="url(#sparkGrad)"/>
+        <path d="${linePath}" fill="none" stroke="#0d6e6e" stroke-width="1.5"/>
+        <circle cx="${pts[pts.length-1].split(',')[0]}" cy="${pts[pts.length-1].split(',')[1]}" r="2.5" fill="#0d6e6e"/>
+      </svg>`;
+    }
+
+    // --- Drill-down modal ---
 
     function esc(text) {
       const d = document.createElement('div');
       d.textContent = text;
       return d.innerHTML;
     }
-
-    // --- Drill-down modal ---
 
     function closeModal() {
       document.getElementById('modalOverlay').classList.remove('active');
@@ -690,7 +815,6 @@
 
     function renderModal(data, filename) {
       const meta = data.metadata || {};
-      const ops = data.oppsummering || {};
       const resultater = data.resultater || [];
 
       document.getElementById('modalTitle').textContent = meta.tag || filename;
@@ -698,7 +822,6 @@
         (meta.tidspunkt ? meta.tidspunkt.substring(0, 16).replace('T', ' ') : '') +
         (meta.versjon ? '  —  ' + meta.versjon : '');
 
-      // Summary cards
       const total = resultater.length;
       const counts = { bestatt: 0, delvis: 0, mangler: 0, feil: 0, hallusinering: 0 };
       resultater.forEach(r => {
@@ -710,7 +833,6 @@
         else if (s.includes('feil')) counts.feil++;
       });
 
-      // Detail rows
       const detailRows = resultater.map((r, i) => {
         const score = r.score || r.consensus_score || '-';
         const cls = scoreClass(score);
@@ -718,10 +840,8 @@
         const begrunnelse = r.begrunnelse || '';
         const answer = r.answer_preview || '';
         const routing = r.actual_routing || [];
-        const expectedRouting = r.expected_routing || r.forventet_routing || [];
         const routingOk = r.routing_correct !== false;
 
-        // For combined reports with run_details
         let runsHtml = '';
         if (r.run_details && r.run_details.length > 0) {
           runsHtml = '<div style="margin-top:6px;"><strong style="font-size:0.72rem;color:var(--primary);">Kjoeredetaljer:</strong>' +
@@ -760,56 +880,51 @@
         <div class="modal-summary">
           <div class="summary-card">
             <div class="value">${total}</div>
-            <div class="label">Spørsmål</div>
+            <div class="label" style="font-size:0.76rem;color:var(--text-light);margin-top:4px">Spoersmaal</div>
           </div>
           <div class="summary-card">
             <div class="value green">${counts.bestatt}</div>
-            <div class="label">Bestatt</div>
+            <div class="label" style="font-size:0.76rem;color:var(--text-light);margin-top:4px">Bestatt</div>
           </div>
           <div class="summary-card">
-            <div class="value yellow">${counts.delvis}</div>
-            <div class="label">Delvis</div>
+            <div class="value" style="color:#ca8a04">${counts.delvis}</div>
+            <div class="label" style="font-size:0.76rem;color:var(--text-light);margin-top:4px">Delvis</div>
           </div>
           <div class="summary-card">
             <div class="value" style="color:#c2410c">${counts.mangler}</div>
-            <div class="label">Mangler</div>
+            <div class="label" style="font-size:0.76rem;color:var(--text-light);margin-top:4px">Mangler</div>
           </div>
           <div class="summary-card">
-            <div class="value red">${counts.feil}</div>
-            <div class="label">Feil</div>
+            <div class="value" style="color:#dc2626">${counts.feil}</div>
+            <div class="label" style="font-size:0.76rem;color:var(--text-light);margin-top:4px">Feil</div>
           </div>
           <div class="summary-card">
             <div class="value" style="color:#be185d">${counts.hallusinering}</div>
-            <div class="label">Hallusinering</div>
+            <div class="label" style="font-size:0.76rem;color:var(--text-light);margin-top:4px">Hallusinering</div>
           </div>
         </div>
         <table class="detail-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Tema</th>
-              <th>Score</th>
-              <th>Routing</th>
-              <th>Tid</th>
-              <th>Detaljer</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th>ID</th><th>Tema</th><th>Score</th><th>Routing</th><th>Tid</th><th>Detaljer</th>
+          </tr></thead>
           <tbody>${detailRows}</tbody>
         </table>
       `;
     }
 
+    // --- Init ---
+
     async function init() {
       try {
         const reports = await loadData();
-        renderSummaryCards(reports);
-        renderChart(reports);
-        renderTable(reports);
-
-        window.addEventListener('resize', () => renderChart(reports));
+        const phases = groupByPhase(reports);
+        renderKPI(reports, phases);
+        renderPhaseChart(phases);
+        renderAccordion(phases, reports);
+        window.addEventListener('resize', () => renderPhaseChart(phases));
       } catch (err) {
-        document.getElementById('reportTable').innerHTML =
-          `<p style="color:#dc2626; text-align:center; padding:24px;">Feil ved lasting av data: ${esc(err.message)}</p>`;
+        document.getElementById('phaseAccordion').innerHTML =
+          `<p style="color:#dc2626;text-align:center;padding:24px;">Feil ved lasting: ${esc(err.message)}</p>`;
       }
     }
 

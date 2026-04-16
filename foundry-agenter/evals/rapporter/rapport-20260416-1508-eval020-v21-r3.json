@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T15:08:02.196787",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval020-v21-r3",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 1,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 27329
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "HALLUSINERING",
+      "begrunnelse": "Svaret inneholder noen reelle NKI-indikatorer for hjerneslag, men inkluderer også indikatorer som ikke finnes i NKI. Dermed regnes det som delvis fabrikkert innhold.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering og testing av svelgefunksjon etter hjerneslag",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag"
+      ],
+      "forventet": 1,
+      "mangler": [
+        "Trombolysebehandling ved hjerneinfarkt",
+        "Trombektomi ved hjerneinfarkt",
+        "Antikoagulasjonsbehandling ved atrieflimmer etter hjerneslag"
+      ],
+      "feil": [
+        "Blodtrykksbehandling etter hjerneslag er ikke en nasjonal kvalitetsindikator i NKI",
+        "Reinnleggelse innen 30 dager for eldre pasienter etter hjerneslag finnes ikke som spesifikk NKI for hjerneslag"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 27329,
+      "answer_length": 1452,
+      "answer_preview": "Indikatornavn: Behandlet i slagenhet etter akutt hjerneslag  \nBeskrivelse: Andel pasienter med akutt hjerneslag som er behandlet i slagenhet  \nTallverdi: Se Helsedirektoratets statistikkbank for oppdaterte tall  \nKilde: Helsedirektoratet\n\nIndikatornavn: Blodtrykksbehandling etter hjerneslag.  \nBeskr",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    }
+  ]
+}

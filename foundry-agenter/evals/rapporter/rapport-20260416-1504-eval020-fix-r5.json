@@ -1,0 +1,54 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T15:04:07.204570",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval020-fix-r5",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 0,
+    "delvis": 1,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 18643
+  },
+  "resultater": [
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret inkluderer flere reelle nasjonale kvalitetsindikatorer for hjerneslag fra Helsedirektoratet, men inneholder også minst én indikator som ikke er en kjent NKI og en som er mer generell. Derfor vurderes svaret som delvis korrekt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Behandlet i slagenhet etter akutt hjerneslag",
+        "Vurdering og testing av svelgefunksjon etter hjerneslag",
+        "30 dagers overlevelse etter sykehusinnleggelse ved hjerneslag"
+      ],
+      "forventet": 1,
+      "mangler": [
+        "Andre kjente NKI for hjerneslag (f.eks. indikatorer knyttet til akutt reperfusjonsbehandling som trombolyse/trombektomi eller sekundærprofylakse)"
+      ],
+      "feil": [
+        "Blodtrykksbehandling etter hjerneslag fremstår ikke som en etablert nasjonal kvalitetsindikator i NKI",
+        "Reinnleggelse innen 30 dager for eldre pasienter etter hjerneslag er en generell reinnleggelsesindikator og ikke spesifikt en hjerneslag‑NKI"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 18643,
+      "answer_length": 1452,
+      "answer_preview": "Indikatornavn: Blodtrykksbehandling etter hjerneslag.  \nBeskrivelse: Andel pasienter som har fått blodtrykksbehandling etter hjerneslag  \nTallverdi: Se Helsedirektoratets statistikkbank for oppdaterte tall  \nKilde: Helsedirektoratet\n\nIndikatornavn: Behandlet i slagenhet etter akutt hjerneslag  \nBesk",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    }
+  ]
+}

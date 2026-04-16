@@ -1,0 +1,47 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-16T12:43:29.236521",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "eval001-fixed",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "1/1 (100%)",
+    "bestatt": 1,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 20266
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret angir korrekt at fenoksymetylpenicillin er førstevalg ved akutt otitis media hos barn og oppgir Helsedirektoratets retningslinje som kilde. Ingen medisinske feil er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 20266,
+      "answer_length": 1028,
+      "answer_preview": "**Førstevalg antibiotika ved akutt otitis media hos barn:**  \n- **Fenoksymetylpenicillin (penicillin V)**   \n\n**Begrunnelse:**  \nFenoksymetylpenicillin anbefales som førstevalg fordi det har smalt spektrum og liten resistensdrivende effekt, og pneumokokker – et vanlig agens ved akutt otitis media – ",
+      "kjent_databegrensning": "Dosering og varighet for otitt-antibiotika finnes ikke i retningslinjeteksten, kun i ekstern lenke"
+    }
+  ]
+}
