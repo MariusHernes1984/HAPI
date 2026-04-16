@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-15T23:28:43.486199",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 1,
+    "tag": "fase8-filesearch",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/1 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 1,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 1,
+    "snitt_responstid_ms": 13664
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir korrekt foerstevalg og refererer til riktig retningslinje, men mangler både anbefalt dosering og behandlingsvarighet. Dermed dekker det under 40% av de forventede fakta.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)",
+        "Varighet typisk 5 dager"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13664,
+      "answer_length": 735,
+      "answer_preview": "**Førstevalg antibiotika ved akutt otitis media hos barn:**  \n- **Fenoksymetylpenicillin (penicillin V)**   \n\nBegrunnelse:  \n- Fenoksymetylpenicillin er effektivt mot de vanligste bakteriene ved akutt otitis media og har smalt spektrum og liten resistensdrivende effekt.   \n\n**Alternativ ved manglend"
+    }
+  ]
+}

@@ -1,0 +1,697 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-04T14:19:03.764174",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 30,
+    "tag": "fase5-baseline",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/30 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 30,
+    "routing_korrekthet": 29,
+    "snitt_responstid_ms": 25162
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 36296,
+      "answer_length": 1267,
+      "answer_preview": "Jeg fant relevant anbefaling via søk, men MCP‑verktøyet for å hente selve innholdet (hent_innhold_id) feiler teknisk i denne samtalen. Derfor kan jeg ikke hente fullstendig anbefalingstekst fra Helsedirektoratet akkurat nå.\n\nDet jeg faktisk fikk fra søket:\n\nKilde: Helsedirektoratet  \nTittel: «Akutt "
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 28321,
+      "answer_length": 626,
+      "answer_preview": "Ifølge Helsedirektoratets **Nasjonal faglig retningslinje for antibiotikabruk i primærhelsetjenesten** er følgende antibiotika angitt som anbefalte førstehåndspreparater ved urinveisinfeksjon:\n\n- mecillinam  \n- trimetoprim  \n- nitrofurantoin  \n\nRetningslinjen angir også at kinoloner (for eksempel ci"
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 24212,
+      "answer_length": 1320,
+      "answer_preview": "Jeg finner ikke i de returnerte HAPI‑treffene en anbefaling som spesifiserer **alternativ antibiotikabehandling ved streptokokk‑tonsillitt hos pasient med penicillinallergi**. MCP‑søkene returnerte kun generelle kapitler om penicillinallergi og en generell anbefaling om streptokokkhalsinfeksjon, ute"
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandling",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 25057,
+      "answer_length": 1095,
+      "answer_preview": "Følgende anbefalinger om behandling av depresjon hos voksne er hentet fra Helsedirektoratets normerende innhold.\n\n1) Tiltak ved depresjon  \nKilde: Helsedirektoratet  \ninfoId: 9d0da7c2-828c-4e9e-9311-86e9071e3ad2  \nStyrkegrad: Anbefaling  \nSist faglig oppdatert: 2017-12-21\n\nAnbefalt innhold:\n- Etable"
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 52889,
+      "answer_length": 2948,
+      "answer_preview": "Dette er relevante anbefalinger fra Helsedirektoratet om behandling og oppfølging av KOLS, inkludert når pasienten fortsatt røyker.\n\n1) Farmakologisk behandling ved stabil KOLS  \nKilde: Helsedirektoratet  \ninfoId: 521ffb08-30af-44ad-8053-dd58d50480a5  \nStyrkegrad: svak anbefaling  \nSist faglig oppda"
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 34229,
+      "answer_length": 1405,
+      "answer_preview": "Kilde: Helsedirektoratet  \nInfoId (pakkeforløp): d9ad3427-44e3-4a3f-8d42-cc8f57af8d84  \nSist faglig oppdatert: 18.09.2023  \n\nPakkeforløp for brystkreft er et nasjonalt standardisert pasientforløp som skal sikre et godt organisert og forutsigbart forløp fra henvisning til oppstart behandling, uten un"
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 32069,
+      "answer_length": 1140,
+      "answer_preview": "Jeg fant relevant innhold fra Helsedirektoratet om søvnvansker/insomni.\n\nKilde: Helsedirektoratet  \nTittel: Søvn og søvnvansker  \ninfoId: f7409e40-0329-4823-b7aa-38221df7f2ba  \nStatus: Gjeldende  \nSist faglig oppdatert: 2017-01-16\n\nHva som anbefales ved insomni (fra innholdet):\n\n• Ved langvarige søv"
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 50769,
+      "answer_length": 3365,
+      "answer_preview": "Følgende innhold er hentet fra **Nasjonal faglig retningslinje for behandling og rehabilitering ved hjerneslag (Helsedirektoratet)**.\n\n1) Overordnet prinsipp for slagrehabilitering  \nKilde: Helsedirektoratet  \ninfoId: 328f68a4-af5b-46a5-8414-55939e76be98  \nsistFagligOppdatert: 21.12.2017  \n\nRetnings"
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 29321,
+      "answer_length": 3341,
+      "answer_preview": "Jeg fant relevante anbefalinger om sekundærforebygging og oppfølging etter aterosklerotisk hjerte‑ og karsykdom (som inkluderer pasienter etter akutt koronarsyndrom og PCI). Under er innhold direkte fra Helsedirektoratets normerende anbefalinger.\n\nAnbefaling: Lipidsenkende behandling ved sekundærfor"
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni behandling",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 18213,
+      "answer_length": 1848,
+      "answer_preview": "Her er hva **Helsedirektoratets nasjonale faglige retningslinje** sier om behandling av pneumoni (lungebetennelse), basert direkte på innholdet fra HAPI.\n\nKilde: Helsedirektoratet  \ninfoId: 88c623dd-f6aa-4c02-ac05-8022fcae70c0  \nStyrkegrad: Anbefaling  \nSist faglig oppdatert: 27.06.2024  \n\nBehandlin"
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 14787,
+      "answer_length": 582,
+      "answer_preview": "Jeg fulgte søkestrategien mot Helsedirektoratet via MCP.\n\nResultat:\n- MCP‑søket på “diabetes mellitus type 2” og “E11 diabetes” returnerte kun læringsmål, råd og referanser.\n- Ingen av treffene inneholdt ICD‑10‑kodeinformasjon.\n\nKonklusjon:\nMCP/Helsedirektoratet returnerte ingen ICD‑10‑kode for diab",
+      "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp E11."
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 9268,
+      "answer_length": 523,
+      "answer_preview": "ICD‑10 kode: I10  \nTittel: Essensiell (primær) hypertensjon  \nKilde: Helsedirektoratet (ICD‑10)\n\nBetydning:  \nI10 brukes for diagnosen essensiell (primær) hypertensjon, altså høyt blodtrykk uten identifiserbar sekundær årsak.\n\nDette er den vanligste formen for hypertensjon og brukes når:\n- pasienten",
+      "kjent_databegrensning": "MCP/HAPI eksponerer ikke ICD-10-kodedefinisjoner direkte. Agenten kan ikke slaa opp I10."
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 11930,
+      "answer_length": 270,
+      "answer_preview": "ATC-kode: A10BA02  \nTittel: Metformin  \nKilde: Helsedirektoratet / ATC-register\n\nDetaljer fra HAPI:\n- ATC-kode: A10BA02\n- Substans: Metformin\n- Definert døgndose (DDD): 2 g\n- Administrasjonsvei: Oral bruk\n\nKonfidens: høy (direkte ATC‑kode oppslag fra Helsedirektoratet)."
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 19079,
+      "answer_length": 918,
+      "answer_preview": "HAPI/MCP-søk på ATC‑kode **J01CA04 (Amoksicillin)** returnerte følgende **legemidler** registrert i datasettet (ikke pakningsvarianter). Listen inneholder kun preparater eksplisitt funnet i MCP‑svaret.\n\nLegemidler (kilde: Helsedirektoratet / HAPI):\n\n• Amoxicillin Viatris kaps 250 mg  \n• Amoxicillin ",
+      "kjent_databegrensning": "FEST kan returnere utenlandske preparater (tyske/nederlandske) som ikke er registrert i Norge. Agenten kan ikke filtrere dette."
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 11382,
+      "answer_length": 286,
+      "answer_preview": "Basert på HAPI/FEST‑data:\n\nPreparat: Eliquis\n\nVirkestoff  \n- Apiksaban (Apixaban)\n\nATC‑klassifisering  \n- B01AF02  \n- ATC‑navn: Apiksaban\n\nKilde: FEST / Helsedirektoratet (legemiddeloppføring: «Eliquis tab 2,5 mg»)\n\nKonfidens: høy (ATC‑kode og virkestoff eksplisitt oppgitt i MCP‑data)."
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 15818,
+      "answer_length": 460,
+      "answer_preview": "Basert på oppslag i Helsedirektoratet (HAPI):\n\n- ICD‑10 (spesialisthelsetjenesten): J44 – Kronisk obstruktiv lungesykdom (KOLS)  \n- ICPC‑2 (primærhelsetjenesten): R95 – Kronisk obstruktiv lungesykdom\n\nKilde (Helsedirektoratet / ICPC‑2):  \n- R95 – Kronisk obstruktiv lungesykdom  \n- InfoID: c8c4d27e-4"
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 16560,
+      "answer_length": 734,
+      "answer_preview": "ICPC‑2 kode: **K74**  \nTittel: **Iskemisk hjertesykdom med angina pectoris**  \nKilde: Helsedirektoratet (ICPC‑2 referert i normerende innhold)\n\nBetydning i praksis:  \nK74 brukes når pasienten har **koronar hjertesykdom som gir angina (hjertekrampe)**, typisk stabil angina pectoris pga. redusert blod"
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 17054,
+      "answer_length": 470,
+      "answer_preview": "HAPI/FEST returnerte følgende for **Ozempic**:\n\nVirkestoff  \n- Semaglutid\n\nATC-kode  \n- A10BJ06 — Semaglutid\n\nStyrker (fra registrerte oppføringer i MCP):  \n- 0,25 mg (Ozempic inj, oppl 0,25 mg/0,19 ml)  \n- 0,5 mg (Ozempic inj, oppl 0,5 mg/0,74 ml)  \n- 1 mg (Ozempic inj, oppl 1 mg/0,74 ml)\n\nAdminist",
+      "kjent_databegrensning": "FEST returnerer feil dosevolum for Ozempic 0,5 mg (0,74 ml i stedet for 0,37 ml). Agenten siterer trofast feil FEST-data."
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 21690,
+      "answer_length": 975,
+      "answer_preview": "Jeg fant **1 nasjonal kvalitetsindikator relatert til KOLS** i HAPI fra Helsedirektoratet.\n\nIndikator:\n- Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/kronisk obstruktiv lungesykdom (KOLS).  \n  Kilde: MCP‑kall hent_innhold_id med id \"0003-0010-236\".  \n  Beskrive"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 27248,
+      "answer_length": 1716,
+      "answer_preview": "Jeg fant følgende nasjonale kvalitetsindikatorer (NKI) for hjerneslag i HAPI. Indikatorene er identifisert via `sok_innhold` og deretter hentet i fullversjon med `hent_innhold_id`.\n\n1. Behandlet i slagenhet etter akutt hjerneslag  \n   - Beskrivelse: Andel pasienter med akutt hjerneslag som er behand",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 20708,
+      "answer_length": 1328,
+      "answer_preview": "Jeg søkte i HAPI etter relevante NKI‑indikatorer for HbA1c‑kontroll.\n\n1) Søk: `sok_innhold(queryText=\"HbA1c kontroll diabetes andel\")`  \nDette ga blant annet indikatoren **“Diabetes type 1 hos barn – blodsukkerregulering”** (infoId: 92250d17-9833-4461-8869-3dbdf424c1c8).\n\n2) Jeg hentet detaljene med",
+      "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c."
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 29154,
+      "answer_length": 2009,
+      "answer_preview": "Ja. Jeg fant flere nasjonale kvalitetsindikatorer (NKI) for diabetes i HAPI. Disse ble identifisert via søk i HAPI og deretter hentet i detalj med `hent_innhold_id`. Under er de viktigste indikatorene som faktisk finnes i API‑svaret.\n\nViktig: HAPI‑svarene jeg hentet inneholder beskrivelser av indika"
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 18485,
+      "answer_length": 1213,
+      "answer_preview": "Jeg fant relevante NKI‑indikatorer for hoftebrudd i HAPI. Tallene under kommer fra MCP‑kallet `hent_innhold_id` med id `0006-0036-1f82f4d4-e3d3-4b77-92cd-31c90ffec7a0`.\n\n**Operasjonstid ved hoftebrudd (NKI)**  \nKilde: MCP‑svar for indikator *“Hoftebrudd operert innen henholdsvis 24 timer og 48 timer"
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 30667,
+      "answer_length": 2373,
+      "answer_preview": "Jeg søkte i Helsedirektoratets innhold om KOLS. MCP‑tjenesten returnerte anbefalingstekster, men detaljert innhold via `hent_innhold_id` feilet teknisk i denne samtalen. Derfor kan jeg bare formidle det som faktisk kom tilbake i søket.\n\nKilde: Helsedirektoratet  \ninfoId: 521ffb08-30af-44ad-8053-dd58"
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 23208,
+      "answer_length": 1300,
+      "answer_preview": "Jeg fant relevant normerende innhold fra Helsedirektoratet om **ukontrollert astma**.\n\nKilde: Helsedirektoratet  \ninfoId: 6e817dbb-433f-4ff6-8863-ec629fdc41c2  \nType: generisk normerende enhet  \nSist faglig oppdatert: 2015-09-28\n\nInnhold fra Helsedirektoratet:\n\n- Ved **ukontrollert eller delvis kont"
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 32843,
+      "answer_length": 2430,
+      "answer_preview": "Her er hva Helsedirektoratets normerende innhold beskriver om hjelp ved alkoholavhengighet og hvilke offentlige tilbud som finnes.\n\nKilde: Helsedirektoratet  \ninfoId: 65b65d8a-4e66-4919-bcff-dc370002d444  \nSist faglig oppdatert: 2015-10-07  \nType: Generisk normerende enhet\n\nHvis en person har **avhe"
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 23532,
+      "answer_length": 908,
+      "answer_preview": "Basert på HAPI‑data fra Helsedirektoratet:\n\nAnbefalt førstelinje antibiotika ved pneumoni  \nKilde: Helsedirektoratet – “Pneumoni” (antibiotikaretningslinje)\n\nRetningslinjen oppgir at empirisk behandling bør dekke Streptococcus pneumoniae, og at:\n\n• Førstevalg: **fenoksymetylpenicillin i monoterapi**"
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 37847,
+      "answer_length": 7658,
+      "answer_preview": "--- Kodeverk ---\nKodeoppslag (ICD‑10)  \n- Kode: E11  \n- Tittel: Diabetes mellitus type 2  \n- Kilde: Helsedirektoratet (ICD‑10, refusjonshjemmel-diagnose)  \n- InfoId: ID_58EC8F50-D31A-4EC2-B28D-BD4EC784FB56\n\nRetningslinjer for behandling (utdrag fra nasjonal faglig retningslinje for diabetes)  \nKilde"
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 23434,
+      "answer_length": 3277,
+      "answer_preview": "--- Kodeverk ---\n**Ozempic** er et legemiddel som inneholder virkestoffet **semaglutid**. Det tilhører legemiddelgruppen **GLP‑1‑reseptoragonister**.  \n\nKort forklart virker GLP‑1‑agonister ved å etterligne hormonet **glukagon‑liknende peptid‑1 (GLP‑1)**, som påvirker blodsukkerreguleringen ved å:\n-"
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Error code: 400 - {'error': {'message': \"Unsupported parameter: 'temperature' is not supported with this model.\", 'type': 'invalid_request_error', 'param': 'temperature', 'code': None}}",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 18817,
+      "answer_length": 1506,
+      "answer_preview": "--- Retningslinje ---\nJeg finner ingen innhold i Helsedirektoratets normerende produkter som matcher diagnosekode **XYZ99**.\n\nUtførte oppslag:\n- Fritekstsøk i Helsedirektoratets innhold: ingen treff.\n- Oppslag i anbefalinger med **ICD‑10 kode: XYZ99**: ingen treff.\n\nSiden MCP‑kildene ikke returnerer"
+    }
+  ]
+}

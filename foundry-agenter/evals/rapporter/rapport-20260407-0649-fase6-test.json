@@ -1,0 +1,686 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-07T06:49:31.781781",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 30,
+    "tag": "fase6-test",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "13/30 (43%)",
+    "bestatt": 8,
+    "delvis": 5,
+    "mangler": 3,
+    "feil": 1,
+    "hallusinering": 0,
+    "teknisk_feil": 13,
+    "routing_korrekthet": 29,
+    "snitt_responstid_ms": 140472
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "FEIL",
+      "begrunnelse": "Førstevalg og behandlingsvarighet er korrekt, men flere av de oppgitte doseringene for alternative antibiotika er medisinsk feil i forhold til norske retningslinjer.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fenoksymetylpenicillin (penicillin V) er oppgitt som førstevalg",
+        "Dosering er oppgitt i mg/kg",
+        "Behandlingsvarighet 5 dager er oppgitt"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [
+        "Amoksicillin 10 mg/kg x3 ved residiverende tilfeller er feil dosering",
+        "Amoksicillin/klavulansyre 15/2,1 mg/kg x2 ved terapisvikt er feil doseringsregime",
+        "Erytromycin 20 mg/kg x2 ved penicillinallergi er feil doseringsregime"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 25851,
+      "answer_length": 933,
+      "answer_preview": "Fra Helsedirektoratets nasjonale faglige retningslinje:\n\nFørstevalg antibiotika ved akutt otitis media hos barn:\n\n• Legemiddel: Fenoksymetylpenicillin  \n• Dosering (barn < 40 kg): 10 mg/kg x 4 peroralt  \n• Behandlingsvarighet: 5 døgn  \n\nAlternative regimer i spesielle situasjoner:\n\n• Ved hyppige/res"
+    },
+    {
+      "id": "EVAL-002",
+      "kategori": "retningslinje",
+      "tema": "UVI antibiotika",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret oppgir riktige anbefalte antibiotika i tråd med Helsedirektoratet, men mangler informasjon om anbefalt kort behandlingsvarighet (3–5 dager).",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Nitrofurantoin eller pivmecillinam (mecillinam) som foerstevalg nevnt",
+        "Trimetoprim nevnt som behandlingsalternativ"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Kort behandlingsvarighet (3-5 dager)"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 25317,
+      "answer_length": 992,
+      "answer_preview": "Jeg fant ikke en anbefaling i MCP‑dataene som eksplisitt oppgir dosering og varighet for **ukomplisert cystitt hos ikke‑gravide kvinner**. Det som fremkommer i tilgjengelig normerende innhold er følgende:\n\n• **Førstehåndspreparater ved urinveisinfeksjon hos kvinner**:  \n  – mecillinam  \n  – trimetop"
+    },
+    {
+      "id": "EVAL-003",
+      "kategori": "retningslinje",
+      "tema": "Tonsillitt penicillinallergi",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ingen anbefalte antibiotika eller dosering ved penicillinallergi og dekker dermed ikke de forventede fakta. Det inneholder heller ingen medisinske feil og refererer til Helsedirektoratet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [
+        "Erytromycin, klaritromycin eller klindamycin som alternativer",
+        "Dosering bor vaere oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 32599,
+      "answer_length": 1176,
+      "answer_preview": "Jeg finner ikke i MCP‑dataene et eksplisitt behandlingsavsnitt for **streptokokk‑tonsillitt med penicillinallergi** med dosering og varighet. Retningslinjeinnholdet som er tilgjengelig peker kun videre til retningslinjen for antibiotikabruk i primærhelsetjenesten, uten detaljer om alternativ antibio"
+    },
+    {
+      "id": "EVAL-004",
+      "kategori": "retningslinje",
+      "tema": "Depresjon behandling",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret inkluderer både psykoterapi og antidepressiv behandling (SSRI) og oppgir Helsedirektoratet som kilde. Ingen medisinske feil eller forbudte anbefalinger er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "SSRI eller annen antidepressiv behandling",
+        "Psykoterapi som del av behandling",
+        "Kilde er Helsedirektoratet"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 49968,
+      "answer_length": 1728,
+      "answer_preview": "Følgende anbefalinger er hentet fra Helsedirektoratets normerende innhold.\n\nKilde: Helsedirektoratet  \nRetningslinje: «Nasjonal retningslinje for diagnostisering og behandling av voksne med depresjon i primær‑ og spesialisthelsetjenesten»  \ninfoId: cc86853d-dc3d-449b-99fe-59464c8e410b  \nStatus: Gjel"
+    },
+    {
+      "id": "EVAL-005",
+      "kategori": "retningslinje",
+      "tema": "KOLS behandling",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret dekker roeykeavvenning og noen generelle tiltak, men mangler sentrale deler av retningslinjene om inhalasjonsbehandling og trinnvis medikamentell behandling basert paa sykdomsgrad.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Roeykeslutt er viktigste tiltak"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Inhalasjonsbehandling (bronkodilatorer)",
+        "Trinnvis tilnaerming basert paa sykdomsgrad"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 66480,
+      "answer_length": 3621,
+      "answer_preview": "Jeg forsøkte å hente detaljinnholdet fra Helsedirektoratet med `hent_innhold_id`, men MCP‑tjenesten returnerer en teknisk feil (“Unexpected end of JSON input”). Derfor kan jeg ikke hente fulltekst med alle detaljer fra anbefalingene i denne samtalen. Under gjengir jeg kun det som faktisk kom frem i "
+    },
+    {
+      "id": "EVAL-006",
+      "kategori": "retningslinje",
+      "tema": "Brystkreft pakkeforloep",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: e8ae314f-24d9-4fbe-b7a3-fe0c610e0700 Correlation ID: d5234710-2be9-4d65-90b1-7a121ecf3127 Timestamp: 2026-04-07 02:53:28Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 3584510,
+      "answer_length": 1259,
+      "answer_preview": "**Pakkeforløp for brystkreft** starter når spesialisthelsetjenesten mottar en henvisning med **begrunnet mistanke om brystkreft**, eller når slik mistanke oppstår i spesialisthelsetjenesten. Formålet er et organisert og forutsigbart pasientforløp uten unødvendige forsinkelser i utredning og behandli"
+    },
+    {
+      "id": "EVAL-007",
+      "kategori": "retningslinje",
+      "tema": "Insomni",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: e8ae314f-24d9-4fbe-b7a3-fe0c610e0700 Correlation ID: d5234710-2be9-4d65-90b1-7a121ecf3127 Timestamp: 2026-04-07 02:53:28Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-008",
+      "kategori": "retningslinje",
+      "tema": "Hjerneslag rehabilitering",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: e8ae314f-24d9-4fbe-b7a3-fe0c610e0700 Correlation ID: d5234710-2be9-4d65-90b1-7a121ecf3127 Timestamp: 2026-04-07 02:53:28Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-009",
+      "kategori": "retningslinje",
+      "tema": "AKS sekundaerprevensjon",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: e8ae314f-24d9-4fbe-b7a3-fe0c610e0700 Correlation ID: d5234710-2be9-4d65-90b1-7a121ecf3127 Timestamp: 2026-04-07 02:53:28Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-010",
+      "kategori": "retningslinje",
+      "tema": "Pneumoni behandling",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-011",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 diabetes",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-012",
+      "kategori": "kodeverk",
+      "tema": "ICD-10 hypertensjon",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-014",
+      "kategori": "kodeverk",
+      "tema": "Amoxicillin preparater",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-015",
+      "kategori": "kodeverk",
+      "tema": "Apixaban ATC",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-016",
+      "kategori": "kodeverk",
+      "tema": "Kodeverk-mapping ICD-10 til ICPC-2",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-017",
+      "kategori": "kodeverk",
+      "tema": "ICPC-2 K74",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "ERROR: V2Error: invalid_grant AADSTS50173: The provided grant has expired due to it being revoked, a fresh auth token is needed. The user might have changed or reset their password. The grant was issued on '2026-04-06T18:36:19.4277542Z' and the TokensValidFrom date (before which tokens are not valid) for this user is '2026-04-06T23:57:50.0000000Z'. Trace ID: 0980d808-16eb-49c3-a5f0-3c936a060a00 Correlation ID: c9412c8a-360e-48fc-ab54-a02a738e53c7 Timestamp: 2026-04-07 03:38:06Z. Status: Response_Status.Status_InteractionRequired, Error code: 3399614467, Tag: 558133255\r\nRun the command below to authenticate interactively; additional arguments may be added as needed:\r\naz logout\r\naz login --tenant \"65f51067-7d65-4aa9-b996-4cc43a0d7111\" --scope \"https://ai.azure.com/.default\"\r\n",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-018",
+      "kategori": "kodeverk",
+      "tema": "Semaglutid",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "Timed out waiting for Azure CLI",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "duration_ms": 0
+    },
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer én relevant indikator og oppgir infoId, men oppgir ikke nasjonale mål og angir ikke eksplisitt Helsedirektoratet/NKI som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for KOLS med navn: «Astma/kols – reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse»",
+        "infoId oppgitt: 55c50aa3-399c-4ce8-80ba-ffb4b6713c3b"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Nasjonale mål for indikatoren",
+        "Tydelig angivelse av at kilden er Helsedirektoratet / Nasjonale kvalitetsindikatorer (NKI)"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 42895,
+      "answer_length": 1550,
+      "answer_preview": "Jeg søkte i HAPI etter KOLS‑relaterte kvalitetsindikatorer.\n\nSøk 1: sok_innhold(queryText=\"KOLS\").  \nSøk 2: sok_innhold(queryText=\"kols indikator\").\n\nResultat: Jeg fant én relevant nasjonal kvalitetsindikator relatert til KOLS.\n\nIndikator\n- Astma/kols – reinnleggelse innen 30 dager for eldre pasient"
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret inkluderer minst én kjent NKI for hjerneslag. Ingen åpenbare medisinske feil eller oppdiktede tall er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Nevner minst én reell nasjonal kvalitetsindikator for hjerneslag: «Behandlet i slagenhet etter akutt hjerneslag»"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 32527,
+      "answer_length": 1259,
+      "answer_preview": "Jeg fant følgende nasjonale kvalitetsindikatorer (NKI) for hjerneslag i HAPI.\n\n1) Behandlet i slagenhet etter akutt hjerneslag  \n- Beskrivelse: Andel pasienter med akutt hjerneslag som er behandlet i slagenhet.  \n- Kilde i HAPI: hent_innhold_id(id=\"0003-0010-32\")  \n- infoId: 32\n\n2) Blodtrykksbehandl",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "BESTATT",
+      "begrunnelse": "Agenten identifiserer korrekt NKI‑indikator og oppgir ærlig at datakilden ikke inneholder måleverdier. Ingen oppdiktede tall eller medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "HbA1c-indikator identifisert med navn (Blodsukkerregulering ved type 1 diabetes hos voksne)",
+        "Agenten rapporterer ærlig at MCP/HAPI ikke returnerte statistiske tallverdier eller siste målte verdi"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 24764,
+      "answer_length": 1023,
+      "answer_preview": "Jeg søkte i HAPI etter nasjonale kvalitetsindikatorer for HbA1c‑kontroll.\n\n1) MCP‑kall: sok_innhold(queryText=\"HbA1c kontroll diabetes NKI\")  \n→ Fant indikatoren **“Blodsukkerregulering ved type 1 diabetes hos voksne”** med id **0003-0010-106** (infoType: kvalitetsindikator).\n\n2) MCP‑kall: hent_innh",
+      "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c."
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere reelle nasjonale kvalitetsindikatorer for diabetes fra NKI med navn og InfoId. Ingen åpenbare medisinske feil eller oppdiktede indikatorer.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst én nasjonal kvalitetsindikator for diabetes er oppgitt med navn (f.eks. 'Underekstremitetsamputasjoner blant pasienter med diabetes')",
+        "InfoId/kilde er oppgitt for indikatorene (f.eks. InfoId 15, 106, 26, 29, 30)",
+        "Indikatorer som gjelder HbA1c‑kontroll ved type 1‑diabetes",
+        "Indikatorer for barn med type 1‑diabetes (akutte komplikasjoner, nyrefunksjon, blodsukkerregulering)"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 30585,
+      "answer_length": 2270,
+      "answer_preview": "Ja. Jeg fant flere nasjonale kvalitetsindikatorer (NKI) for diabetes i HAPI. Under er de viktigste indikatorene som ble identifisert i API‑søket.\n\n1. Underekstremitetsamputasjoner blant pasienter med diabetes  \n- Tittel fra HAPI: “Underekstremitetsamputasjoner blant pasienter med diabetes”  \n- InfoI"
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer riktig NKI‑indikator og oppgir tall samt tydelig begrensning i datagrunnlaget. Ingen åpenbare oppdiktede tall eller medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Indikator for hoftebrudd identifisert (operasjonstid etter hoftebrudd – andel operert innen 24 og 48 timer)",
+        "Ærlighet om manglende data: opplyser at MCP/HAPI‑svaret ikke inneholder nasjonalt måltall og at det derfor ikke kan konkluderes om tidskravene er oppfylt"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 23533,
+      "answer_length": 1246,
+      "answer_preview": "Jeg fant relevante NKI‑indikatorer for hoftebrudd i HAPI og hentet detaljdata.\n\nKilde: MCP‑kall `hent_innhold_id` med id `0006-0036-1f82f4d4-e3d3-4b77-92cd-31c90ffec7a0`.\n\nNyeste tall som faktisk ble returnert fra API‑svaret:\n\nOperasjonstid etter hoftebrudd  \n(periode: 2. tertial 2022 – oppgitt i MC"
+    },
+    {
+      "id": "EVAL-024",
+      "kategori": "pasient",
+      "tema": "KOLS pasientperspektiv",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret gjengir behandlingsprinsipper fra Helsedirektoratet og beskriver inhalasjonsmedisiner korrekt, men mangler sentral pasientinformasjon om at KOLS er en kronisk sykdom og at røykeslutt er det viktigste tiltaket.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Inhalasjonsmedisiner",
+        "Informasjon hentet fra Helsedirektoratet"
+      ],
+      "forventet": 4,
+      "mangler": [
+        "KOLS er en kronisk lungesykdom",
+        "Roykeslutt er viktigste tiltak"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 56732,
+      "answer_length": 3868,
+      "answer_preview": "Jeg har søkt i Helsedirektoratets innhold om KOLS. Forsøk på å hente full detaljvisning for enkelte anbefalinger (via hent_innhold_id) ga teknisk feil fra tjenesten i denne samtalen, så jeg kan bare presentere det som faktisk kom frem i søketreffene.\n\nHer er relevant normerende innhold fra Helsedire"
+    },
+    {
+      "id": "EVAL-025",
+      "kategori": "pasient",
+      "tema": "Astma barn",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret siterer korrekt innhold fra Helsedirektoratet og oppgir ærlig at konkrete behandlingsanbefalinger ikke finnes i datasettet. I henhold til den kjente databegrensningen skal slik korrekt og transparent håndtering vurderes som BESTATT.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Trinnvis behandling (trappeopp)",
+        "Inhalasjonssteroider som basisbehandling",
+        "Oppfoelging og kontroll"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 30021,
+      "answer_length": 2044,
+      "answer_preview": "Jeg fant begrenset konkret behandlingsinformasjon i Helsedirektoratets innhold om selve medisinen ved barneastma i disse treffene. Det som finnes handler primært om **oppfølging og henvisning ved dårlig kontrollert astma**.\n\nHer er det relevante normerende innholdet som faktisk ble funnet:\n\nAstma – ",
+      "kjent_databegrensning": "HAPI QA-API returnerer ingen anbefalinger for ICPC-2 R96 (astma) og sok/infobit gir irrelevante treff. Trinnvis behandlingsplan for barn finnes ikke i datagrunnlaget."
+    },
+    {
+      "id": "EVAL-026",
+      "kategori": "pasient",
+      "tema": "Alkoholavhengighet",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver TSB og både medisinsk og psykososial behandling, men nevner ikke tydelig fastlegen som første kontaktpunkt i praksis. Ingen faktiske medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Tverrfaglig spesialisert rusbehandling (TSB)",
+        "Baade medikamentell og ikke-medikamentell behandling"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Fastlege som foerste kontaktpunkt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 38691,
+      "answer_length": 2504,
+      "answer_preview": "Det finnes flere offentlige hjelpetilbud i Norge hvis du ønsker å slutte eller redusere alkoholbruk. Nedenfor er sentrale tilbud beskrevet ut fra Helsedirektoratets normerende innhold.\n\n1. Behandling i spesialisthelsetjenesten (TSB – tverrfaglig spesialisert rusbehandling)  \nKilde: Helsedirektoratet"
+    },
+    {
+      "id": "EVAL-027",
+      "kategori": "sammensatt",
+      "tema": "Pneumoni antibiotika + ATC",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer korrekt førstevalg (penicillin), men oppgir ikke ATC-kode som etterspurt. ATC/HAPI-kilde er heller ikke faktisk brukt til å gi kode.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Penicillin oppgis som førstevalg ved pneumoni"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "ATC-kode for valgt antibiotika (f.eks. J01CE01 for benzylpenicillin)"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 35364,
+      "answer_length": 915,
+      "answer_preview": "Basert på innhold fra Helsedirektoratet:\n\nFørstevalg ved pneumoni  \nKilde: Helsedirektoratet – «Infeksjonsbehandling og vaksinering» (infoId: 1a65ba34-9ea0-4490-a842-a82955206e54)\n\n- Antibiotika: **Penicillin**\n- Eksempel på dosering i teksten: **2 mill IE x 4**\n\nSitat fra kilden:  \n«Penicillin (2 m"
+    },
+    {
+      "id": "EVAL-028",
+      "kategori": "sammensatt",
+      "tema": "Diabetes klinisk oversikt",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker sentrale punkter i nasjonale retningslinjer for type 2-diabetes og relevante HbA1c-kvalitetsindikatorer, og oppgir Helsedirektoratet som kilde. Ingen vesentlige medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "E11 korrekt identifisert som diabetes type 2",
+        "Metformin oppgitt som førstevalg ved legemiddelbehandling",
+        "HbA1c-behandlingsmål beskrevet (ca. 53 mmol/mol med individualisering)",
+        "Nasjonale kvalitetsindikatorer for HbA1c-kontroll nevnt (andel ≤53 mmol/mol og andel ≥75 mmol/mol)"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 48861,
+      "answer_length": 2850,
+      "answer_preview": "**Diagnose:** ICD‑10 **E11 – Diabetes mellitus type 2**.\n\n## Behandling ifølge nasjonale retningslinjer\nKilde: Helsedirektoratet (nasjonal faglig retningslinje for diabetes) via hapi.\n\nBehandlingen skal **individualiseres**. Hovedmålene er å redusere symptomer fra hyperglykemi, forebygge alvorlig hy"
+    },
+    {
+      "id": "EVAL-029",
+      "kategori": "sammensatt",
+      "tema": "Semaglutid retningslinje + legemiddel",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret beskriver GLP‑1‑analoger og deres plass i behandlingen, men oppgir ikke eksplisitt at semaglutid er virkestoffet i Ozempic og mangler ATC‑kode. Ingen faktiske feil er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "GLP-1-agonister har plass i behandlingstrappen for type 2 diabetes"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Semaglutid er virkestoffet i Ozempic",
+        "ATC-kode A10BJ06"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 41426,
+      "answer_length": 2603,
+      "answer_preview": "Flere pasienter spør om **Ozempic**. Basert på tilgjengelig informasjon fra Helsedirektoratets nasjonale faglige retningslinje for diabetes kan dette forklares slik:\n\n**Hva er Ozempic?**  \nRetningslinjen omtaler ikke preparatnavnet Ozempic direkte, men legemiddelet **semaglutid** er nevnt som en av "
+    },
+    {
+      "id": "EVAL-030",
+      "kategori": "feilhaandtering",
+      "tema": "Ugyldig kode",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt at XYZ99 ikke finnes som gyldig diagnosekode og foreslår å kontrollere skrivemåten. Ingen oppdiktede diagnoser eller behandlinger er gitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent",
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Koden finnes ikke eller er ugyldig",
+        "Forslag om aa sjekke skrivemaate"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 24065,
+      "answer_length": 1023,
+      "answer_preview": "**Diagnose/kode**  \nJeg finner ingen diagnosekode **XYZ99** i data fra Helsedirektoratet.  \nSøk som ble gjort:  \n- Fritekstsøk «XYZ99» → ingen treff  \n- Søk «XYZ 99» → flere treff, men ingen var diagnoser (ICD‑10 eller ICPC‑2)  \n- Ingen treff knyttet til **ICD‑10‑kode XYZ99**\n\nDette tyder på at **XY"
+    }
+  ]
+}

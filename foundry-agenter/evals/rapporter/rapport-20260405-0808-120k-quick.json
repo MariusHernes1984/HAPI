@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-05T08:08:58.810500",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 2,
+    "tag": "120k-quick",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "0/2 (0%)",
+    "bestatt": 0,
+    "delvis": 0,
+    "mangler": 2,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 2,
+    "snitt_responstid_ms": 29976
+  },
+  "resultater": [
+    {
+      "id": "EVAL-001",
+      "kategori": "retningslinje",
+      "tema": "Otitt antibiotika",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir generelle indikasjoner for antibiotika, men ikke foerstevalg, dosering eller behandlingsvarighet. Ingen medisinske feil, men dekker ikke de forventede faktaene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [
+        "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
+        "Dosering skal vaere oppgitt (mg/kg eller konkret dose)",
+        "Varighet typisk 5 dager"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 37928,
+      "answer_length": 1287,
+      "answer_preview": "Jeg fant relevant anbefaling, men detaljert behandlingsregime (antibiotikum, dose og varighet) kom ikke frem i de tilgjengelige MCP‑svarene. Derfor kan jeg bare gjengi det som faktisk står i innholdet som ble hentet.\n\nKilde: Helsedirektoratet  \ninfoId: 4cee7335-124b-47cd-9ba0-470788969408  \nTittel: "
+    },
+    {
+      "id": "EVAL-013",
+      "kategori": "kodeverk",
+      "tema": "ATC metformin",
+      "score": "MANGLER",
+      "begrunnelse": "Svaret oppgir ikke ATC-koden for metformin og dekker dermed ingen av de forventede fakta. Det inneholder imidlertid heller ingen medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [],
+      "forventet": 1,
+      "mangler": [
+        "A10BA02 er ATC-koden for metformin"
+      ],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 22025,
+      "answer_length": 767,
+      "answer_preview": "Jeg søkte i Helsedirektoratets innhold via MCP etter “metformin” og “ATC metformin kode”.\n\nResultat:\n- Treffene som ble returnert (anbefalinger og referanser om metformin) inneholder **ingen ATC‑kodefelt**.\n- Feltet **koder = null** i resultatene.\n\nKonklusjon:\n- **MCP/Helsedirektoratet returnerte in"
+    }
+  ]
+}

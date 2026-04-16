@@ -1,0 +1,683 @@
+{
+  "exported_at": "2026-04-15T23:05:58",
+  "retningslinjer_total": 98,
+  "retningslinjer_gjeldende": 96,
+  "retningslinjer_eksportert": 96,
+  "total_anbefalinger": 7566,
+  "total_chars": 17420220,
+  "duration_s": 560.5,
+  "files": [
+    {
+      "id": "0006-0001-32c2e3d1-5a0f-4a8e-a35d-b168a1f8d6ee",
+      "tittel": "Nasjonal faglig retningslinje om bruk av elektrokonvulsiv behandling – ECT",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-om-bruk-av-elektrokonvulsiv-behandling-ect.md",
+      "anbefalinger": 1,
+      "chars": 512
+    },
+    {
+      "id": "0006-0001-0c5e73a7-1bc0-4016-92b6-5b023e7b498a",
+      "tittel": "Faglige og organisatoriske kvalitetskrav for somatiske akuttmottak",
+      "file": "retningslinjer_export\\faglige-og-organisatoriske-kvalitetskrav-for-somatiske-akuttmottak.md",
+      "anbefalinger": 1,
+      "chars": 501
+    },
+    {
+      "id": "0006-0001-369db1c8-d564-4de9-9087-61812627e770",
+      "tittel": "Nasjonal faglig retningslinje for langtids mekanisk ventilasjon (LTMV)",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-langtids-mekanisk-ventilasjon-ltmv.md",
+      "anbefalinger": 1,
+      "chars": 446
+    },
+    {
+      "id": "0006-0001-71b27310-bc3e-4dff-a390-7d9546db167d",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av pasienter med spiserørskreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 1,
+      "chars": 619
+    },
+    {
+      "id": "0006-0001-bd25ba21-9d26-46ec-a7c0-0669d67c3cfa",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av kreft hos barn",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 50,
+      "chars": 480041
+    },
+    {
+      "id": "0006-0001-7dc1ae0b-5cad-40f3-9ad9-6b268c46b486",
+      "tittel": "Nasjonal faglig retningslinje for gravide i legemiddelassistert rehabilitering (LAR) og oppfølging av familiene frem til barnet når skolealder",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-gravide-i-legemiddelassistert-rehabilitering-l.md",
+      "anbefalinger": 11,
+      "chars": 106668
+    },
+    {
+      "id": "0006-0001-2ea5f302-48e0-4146-ae00-39a54dc2175f",
+      "tittel": "Nasjonal faglig retningslinje for diabetes",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-diabetes.md",
+      "anbefalinger": 639,
+      "chars": 773617
+    },
+    {
+      "id": "0006-0001-ca6b72d1-b7dc-4495-b0ab-c08c43266cf6",
+      "tittel": "Nasjonal faglig retningslinje for spedbarnsernæring",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-spedbarnsernaering.md",
+      "anbefalinger": 174,
+      "chars": 164138
+    },
+    {
+      "id": "0006-0001-c8e2a9bd-d1b3-423b-9e16-be50767f3b07",
+      "tittel": "Nasjonal faglig retningslinje for screening av hørsel hos nyfødte",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-screening-av-horsel-hos-nyfodte.md",
+      "anbefalinger": 199,
+      "chars": 61345
+    },
+    {
+      "id": "0006-0001-ee20b166-bfc8-4485-8c5f-0cb08b41a3bf",
+      "tittel": "Nasjonal faglig retningslinje for barselomsorgen – Nytt liv og trygg barseltid for familien",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-barselomsorgen-nytt-liv-og-trygg-barseltid-for.md",
+      "anbefalinger": 1,
+      "chars": 521
+    },
+    {
+      "id": "0006-0001-3f8bda09-31a7-4c79-ab6a-64b643b1b39f",
+      "tittel": "Nasjonal faglig retningslinje for tidlig oppdagelse av utsatte barn og unge ",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-tidlig-oppdagelse-av-utsatte-barn-og-unge.md",
+      "anbefalinger": 62,
+      "chars": 85309
+    },
+    {
+      "id": "0006-0001-ad226cab-394b-498a-821f-c5673cebb85f",
+      "tittel": "Nasjonal faglig retningslinje for utredning og behandling ved mistanke om bivirkninger fra odontologiske biomaterialer",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-utredning-og-behandling-ved-mistanke-om-bivirk.md",
+      "anbefalinger": 1,
+      "chars": 656
+    },
+    {
+      "id": "0006-0001-fc862b0d-9931-46b8-92af-431d23e27b00",
+      "tittel": "Nasjonal faglig retningslinje om demens",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-om-demens.md",
+      "anbefalinger": 119,
+      "chars": 360460
+    },
+    {
+      "id": "0006-0001-651b7e56-af25-4214-be1b-6aab498ece8d",
+      "tittel": "Nasjonal faglig retningslinje for behandling og rehabilitering av rusmiddelproblemer og avhengighet",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-behandling-og-rehabilitering-av-rusmiddelprobl.md",
+      "anbefalinger": 293,
+      "chars": 213932
+    },
+    {
+      "id": "0006-0001-1673f41b-6e47-45d0-a5fc-479230f1a4e1",
+      "tittel": "Nasjonal faglig retningslinje for helsetjenestetilbud til personer med kjønnsinkongruens",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-helsetjenestetilbud-til-personer-med-kjonnsink.md",
+      "anbefalinger": 15,
+      "chars": 157887
+    },
+    {
+      "id": "0006-0001-df28c2a9-bbf0-4622-a043-1d149eb4482d",
+      "tittel": "Nasjonal faglig retningslinje for oppfølging av for tidlig fødte barn",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-oppfolging-av-for-tidlig-fodte-barn.md",
+      "anbefalinger": 1,
+      "chars": 491
+    },
+    {
+      "id": "0006-0001-9f3894a7-9099-4da8-8d01-8e364b32e96f",
+      "tittel": "Nasjonal faglig retningslinje for forebygging, utredning og behandling av overvekt og fedme hos barn og unge",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-forebygging-utredning-og-behandling-av-overvek.md",
+      "anbefalinger": 1,
+      "chars": 692
+    },
+    {
+      "id": "0006-0001-3c290e30-2b8a-4d8e-99c8-10096fd5dbc3",
+      "tittel": "Nasjonal faglig retningslinje for svangerskapsomsorgen",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-svangerskapsomsorgen.md",
+      "anbefalinger": 84,
+      "chars": 162062
+    },
+    {
+      "id": "0006-0001-f384de49-f9e5-4486-aed7-d25696616812",
+      "tittel": "Nasjonal faglig retningslinje for forebygging, utredning og behandling av overvekt og fedme hos voksne",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-forebygging-utredning-og-behandling-av-overvek.md",
+      "anbefalinger": 1,
+      "chars": 545
+    },
+    {
+      "id": "0006-0001-cc86853d-dc3d-449b-99fe-59464c8e410b",
+      "tittel": "Nasjonal retningslinje for diagnostisering og behandling av voksne med depresjon i primær- og spesialisthelsetjenesten",
+      "file": "retningslinjer_export\\nasjonal-retningslinje-for-diagnostisering-og-behandling-av-voksne-med-depresjon.md",
+      "anbefalinger": 1,
+      "chars": 600
+    },
+    {
+      "id": "0006-0001-098527e5-4b5f-41e1-9fe6-e9eb20f3adbc",
+      "tittel": "Gruppe B-streptokokker hos gravide og fødende kvinner – Forebygging av sykdom forårsaket av tidlig infeksjon med gruppe B-streptokokker hos nyfødte",
+      "file": "retningslinjer_export\\gruppe-b-streptokokker-hos-gravide-og-fodende-kvinner-forebygging-av-sykdom-fora.md",
+      "anbefalinger": 1,
+      "chars": 691
+    },
+    {
+      "id": "0006-0001-b0201403-cbe9-4d91-8ec4-0d8c70fa3253",
+      "tittel": "Nasjonal faglig retningslinje for behandling og rehabilitering ved hjerneslag",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-behandling-og-rehabilitering-ved-hjerneslag.md",
+      "anbefalinger": 1048,
+      "chars": 691394
+    },
+    {
+      "id": "0006-0001-7cd4aa27-ea49-4b39-bc13-896d5702ce6d",
+      "tittel": "Nasjonal faglig retningslinje for utredning, behandling og oppfølging av pasienter med Menières sykdom",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-utredning-behandling-og-oppfolging-av-pasiente.md",
+      "anbefalinger": 1,
+      "chars": 498
+    },
+    {
+      "id": "0006-0001-f6249fc7-8ee4-4974-9b58-cb214bcbae47",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av pasienter med nyrekreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 68,
+      "chars": 126505
+    },
+    {
+      "id": "0006-0001-9ff57fa8-e716-424d-a59a-8b2f0ef2e177",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av pasienter med thyroideakreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 60,
+      "chars": 219910
+    },
+    {
+      "id": "0006-0001-14b5fc9d-41ef-45c0-81cc-a81d7c88d450",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av tynntarmskreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 45,
+      "chars": 131120
+    },
+    {
+      "id": "0006-0001-a1a8d9e5-593c-4eb1-bfba-5c93a8d3c1c7",
+      "tittel": "Nasjonal faglig retningslinje for forebygging av selvmord i psykisk helsevern",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-forebygging-av-selvmord-i-psykisk-helsevern.md",
+      "anbefalinger": 1,
+      "chars": 572
+    },
+    {
+      "id": "0006-0001-3aaebf57-2618-45dd-a6b5-ce90cc5b32c2",
+      "tittel": "Nasjonal faglig retningslinje for røykeavvenning",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-roykeavvenning.md",
+      "anbefalinger": 38,
+      "chars": 109327
+    },
+    {
+      "id": "0006-0001-eb27cc71-4f1f-49cf-930a-d2ffffad7788",
+      "tittel": "Nasjonal faglig retningslinje for kompetanse og kvalitet i nyfødtintensivavdelinger",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-kompetanse-og-kvalitet-i-nyfodtintensivavdelin.md",
+      "anbefalinger": 167,
+      "chars": 113172
+    },
+    {
+      "id": "0006-0001-5b95ca8e-317b-4cd7-9d4a-94139edc8efe",
+      "tittel": "Nasjonal faglig retningslinje for mat og måltider i barnehagen",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-mat-og-maaltider-i-barnehagen.md",
+      "anbefalinger": 93,
+      "chars": 116683
+    },
+    {
+      "id": "0006-0001-f5d9f298-607c-473d-b952-a048e373767d",
+      "tittel": "Nasjonal faglig retningslinje for tannhelsetjenester til barn og unge 0–20 år",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-tannhelsetjenester-til-barn-og-unge-0-20-aar.md",
+      "anbefalinger": 286,
+      "chars": 659520
+    },
+    {
+      "id": "0006-0001-9ae38771-d80b-4dc0-9909-bf408a1a054b",
+      "tittel": "Nasjonal faglig retningslinje for forebygging av hjerte- og karsykdom",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-forebygging-av-hjerte-og-karsykdom.md",
+      "anbefalinger": 327,
+      "chars": 316187
+    },
+    {
+      "id": "0006-0001-a13973b7-b100-4598-86cf-514e08340099",
+      "tittel": "Nasjonal faglig retningslinje for mat og måltider i skolen",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-mat-og-maaltider-i-skolen.md",
+      "anbefalinger": 301,
+      "chars": 212632
+    },
+    {
+      "id": "0006-0001-00cf089a-b137-407d-9749-462958b9041a",
+      "tittel": "Nasjonal faglig retningslinje for utredning og oppfølging av hørsel hos små barn (0–3 år)",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-utredning-og-oppfolging-av-horsel-hos-smaa-bar.md",
+      "anbefalinger": 223,
+      "chars": 111743
+    },
+    {
+      "id": "0006-0001-05d640f7-ad72-4160-9665-9855be8551ee",
+      "tittel": "Nasjonal faglig retningslinje for tidlig oppdagelse, utredning og behandling av spiseforstyrrelser",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-tidlig-oppdagelse-utredning-og-behandling-av-s.md",
+      "anbefalinger": 166,
+      "chars": 221660
+    },
+    {
+      "id": "0006-0001-ad410d41-f16e-44e6-8138-2495a092b54c",
+      "tittel": "Nasjonal faglig retningslinje for svangerskapsdiabetes",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-svangerskapsdiabetes.md",
+      "anbefalinger": 121,
+      "chars": 279025
+    },
+    {
+      "id": "0006-0001-ae1fb7ef-c9fd-45f2-b0a6-db7d7f58791c",
+      "tittel": "Nasjonal faglig retningslinje for utredning og behandling av TMD (tyggemuskulatur- og kjeveleddsplager)",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-utredning-og-behandling-av-tmd-tyggemuskulatur.md",
+      "anbefalinger": 125,
+      "chars": 124640
+    },
+    {
+      "id": "0006-0001-1efb3d1b-9a03-426b-93ff-8dd7da07847c",
+      "tittel": "Nasjonal faglig retningslinje for diagnostikk, attakk- og sykdomsmodulerende behandling av multippel sklerose",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-diagnostikk-attakk-og-sykdomsmodulerende-behan.md",
+      "anbefalinger": 15,
+      "chars": 54970
+    },
+    {
+      "id": "0006-0001-a765c0df-0ebb-4c29-a9f1-373e342facd0",
+      "tittel": "Nasjonal faglig retningslinje for bildediagnostikk ved ikke-traumatiske muskel- og skjelettlidelser – Anbefalinger for primærhelsetjenesten",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-bildediagnostikk-ved-ikke-traumatiske-muskel-o.md",
+      "anbefalinger": 1,
+      "chars": 644
+    },
+    {
+      "id": "0006-0001-4cfa5cd1-7e33-4040-9b67-0e0eb2184997",
+      "tittel": "Nasjonal faglig retningslinje for det helsefremmende og forebyggende arbeidet i helsestasjon, skolehelsetjeneste og helsestasjon for ungdom",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-det-helsefremmende-og-forebyggende-arbeidet-i-.md",
+      "anbefalinger": 125,
+      "chars": 837655
+    },
+    {
+      "id": "0006-0001-5091c370-3de9-4225-a43a-6b2927f5e3d2",
+      "tittel": "Nasjonal faglig retningslinje for avrusning fra rusmidler og vanedannende legemidler",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-avrusning-fra-rusmidler-og-vanedannende-legemi.md",
+      "anbefalinger": 117,
+      "chars": 205635
+    },
+    {
+      "id": "0006-0001-ec9db231-06ae-41d1-99d0-87b566fc68b3",
+      "tittel": "Nasjonal faglig retningslinje for somatiske akuttmottak",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-somatiske-akuttmottak.md",
+      "anbefalinger": 40,
+      "chars": 154956
+    },
+    {
+      "id": "0006-0001-75f38250-268a-42cb-b9a1-f676762d0f21",
+      "tittel": "Oppgradering av Enonic",
+      "file": "retningslinjer_export\\oppgradering-av-enonic.md",
+      "anbefalinger": 4,
+      "chars": 833
+    },
+    {
+      "id": "0006-0001-b9b66813-9aa4-4983-a413-e67d202ba029",
+      "tittel": "Something",
+      "file": "retningslinjer_export\\something.md",
+      "anbefalinger": 1,
+      "chars": 356
+    },
+    {
+      "id": "0006-0001-676d0a55-966b-4b54-bd96-3424696b3f35",
+      "tittel": "Rekonstruksjon av versjonshistorikk",
+      "file": "retningslinjer_export\\rekonstruksjon-av-versjonshistorikk.md",
+      "anbefalinger": 1,
+      "chars": 431
+    },
+    {
+      "id": "0006-0001-eb9a7143-c21e-4850-a0ea-e1eb3688badc",
+      "tittel": "Documaster-retningslinje",
+      "file": "retningslinjer_export\\documaster-retningslinje.md",
+      "anbefalinger": 3,
+      "chars": 850
+    },
+    {
+      "id": "0006-0001-13fdc7bc-b668-4424-84ad-a879a7c9cf01",
+      "tittel": "Hedda sin fantastiske retningslinje",
+      "file": "retningslinjer_export\\hedda-sin-fantastiske-retningslinje.md",
+      "anbefalinger": 5,
+      "chars": 566
+    },
+    {
+      "id": "0006-0001-991be5b2-bf15-490a-a4d7-ca20ff111033",
+      "tittel": "Nasjonal faglig retningslinje for forebygging og behandling av underernæring ",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-forebygging-og-behandling-av-underernaering.md",
+      "anbefalinger": 13,
+      "chars": 132021
+    },
+    {
+      "id": "0006-0001-f2fa6f16-ee93-4ec1-b7b2-2d28fae58525",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av prostatakreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 67,
+      "chars": 183409
+    },
+    {
+      "id": "0006-0001-5064c8ab-f882-4040-8dc4-ece82f39ef05",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av gynekologisk kreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 153,
+      "chars": 603940
+    },
+    {
+      "id": "0006-0001-8daf5e53-e880-461e-867b-b6fb0c21ac4f",
+      "tittel": "Hode-/halskreft – handlingsprogram",
+      "file": "retningslinjer_export\\hode-halskreft-handlingsprogram.md",
+      "anbefalinger": 147,
+      "chars": 296930
+    },
+    {
+      "id": "0006-0001-724c18b7-2897-4a14-b7f8-ee6a8ebb71c8",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av analkreft (analcancer)",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 59,
+      "chars": 183192
+    },
+    {
+      "id": "0006-0001-bba79326-bdde-42f8-9eb3-093df0afbccd",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for palliasjon i kreftomsorgen",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-palliasjon-i-kreftomsorgen.md",
+      "anbefalinger": 83,
+      "chars": 529701
+    },
+    {
+      "id": "0006-0001-2ec18786-bb9c-45f0-bd76-f65006d62884",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av melanom",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 64,
+      "chars": 245541
+    },
+    {
+      "id": "0006-0001-9e0413ee-31f5-44bb-848d-8a1faffe07d4",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av maligne lymfomer",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 82,
+      "chars": 568339
+    },
+    {
+      "id": "0006-0001-08934bfe-aba6-4cba-84cf-9b589db5b93b",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av pasienter med pancreaskreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 47,
+      "chars": 215641
+    },
+    {
+      "id": "0006-0001-8730aba1-d29a-440d-81a0-dc9766d745a1",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk behandling og oppfølging av blærekreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 79,
+      "chars": 278808
+    },
+    {
+      "id": "0006-0001-c93c2053-1f77-44ff-a515-a9acdf8ed619",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk behandling og oppfølging av testikkelkreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 116,
+      "chars": 292358
+    },
+    {
+      "id": "0006-0001-52970834-1ab0-41ea-b206-fd5c5435931d",
+      "tittel": "Nasjonal faglig retningslinje for diagnostisering og behandling av kronisk obstruktiv lungesykdom (kols)",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-diagnostisering-og-behandling-av-kronisk-obstr.md",
+      "anbefalinger": 19,
+      "chars": 109297
+    },
+    {
+      "id": "0006-0001-5b2211bd-f08e-4968-b5dd-b6c58a81d58c",
+      "tittel": "DM-test ny retningslinje med kapitler",
+      "file": "retningslinjer_export\\dm-test-ny-retningslinje-med-kapitler.md",
+      "anbefalinger": 4,
+      "chars": 613
+    },
+    {
+      "id": "0006-0001-01e1647c-9109-485d-9755-c37ae65faa89",
+      "tittel": "DM-test ny retningslinje med pdf",
+      "file": "retningslinjer_export\\dm-test-ny-retningslinje-med-pdf.md",
+      "anbefalinger": 1,
+      "chars": 419
+    },
+    {
+      "id": "0006-0001-fc714360-9e33-4cef-b2e0-a6d33fdcded6",
+      "tittel": "React4XP retningslinje",
+      "file": "retningslinjer_export\\react4xp-retningslinje.md",
+      "anbefalinger": 4,
+      "chars": 1060
+    },
+    {
+      "id": "0006-0001-794b3029-72ab-4b25-aea0-a2c252fe142a",
+      "tittel": "Maria og Hedda tester kanter - ret1",
+      "file": "retningslinjer_export\\maria-og-hedda-tester-kanter-ret1.md",
+      "anbefalinger": 2,
+      "chars": 430
+    },
+    {
+      "id": "0006-0001-3c3074af-846c-4a97-bc51-0fcab6b62d87",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av lungekreft, mesoteliom og thymom",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 113,
+      "chars": 639425
+    },
+    {
+      "id": "0006-0001-2facb9c4-fcef-4bdf-b9dd-434aed3451a1",
+      "tittel": "Nasjonal faglig retningslinje for legemiddelassistert rehabilitering (LAR) ved opioidavhengighet",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-legemiddelassistert-rehabilitering-lar-ved-opi.md",
+      "anbefalinger": 31,
+      "chars": 286572
+    },
+    {
+      "id": "0006-0001-9095ea28-4f73-4c48-9315-22b9d70ad055",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av kreft i magesekken (ventrikkelkreft)",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 1,
+      "chars": 664
+    },
+    {
+      "id": "0006-0001-4bf30e10-bf39-49a1-8fd1-0a3e47e490cd",
+      "tittel": "Nasjonal fagleg retningslinje for utgreiing og behandling av bipolare lidingar",
+      "file": "retningslinjer_export\\nasjonal-fagleg-retningslinje-for-utgreiing-og-behandling-av-bipolare-lidingar.md",
+      "anbefalinger": 1,
+      "chars": 512
+    },
+    {
+      "id": "0006-0001-d1d7bb9a-52de-4016-a973-ce2a1af375f4",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av maligne blodsykdommer",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 126,
+      "chars": 501021
+    },
+    {
+      "id": "0006-0001-18a8571d-71d5-4af6-94c5-6b5f534777c9",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av kreft i tykktarm og endetarm",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 98,
+      "chars": 506928
+    },
+    {
+      "id": "0006-0001-50560a1e-650e-48e6-8b6d-47dcb6b6f1fa",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av sarkom",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 71,
+      "chars": 296881
+    },
+    {
+      "id": "0006-0001-857a1e89-1e3c-4039-800f-90abd8c2a595",
+      "tittel": "Nasjonal faglig retningslinje for håndtering av CBRNE-hendelser med personskade",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-haandtering-av-cbrne-hendelser-med-personskade.md",
+      "anbefalinger": 1,
+      "chars": 532
+    },
+    {
+      "id": "0006-0001-7d32b2ac-fb2f-4698-b0cd-ece8525298c6",
+      "tittel": "Brystkreft - handlingsprogram - NY",
+      "file": "retningslinjer_export\\brystkreft-handlingsprogram-ny.md",
+      "anbefalinger": 74,
+      "chars": 510426
+    },
+    {
+      "id": "0006-0001-19f43c25-b1d4-4775-86af-9596ba6d64e0",
+      "tittel": "Hjernesvulster - handlingsprogram",
+      "file": "retningslinjer_export\\hjernesvulster-handlingsprogram.md",
+      "anbefalinger": 1,
+      "chars": 444
+    },
+    {
+      "id": "0006-0001-a39afead-5233-433d-859f-262cc468cd1a",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av pasienter med brystkreft",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 126,
+      "chars": 888786
+    },
+    {
+      "id": "0006-0001-915fd12b-7ab3-4f64-ab47-1d95776d259a",
+      "tittel": "Nasjonal faglig retningslinje for kvalitet og kompetanse i overgrepsmottak",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-kvalitet-og-kompetanse-i-overgrepsmottak.md",
+      "anbefalinger": 17,
+      "chars": 98950
+    },
+    {
+      "id": "0006-0001-40450ecb-bafb-4066-8fa8-537d1e566070",
+      "tittel": "Nasjonal faglig retningslinje for utredning, behandling og oppfølging av personer med samtidig ruslidelse og psykisk lidelse (ROP-lidelser)",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-utredning-behandling-og-oppfolging-av-personer.md",
+      "anbefalinger": 1,
+      "chars": 684
+    },
+    {
+      "id": "0006-0001-48b59004-1dbd-4b94-a5c9-6bff7ec33071",
+      "tittel": "Nasjonal faglig retningslinje for utredning, behandling og oppfølging av personer med psykoselidelser",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-utredning-behandling-og-oppfolging-av-personer.md",
+      "anbefalinger": 1,
+      "chars": 558
+    },
+    {
+      "id": "0006-0001-0e87de78-2cb4-4a70-93a7-0d687443b71e",
+      "tittel": "ADHD/Hyperkinetisk forstyrrelse – Nasjonal faglig retningslinje for utredning, behandling og oppfølging",
+      "file": "retningslinjer_export\\adhd-hyperkinetisk-forstyrrelse-nasjonal-faglig-retningslinje-for-utredning-beha.md",
+      "anbefalinger": 30,
+      "chars": 153384
+    },
+    {
+      "id": "0006-0001-148327ee-7486-45fa-9ee7-306865e17ee2",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av nevroendokrine svulster i fordøyelsessystemet",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 111,
+      "chars": 188322
+    },
+    {
+      "id": "0006-0001-93580776-3de9-4c1a-83de-3f785ff4e861",
+      "tittel": "Nasjonal faglig retningslinje for bruk av antibiotika i primærhelsetjenesten",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-bruk-av-antibiotika-i-primaerhelsetjenesten.md",
+      "anbefalinger": 76,
+      "chars": 308736
+    },
+    {
+      "id": "0006-0001-2db4c59b-d148-4d6d-9b83-eacbeccfa91c",
+      "tittel": "Antibiotika i sykehus",
+      "file": "retningslinjer_export\\antibiotika-i-sykehus.md",
+      "anbefalinger": 256,
+      "chars": 914823
+    },
+    {
+      "id": "0006-0001-9746b341-4f30-4938-9b1b-2215a94046b2",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for utredning, behandling og oppfølging av levercellekreft ( hepatocellulært karsinom (HCC) )",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-utredning-behandling-og-oppfol.md",
+      "anbefalinger": 56,
+      "chars": 120015
+    },
+    {
+      "id": "0006-0001-07cd42a7-a50a-403f-ad55-b1c99b306c7a",
+      "tittel": "Retningslinje test Tore Retningslinje test Tore",
+      "file": "retningslinjer_export\\retningslinje-test-tore-retningslinje-test-tore.md",
+      "anbefalinger": 2,
+      "chars": 401
+    },
+    {
+      "id": "0006-0001-f7311f90-ac8c-4b24-b3f5-969eabc4d89f",
+      "tittel": "Testerabonnement",
+      "file": "retningslinjer_export\\testerabonnement.md",
+      "anbefalinger": 1,
+      "chars": 302
+    },
+    {
+      "id": "0006-0001-c9a4c1dc-ff89-4e6e-8865-c67814f560c3",
+      "tittel": "DM-test",
+      "file": "retningslinjer_export\\dm-test.md",
+      "anbefalinger": 1,
+      "chars": 314
+    },
+    {
+      "id": "0006-0001-dc8d3cc5-4e16-47ae-8b22-16fe06c1b8a5",
+      "tittel": "Nasjonal faglig retningslinje for tverrfaglig helsekartlegging av barn i barnevernet",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-tverrfaglig-helsekartlegging-av-barn-i-barneve.md",
+      "anbefalinger": 15,
+      "chars": 83654
+    },
+    {
+      "id": "0006-0001-587123c6-805e-4b9d-8229-21c77a835140",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av diffuse gliomer hos voksne",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 72,
+      "chars": 185663
+    },
+    {
+      "id": "0006-0001-bbf488c2-0743-458e-8f56-d87f072dfcc1",
+      "tittel": "Nasjonal faglig retningslinje for fødselsomsorgen",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-fodselsomsorgen.md",
+      "anbefalinger": 26,
+      "chars": 125600
+    },
+    {
+      "id": "0006-0001-9206234e-f2c3-4314-9d2d-64764449aa9d",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av hjernesvulster generelt (hos voksne)",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 59,
+      "chars": 164174
+    },
+    {
+      "id": "0006-0001-73608fc3-1941-446e-8aaf-ebc400337b92",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av hypofyseadenomer",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 50,
+      "chars": 80728
+    },
+    {
+      "id": "0006-0001-5306c8e2-9248-4190-a6ec-7b6bcf06aa77",
+      "tittel": "Kreft i galleveier og galleblære - handlingsprogram",
+      "file": "retningslinjer_export\\kreft-i-galleveier-og-galleblaere-handlingsprogram.md",
+      "anbefalinger": 25,
+      "chars": 72322
+    },
+    {
+      "id": "0006-0001-2a546119-b0f5-4c0c-b9c1-b2ce51a17813",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for utredning, behandling og oppfølging av kreft i spiserør og magesekk",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-utredning-behandling-og-oppfol.md",
+      "anbefalinger": 51,
+      "chars": 151477
+    },
+    {
+      "id": "0006-0001-c577516d-33ab-416c-8fa3-6d57769944e4",
+      "tittel": "Nasjonalt handlingsprogram med retningslinjer for diagnostikk, behandling og oppfølging av meningeomer",
+      "file": "retningslinjer_export\\nasjonalt-handlingsprogram-med-retningslinjer-for-diagnostikk-behandling-og-oppf.md",
+      "anbefalinger": 55,
+      "chars": 88845
+    },
+    {
+      "id": "0006-0001-c1de32ef-8815-4558-8985-3ada416b2865",
+      "tittel": "Nasjonal faglig retningslinje for legemiddelbehandling ved psykoselidelser",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-legemiddelbehandling-ved-psykoselidelser.md",
+      "anbefalinger": 10,
+      "chars": 46270
+    },
+    {
+      "id": "0006-0001-ab8ea78e-e9aa-4b71-a47f-d20ee40793ac",
+      "tittel": "Nasjonal faglig retningslinje for selvmordsforebygging i psykisk helsevern og tverrfaglig spesialisert rusbehandling (TSB)",
+      "file": "retningslinjer_export\\nasjonal-faglig-retningslinje-for-selvmordsforebygging-i-psykisk-helsevern-og-tv.md",
+      "anbefalinger": 28,
+      "chars": 97569
+    },
+    {
+      "id": "0006-0001-809729f2-fc14-4bcb-9c70-d4360f922d26",
+      "tittel": "Brukermedvirkning og pårørendemedvirkning",
+      "file": "retningslinjer_export\\brukermedvirkning-og-paarorendemedvirkning.md",
+      "anbefalinger": 1,
+      "chars": 322
+    }
+  ]
+}
