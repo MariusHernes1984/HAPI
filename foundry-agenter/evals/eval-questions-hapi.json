@@ -22,16 +22,17 @@
       ],
       "faktasjekk": {
         "skal_inneholde": [
-          "Fenoksymetylpenicillin (penicillin V) er foerstevalg",
-          "Dosering skal vaere oppgitt (mg/kg eller konkret dose)",
-          "Varighet typisk 5 dager"
+          "Fenoksymetylpenicillin (penicillin V) er foerstevalg"
         ],
         "skal_IKKE_inneholde": [
           "Amoxicillin som foerstevalg (dette er IKKE norsk foerstevalg)",
           "Bredspektret antibiotika som foerstevalg"
         ],
-        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
-      }
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "Retningslinjeteksten for akutt otitis media oppgir kun valg av antibiotikum (fenoksymetylpenicillin), ikke dosering eller behandlingsvarighet. Detaljert dosering finnes i ekstern kilde (antibiotikaiallmennpraksis.no) som ikke er tilgjengelig via MCP eller file_search."
+      },
+      "kjent_databegrensning": "Dosering og varighet for otitt-antibiotika finnes ikke i retningslinjeteksten, kun i ekstern lenke"
     },
     {
       "id": "EVAL-002",
