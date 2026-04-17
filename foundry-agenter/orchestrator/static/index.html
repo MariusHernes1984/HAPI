@@ -253,20 +253,38 @@
       line-height: 1.65;
       font-size: 0.9rem;
       max-width: 680px;
-      /* Prevent long URLs, ICD/ATC codes from breaking layout */
-      overflow-wrap: anywhere;
-      word-break: break-word;
+      /* Prevent long URLs / ICD/ATC codes from overflowing — but only on prose */
+      overflow-wrap: break-word;
       min-width: 0;
     }
+    /* Inline code, chips, and tables should NOT be mid-word-broken */
+    .bubble code,
+    .bubble .meta-chip,
+    .bubble-table-wrap,
+    .bubble-table-wrap * {
+      overflow-wrap: normal;
+      word-break: keep-all;
+    }
+    .bubble code { white-space: nowrap; }
 
-    /* Wrapper for markdown tables inside bubbles — horizontal scroll on narrow screens */
+    /* Wrapper for markdown tables inside bubbles — real horizontal scroll */
     .bubble-table-wrap {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       margin: 10px 0;
       border-radius: 8px;
+      border: 1px solid var(--border);
     }
-    .bubble-table-wrap > table { margin: 0; }
+    .bubble-table-wrap > table {
+      margin: 0;
+      width: auto;
+      min-width: 100%;
+      border: 0;
+    }
+    .bubble-table-wrap > table th,
+    .bubble-table-wrap > table td {
+      white-space: nowrap;
+    }
 
     .message.user .bubble {
       background: var(--user-bubble);
@@ -778,18 +796,29 @@
     /* Hide desktop-only toggle by default */
     .suggestions-toggle { display: none; }
 
+    /* Short title is hidden on desktop */
+    .header-text h1 .title-short { display: none; }
+    /* Mobile-only disclaimer variant */
+    .disclaimer .disclaimer-short { display: none; }
+
     /* --- Responsive: tablet + mobile --- */
     @media (max-width: 640px) {
       header {
-        padding: 12px 14px;
-        gap: 10px;
+        padding: 10px 12px;
+        gap: 8px;
       }
-      .logo { width: 38px; height: 38px; }
-      .header-text h1 { font-size: 1rem; }
-      .header-text p { font-size: 0.7rem; }
+      .logo { width: 36px; height: 36px; flex-shrink: 0; }
+      .logo svg { width: 22px; height: 22px; }
 
-      /* Keep header-actions visible — collapse to icon-only circular buttons */
-      .header-actions { display: flex; gap: 6px; }
+      /* Keep title readable — swap to short form, strip subtitle */
+      .header-text { min-width: 0; flex: 0 1 auto; }
+      .header-text h1 { font-size: 1.05rem; white-space: nowrap; }
+      .header-text h1 .title-long { display: none; }
+      .header-text h1 .title-short { display: inline; }
+      .header-text p { display: none; }
+
+      /* Header actions: all compact circular icon buttons */
+      .header-actions { display: flex; gap: 6px; margin-left: auto; flex-shrink: 0; }
       .header-badge .badge-text,
       .header-btn .btn-text { display: none; }
       .header-badge, .header-btn {
@@ -798,20 +827,40 @@
         padding: 0;
         border-radius: 50%;
         justify-content: center;
+        min-height: 40px;
       }
-      /* patient-select gets a short width on mobile */
-      .patient-select { font-size: 12px; padding: 6px 8px; max-width: 140px; }
+      /* Patient-select becomes an icon-style chip showing only the patient ID */
+      .patient-select {
+        font-size: 11px;
+        padding: 0 6px;
+        width: 40px;
+        height: 40px;
+        max-width: 40px;
+        border-radius: 50%;
+        text-align: center;
+        text-align-last: center;
+        appearance: none;
+        background-image: none;
+        /* Ensure only first characters of selected option are shown */
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+      .patient-select.has-patient {
+        background: var(--accent);
+        font-weight: 600;
+      }
 
       .suggestions { grid-template-columns: 1fr; }
       .suggestion.full { grid-column: span 1; }
-      .chat-container { padding: 16px; }
-      .input-area { padding: 10px 14px 14px; }
-      .bubble { max-width: 100%; }
+      .chat-container { padding: 14px; gap: 16px; }
+      .input-area { padding: 10px 14px 10px; }
+      .message { max-width: 100%; gap: 10px; }
+      .bubble { max-width: calc(100% - 46px); padding: 12px 14px; font-size: 0.88rem; }
 
-      .welcome { padding: 32px 16px; }
-      .welcome-icon { font-size: 44px; margin-bottom: 12px; }
-      .welcome h2 { font-size: 1.25rem; }
-      .welcome p { font-size: 0.88rem; }
+      .welcome { padding: 24px 12px; max-width: 100%; }
+      .welcome-icon { font-size: 40px; margin-bottom: 10px; }
+      .welcome h2 { font-size: 1.2rem; margin-bottom: 6px; }
+      .welcome p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 18px; }
 
       /* P3-I: collapse extra suggestions behind "Se flere" toggle */
       .suggestions.collapsed .suggestion.extra { display: none; }
@@ -831,27 +880,37 @@
       }
       .suggestions-toggle:hover { background: #f0faf8; }
 
-      /* P3-G: bigger disclaimer text for older users */
-      .disclaimer { font-size: 0.78rem; }
+      /* Disclaimer: show short version, much smaller */
+      .disclaimer { font-size: 0.7rem; line-height: 1.35; margin-top: 6px; opacity: 0.75; }
+      .disclaimer .disclaimer-long { display: none; }
+      .disclaimer .disclaimer-short { display: inline; }
 
-      /* Bigger send button for touch */
-      .send-btn { width: 48px; height: 48px; }
-      .input-field { font-size: 1rem; padding: 12px 14px; } /* prevents iOS zoom on focus */
+      /* Send button sized for touch */
+      .send-btn { width: 46px; height: 46px; flex-shrink: 0; }
+      .input-field { font-size: 1rem; padding: 10px 14px; } /* 1rem prevents iOS zoom on focus */
+
+      /* orch-flow compact */
+      .orch-flow-inner { padding: 12px 14px; font-size: 0.74rem; }
+      .orch-step { padding: 4px 10px; font-size: 0.7rem; }
+
+      /* meta-bar avoid overflow */
+      .meta-bar { gap: 6px; }
+      .meta-chip { font-size: 0.7rem; }
     }
 
     /* Ultra-narrow (<380px) — iPhone SE and older */
     @media (max-width: 380px) {
-      header { padding: 10px 10px; gap: 8px; }
+      header { padding: 8px 10px; gap: 6px; }
       .logo { width: 34px; height: 34px; }
-      .logo svg { width: 22px; height: 22px; }
-      .header-text h1 { font-size: 0.95rem; }
-      .header-text p { display: none; }
-      .header-badge, .header-btn { width: 36px; height: 36px; }
-      .patient-select { max-width: 100px; font-size: 11px; }
-      .chat-container { padding: 12px; gap: 16px; }
-      .bubble { padding: 12px 14px; font-size: 0.88rem; }
-      .avatar { width: 32px; height: 32px; }
+      .logo svg { width: 20px; height: 20px; }
+      .header-text h1 { font-size: 1rem; }
+      .header-badge, .header-btn, .patient-select { width: 36px; height: 36px; max-width: 36px; }
+      .chat-container { padding: 12px; gap: 14px; }
+      .bubble { padding: 10px 12px; font-size: 0.86rem; }
+      .avatar { width: 30px; height: 30px; }
       .message { gap: 8px; }
+      .welcome h2 { font-size: 1.1rem; }
+      .welcome p { font-size: 0.82rem; }
     }
   </style>
 </head>
@@ -864,7 +923,7 @@
       </svg>
     </div>
     <div class="header-text">
-      <h1>HAPI Helseassistent</h1>
+      <h1><span class="title-long">HAPI Helseassistent</span><span class="title-short">HAPI</span></h1>
       <p>Norsk helseinformasjon fra Helsedirektoratet</p>
     </div>
     <div class="header-actions">
@@ -970,7 +1029,8 @@
       </button>
     </div>
     <div class="disclaimer">
-      Informasjonen er hentet fra Helsedirektoratets offisielle kilder og interaksjonsdata fra FEST/Statens legemiddelverk. Dette er ikke medisinsk rådgivning &mdash; kontakt lege for kliniske beslutninger.
+      <span class="disclaimer-long">Informasjonen er hentet fra Helsedirektoratets offisielle kilder og interaksjonsdata fra FEST/Statens legemiddelverk. Dette er ikke medisinsk rådgivning &mdash; kontakt lege for kliniske beslutninger.</span>
+      <span class="disclaimer-short">Ikke medisinsk rådgivning &mdash; kontakt lege for kliniske beslutninger.</span>
     </div>
   </div>
 
@@ -995,21 +1055,49 @@
     let selectedPatientId = localStorage.getItem('hapi_patient_id') || '';
     let patientsCache = [];
 
+    const MOBILE_BREAKPOINT = 640;
+    function isMobile() { return window.innerWidth <= MOBILE_BREAKPOINT; }
+
+    function refreshPatientSelectLabels() {
+      // On mobile, show only patient ID. On desktop, show full label.
+      const sel = document.getElementById('patientSelect');
+      if (!sel) return;
+      const mobile = isMobile();
+      Array.from(sel.options).forEach(opt => {
+        const long = opt.dataset.labelLong || opt.textContent;
+        const short = opt.dataset.labelShort || '';
+        if (!opt.dataset.labelLong) opt.dataset.labelLong = long;
+        opt.textContent = mobile ? short : long;
+      });
+      sel.classList.toggle('has-patient', !!sel.value);
+      // Update tittel-attribute to show full patient name on tap
+      const selected = sel.options[sel.selectedIndex];
+      sel.title = selected ? (selected.dataset.labelLong || selected.textContent) : 'Velg aktiv pasient';
+    }
+
     async function loadPatients() {
       try {
         const resp = await fetch(`${API_BASE}/patients`);
         const data = await resp.json();
         patientsCache = data.patients || [];
         const sel = document.getElementById('patientSelect');
+        // Decorate the default "Ingen aktiv pasient" option
+        if (sel.options[0]) {
+          sel.options[0].dataset.labelLong = 'Ingen aktiv pasient';
+          sel.options[0].dataset.labelShort = '—';
+        }
         patientsCache.forEach(p => {
           const opt = document.createElement('option');
           opt.value = p.id;
-          opt.textContent = `${p.id} — ${p.navn}, ${p.alder} år (${p.beskrivelse})`;
+          opt.dataset.labelLong = `${p.id} — ${p.navn}, ${p.alder} år (${p.beskrivelse})`;
+          opt.dataset.labelShort = p.id.replace('P-', ''); // e.g. "001"
+          opt.textContent = opt.dataset.labelLong;
           sel.appendChild(opt);
         });
         if (selectedPatientId) {
           sel.value = selectedPatientId;
         }
+        refreshPatientSelectLabels();
       } catch (err) {
         console.error('Kunne ikke laste pasienter:', err);
       }
@@ -1023,7 +1111,14 @@
       } else {
         localStorage.removeItem('hapi_patient_id');
       }
+      refreshPatientSelectLabels();
     }
+
+    window.addEventListener('resize', () => {
+      // Debounce
+      clearTimeout(window._patientLabelTimer);
+      window._patientLabelTimer = setTimeout(refreshPatientSelectLabels, 150);
+    });
 
     async function showPatientDetails() {
       if (!selectedPatientId) return;
