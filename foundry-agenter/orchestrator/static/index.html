@@ -829,21 +829,22 @@
         justify-content: center;
         min-height: 40px;
       }
-      /* Patient-select becomes an icon-style chip showing only the patient ID */
+      /* Patient-select becomes a compact rounded-rectangle chip with ID + first name */
       .patient-select {
-        font-size: 11px;
-        padding: 0 6px;
-        width: 40px;
+        font-size: 12px;
+        padding: 0 10px;
         height: 40px;
-        max-width: 40px;
-        border-radius: 50%;
-        text-align: center;
-        text-align-last: center;
+        min-width: 56px;
+        max-width: 140px;
+        border-radius: 10px;
+        text-align: left;
+        text-align-last: left;
         appearance: none;
         background-image: none;
-        /* Ensure only first characters of selected option are shown */
         text-overflow: ellipsis;
         overflow: hidden;
+        font-weight: 500;
+        letter-spacing: -0.01em;
       }
       .patient-select.has-patient {
         background: var(--accent);
@@ -904,7 +905,8 @@
       .logo { width: 34px; height: 34px; }
       .logo svg { width: 20px; height: 20px; }
       .header-text h1 { font-size: 1rem; }
-      .header-badge, .header-btn, .patient-select { width: 36px; height: 36px; max-width: 36px; }
+      .header-badge, .header-btn { width: 36px; height: 36px; max-width: 36px; }
+      .patient-select { height: 36px; min-width: 50px; max-width: 120px; font-size: 11px; padding: 0 8px; }
       .chat-container { padding: 12px; gap: 14px; }
       .bubble { padding: 10px 12px; font-size: 0.86rem; }
       .avatar { width: 30px; height: 30px; }
@@ -1084,13 +1086,15 @@
         // Decorate the default "Ingen aktiv pasient" option
         if (sel.options[0]) {
           sel.options[0].dataset.labelLong = 'Ingen aktiv pasient';
-          sel.options[0].dataset.labelShort = '—';
+          sel.options[0].dataset.labelShort = 'Ingen pasient';
         }
         patientsCache.forEach(p => {
           const opt = document.createElement('option');
           opt.value = p.id;
           opt.dataset.labelLong = `${p.id} — ${p.navn}, ${p.alder} år (${p.beskrivelse})`;
-          opt.dataset.labelShort = p.id.replace('P-', ''); // e.g. "001"
+          // Short form: "P-013 Kari" — ID + first name, fits in compact chip
+          const firstName = (p.navn || '').split(/\s+/)[0] || '';
+          opt.dataset.labelShort = `${p.id} ${firstName}`.trim();
           opt.textContent = opt.dataset.labelLong;
           sel.appendChild(opt);
         });
