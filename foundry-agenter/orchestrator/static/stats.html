@@ -531,21 +531,48 @@
       return data.reports;
     }
 
-    function detectPhase(tag) {
-      if (!tag) return 'pre';
-      const m = tag.match(/fase(\d+)/i);
-      if (m) return 'fase' + m[1];
-      // Some tags don't include "fase" but were from early phases
-      if (/v[12]-keyword|v2-llm-baseline|post-mcp-fix|smarttruncate|retest|post-fix/i.test(tag)) return 'pre';
-      if (/clinical-protect|adaptive|120k/i.test(tag)) return 'fase5';
-      if (/eval00[16]-|crm-|run\d/i.test(tag)) return 'pre';
-      return 'pre';
+    // Date-based phase boundaries. When a tag is missing/ambiguous, we fall back to these.
+    // Format: {phase, from} where "from" is the earliest timestamp that belongs to the phase.
+    const PHASE_DATE_RANGES = [
+      { phase: 'pre',   from: '0000-00-00T00:00:00' },
+      { phase: 'fase1', from: '2026-03-28T18:00:00' },
+      { phase: 'fase2', from: '2026-03-29T16:00:00' },
+      { phase: 'fase3', from: '2026-03-29T22:30:00' },
+      { phase: 'fase4', from: '2026-04-01T19:00:00' },
+      { phase: 'fase5', from: '2026-04-04T14:00:00' },
+      { phase: 'fase6', from: '2026-04-07T00:00:00' },
+      { phase: 'fase7', from: '2026-04-14T00:00:00' },
+      { phase: 'fase8', from: '2026-04-15T23:00:00' },
+    ];
+
+    function phaseFromDate(tidspunkt) {
+      if (!tidspunkt) return 'pre';
+      let current = 'pre';
+      for (const range of PHASE_DATE_RANGES) {
+        if (tidspunkt >= range.from) current = range.phase;
+        else break;
+      }
+      return current;
+    }
+
+    function detectPhase(tag, tidspunkt) {
+      // 1) Explicit fase tag wins
+      if (tag) {
+        const m = tag.match(/fase(\d+)/i);
+        if (m) return 'fase' + m[1];
+        // Explicit early-phase markers (predates fase-tagging convention)
+        if (/v[12]-keyword|v2-llm-baseline|post-mcp-fix|smarttruncate/i.test(tag)) return 'pre';
+        if (/clinical-protect|adaptive|120k/i.test(tag)) return 'fase5';
+      }
+      // 2) Fall back to date — handles untagged reports + non-fase tags
+      // (e.g. "eval001-fixed", "eval020-v21-r1", "retest", "run1", etc.)
+      return phaseFromDate(tidspunkt);
     }
 
     function groupByPhase(reports) {
       const groups = {};
       reports.forEach(r => {
-        const phase = detectPhase(r.tag);
+        const phase = detectPhase(r.tag, r.tidspunkt);
         if (!groups[phase]) groups[phase] = [];
         groups[phase].push(r);
       });

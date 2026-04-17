@@ -3,7 +3,7 @@
     "tidspunkt": "2026-04-15T23:40:22.569511",
     "versjon": "v2-llm",
     "antall_spoersmaal": 30,
-    "tag": null,
+    "tag": "fase8-filesearch",
     "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
   },
   "oppsummering": {
