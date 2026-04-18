@@ -948,8 +948,37 @@
         </svg>
         <span class="btn-text">Data Statistikk</span>
       </a>
+      <button type="button" class="header-btn" onclick="openProfileModal(false)" id="profileBtn" aria-label="Min profil">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/>
+        </svg>
+        <span class="btn-text" id="profileBtnText">Min profil</span>
+      </button>
     </div>
   </header>
+
+  <!-- Profil-modal (brukernavn for chatlog) -->
+  <div class="modal-overlay" id="profileModal" onclick="closeProfileModal(event)" role="dialog" aria-labelledby="profileModalTitle" aria-modal="true">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="profileModalTitle">Min profil</h3>
+        <button class="modal-close" id="profileModalCloseBtn" onclick="closeProfileModal()" aria-label="Lukk">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-light); font-size:0.9rem; margin-bottom:14px;">
+          Oppgi ditt navn for loggføring. Navnet lagres lokalt og sendes med når du stiller spørsmål om en pasient,
+          slik at samtalene kan spores i pasientens samtalelogg.
+        </p>
+        <label for="userNameInput" style="display:block; font-size:0.85rem; color:var(--text); margin-bottom:6px; font-weight:500;">Navn</label>
+        <input type="text" id="userNameInput" maxlength="100" placeholder="F.eks. Anne Lege"
+               style="width:100%; padding:10px 12px; font-size:0.95rem; font-family:inherit; color:var(--text); background:#fff; border:1px solid var(--border); border-radius:10px; outline:none;"
+               onkeydown="if(event.key==='Enter'){event.preventDefault(); saveProfile();}">
+        <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:16px;">
+          <button type="button" onclick="saveProfile()" style="background:var(--primary); color:#fff; border:none; padding:10px 18px; border-radius:10px; font-size:0.9rem; font-weight:500; cursor:pointer; font-family:inherit;">Lagre</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Agent modal -->
   <div class="modal-overlay" id="agentModal" onclick="closeAgentModal(event)" role="dialog" aria-labelledby="agentModalTitle" aria-modal="true">
@@ -1436,7 +1465,11 @@ Nytt oppfølgingsspørsmål: ${query}`;
         const resp = await fetch(`${API_BASE}/ask`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ query, patient_id: selectedPatientId || null }),
+          body: JSON.stringify({
+            query,
+            patient_id: selectedPatientId || null,
+            user_id: localStorage.getItem('hapi_user_name') || null,
+          }),
         });
 
         if (!resp.ok) {
@@ -1523,11 +1556,66 @@ Nytt oppfølgingsspørsmål: ${query}`;
 
     // Close modal on Escape
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') document.getElementById('agentModal').classList.remove('active');
+      if (e.key === 'Escape') {
+        document.getElementById('agentModal').classList.remove('active');
+        const pm = document.getElementById('profileModal');
+        if (pm && !pm.dataset.required) pm.classList.remove('active');
+      }
     });
+
+    // --- Profil-modal (brukernavn til chatlog) ---
+    function openProfileModal(required) {
+      const modal = document.getElementById('profileModal');
+      const input = document.getElementById('userNameInput');
+      const closeBtn = document.getElementById('profileModalCloseBtn');
+      input.value = localStorage.getItem('hapi_user_name') || '';
+      if (required) {
+        modal.dataset.required = '1';
+        closeBtn.style.display = 'none';
+      } else {
+        delete modal.dataset.required;
+        closeBtn.style.display = '';
+      }
+      modal.classList.add('active');
+      setTimeout(() => input.focus(), 50);
+    }
+
+    function closeProfileModal(e) {
+      if (e && e.target !== e.currentTarget) return;
+      const modal = document.getElementById('profileModal');
+      if (modal.dataset.required) return;
+      modal.classList.remove('active');
+    }
+
+    function saveProfile() {
+      const input = document.getElementById('userNameInput');
+      const name = (input.value || '').trim();
+      if (!name) {
+        input.focus();
+        return;
+      }
+      localStorage.setItem('hapi_user_name', name);
+      const modal = document.getElementById('profileModal');
+      delete modal.dataset.required;
+      document.getElementById('profileModalCloseBtn').style.display = '';
+      modal.classList.remove('active');
+      refreshProfileBtnText();
+    }
+
+    function refreshProfileBtnText() {
+      const name = localStorage.getItem('hapi_user_name');
+      const el = document.getElementById('profileBtnText');
+      if (el) el.textContent = name ? name.split(/\s+/)[0] : 'Min profil';
+    }
 
     // Load pasienter for dropdown
     loadPatients();
+
+    // Prompt for user name on first visit
+    refreshProfileBtnText();
+    if (!localStorage.getItem('hapi_user_name')) {
+      openProfileModal(true);
+    }
 
     // Focus input on load
     input.focus();

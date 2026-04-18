@@ -20,7 +20,7 @@ import logging
 from pathlib import Path
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
@@ -29,6 +29,7 @@ from pydantic import BaseModel, Field
 from orchestrate import orchestrate, OrchestrationResult
 from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL
 import kjernejournal
+import chatlog
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -45,6 +46,7 @@ class AskRequest(BaseModel):
     query: str = Field(..., min_length=1, max_length=2000, description="Spørsmål til HAPI-agentene")
     use_llm_routing: bool = Field(False, description="Bruk LLM for routing ved lav konfidens")
     patient_id: str | None = Field(None, description="Valgfri aktiv pasient-ID (mock kjernejournal)")
+    user_id: str | None = Field(None, max_length=100, description="Navn på innlogget helsepersonell (fra localStorage)")
 
 
 class AgentResultResponse(BaseModel):
@@ -105,7 +107,7 @@ STATIC_DIR = Path(__file__).parent / "static"
 # --- Endepunkter ---
 
 @app.post("/ask", response_model=AskResponse)
-async def ask(request: AskRequest):
+async def ask(request: AskRequest, background_tasks: BackgroundTasks):
     """Send et spørsmål og få et orkestrert svar fra HAPI-agentene."""
     logger.info(f"POST /ask: {request.query[:80]}")
 
@@ -117,7 +119,7 @@ async def ask(request: AskRequest):
             patient_id=request.patient_id,
         )
 
-        return AskResponse(
+        response = AskResponse(
             answer=result.final_answer,
             routing=RoutingResponse(
                 agents=result.routing.agents,
@@ -138,6 +140,17 @@ async def ask(request: AskRequest):
             total_duration_ms=result.total_duration_ms,
             interaksjonssjekk=result.interaksjonssjekk,
         )
+
+        if request.patient_id and request.user_id:
+            background_tasks.add_task(
+                chatlog.log_chat,
+                request.patient_id,
+                request.user_id,
+                request.query,
+                response.model_dump(),
+            )
+
+        return response
 
     except Exception as e:
         logger.error(f"Orchestration feilet: {e}")
@@ -234,6 +247,13 @@ async def get_patient(patient_id: str):
     if not p:
         raise HTTPException(status_code=404, detail="Pasient ikke funnet")
     return p
+
+
+@app.get("/patients/{patient_id}/chatlog")
+async def get_patient_chatlog(patient_id: str, limit: int = 50):
+    """Hent samtalelogg for en pasient (nyeste først)."""
+    entries = await chatlog.get_chatlog(patient_id, limit=limit)
+    return {"entries": entries}
 
 
 EVALS_DIR = Path("/app/evals/rapporter")

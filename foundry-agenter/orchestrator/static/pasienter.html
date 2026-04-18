@@ -415,6 +415,96 @@
       .demografi-name { font-size: 1.15rem; }
       .item-row { padding: 8px 0; }
     }
+
+    /* --- Samtalelogg --- */
+    .chatlog-entry {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .chatlog-entry:first-child { padding-top: 0; }
+    .chatlog-entry:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .chatlog-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 0.76rem;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+    .chatlog-user-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--primary);
+      color: white;
+      padding: 2px 9px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .chatlog-timestamp { color: var(--text-light); }
+    .chatlog-agent-chip {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--primary-dark);
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-size: 0.68rem;
+      font-weight: 500;
+    }
+    .chatlog-interaksjon {
+      background: #fef9c3;
+      color: #713f12;
+      padding: 1px 7px;
+      border-radius: 5px;
+      font-size: 0.68rem;
+      font-weight: 500;
+    }
+
+    .chatlog-query {
+      font-weight: 600;
+      color: var(--text);
+      font-size: 0.92rem;
+      margin-bottom: 8px;
+      line-height: 1.45;
+    }
+
+    .chatlog-answer {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.55;
+      white-space: pre-wrap;
+      background: #f8fafa;
+      border-left: 3px solid var(--accent);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+    }
+    .chatlog-answer.collapsed {
+      max-height: 140px;
+      overflow: hidden;
+      position: relative;
+    }
+    .chatlog-answer.collapsed::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(248,250,250,0), #f8fafa);
+    }
+    .chatlog-toggle {
+      background: none;
+      border: none;
+      color: var(--primary);
+      font-size: 0.78rem;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      padding: 6px 0 0;
+      margin-top: 4px;
+    }
+    .chatlog-toggle:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -569,6 +659,7 @@
         if (!opts.silent) {
           containerEl.classList.add('detail-active');
         }
+        loadChatlog(id);
       } catch (err) {
         console.error('Kunne ikke hente pasient:', err);
         detailEl.innerHTML = `<div class="card"><div class="card-body empty-msg">Kunne ikke hente detaljer: ${esc(err.message)}</div></div>`;
@@ -643,7 +734,86 @@
           <div class="card-header">Kliniske merknader</div>
           <div class="card-body">${merknadHtml}</div>
         </div>
+
+        <div class="card">
+          <div class="card-header">Samtalelogg</div>
+          <div class="card-body" id="chatlogBody">
+            <div class="empty-msg">Laster samtalelogg…</div>
+          </div>
+        </div>
       `;
+    }
+
+    const CHATLOG_COLLAPSE_CHARS = 300;
+
+    function formatChatlogTs(iso) {
+      if (!iso) return '';
+      try {
+        const d = new Date(iso);
+        return d.toLocaleString('nb-NO', {
+          day: '2-digit', month: '2-digit', year: 'numeric',
+          hour: '2-digit', minute: '2-digit',
+        });
+      } catch (e) {
+        return iso;
+      }
+    }
+
+    function renderChatlogEntries(entries) {
+      const body = document.getElementById('chatlogBody');
+      if (!body) return;
+      if (!entries || entries.length === 0) {
+        body.innerHTML = '<div class="empty-msg">Ingen loggførte samtaler for denne pasienten.</div>';
+        return;
+      }
+      body.innerHTML = entries.map((e, idx) => {
+        const answer = e.answer || '';
+        const collapsible = answer.length > CHATLOG_COLLAPSE_CHARS;
+        const agents = (e.agents_used || [])
+          .map(a => {
+            const label = (a || '').replace(/^hapi-/, '').replace(/-agent$/, '');
+            return `<span class="chatlog-agent-chip">${esc(label)}</span>`;
+          }).join('');
+        const interaksjon = e.interaksjonssjekk
+          ? '<span class="chatlog-interaksjon">Interaksjonssjekk</span>' : '';
+        const user = e.user_id || 'ukjent';
+        return `
+          <div class="chatlog-entry">
+            <div class="chatlog-meta">
+              <span class="chatlog-user-badge">${esc(user)}</span>
+              <span class="chatlog-timestamp">${esc(formatChatlogTs(e.timestamp_iso))}</span>
+              ${agents}
+              ${interaksjon}
+            </div>
+            <div class="chatlog-query">${esc(e.query)}</div>
+            <div class="chatlog-answer${collapsible ? ' collapsed' : ''}" id="chatlogAns${idx}">${esc(answer)}</div>
+            ${collapsible ? `<button type="button" class="chatlog-toggle" data-target="chatlogAns${idx}">Vis mer</button>` : ''}
+          </div>
+        `;
+      }).join('');
+
+      body.querySelectorAll('.chatlog-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = document.getElementById(btn.dataset.target);
+          if (!target) return;
+          const collapsed = target.classList.toggle('collapsed');
+          btn.textContent = collapsed ? 'Vis mer' : 'Vis mindre';
+        });
+      });
+    }
+
+    async function loadChatlog(patientId) {
+      const body = document.getElementById('chatlogBody');
+      if (!body) return;
+      try {
+        const resp = await fetch(`${API_BASE}/patients/${encodeURIComponent(patientId)}/chatlog`);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const data = await resp.json();
+        renderChatlogEntries(data.entries || []);
+      } catch (err) {
+        console.error('Kunne ikke hente chatlog:', err);
+        body.innerHTML = `<div class="empty-msg">Kunne ikke hente samtalelogg.</div>`;
+      }
     }
 
     // Event handlers
