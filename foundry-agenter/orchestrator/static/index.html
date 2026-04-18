@@ -69,11 +69,9 @@
     .logo {
       width: 44px;
       height: 44px;
-      background: rgba(255,255,255,0.15);
       border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: block;
+      flex-shrink: 0;
       font-size: 24px;
       flex-shrink: 0;
     }
@@ -139,8 +137,11 @@
     }
 
     .welcome-icon {
-      font-size: 56px;
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
       margin-bottom: 16px;
+      display: block;
     }
 
     .welcome h2 {
@@ -808,8 +809,7 @@
         padding: 10px 12px;
         gap: 8px;
       }
-      .logo { width: 36px; height: 36px; flex-shrink: 0; }
-      .logo svg { width: 22px; height: 22px; }
+      .logo { width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; }
 
       /* Keep title readable — swap to short form, strip subtitle */
       .header-text { min-width: 0; flex: 0 1 auto; }
@@ -860,7 +860,7 @@
       .bubble { max-width: calc(100% - 46px); padding: 12px 14px; font-size: 0.88rem; }
 
       .welcome { padding: 24px 12px; max-width: 100%; }
-      .welcome-icon { font-size: 40px; margin-bottom: 10px; }
+      .welcome-icon { width: 60px; height: 60px; border-radius: 12px; margin-bottom: 10px; }
       .welcome h2 { font-size: 1.2rem; margin-bottom: 6px; }
       .welcome p { font-size: 0.85rem; line-height: 1.5; margin-bottom: 18px; }
 
@@ -903,8 +903,7 @@
     /* Ultra-narrow (<380px) — iPhone SE and older */
     @media (max-width: 380px) {
       header { padding: 8px 10px; gap: 6px; }
-      .logo { width: 34px; height: 34px; }
-      .logo svg { width: 20px; height: 20px; }
+      .logo { width: 34px; height: 34px; border-radius: 9px; }
       .header-text h1 { font-size: 1rem; }
       .header-badge, .header-btn { width: 36px; height: 36px; max-width: 36px; }
       .patient-select { height: 36px; min-width: 50px; max-width: 120px; font-size: 11px; padding: 0 8px; }
@@ -920,11 +919,7 @@
 <body>
 
   <header>
-    <div class="logo" aria-hidden="true">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-      </svg>
-    </div>
+    <img class="logo" src="/static/logo-on-dark.svg" alt="HAPI" aria-hidden="true">
     <div class="header-text">
       <h1><span class="title-long">HAPI Helseassistent</span><span class="title-short">HAPI</span></h1>
       <p>Norsk helseinformasjon fra Helsedirektoratet</p>
@@ -999,11 +994,7 @@
 
   <div class="chat-container" id="chat">
     <div class="welcome" id="welcome">
-      <div class="welcome-icon">
-        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#0d6e6e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-        </svg>
-      </div>
+      <img class="welcome-icon" src="/static/logo.svg" alt="HAPI" aria-hidden="true">
       <h2>Hei! Hva lurer du på?</h2>
       <p>
         Jeg henter faglig informasjon fra Helsedirektoratets retningslinjer, kodeverk, kvalitetsindikatorer

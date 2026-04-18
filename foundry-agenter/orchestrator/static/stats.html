@@ -60,10 +60,9 @@
 
     .logo {
       width: 44px; height: 44px;
-      background: rgba(255,255,255,0.15);
       border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; flex-shrink: 0;
+      flex-shrink: 0;
+      display: block;
     }
 
     .header-text h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
@@ -453,11 +452,7 @@
 <body>
 
   <header>
-    <div class="logo" aria-hidden="true">
-      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-      </svg>
-    </div>
+    <img class="logo" src="/static/logo-on-dark.svg" alt="HAPI" aria-hidden="true">
     <div class="header-text">
       <h1>Data Statistikk</h1>
       <p>Eval-resultater over tid</p>
