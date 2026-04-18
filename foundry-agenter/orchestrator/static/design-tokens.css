@@ -1,0 +1,210 @@
+/* =========================================================
+   HAPI Design System — Colors, Type, Spacing, Elevation
+   Canonical design tokens for HAPI Helseassistent.
+   Prefer --hapi-* tokens in new code. Legacy aliases
+   (--primary, --accent, etc.) coexist for backward compat.
+   ========================================================= */
+
+:root {
+  /* ---- Brand ---- */
+  --hapi-primary:        #0d6e6e;
+  --hapi-primary-light:  #0f8a8a;
+  --hapi-primary-dark:   #094e4e;
+  --hapi-accent:         #28a87d;
+  --hapi-accent-light:   #d0f0e4;
+
+  /* ---- Surfaces ---- */
+  --hapi-bg:        #f0f5f4;
+  --hapi-bg-alt:    #f8fafa;
+  --hapi-surface:   #ffffff;
+  --hapi-bg-chat:   #ffffff;
+
+  /* ---- Text ---- */
+  --hapi-text:        #1a2e2e;
+  --hapi-text-light:  #5a7272;
+  --hapi-placeholder: #a0b5b5;
+
+  /* ---- Lines ---- */
+  --hapi-border:      #d4e0df;
+  --hapi-border-soft: #e8efee;
+
+  /* ---- Semantic status ---- */
+  --hapi-info-bg:      #e0e7ff;
+  --hapi-info-fg:      #3730a3;
+  --hapi-warning-bg:   #fef3c7;
+  --hapi-warning-fg:   #92400e;
+  --hapi-warning-mid:  #fef9c3;
+  --hapi-warning-line: #eab308;
+  --hapi-danger-bg:    #fee2e2;
+  --hapi-danger-fg:    #b91c1c;
+  --hapi-danger-line:  #fecaca;
+  --hapi-violet-bg:    #ede9fe;
+  --hapi-violet-fg:    #5b21b6;
+  --hapi-blue-bg:      #dbeafe;
+  --hapi-blue-code:    #e0f2fe;
+  --hapi-blue-code-fg: #0369a1;
+  --hapi-mint-bg:      #d1fae5;
+
+  /* ---- Score / quality palette ---- */
+  --hapi-score-pass:    #16a34a;
+  --hapi-score-partial: #eab308;
+  --hapi-score-miss:    #f97316;
+  --hapi-score-fail:    #dc2626;
+
+  /* ---- Chat bubbles ---- */
+  --hapi-user-bubble: var(--hapi-primary);
+  --hapi-bot-bubble:  #ffffff;
+
+  /* ---- Signature gradients (always 135deg) ---- */
+  --hapi-grad-header: linear-gradient(135deg, var(--hapi-primary) 0%, var(--hapi-primary-dark) 100%);
+  --hapi-grad-avatar: linear-gradient(135deg, var(--hapi-primary) 0%, var(--hapi-accent) 100%);
+  --hapi-grad-kpi:    linear-gradient(135deg, var(--hapi-primary) 0%, var(--hapi-primary-light) 100%);
+  --hapi-grad-orch:   linear-gradient(135deg, #f0faf8 0%, #eef6f5 100%);
+
+  /* ---- Elevation ---- */
+  --hapi-shadow:        0 2px 12px rgba(13, 110, 110, 0.08);
+  --hapi-shadow-lg:     0 8px 32px rgba(13, 110, 110, 0.12);
+  --hapi-shadow-header: 0 2px 16px rgba(0, 0, 0, 0.15);
+  --hapi-shadow-send:   0 4px 12px rgba(13, 110, 110, 0.30);
+
+  /* ---- Radii ---- */
+  --hapi-radius-xs:   6px;
+  --hapi-radius-sm:   10px;
+  --hapi-radius:      16px;
+  --hapi-radius-pill: 20px;
+  --hapi-radius-chip: 12px;
+  --hapi-radius-full: 9999px;
+
+  /* ---- Spacing scale ---- */
+  --hapi-space-1: 4px;
+  --hapi-space-2: 6px;
+  --hapi-space-3: 8px;
+  --hapi-space-4: 10px;
+  --hapi-space-5: 12px;
+  --hapi-space-6: 14px;
+  --hapi-space-7: 16px;
+  --hapi-space-8: 20px;
+  --hapi-space-9: 24px;
+
+  /* ---- Typography ---- */
+  --hapi-font-sans: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont,
+                    'Helvetica Neue', Arial, sans-serif;
+  --hapi-font-mono: 'SF Mono', 'Consolas', 'Menlo', 'Courier New', monospace;
+  --hapi-text-base:    0.92rem;
+  --hapi-leading:      1.65;
+  --hapi-leading-tight: 1.4;
+
+  /* ---- Legacy aliases (existing stylesheets still reference these) ---- */
+  --primary:       var(--hapi-primary);
+  --primary-light: var(--hapi-primary-light);
+  --primary-dark:  var(--hapi-primary-dark);
+  --accent:        var(--hapi-accent);
+  --accent-light:  var(--hapi-accent-light);
+  --bg:            var(--hapi-bg);
+  --text:          var(--hapi-text);
+  --text-light:    var(--hapi-text-light);
+  --border:        var(--hapi-border);
+  --shadow:        var(--hapi-shadow);
+  --shadow-lg:     var(--hapi-shadow-lg);
+  --radius:        var(--hapi-radius);
+  --radius-sm:     var(--hapi-radius-sm);
+}
+
+/* =========================================================
+   Semantic typography utilities (optional — pick when useful)
+   ========================================================= */
+
+.hapi-h1 {
+  font-family: var(--hapi-font-sans);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.hapi-h2 {
+  font-family: var(--hapi-font-sans);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--hapi-primary);
+}
+
+.hapi-h3 {
+  font-family: var(--hapi-font-sans);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--hapi-primary);
+  margin: 16px 0 8px;
+}
+
+.hapi-eyebrow {
+  font-family: var(--hapi-font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--hapi-primary);
+}
+
+.hapi-body {
+  font-family: var(--hapi-font-sans);
+  font-size: var(--hapi-text-base);
+  line-height: var(--hapi-leading);
+  color: var(--hapi-text);
+}
+
+.hapi-body-sm {
+  font-family: var(--hapi-font-sans);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--hapi-text-light);
+}
+
+.hapi-meta {
+  font-family: var(--hapi-font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--hapi-text-light);
+}
+
+.hapi-disclaimer {
+  font-family: var(--hapi-font-sans);
+  font-size: 0.7rem;
+  line-height: 1.35;
+  color: var(--hapi-text-light);
+  opacity: 0.85;
+}
+
+.hapi-code {
+  font-family: var(--hapi-font-mono);
+  font-size: 0.85em;
+  background: #f1f5f4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.hapi-id-badge {
+  display: inline-block;
+  font-family: var(--hapi-font-sans);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: var(--hapi-primary);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: var(--hapi-radius-xs);
+}
+
+.hapi-card {
+  background: var(--hapi-surface);
+  border: 1px solid var(--hapi-border);
+  border-radius: var(--hapi-radius);
+  box-shadow: var(--hapi-shadow);
+}
+
+.hapi-card-header-strip {
+  background: var(--hapi-bg-alt);
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--hapi-border);
+}
