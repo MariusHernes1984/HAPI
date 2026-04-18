@@ -326,6 +326,12 @@ async def stats_page():
     return FileResponse(STATIC_DIR / "stats.html")
 
 
+@app.get("/pasienter", include_in_schema=False)
+async def pasienter_page():
+    """Serve patient overview dashboard."""
+    return FileResponse(STATIC_DIR / "pasienter.html")
+
+
 @app.get("/", include_in_schema=False)
 async def root():
     """Serve chat UI."""

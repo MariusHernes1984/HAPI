@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAPI — Pasientoversikt</title>
+  <style>
+    :root {
+      --primary: #0d6e6e;
+      --primary-light: #0f8a8a;
+      --primary-dark: #094e4e;
+      --accent: #28a87d;
+      --accent-light: #d0f0e4;
+      --bg: #f0f5f4;
+      --text: #1a2e2e;
+      --text-light: #5a7272;
+      --border: #d4e0df;
+      --shadow: 0 2px 12px rgba(13,110,110,0.08);
+      --shadow-lg: 0 8px 32px rgba(13,110,110,0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--primary-light);
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: white;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; flex-shrink: 0;
+    }
+
+    .header-text h1 { font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; }
+    .header-text p { font-size: 0.78rem; opacity: 0.8; margin-top: 1px; }
+
+    .header-back {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.12);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 500;
+      color: white; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .header-back:hover { background: rgba(255,255,255,0.22); }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* --- Venstre panel: liste --- */
+    .patient-list-panel {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .search-wrap {
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--border);
+      background: white;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      background: white;
+    }
+
+    .list-count {
+      font-size: 0.72rem;
+      color: var(--text-light);
+      margin-top: 6px;
+      padding: 0 2px;
+    }
+
+    .patient-list {
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .patient-row {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.12s;
+      background: white;
+      border-left: 3px solid transparent;
+    }
+    .patient-row:hover { background: #f8fafa; }
+    .patient-row.selected {
+      background: var(--accent-light);
+      border-left-color: var(--accent);
+    }
+    .patient-row:last-child { border-bottom: none; }
+
+    .patient-row-top {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .patient-id-badge {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      flex-shrink: 0;
+    }
+    .patient-row.selected .patient-id-badge {
+      background: var(--accent);
+    }
+
+    .patient-name {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .patient-meta {
+      font-size: 0.72rem;
+      color: var(--text-light);
+    }
+
+    .patient-desc {
+      font-size: 0.74rem;
+      color: var(--text-light);
+      margin-top: 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .empty-list {
+      padding: 32px 20px;
+      text-align: center;
+      color: var(--text-light);
+      font-size: 0.85rem;
+    }
+
+    /* --- Høyre panel: detaljer --- */
+    .patient-detail-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .detail-empty {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      padding: 60px 24px;
+      text-align: center;
+      color: var(--text-light);
+    }
+    .detail-empty svg {
+      width: 48px; height: 48px;
+      color: var(--border);
+      margin-bottom: 12px;
+    }
+    .detail-empty p { font-size: 0.95rem; }
+
+    .card {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: #f8fafa;
+    }
+
+    .card-body { padding: 18px 20px; }
+
+    /* Demografi-kort */
+    .demografi-card .card-body {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .demografi-main {
+      flex: 1;
+      min-width: 200px;
+    }
+    .demografi-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+      letter-spacing: -0.01em;
+    }
+    .demografi-sub {
+      font-size: 0.88rem;
+      color: var(--text-light);
+      margin-top: 4px;
+    }
+    .demografi-id {
+      background: var(--primary);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    /* Diagnoser / medisiner — rader */
+    .item-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .item-row:last-child { border-bottom: none; }
+    .item-row:first-child { padding-top: 0; }
+
+    .code-badge {
+      display: inline-block;
+      background: var(--accent-light);
+      color: var(--primary-dark);
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      font-family: 'SF Mono', Consolas, monospace;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+    .code-badge.atc { background: #e0f2fe; color: #0369a1; }
+
+    .item-text {
+      flex: 1;
+      font-size: 0.92rem;
+      color: var(--text);
+      min-width: 0;
+    }
+    .item-meta {
+      font-size: 0.76rem;
+      color: var(--text-light);
+      margin-top: 2px;
+    }
+
+    /* Allergi-chips */
+    .allergy-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .allergy-chip {
+      background: #fee2e2;
+      color: #b91c1c;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .empty-msg {
+      color: var(--text-light);
+      font-size: 0.88rem;
+      font-style: italic;
+    }
+
+    /* Merknader */
+    .merknad-body {
+      background: #fef9c3;
+      border-left: 4px solid #eab308;
+      padding: 14px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #713f12;
+    }
+
+    /* Mobil tilbake-knapp */
+    .mobile-back {
+      display: none;
+      background: white;
+      border: 1px solid var(--border);
+      color: var(--primary);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+      box-shadow: var(--shadow);
+    }
+    .mobile-back:hover { background: #f8fafa; }
+
+    @media (max-width: 640px) {
+      header { padding: 12px 14px; gap: 10px; }
+      .logo { width: 38px; height: 38px; }
+      .header-text h1 { font-size: 1rem; }
+      .header-text p { font-size: 0.7rem; }
+      .header-back {
+        width: 40px; height: 40px; padding: 0;
+        border-radius: 50%; justify-content: center;
+      }
+      .header-back .back-text { display: none; }
+
+      .container {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 14px;
+      }
+
+      .patient-list-panel {
+        position: static;
+        max-height: none;
+      }
+
+      .patient-list {
+        max-height: 60vh;
+      }
+
+      /* Når pasient er valgt på mobil: skjul liste, vis detaljer + tilbake-knapp */
+      .container.detail-active .patient-list-panel { display: none; }
+      .container.detail-active .mobile-back { display: inline-flex; }
+      .container:not(.detail-active) .patient-detail-panel { display: none; }
+
+      .demografi-name { font-size: 1.25rem; }
+      .card-body { padding: 14px 16px; }
+      .card-header { padding: 12px 16px; font-size: 0.76rem; }
+    }
+
+    @media (max-width: 380px) {
+      .patient-row { padding: 10px 12px; }
+      .patient-name { font-size: 0.88rem; }
+      .demografi-name { font-size: 1.15rem; }
+      .item-row { padding: 8px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+        <circle cx="12" cy="7" r="4"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>Pasientoversikt</h1>
+      <p>Kjernejournal — mock-data for demo</p>
+    </div>
+    <a class="header-back" href="/" aria-label="Tilbake til chat">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+      </svg>
+      <span class="back-text">Tilbake til chat</span>
+    </a>
+  </header>
+
+  <div class="container" id="container">
+    <aside class="patient-list-panel" aria-label="Pasientliste">
+      <div class="search-wrap">
+        <input
+          type="search"
+          class="search-input"
+          id="searchInput"
+          placeholder="Søk navn eller ID…"
+          autocomplete="off"
+          aria-label="Søk i pasientliste"
+        />
+        <div class="list-count" id="listCount"></div>
+      </div>
+      <div class="patient-list" id="patientList" role="listbox" aria-label="Pasienter">
+        <div class="empty-list">Laster pasienter…</div>
+      </div>
+    </aside>
+
+    <section class="patient-detail-panel" id="detailPanel" aria-live="polite">
+      <button type="button" class="mobile-back" id="mobileBack">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+        </svg>
+        Tilbake til liste
+      </button>
+      <div class="detail-empty" id="detailEmpty">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <p>Velg en pasient fra listen for å se detaljer</p>
+      </div>
+      <div id="detailContent" style="display:none;"></div>
+    </section>
+  </div>
+
+  <script>
+    const API_BASE = window.location.origin;
+
+    function esc(s) {
+      return String(s ?? '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    let patientsCache = [];
+    let selectedPatientId = localStorage.getItem('hapi_patient_id') || '';
+
+    const listEl = document.getElementById('patientList');
+    const searchEl = document.getElementById('searchInput');
+    const countEl = document.getElementById('listCount');
+    const emptyEl = document.getElementById('detailEmpty');
+    const detailEl = document.getElementById('detailContent');
+    const containerEl = document.getElementById('container');
+    const mobileBackBtn = document.getElementById('mobileBack');
+
+    function kjonnTekst(k) {
+      if (k === 'K') return 'Kvinne';
+      if (k === 'M') return 'Mann';
+      return k || '';
+    }
+
+    function renderList(filter) {
+      const q = (filter || '').trim().toLowerCase();
+      const filtered = q
+        ? patientsCache.filter(p =>
+            p.navn.toLowerCase().includes(q) || p.id.toLowerCase().includes(q))
+        : patientsCache;
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = '<div class="empty-list">Ingen treff.</div>';
+        countEl.textContent = '0 av ' + patientsCache.length;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(p => {
+        const isSelected = p.id === selectedPatientId;
+        return `
+          <div class="patient-row${isSelected ? ' selected' : ''}"
+               role="option"
+               tabindex="0"
+               aria-selected="${isSelected}"
+               data-id="${esc(p.id)}">
+            <div class="patient-row-top">
+              <span class="patient-id-badge">${esc(p.id)}</span>
+              <span class="patient-name">${esc(p.navn)}</span>
+            </div>
+            <div class="patient-meta">${esc(p.alder)} år · ${esc(kjonnTekst(p.kjonn))}</div>
+            <div class="patient-desc">${esc(p.beskrivelse || '')}</div>
+          </div>
+        `;
+      }).join('');
+
+      if (q) {
+        countEl.textContent = `${filtered.length} av ${patientsCache.length}`;
+      } else {
+        countEl.textContent = `${patientsCache.length} pasienter`;
+      }
+    }
+
+    async function loadPatients() {
+      try {
+        const resp = await fetch(`${API_BASE}/patients`);
+        const data = await resp.json();
+        patientsCache = data.patients || [];
+        renderList('');
+        if (selectedPatientId && patientsCache.some(p => p.id === selectedPatientId)) {
+          showPatient(selectedPatientId, { silent: true });
+        }
+      } catch (err) {
+        console.error('Kunne ikke laste pasienter:', err);
+        listEl.innerHTML = '<div class="empty-list">Kunne ikke laste pasienter.</div>';
+      }
+    }
+
+    async function showPatient(id, opts) {
+      opts = opts || {};
+      selectedPatientId = id;
+      localStorage.setItem('hapi_patient_id', id);
+      renderList(searchEl.value);
+
+      try {
+        const resp = await fetch(`${API_BASE}/patients/${encodeURIComponent(id)}`);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const p = await resp.json();
+        renderDetail(p);
+        emptyEl.style.display = 'none';
+        detailEl.style.display = '';
+        if (!opts.silent) {
+          containerEl.classList.add('detail-active');
+        }
+      } catch (err) {
+        console.error('Kunne ikke hente pasient:', err);
+        detailEl.innerHTML = `<div class="card"><div class="card-body empty-msg">Kunne ikke hente detaljer: ${esc(err.message)}</div></div>`;
+        emptyEl.style.display = 'none';
+        detailEl.style.display = '';
+      }
+    }
+
+    function renderDetail(p) {
+      const diagnoser = p.diagnoser || [];
+      const medisiner = p.faste_medisiner || [];
+      const allergier = p.allergier || [];
+      const merknader = (p.merknader || '').trim();
+
+      const diagnoseHtml = diagnoser.length
+        ? diagnoser.map(d => `
+            <div class="item-row">
+              <span class="code-badge">${esc(d.kodeverk || 'ICD-10')}: ${esc(d.kode)}</span>
+              <div class="item-text">
+                ${esc(d.tekst)}
+                ${d.siden ? `<div class="item-meta">Siden ${esc(d.siden)}</div>` : ''}
+              </div>
+            </div>`).join('')
+        : '<div class="empty-msg">Ingen registrerte diagnoser.</div>';
+
+      const medisinHtml = medisiner.length
+        ? medisiner.map(m => `
+            <div class="item-row">
+              <span class="code-badge atc">ATC: ${esc(m.atc || '—')}</span>
+              <div class="item-text">
+                <strong>${esc(m.navn)}</strong> · ${esc(m.dose || '')}
+                ${m.indikasjon ? `<div class="item-meta">${esc(m.indikasjon)}</div>` : ''}
+              </div>
+            </div>`).join('')
+        : '<div class="empty-msg">Ingen faste medisiner.</div>';
+
+      const allergiHtml = allergier.length
+        ? `<div class="allergy-chips">${allergier.map(a => `<span class="allergy-chip">${esc(a)}</span>`).join('')}</div>`
+        : '<div class="empty-msg">Ingen kjente allergier.</div>';
+
+      const merknadHtml = merknader
+        ? `<div class="merknad-body">${esc(merknader)}</div>`
+        : '<div class="empty-msg">Ingen merknader.</div>';
+
+      detailEl.innerHTML = `
+        <div class="card demografi-card">
+          <div class="card-body">
+            <div class="demografi-main">
+              <div class="demografi-name">${esc(p.navn)}</div>
+              <div class="demografi-sub">${esc(p.alder)} år · ${esc(kjonnTekst(p.kjonn))}</div>
+            </div>
+            <span class="demografi-id">${esc(p.id)}</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Diagnoser (${diagnoser.length})</div>
+          <div class="card-body">${diagnoseHtml}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Faste medisiner (${medisiner.length})</div>
+          <div class="card-body">${medisinHtml}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Allergier</div>
+          <div class="card-body">${allergiHtml}</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">Kliniske merknader</div>
+          <div class="card-body">${merknadHtml}</div>
+        </div>
+      `;
+    }
+
+    // Event handlers
+    searchEl.addEventListener('input', (e) => renderList(e.target.value));
+
+    listEl.addEventListener('click', (e) => {
+      const row = e.target.closest('.patient-row');
+      if (row) showPatient(row.dataset.id);
+    });
+
+    listEl.addEventListener('keydown', (e) => {
+      const row = e.target.closest('.patient-row');
+      if (!row) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showPatient(row.dataset.id);
+      }
+    });
+
+    mobileBackBtn.addEventListener('click', () => {
+      containerEl.classList.remove('detail-active');
+    });
+
+    loadPatients();
+  </script>
+</body>
+</html>
