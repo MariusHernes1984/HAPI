@@ -135,6 +135,8 @@ const CRITICAL_ARRAY_FIELDS = new Set([
   "anbefalinger", "tiltak",
   "medikamenter", "legemidler",
   "trinn", "steg",
+  // NKI og kvalitetsindikatorer — unngå trunkering av full katalog
+  "kvalitetsindikatorer", "indikatorer", "indikator", "nki",
 ]);
 
 // Felter som ofte er store og kan trygt forkortes
@@ -171,7 +173,7 @@ const MAX_ARRAY_ITEMS = 15;      // Maks antall elementer i en vanlig array
 const MAX_TEXT_LENGTH = 2000;     // Maks tegn per tekstfelt
 const MAX_ESSENTIAL_LENGTH = 6000; // Økt fra 4000 — bevarer mer av dosering/anbefalinger/forløpstider
 const MAX_TOTAL_LENGTH = 60000;   // Maks total JSON-lengde — 120K testet og feilet (agenter drukner i data)
-const DEFAULT_SEARCH_TOP = 15;    // Maks antall resultater fra HAPI søk-API
+const DEFAULT_SEARCH_TOP = 30;    // Økt fra 15 — bredere dekning av retningslinjer og NKI-er
 
 function stripHtml(html: string): string {
   return html
