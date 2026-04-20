@@ -1069,38 +1069,7 @@
         og legemiddeldata. Ved aktiv pasient sjekkes interaksjoner automatisk mot FEST/Statens legemiddelverk.
         Still et spørsmål så finner jeg svar fra riktig kilde.
       </p>
-      <div class="suggestions collapsed" id="suggestionList">
-        <!-- Kjernejournal-demoer (auto-velger pasient) — alltid synlige -->
-        <button type="button" class="suggestion kjernejournal" data-patient="P-001" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F4CB;</span>
-          <span>Pasienten har vondt i kneet etter en falltur. Hva kan hun ta?</span>
-        </button>
-        <button type="button" class="suggestion kjernejournal" data-patient="P-030" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F4CB;</span>
-          <span>Han plages av hodepine. Hva kan han bruke?</span>
-        </button>
-        <button type="button" class="suggestion kjernejournal full" data-patient="P-013" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F3F7;&#xFE0F;&#x1F4CA;&#x1F4CB;</span>
-          <span>HbA1c er 64 mmol/mol. Bør jeg starte metformin igjen, hva er ATC-koden, og finnes det nasjonale mål for HbA1c-kontroll?</span>
-        </button>
-        <button type="button" class="suggestion kjernejournal" data-patient="P-036" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F4CB;</span>
-          <span>Hjemmesykepleien melder at hun er forvirret og urolig om kveldene. Hva tenker dere?</span>
-        </button>
-        <!-- Multi-agent uten kjernejournal — skjules bak toggle paa mobil -->
-        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1FAC1;&#x1F3F7;&#xFE0F;&#x1F4CA;</span>
-          <span>Hva er ICD-10-koden for KOLS, hva sier retningslinjene om førstelinjebehandling, og finnes det kvalitetsindikatorer for KOLS-oppfølging?</span>
-        </button>
-        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;</span>
-          <span>Hva anbefaler retningslinjene for behandling av insomni hos voksne?</span>
-        </button>
-        <button type="button" class="suggestion extra" onclick="askSuggestion(this)">
-          <span class="suggestion-icon" aria-hidden="true">&#x1F48A;&#x1F3F7;&#xFE0F;</span>
-          <span>En pasient bruker Ozempic. Hva er virkestoffet og ATC-koden, og hva sier retningslinjene om indikasjonen ved type 2 diabetes?</span>
-        </button>
-      </div>
+      <div class="suggestions collapsed" id="suggestionList"></div>
       <button type="button" class="suggestions-toggle" id="suggestionsToggle" onclick="toggleSuggestions(this)" aria-expanded="false" aria-controls="suggestionList">
         Se flere forslag
       </button>
@@ -1264,6 +1233,167 @@
         localStorage.removeItem('hapi_patient_id');
       }
       refreshPatientSelectLabels();
+      updateSuggestions();
+    }
+
+    // --- Dynamiske forslag basert på aktiv pasient ---
+    const SUGGESTION_SETS = {
+      default: [
+        { icon: '\u{1F4D6}', text: 'Hva er førstevalg antibiotika ved ukomplisert cystitt?' },
+        { icon: '\u{1FAC1}', text: 'Førstevalg vedlikeholdsbehandling for KOLS?' },
+        { icon: '\u{1F3F7}\uFE0F', text: 'ICD-10 for atrieflimmer?' },
+        { icon: '\u{1F4CA}', text: 'Hvilke nasjonale kvalitetsindikatorer finnes for diabetes?' }
+      ],
+      onkologi: [
+        { icon: '\u26A0\uFE0F', text: 'Pasienten har hatt diaré flere ganger daglig i noen dager. Hvordan bør jeg tenke?' },
+        { icon: '\u{1F48A}', text: 'Pasienten har gjennombruddssmerter tross fast analgesi. Hva er neste steg?' },
+        { icon: '\u{1F48A}', text: 'Kvalme under behandling. Trygt med ondansetron?' }
+      ],
+      gravid: [
+        { icon: '\u{1F48A}', text: 'Pasienten har hodepine. Kan hun ta ibuprofen, eller bør jeg holde meg til paracetamol?' },
+        { icon: '\u{1FA7A}', text: 'BT er forhøyet. Hvilket BT-medikament er trygt i svangerskap?' }
+      ],
+      psykiatri: [
+        { icon: '\u{1F48A}', text: 'Pasienten har luftveisinfeksjon. Er klaritromycin trygt?' },
+        { icon: '\u{1F48A}', text: 'Hun har tatt ibuprofen mot ryggsmerter og er nå kvalm og ustø. Kan det være toksisitet?' }
+      ],
+      klozapin: [
+        { icon: '\u{1F48A}', text: 'Pasienten har luftveisinfeksjon. Er klaritromycin trygt?' },
+        { icon: '\u{1F6AD}', text: 'Pasienten vil slutte å røyke. Hva må jeg følge med på?' }
+      ],
+      litium: [
+        { icon: '\u{1F48A}', text: 'Hun har tatt ibuprofen mot ryggsmerter og er nå kvalm og ustø. Litiumtoksisitet?' },
+        { icon: '\u{1F48A}', text: 'Pasienten trenger smertestillende \u2014 hva anbefales?' }
+      ],
+      parkinson: [
+        { icon: '\u{1F48A}', text: 'Pasienten er kvalm. Kan jeg gi Afipran?' },
+        { icon: '\u{1F48A}', text: 'Smerter etter fall \u2014 er tramadol greit?' }
+      ],
+      ms: [
+        { icon: '\u2708\uFE0F', text: 'Pasienten skal reise til Sørøst-Asia. Vaksiner \u2014 noe kontraindisert?' }
+      ],
+      lar: [
+        { icon: '\u{1F48A}', text: 'Pasienten skal få ondansetron postoperativt. Noe jeg bør tenke på?' },
+        { icon: '\u{1F48A}', text: 'Luftveisinfeksjon \u2014 hvilken antibiotika er trygg?' }
+      ],
+      alkohol: [
+        { icon: '\u{1F48A}', text: 'Trenger smertestillende, men har cirrhose. Hva er trygt?' },
+        { icon: '\u{1F634}', text: 'Dårlig søvn \u2014 kan jeg skrive ut zopiklon eller nitrazepam?' }
+      ],
+      cirrhose: [
+        { icon: '\u{1F48A}', text: 'Pasienten har UVI. Er ciprofloksacin trygt?' },
+        { icon: '\u{1F634}', text: 'Pasienten klager over dårlig søvn. Zopiklon eller nitrazepam?' }
+      ],
+      hiv: [
+        { icon: '\u{1F48A}', text: 'Hun har sure oppstøt og vil kjøpe magnesium-tyggetabletter. Noe å informere om?' },
+        { icon: '\u2708\uFE0F', text: 'Pasienten skal reise til Sørøst-Asia. Vaksiner \u2014 noe kontraindisert?' }
+      ],
+      antikoagulasjon: [
+        { icon: '\u{1F48A}', text: 'Pasienten har vondt i kneet etter fall. Kan hun ta Ibux?' },
+        { icon: '\u{1F48A}', text: 'Smerter \u2014 hva kan jeg trygt forskrive?' }
+      ],
+      diabetes: [
+        { icon: '\u{1F4CA}', text: 'HbA1c er dårlig regulert. Hva anbefaler retningslinjene?' },
+        { icon: '\u{1F48A}', text: 'Kan pasienten ta ibuprofen for muskelsmerter?' }
+      ],
+      kols: [
+        { icon: '\u{1F48A}', text: 'Pasienten har eksaserbasjon. Hvilken antibiotika anbefales?' },
+        { icon: '\u{1F4D6}', text: 'Vedlikeholdsbehandling \u2014 neste trinn?' }
+      ],
+      traume: [
+        { icon: '\u{1F48A}', text: 'Nevropatisk smerte tross gabapentin. Hva er neste?' },
+        { icon: '\u{1F48A}', text: 'VTE-profylakse \u2014 hvor lenge etter operasjon?' }
+      ],
+      pediatri: [
+        { icon: '\u{1F48A}', text: 'Feber etter vaksine. Hvilken dose ibuprofen/paracetamol?' },
+        { icon: '\u{1F48A}', text: 'Luftveisinfeksjon hos barn \u2014 antibiotika?' }
+      ]
+    };
+
+    function categorizePatient(p) {
+      const cats = [];
+      const codes = (p.diagnoser || []).map(d => (d.kode || '').toUpperCase());
+      const atc = (p.faste_medisiner || []).map(m => (m.atc || '').toUpperCase());
+      const meds = (p.faste_medisiner || []).map(m => (m.navn || '').toLowerCase()).join(' ');
+
+      // Pediatri (alder) foerst — barn trumfer andre kategorier paa toppen
+      if (typeof p.alder === 'number' && p.alder < 18) cats.push('pediatri');
+
+      // Legemiddel-spesifikke tema
+      if (meds.includes('klozapin')) cats.push('klozapin');
+      if (meds.includes('litium')) cats.push('litium');
+      if (meds.includes('levodopa')) cats.push('parkinson');
+      if (meds.includes('metadon')) cats.push('lar');
+      if (meds.includes('okrelizumab') || meds.includes('ocrevus')) cats.push('ms');
+
+      // ICD-10-basert
+      if (codes.some(c => c.startsWith('C'))) cats.push('onkologi');
+      if (codes.some(c => c.startsWith('O'))) cats.push('gravid');
+      if (codes.some(c => c.startsWith('B20'))) cats.push('hiv');
+      if (codes.some(c => c.startsWith('K70'))) cats.push('cirrhose');
+      if (codes.some(c => c.startsWith('F10'))) cats.push('alkohol');
+      if (codes.some(c => c.startsWith('F11')) && !cats.includes('lar')) cats.push('lar');
+      if (codes.some(c => c.startsWith('F20')) && !cats.includes('klozapin')) cats.push('psykiatri');
+      if (codes.some(c => c.startsWith('F3'))) cats.push('psykiatri');
+      if (codes.some(c => c.startsWith('G20')) && !cats.includes('parkinson')) cats.push('parkinson');
+      if (codes.some(c => c.startsWith('G35')) && !cats.includes('ms')) cats.push('ms');
+      if (codes.some(c => c.startsWith('J44'))) cats.push('kols');
+      if (codes.some(c => c.startsWith('E10') || c.startsWith('E11'))) cats.push('diabetes');
+      if (codes.some(c => c.startsWith('S') || c.startsWith('T') || c.startsWith('G82'))) cats.push('traume');
+
+      // ATC-basert — antikoagulasjon (kun hvis ikke allerede kategorisert sterkt)
+      if (atc.some(a => a.startsWith('B01A'))) cats.push('antikoagulasjon');
+
+      return cats;
+    }
+
+    async function updateSuggestions() {
+      const list = document.getElementById('suggestionList');
+      if (!list) return;
+
+      let items = [];
+      let linkedPatientId = '';
+
+      if (selectedPatientId) {
+        linkedPatientId = selectedPatientId;
+        try {
+          const resp = await fetch(`${API_BASE}/patients/${encodeURIComponent(selectedPatientId)}`);
+          if (resp.ok) {
+            const p = await resp.json();
+            const cats = categorizePatient(p);
+            const seen = new Set();
+            for (const cat of cats) {
+              const set = SUGGESTION_SETS[cat];
+              if (!set) continue;
+              for (const s of set) {
+                if (seen.has(s.text)) continue;
+                seen.add(s.text);
+                items.push(s);
+                if (items.length >= 4) break;
+              }
+              if (items.length >= 4) break;
+            }
+          }
+        } catch (e) {
+          console.error('Kunne ikke hente pasient for suggestions:', e);
+        }
+      }
+
+      if (items.length === 0) {
+        items = SUGGESTION_SETS.default;
+        linkedPatientId = '';
+      }
+
+      items = items.slice(0, 4);
+      const patientClass = linkedPatientId ? ' kjernejournal' : '';
+      const patientAttr = linkedPatientId ? ` data-patient="${linkedPatientId}"` : '';
+      list.innerHTML = items.map((s, i) => {
+        const fullClass = items.length >= 3 && i === items.length - 1 ? ' full' : '';
+        return `<button type="button" class="suggestion${patientClass}${fullClass}"${patientAttr} onclick="askSuggestion(this)">
+          <span class="suggestion-icon" aria-hidden="true">${s.icon}</span>
+          <span>${escapeHtml(s.text)}</span>
+        </button>`;
+      }).join('');
     }
 
     window.addEventListener('resize', () => {
@@ -1731,8 +1861,9 @@ Nytt oppfølgingsspørsmål: ${query}`;
       if (el) el.textContent = name ? name.split(/\s+/)[0] : 'Min profil';
     }
 
-    // Load pasienter for dropdown
+    // Load pasienter for dropdown + initial suggestions
     loadPatients();
+    updateSuggestions();
 
     // Prompt for user name on first visit
     refreshProfileBtnText();
