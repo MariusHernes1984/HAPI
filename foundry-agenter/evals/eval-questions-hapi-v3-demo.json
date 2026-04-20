@@ -1,0 +1,728 @@
+{
+  "name": "HAPI Agent Evaluering v3 — Demo-sett",
+  "description": "30 evalueringssporsmal med bredt spekter: interaksjoner, retningslinjer, kodeverk, statistikk, multi-agent, edge cases og negative scenarier. Bruker mock-pasienter P-001..P-075. Sender patient_id via /ask — kjernejournal-konteksten hentes automatisk.",
+  "version": "3.1",
+  "dato": "2026-04-19",
+  "evalueringskriterier": {
+    "BESTATT": "Svaret dekker minst 80% av forventede fakta, ingen reelle feil, kilde oppgitt",
+    "DELVIS": "Svaret dekker 40-80% av forventede fakta, ingen reelle feil",
+    "MANGLER": "Svaret dekker under 40% av forventede fakta, men ingen feil",
+    "FEIL": "Svaret inneholder medisinsk feilinformasjon",
+    "HALLUSINERING": "Svaret fabrikkerer data som ikke finnes i kildene"
+  },
+  "questions": [
+    {
+      "id": "DEMO-001",
+      "kategori": "pasient",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-057",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Klozapin + klaritromycin (CYP3A4)",
+      "sporsmal": "Pasienten har luftveisinfeksjon. Er klaritromycin trygt?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Klaritromycin hemmer CYP3A4 og kan oeke klozapin-konsentrasjon",
+          "Risiko for klozapin-toksisitet (sedasjon, anfall, agranulocytose-forverring)",
+          "Velg alternativ antibiotika (doksycyklin eller fenoksymetylpenicillin)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale klaritromycin uten tydelig advarsel om interaksjon",
+          "Overse at pasienten staar paa klozapin"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-002",
+      "kategori": "pasient",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-070",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Metadon + ondansetron (QT-forlengelse)",
+      "sporsmal": "Pasienten skal faa ondansetron postoperativt. Noe jeg boer tenke paa?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Additiv QT-forlengelse ved metadon + ondansetron",
+          "Risiko for torsades de pointes / alvorlig arytmi",
+          "Vurder EKG og elektrolytter foer oppstart",
+          "Alternativer: deksametason, meklozin, lav dose"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale ondansetron uten QT-diskusjon",
+          "Foreslaa metoklopramid uten aa nevne at det ogsaa kan forlenge QT"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST / SLV"
+      }
+    },
+    {
+      "id": "DEMO-003",
+      "kategori": "pasient",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "strukturert",
+      "patient_id": "P-058",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Litium + NSAID (toksisitet)",
+      "sporsmal": "Pasienten har tatt ibuprofen 400 mg x 3 mot ryggsmerter i et par uker, og er naa kvalm og ustoe. Kan symptomene skyldes litium-toksisitet?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "NSAID kan oeke litium-serumkonsentrasjon betydelig (opptil 60 %)",
+          "Symptomene (kvalme, ustoehet) er forenlige med litium-toksisitet",
+          "Seponer ibuprofen og ta serum-litium + elektrolytter + kreatinin",
+          "Paracetamol som trygt alternativ smertestillende"
+        ],
+        "skal_IKKE_inneholde": [
+          "Fortsette ibuprofen uten forbehold",
+          "Anbefale andre NSAID som trygt alternativ"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-004",
+      "kategori": "pasient",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-071",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Cipro ved cirrhose (propranolol + C. diff)",
+      "sporsmal": "Pasienten har UVI. Trygt aa starte ciprofloksacin 500 mg x 2 i 7 dager?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ciprofloksacin hemmer CYP1A2 og kan oeke propranolol-nivaa (bradykardi/hypotensjon)",
+          "Foerstelinje ved ukomplisert UVI i Norge er pivmecillinam eller nitrofurantoin, ikke cipro",
+          "Forhoeyet C. difficile-risiko ved cirrhose + fluorokinolon",
+          "Dosering maa tilpasses eGFR"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale cipro som foerstevalg ved ukomplisert UVI",
+          "Overse propranolol-interaksjon"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-005",
+      "kategori": "pasient",
+      "vanskelighet": "lett",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-001",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Warfarin + NSAID",
+      "sporsmal": "Pasienten har vondt i kneet etter fall. Kan hun ta Ibux?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "NSAIDs boer unngaas ved warfarin-behandling (oekt bloedningsrisiko)",
+          "Paracetamol som trygt alternativ (maks 4 g/doegn)",
+          "Vurder topikal NSAID som alternativ"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale ibuprofen uten forbehold",
+          "Foreslaa acetylsalisylsyre som alternativ"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-006",
+      "kategori": "pasient",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": "P-073",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Bictegravir + polyvalente kationer",
+      "sporsmal": "Pasienten har sure oppstoet og vil kjoepe magnesium-tyggetabletter paa apoteket. Noe jeg boer informere om?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Polyvalente kationer (Mg, Ca, Fe, Al) reduserer bictegravir-absorpsjon ved chelering",
+          "Risiko for subterapeutiske nivaaer og virologisk svikt",
+          "Ta adskilt: bictegravir minst 2 timer foer eller 6 timer etter magnesium",
+          "PPI eller H2-blokker er tryggere alternativer ved dyspepsi"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale samtidig inntak",
+          "Si at det er ingen interaksjon"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST / EMA-preparatomtale"
+      }
+    },
+    {
+      "id": "DEMO-007",
+      "kategori": "pasient",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-074",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Metoklopramid kontraindisert ved Parkinson",
+      "sporsmal": "Pasienten er kvalm. Kan jeg gi Afipran?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Metoklopramid (Afipran) er dopaminantagonist og kontraindisert ved Parkinson",
+          "Kan forverre parkinsonsymptomer (rigiditet, tremor, akinesi) og motvirke levodopa",
+          "Domperidon er foretrukket alternativ (passerer BBB i liten grad)",
+          "Rasagilin-advarsel: unngaa tramadol/meperidin (serotonergt syndrom)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale metoklopramid eller Afipran uten kontraindikasjonsadvarsel",
+          "Foreslaa haloperidol"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-008",
+      "kategori": "pasient",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-035",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Eldre + polyfarmasi + dekongestivmidler",
+      "sporsmal": "Pasienten har influensalignende plager. Greit med Paracet og reseptfri nesespray med adrenalin?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Paracetamol trygt ved hjertesvikt og polyfarmasi",
+          "Topikale dekongestivmidler (xylometazolin) kort bruk er mindre problematisk, men systemiske (pseudoefedrin) skal unngaas ved hjertesvikt/hypertensjon",
+          "Saltvann-nesespray er tryggere alternativ",
+          "Vurder eldre-spesifikk doseringsreduksjon"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale systemisk pseudoefedrin uten forbehold",
+          "Ignorere hjertesvikt-status"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "DEMO-009",
+      "kategori": "retningslinje",
+      "vanskelighet": "lett",
+      "prompt_stil": "strukturert",
+      "patient_id": null,
+      "agent": "hapi-retningslinje-agent",
+      "tema": "UVI foerstelinje ukomplisert",
+      "sporsmal": "30-aarig kvinne, ikke-gravid, har ukomplisert cystitt (foerstegang). Hva er foerstevalg av antibiotika, og hvor mange dagers behandling?",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Pivmecillinam 200 mg x 3 i 3 dager som foerstevalg",
+          "Nitrofurantoin 50 mg x 3 i 3-5 dager som alternativ",
+          "Trimetoprim som alternativ (ved lav lokal resistens)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Ciprofloksacin som foerstevalg",
+          "Amoxicillin som foerstevalg",
+          "Behandling lengre enn 7 dager"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
+      }
+    },
+    {
+      "id": "DEMO-010",
+      "kategori": "retningslinje",
+      "vanskelighet": "lett",
+      "prompt_stil": "realistisk",
+      "patient_id": null,
+      "agent": "hapi-retningslinje-agent",
+      "tema": "KOLS vedlikeholdsbehandling",
+      "sporsmal": "Hva er foerstevalg for vedlikeholdsbehandling ved KOLS?",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "LAMA eller LABA som monoterapi i foerste trinn",
+          "LABA+LAMA eller LABA+ICS ved eksaserbasjoner",
+          "Roeykeslutt er viktigste tiltak",
+          "Trinnvis tilnaerming basert paa sykdomsgrad/symptomer"
+        ],
+        "skal_IKKE_inneholde": [
+          "ICS som monoterapi (foerstevalg)",
+          "Antibiotika som fast vedlikehold",
+          "Kurativ behandling"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "DEMO-011",
+      "kategori": "retningslinje",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": null,
+      "agent": "hapi-retningslinje-agent",
+      "tema": "Pneumoni ambulant voksen",
+      "sporsmal": "En tidligere frisk 50-aaring har faatt ambulant ervervet pneumoni (CRB-65 = 1). Hvilket antibiotika-regime er foerstelinje i norske retningslinjer, og i hvor mange dager?",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Fenoksymetylpenicillin (penicillin V) som foerstevalg",
+          "Amoxicillin som alternativ",
+          "Doksycyklin ved penicillin-allergi",
+          "Varighet 5-7 dager"
+        ],
+        "skal_IKKE_inneholde": [
+          "Fluorokinoloner som foerstevalg",
+          "Cefalosporiner som foerstevalg ambulant",
+          "Bredspektret antibiotika uten begrunnelse"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje for antibiotika"
+      }
+    },
+    {
+      "id": "DEMO-012",
+      "kategori": "retningslinje",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": null,
+      "agent": "hapi-retningslinje-agent",
+      "tema": "Pakkeforloep lungekreft varighet",
+      "sporsmal": "Hvor lang er maksimal total tid i pakkeforloep lungekreft fra henvisning mottatt til behandlingsstart?",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Maksimalt 49 kalenderdager totalt fra henvisning til behandlingsstart",
+          "Pakkeforloep lungekreft er regulert av Helsedirektoratet"
+        ],
+        "skal_IKKE_inneholde": [
+          "Hallusinerte tall uten begrunnelse",
+          "Feil om at det ikke finnes frist"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "DEMO-013",
+      "kategori": "retningslinje",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": null,
+      "agent": "hapi-retningslinje-agent",
+      "tema": "VTE-profylakse etter hoftebrudd",
+      "sporsmal": "78-aarig kvinne er operert for hoftebrudd for 5 dager siden og skal skrives ut i dag. Hvilken tromboseprofylakse skal hun ha, og hvor lenge?",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "LMWH (enoksaparin 40 mg s.c.) eller DOAK (rivaroksaban/apiksaban) daglig",
+          "Total profylakseperiode 28-35 dager etter hoftebrudd",
+          "Mobilisering er viktig"
+        ],
+        "skal_IKKE_inneholde": [
+          "Kortere varighet enn 10 dager",
+          "Ingen profylakse ved utskrivelse"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "DEMO-014",
+      "kategori": "kodeverk",
+      "vanskelighet": "lett",
+      "prompt_stil": "realistisk",
+      "patient_id": null,
+      "agent": "hapi-kodeverk-agent",
+      "tema": "ICD-10 atrieflimmer",
+      "sporsmal": "ICD-10 for atrieflimmer?",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "I48 (Atrieflimmer og -flutter)",
+          "ICD-10"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil hovedkode (ikke I48)",
+          "Feil kodeverk"
+        ],
+        "kilde_krav": "ICD-10 / Helsedirektoratet kodeverk"
+      }
+    },
+    {
+      "id": "DEMO-015",
+      "kategori": "kodeverk",
+      "vanskelighet": "lett",
+      "prompt_stil": "realistisk",
+      "patient_id": null,
+      "agent": "hapi-kodeverk-agent",
+      "tema": "ATC warfarin",
+      "sporsmal": "ATC for warfarin?",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "B01AA03",
+          "Vitamin K-antagonist / antitrombotisk"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil ATC-kode"
+        ],
+        "kilde_krav": "ATC / FEST"
+      }
+    },
+    {
+      "id": "DEMO-016",
+      "kategori": "kodeverk",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": null,
+      "agent": "hapi-kodeverk-agent",
+      "tema": "Depresjon m/psykose ICD-10 + ICPC-2",
+      "sporsmal": "Pasienten har alvorlig depressiv episode med psykotiske symptomer. Hvilken ICD-10-kode skal jeg dokumentere, og hva er tilsvarende ICPC-2-kode i fastlegejournal?",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ICD-10 F32.3 (Alvorlig depressiv episode med psykotiske symptomer)",
+          "ICPC-2 P76 (Depressiv lidelse) — merk at ICPC-2 ikke har samme granularitet som ICD-10",
+          "Evt nevne F33.3 hvis tilbakevendende"
+        ],
+        "skal_IKKE_inneholde": [
+          "Feil ICD-10-kode (f.eks. F32.0 eller F32.2)",
+          "Feil ICPC-2-kode"
+        ],
+        "kilde_krav": "ICD-10 / ICPC-2 / Helsedirektoratet kodeverk"
+      }
+    },
+    {
+      "id": "DEMO-017",
+      "kategori": "statistikk",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": null,
+      "agent": "hapi-statistikk-agent",
+      "tema": "NKI diabetes",
+      "sporsmal": "Hvilke nasjonale kvalitetsindikatorer finnes for diabetes?",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Underekstremitetsamputasjoner blant pasienter med diabetes (0003-0010-15)",
+          "Blodsukkerregulering ved type 1 diabetes hos voksne (0003-0010-106)",
+          "Diabetes type 1 hos barn (flere underindikatorer: blodsukker, LDL, nyrefunksjon, komplikasjoner)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Hallusinerte NKI-er som HbA1c-kontroll, oeyebunn, fotundersoekelse, blodtrykk (disse er kliniske anbefalinger, ikke NKI-er)",
+          "Si at NKI for diabetes ikke finnes",
+          "Hallusinerte tallverdier som ikke kommer fra kilden"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonale kvalitetsindikatorer"
+      }
+    },
+    {
+      "id": "DEMO-018",
+      "kategori": "statistikk",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "strukturert",
+      "patient_id": null,
+      "agent": "hapi-statistikk-agent",
+      "tema": "NKI trombolyse door-to-needle",
+      "sporsmal": "Jeg skal rapportere paa akutt slagbehandling. Finnes det en nasjonal kvalitetsindikator for tid fra ankomst sykehus til trombolyse-start, og hva er maalverdien?",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ja, tid fra ankomst til trombolyse (door-to-needle) er en nasjonal kvalitetsindikator",
+          "Maalverdi er at majoriteten (>50%) skal faa trombolyse innen 40 minutter",
+          "Rapporteres via Norsk hjerneslagregister"
+        ],
+        "skal_IKKE_inneholde": [
+          "Si at indikatoren ikke finnes",
+          "Hallusinere maalverdi"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonale kvalitetsindikatorer"
+      }
+    },
+    {
+      "id": "DEMO-019",
+      "kategori": "statistikk",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": null,
+      "agent": "hapi-statistikk-agent",
+      "tema": "NKI antibiotika barn",
+      "sporsmal": "Finnes det en nasjonal kvalitetsindikator for antibiotikabruk hos barn?",
+      "forventet_routing": ["hapi-statistikk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ja, NKI 0003-0010-171 'Antibiotikabehandling hos barn mellom 0-9 aar' finnes",
+          "Maaler antibiotikaforskriving til barn 0-9 aar",
+          "Relatert indikator: luftveisantibiotika hos barn 0-9 aar (0003-0010-172) kan ogsaa nevnes"
+        ],
+        "skal_IKKE_inneholde": [
+          "Si at NKI for barn og antibiotika ikke finnes",
+          "Kun gi tall for hele befolkningen uten aa nevne barn-spesifikk NKI",
+          "Forveksle luftveisantibiotika-NKI (172) med total-NKI (171) uten aa klargjoere forskjellen"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonale kvalitetsindikatorer"
+      }
+    },
+    {
+      "id": "DEMO-020",
+      "kategori": "sammensatt",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-054",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "iR-kolitt under immunterapi",
+      "sporsmal": "Pasienten har hatt diare 6 ganger daglig i 5 dager, uten feber. Hvordan boer jeg tenke om dette?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Mistanke om immunrelatert kolitt (iR-kolitt) ved pembrolizumab",
+          "Kortikosteroider (prednisolon 1-2 mg/kg eller metylprednisolon i.v.) er foerstelinje",
+          "IKKE loperamid som rutinebehandling foer infeksjon/iR-kolitt er utelukket",
+          "C. difficile og andre infeksjoner maa utelukkes",
+          "Vurder pause/seponering av pembrolizumab"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale loperamid som foerstevalg",
+          "Fortsette pembrolizumab uten vurdering"
+        ],
+        "kilde_krav": "Helsedirektoratet / Onkologisk veileder"
+      }
+    },
+    {
+      "id": "DEMO-021",
+      "kategori": "sammensatt",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": "P-035",
+      "agent": "hapi-retningslinje-agent",
+      "tema": "STOPP/START polyfarmasi eldre",
+      "sporsmal": "Kan du gjennomgaa pasientens medikamentliste etter STOPP/START-kriterier og si hva som boer revurderes?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "STOPP/START-kriterier er relevante ved polyfarmasi hos eldre",
+          "Vurder medikamenter for nyrefunksjon (eGFR-justert dosering)",
+          "Antikolinerg byrde boer vurderes",
+          "Fall-risiko med BT-medikasjon, benzodiazepiner",
+          "Revurder PPI-langtidsbruk"
+        ],
+        "skal_IKKE_inneholde": [
+          "Ikke nevne STOPP/START ved eksplisitt spoersmaal"
+        ],
+        "kilde_krav": "Helsedirektoratet / Geriatrisk veileder"
+      }
+    },
+    {
+      "id": "DEMO-022",
+      "kategori": "sammensatt",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-036",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Demens + agitasjon",
+      "sporsmal": "Pasienten har blitt mer urolig og utagerende om kveldene. Hva gjoer jeg foerst?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ikke-farmakologiske tiltak skal alltid proeves foerst",
+          "Antipsykotika boer unngaas ved demens (oekt doedelighet, slagrisiko)",
+          "Vurder bakenforliggende aarsaker: smerte, infeksjon (spesielt UVI), medikamentbivirkning",
+          "Miljoe- og omsorgstilrettelegging (lys, stimuli, rutiner)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale haloperidol eller risperidon som foerstevalg uten forbehold",
+          "Starte benzodiazepin rutinemessig"
+        ],
+        "kilde_krav": "Helsedirektoratet / Nasjonal faglig retningslinje demens"
+      }
+    },
+    {
+      "id": "DEMO-023",
+      "kategori": "sammensatt",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": "P-062",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Gravid uke 30 + hodepine + BT",
+      "sporsmal": "Pasienten har hodepine og BT 138/88. Kan hun ta smertestillende, og boer jeg gjoere noe mer med BT?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "NSAID (ibuprofen) er kontraindisert i 3. trimester (fra ca uke 28)",
+          "Paracetamol er trygt foerstevalg mot smerter",
+          "BT 138/88 ved uke 30 krever preeklampsi-utredning (urin-proteinuri, oesyndromer, HELLP-risiko)",
+          "Labetalol er foerstevalg for BT-behandling i svangerskap"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale ACE-hemmer eller ARB i svangerskap (teratogent)",
+          "Anbefale ibuprofen uten forbehold",
+          "Overse BT som kan vaere tegn paa preeklampsi"
+        ],
+        "kilde_krav": "Helsedirektoratet / Norsk gynekologisk forening veileder"
+      }
+    },
+    {
+      "id": "DEMO-024",
+      "kategori": "sammensatt",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-069",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Pediatrisk dosering NSAID/paracetamol",
+      "sporsmal": "Pasienten har feber etter MFR-vaksine. Ibuprofen eller Paracet — hvilken dose?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Paracetamol 15 mg/kg per dose (~300 mg for 20 kg) x 3-4",
+          "Ibuprofen 5-10 mg/kg per dose (~100-200 mg for 20 kg) x 3",
+          "Maksdose per doegn (paracetamol <60-75 mg/kg, ibuprofen <30-40 mg/kg)",
+          "Valproat har ingen direkte kontraindikasjon, men hydrering viktig"
+        ],
+        "skal_IKKE_inneholde": [
+          "Voksendose (ibuprofen 400 mg eller paracetamol 1 g)",
+          "Overse vekt eller gi generisk voksen-dose"
+        ],
+        "kilde_krav": "Helsedirektoratet / Barnelegeforeningens akuttveileder"
+      }
+    },
+    {
+      "id": "DEMO-025",
+      "kategori": "sammensatt",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-055",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Noeytropen feber AML",
+      "sporsmal": "Pasienten er dag 8 av induksjon og faar feber 38.6. Hva gjoer jeg naa?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Noeytropen feber er medisinsk akutt (feber >38.3 eller vedvarende >38.0)",
+          "Empirisk bredspektret antibiotika innen 1 time: piperacillin/tazobaktam eller meropenem",
+          "Blod- og urinkultur + bildediagnostikk foer antibiotika (men ikke forsinke behandling)",
+          "Vurder vancomycin ved CVK-mistanke eller alvorlig syk"
+        ],
+        "skal_IKKE_inneholde": [
+          "Observere foerst",
+          "Peroral antibiotika som foerstevalg",
+          "Vente med antibiotika til blodprover foreligger"
+        ],
+        "kilde_krav": "Helsedirektoratet / Onkologisk veileder"
+      }
+    },
+    {
+      "id": "DEMO-026",
+      "kategori": "sammensatt",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "strukturert",
+      "patient_id": "P-060",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Serotonergt syndrom — tramadol + SNRI",
+      "sporsmal": "Pasienten har falt og faatt muskelsmerter. Fastlege foreslaar tramadol. Er det trygt, eller boer jeg anbefale noe annet?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Tramadol + venlafaksin (SNRI) gir risiko for serotonergt syndrom",
+          "Kombinasjonen boer unngaas",
+          "Paracetamol som foerstevalg, oksykodon som tryggere opioid-alternativ",
+          "Litium + NSAID boer ogsaa unngaas"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale tramadol uten klar advarsel"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-027",
+      "kategori": "sammensatt",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-068",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "T1DM pumpefeil / DKA-mistanke",
+      "sporsmal": "Pasienten er kvalm og har magesmerter. Urinstix viser +++ ketoner, blodsukker 19. Hva gjoer jeg?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Mistanke om diabetisk ketoacidose (DKA) eller begynnende ketose",
+          "Sjekk pumpe/sett for feil — bytt infusjonssett",
+          "Gi korreksjons-bolus med sproeyte eller penn (ikke stole paa pumpen)",
+          "Hydrering og sukkerkontroll hvert par timer",
+          "Lav terskel for akutt sykehusinnleggelse"
+        ],
+        "skal_IKKE_inneholde": [
+          "Bare oeke pumpe-dose uten feilsoeking",
+          "Observere hjemme uten tiltak"
+        ],
+        "kilde_krav": "Helsedirektoratet / Barnelegeforeningen"
+      }
+    },
+    {
+      "id": "DEMO-028",
+      "kategori": "sammensatt",
+      "vanskelighet": "medium",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-075",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "MS + okrelizumab + reisevaksiner",
+      "sporsmal": "Pasienten skal paa jobbreise til Soeroest-Asia. Hvilke vaksiner boer hun ta, og er noe kontraindisert?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ikke levende vaksiner under okrelizumab (gul feber, levende MMR, varicella)",
+          "Inaktiverte vaksiner OK (hepatitt A/B, Japansk encefalitt, tyfoid inj., meningokokk)",
+          "Timing: vaksinering minst 4-6 uker foer eller minst 3 mnd etter siste infusjon",
+          "Sjekk hepatitt B-status og oppdater basisvaksinasjoner foer start"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale gul feber (levende) uten forbehold",
+          "Anbefale MMR levende vaksine"
+        ],
+        "kilde_krav": "Helsedirektoratet / FHI / Norsk nevrologisk forening"
+      }
+    },
+    {
+      "id": "DEMO-029",
+      "kategori": "pasient",
+      "vanskelighet": "vanskelig",
+      "prompt_stil": "realistisk",
+      "patient_id": "P-057",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Roeykestopp + klozapin CYP1A2",
+      "sporsmal": "Pasienten har bestemt seg for aa slutte aa roeyke. Hva maa jeg foelge med paa?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Roeyking induserer CYP1A2, roeykeslutt gir derfor oekt klozapin-serumkonsentrasjon",
+          "Klozapin-dose maa reduseres (typisk 10-30%) ved vedvarende roeykestopp",
+          "Tett serum-klozapin-maaling under overgangsfasen (uker til maaneder)",
+          "Observer for bivirkninger: sedasjon, hypotensjon, anfall"
+        ],
+        "skal_IKKE_inneholde": [
+          "Ignorere behov for dose-endring",
+          "Kun generell roeykesluttsraadgivning uten aa flagge klozapin-paavirkning"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    },
+    {
+      "id": "DEMO-030",
+      "kategori": "pasient",
+      "vanskelighet": "medium",
+      "prompt_stil": "strukturert",
+      "patient_id": "P-071",
+      "agent": "hapi-kjernejournal-agent",
+      "tema": "Sedativa ved cirrhose",
+      "sporsmal": "Pasienten klager over daarlig soevn. Kan jeg skrive ut zopiklon eller nitrazepam?",
+      "forventet_routing": ["hapi-kjernejournal-agent", "hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Sedativa og benzodiazepiner boer unngaas ved cirrhose (risiko for hepatisk encefalopati)",
+          "Ikke-farmakologiske tiltak foerst (soevnhygiene, miljoe)",
+          "Hvis absolutt noedvendig: oksazepam (kort t1/2, glukuronidering, ikke CYP)",
+          "Zopiklon og spesielt nitrazepam (lang t1/2) er uheldige valg"
+        ],
+        "skal_IKKE_inneholde": [
+          "Anbefale nitrazepam uten forbehold",
+          "Anbefale zopiklon uten forbehold"
+        ],
+        "kilde_krav": "Helsedirektoratet / FEST"
+      }
+    }
+  ]
+}

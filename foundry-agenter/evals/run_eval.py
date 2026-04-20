@@ -25,6 +25,7 @@ from collections import Counter
 from pathlib import Path
 from datetime import datetime
 
+import aiohttp
 from azure.identity.aio import (
     AzureCliCredential as AsyncCliCredential,
     ChainedTokenCredential as AsyncChainedCredential,
@@ -35,14 +36,20 @@ from azure.ai.projects.aio import AIProjectClient as AsyncProjectClient
 
 logger = logging.getLogger(__name__)
 
-# Legg til orchestrator-mappen i path for routing
+# Legg til orchestrator-mappen i path (brukes ikke lenger for routing — orchestrator styrer det via /ask)
 sys.path.insert(0, str(Path(__file__).parent.parent / "orchestrator"))
-from router import route
 
 PROJECT_ENDPOINT = os.environ.get(
     "PROJECT_ENDPOINT",
     "https://kateecosystem-resource.services.ai.azure.com/api/projects/kateecosystem",
 )
+
+# HAPI Orchestrator /ask endepunkt — bruker produksjons-flyten slik at routing,
+# kjernejournal-kontekst og interaksjonssjekk aktiveres automatisk.
+HAPI_URL = os.environ.get(
+    "HAPI_URL",
+    "https://hapi-orchestrator.nicefield-3933b657.norwayeast.azurecontainerapps.io",
+).rstrip("/")
 
 EVAL_DIR = Path(__file__).parent
 EVAL_FILE = EVAL_DIR / "eval-questions-hapi.json"
@@ -127,8 +134,8 @@ Vurder svaret og returner KUN gyldig JSON (ingen annen tekst):
 }}
 
 VIKTIGE REGLER FOR VURDERING:
-- BESTATT: Svaret dekker minst 70% av forventede fakta, ingen reelle feil, kilde oppgitt
-- DELVIS: Svaret dekker 40-70% av forventede fakta, ingen reelle feil
+- BESTATT: Svaret dekker minst 80% av forventede fakta, ingen reelle feil, kilde oppgitt
+- DELVIS: Svaret dekker 40-80% av forventede fakta, ingen reelle feil
 - MANGLER: Svaret dekker under 40% av forventede fakta, men ingen feil
 - FEIL: Svaret inneholder medisinsk feilinformasjon
 - HALLUSINERING: Svaret fabrikkerer data som ikke finnes i kildene
@@ -209,28 +216,40 @@ async def llm_fact_check(
         }
 
 
-async def call_agent(project, agent_name: str, query: str) -> dict:
-    """Kall en agent og returner svar med metadata."""
+async def call_orchestrator(query: str, patient_id: str | None) -> dict:
+    """Kall HAPI-orchestratorens /ask-endepunkt.
+
+    Bruker produksjons-flyten: router -> agenter -> kjernejournal-kontekst
+    -> automatisk interaksjonssjekk -> synthesis. Returnerer hele AskResponse
+    pluss suksess-flag.
+    """
+    url = f"{HAPI_URL}/ask"
+    payload = {"query": query, "patient_id": patient_id}
     start = time.monotonic()
     try:
-        openai = project.get_openai_client()
-        conv = await openai.conversations.create()
-        resp = await openai.responses.create(
-            conversation=conv.id,
-            input=query,
-            extra_body={"agent_reference": {"name": agent_name, "type": "agent_reference"}},
-        )
-        _add_usage(resp)
-        output = resp.output_text
-        duration = int((time.monotonic() - start) * 1000)
-        try:
-            await openai.conversations.delete(conv.id)
-        except Exception:
-            pass
-        return {"success": True, "output": output, "duration_ms": duration}
+        timeout = aiohttp.ClientTimeout(total=180)
+        async with aiohttp.ClientSession(timeout=timeout) as session:
+            async with session.post(url, json=payload) as resp:
+                duration = int((time.monotonic() - start) * 1000)
+                if resp.status != 200:
+                    err = await resp.text()
+                    return {
+                        "success": False,
+                        "error": f"HTTP {resp.status}: {err[:200]}",
+                        "total_duration_ms": duration,
+                    }
+                data = await resp.json()
+                data["success"] = True
+                if "total_duration_ms" not in data:
+                    data["total_duration_ms"] = duration
+                return data
     except Exception as e:
         duration = int((time.monotonic() - start) * 1000)
-        return {"success": False, "output": "", "duration_ms": duration, "error": str(e)}
+        return {
+            "success": False,
+            "error": f"{type(e).__name__}: {e}",
+            "total_duration_ms": duration,
+        }
 
 
 async def _acquire_credential(max_retries: int = 3, delay: float = 2.0):
@@ -334,87 +353,41 @@ async def run_eval(questions: list[dict]) -> tuple[list[dict], dict]:
         async with AsyncProjectClient(endpoint=PROJECT_ENDPOINT, credential=cred) as project:
             for i, q in enumerate(questions, 1):
                 qid = q["id"]
-                safe_print(f"\n[{i}/{len(questions)}] {qid}: {q['sporsmal'][:80]}...")
+                pid = q.get("patient_id")
+                pid_str = f" [patient={pid}]" if pid else ""
+                safe_print(f"\n[{i}/{len(questions)}] {qid}{pid_str}: {q['sporsmal'][:80]}...")
 
-                # Route
-                routing = route(q["sporsmal"])
-                agents = routing.agents
-                safe_print(f"  Routing -> {agents} (konfidens: {routing.confidence})")
-
-                # Sjekk routing korrekthet
                 expected_routing = q.get("forventet_routing", [])
-                routing_correct = set(agents) == set(expected_routing)
 
-                # Kall ALLE routede agenter parallelt (som produksjons-orkestratoren)
-                agents_to_call = agents if agents else ["hapi-retningslinje-agent"]
-                agent_tasks = [
-                    _retry_on_auth_error(
-                        lambda a=a, s=q["sporsmal"]: call_agent(project, a, s)
-                    )
-                    for a in agents_to_call
-                ]
+                # Call orchestrator (produksjons-flyt: router + kjernejournal + interaksjonssjekk + syntese)
+                ask_result = await call_orchestrator(q["sporsmal"], pid)
 
-                try:
-                    agent_results = await asyncio.gather(*agent_tasks, return_exceptions=True)
-                except Exception as agent_err:
-                    agent_results = [{"success": False, "output": "", "duration_ms": 0, "error": str(agent_err)}]
+                if ask_result.get("success"):
+                    routing_info = ask_result.get("routing") or {}
+                    agents = routing_info.get("agents", []) or []
+                    confidence = routing_info.get("confidence", "?")
+                    safe_print(f"  Routing -> {agents} (konfidens: {confidence})")
+                    routing_correct = set(agents) == set(expected_routing)
 
-                # Samle vellykkede resultater
-                successful_outputs = []
-                total_duration = 0
-                for idx, ar in enumerate(agent_results):
-                    if isinstance(ar, Exception):
-                        safe_print(f"  {agents_to_call[idx]}: FEIL ({ar})")
-                        continue
-                    if ar.get("success") and ar.get("output"):
-                        agent_label = agents_to_call[idx].replace("hapi-", "").replace("-agent", "").title()
-                        successful_outputs.append(f"--- {agent_label} ---\n{ar['output']}")
-                        total_duration = max(total_duration, ar["duration_ms"])
-                        safe_print(f"  {agents_to_call[idx]}: {ar['duration_ms']}ms, {len(ar['output'])} tegn")
-                    else:
-                        safe_print(f"  {agents_to_call[idx]}: FEIL ({ar.get('error', 'tomt svar')})")
-
-                # Syntetiser hvis flere agenter svarte
-                if len(successful_outputs) > 1:
-                    combined = "\n\n".join(successful_outputs)
-                    agent_names = ", ".join(
-                        a.replace("hapi-", "").replace("-agent", "")
-                        for a in agents_to_call
-                        if any(a in o for o in successful_outputs)
-                    ) or "hapi"
-                    synth_prompt = (
-                        f"Du er HAPI Helseassistent. Kombiner agentsvarene til ett svar paa norsk.\n\n"
-                        f"Spoersmaal: {q['sporsmal']}\n\n{combined}\n\n"
-                        f"REGLER:\n"
-                        f"1. BEVAR ALL PRESIS DATA: ATC-koder, ICD-10-koder, prosenttall, doser "
-                        f"og preparatnavn skal gjengis ORDRETT. Aldri utelat en kode eller et tall.\n"
-                        f"2. LOGISK REKKEFOEGLE: diagnose/kode -> behandling -> statistikk/NKI\n"
-                        f"3. IKKE BLAND DOMENER: Retningslinje-innhold er ikke NKI-data.\n"
-                        f"4. Behold faglig presisjon. Ikke legg til egen kunnskap.\n"
-                        f"5. Oppgi kilde: Helsedirektoratet (agenter: {agent_names})."
-                    )
-                    try:
-                        openai = project.get_openai_client()
-                        synth_resp = await openai.responses.create(
-                            model="gpt-5.3-chat",
-                            input=synth_prompt,
-                        )
-                        _add_usage(synth_resp)
-                        result = {"success": True, "output": synth_resp.output_text, "duration_ms": total_duration}
-                        safe_print(f"  Syntetisert fra {len(successful_outputs)} agenter")
-                    except Exception as synth_err:
-                        # Fallback: konkatener
-                        result = {"success": True, "output": "\n\n".join(successful_outputs), "duration_ms": total_duration}
-                        safe_print(f"  Syntese feilet, bruker konkatenering: {synth_err}")
-                elif len(successful_outputs) == 1:
-                    ar = next(a for a in agent_results if not isinstance(a, Exception) and a.get("success") and a.get("output"))
-                    result = ar
+                    result = {
+                        "success": True,
+                        "output": ask_result.get("answer", ""),
+                        "duration_ms": int(ask_result.get("total_duration_ms", 0) or 0),
+                    }
+                    ik = ask_result.get("interaksjonssjekk")
+                    if ik:
+                        safe_print(f"  Interaksjonssjekk aktivert")
+                    safe_print(f"  Orchestrator svarte: {result['duration_ms']}ms, {len(result['output'])} tegn")
                 else:
-                    err_msg = "; ".join(
-                        str(ar) if isinstance(ar, Exception) else ar.get("error", "tomt")
-                        for ar in agent_results
-                    )
-                    result = {"success": False, "output": "", "duration_ms": 0, "error": err_msg}
+                    agents = []
+                    routing_correct = False
+                    result = {
+                        "success": False,
+                        "output": "",
+                        "duration_ms": int(ask_result.get("total_duration_ms", 0) or 0),
+                        "error": ask_result.get("error", "unknown"),
+                    }
+                    safe_print(f"  Orchestrator FEIL: {ask_result.get('error', 'unknown')[:120]}")
 
                 if result["success"]:
                     safe_print(f"  Svar mottatt: {result['duration_ms']}ms, {len(result['output'])} tegn")
@@ -775,9 +748,10 @@ def main():
     parser.add_argument("--kategori", help="Kjoer en kategori (retningslinje, kodeverk, statistikk, pasient, sammensatt)")
     parser.add_argument("--tag", default="", help="Tag for rapportfilnavn (f.eks. v2-llm, post-mcp-fix)")
     parser.add_argument("--runs", type=int, default=1, help="Antall ganger aa kjoere eval (default: 1). Flere kjoringer gir konsensusrapport.")
+    parser.add_argument("--file", help="Sti til eval-JSON (default: eval-questions-hapi.json)")
     args = parser.parse_args()
 
-    eval_file = EVAL_FILE
+    eval_file = Path(args.file).resolve() if args.file else EVAL_FILE
     safe_print(f"Evalueringsfil: {eval_file.name}")
 
     with open(eval_file) as f:
