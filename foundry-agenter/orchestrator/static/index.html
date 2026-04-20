@@ -1238,11 +1238,18 @@
 
     // --- Dynamiske forslag basert på aktiv pasient ---
     const SUGGESTION_SETS = {
+      // 8 default-forslag: 4 fastlege-scenarier + 4 sykehus-scenarier
       default: [
+        // Fastlege / allmennpraksis
         { icon: '\u{1F4D6}', text: 'Hva er førstevalg antibiotika ved ukomplisert cystitt?' },
         { icon: '\u{1FAC1}', text: 'Førstevalg vedlikeholdsbehandling for KOLS?' },
         { icon: '\u{1F3F7}\uFE0F', text: 'ICD-10 for atrieflimmer?' },
-        { icon: '\u{1F4CA}', text: 'Hvilke nasjonale kvalitetsindikatorer finnes for diabetes?' }
+        { icon: '\u{1F634}', text: 'Hva anbefales ved insomni hos voksne?' },
+        // Sykehus / spesialisthelsetjeneste
+        { icon: '\u{1F3E5}', text: 'Hvor lang er maksimal total tid i pakkeforløp lungekreft?' },
+        { icon: '\u{1F9E0}', text: 'Hva er mål for tid fra ankomst sykehus til trombolyse ved hjerneslag?' },
+        { icon: '\u{1F9B4}', text: 'Anbefalt tromboseprofylakse etter hoftebruddsoperasjon — hvor lenge?' },
+        { icon: '\u{1F489}', text: 'Empirisk antibiotikavalg ved nøytropen feber i sykehus?' }
       ],
       onkologi: [
         { icon: '\u26A0\uFE0F', text: 'Pasienten har hatt diaré flere ganger daglig i noen dager. Hvordan bør jeg tenke?' },
@@ -1379,16 +1386,20 @@
         }
       }
 
+      let isDefault = false;
       if (items.length === 0) {
         items = SUGGESTION_SETS.default;
         linkedPatientId = '';
+        isDefault = true;
       }
 
-      items = items.slice(0, 4);
+      // Default: vis alle 8. Pasient-tema: maks 4.
+      items = isDefault ? items : items.slice(0, 4);
       const patientClass = linkedPatientId ? ' kjernejournal' : '';
       const patientAttr = linkedPatientId ? ` data-patient="${linkedPatientId}"` : '';
       list.innerHTML = items.map((s, i) => {
-        const fullClass = items.length >= 3 && i === items.length - 1 ? ' full' : '';
+        // Pasient-tema: gjør siste .full dersom odd antall. Default: ingen .full.
+        const fullClass = !isDefault && items.length >= 3 && (items.length % 2 === 1) && i === items.length - 1 ? ' full' : '';
         return `<button type="button" class="suggestion${patientClass}${fullClass}"${patientAttr} onclick="askSuggestion(this)">
           <span class="suggestion-icon" aria-hidden="true">${s.icon}</span>
           <span>${escapeHtml(s.text)}</span>
