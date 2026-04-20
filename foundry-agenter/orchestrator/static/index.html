@@ -76,6 +76,31 @@
       flex-shrink: 0;
     }
 
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      padding: 6px 10px;
+      margin: -6px -10px;
+      border-radius: 10px;
+      font-family: inherit;
+      text-align: left;
+      transition: background 0.2s;
+      min-width: 0;
+    }
+
+    .header-brand:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    .header-brand:active {
+      background: rgba(255,255,255,0.2);
+    }
+
     .header-text h1 {
       font-size: 1.2rem;
       font-weight: 600;
@@ -349,6 +374,48 @@
       background: #f0f5f4;
       color: var(--primary);
       font-weight: 600;
+    }
+
+    /* --- Bubble actions (copy etc.) --- */
+    .bubble-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #e8efee;
+    }
+
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-light);
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .copy-btn:hover {
+      background: #f0f5f4;
+      color: var(--primary);
+      border-color: var(--border);
+    }
+
+    .copy-btn.copied {
+      color: var(--accent);
+      background: var(--accent-light);
+      border-color: var(--accent-light);
+    }
+
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
 
     /* --- Metadata bar --- */
@@ -919,11 +986,13 @@
 <body>
 
   <header>
-    <img class="logo" src="/static/logo-on-dark.svg" alt="HAPI" aria-hidden="true">
-    <div class="header-text">
-      <h1><span class="title-long">HAPI Helseassistent</span><span class="title-short">HAPI</span></h1>
-      <p>Norsk helseinformasjon fra Helsedirektoratet</p>
-    </div>
+    <button type="button" class="header-brand" onclick="newChat()" aria-label="Start ny samtale" title="Start ny samtale">
+      <img class="logo" src="/static/logo-on-dark.svg" alt="HAPI" aria-hidden="true">
+      <div class="header-text">
+        <h1><span class="title-long">HAPI Helseassistent</span><span class="title-short">HAPI</span></h1>
+        <p>Norsk helseinformasjon fra Helsedirektoratet</p>
+      </div>
+    </button>
     <div class="header-actions">
       <select id="patientSelect" class="patient-select" onchange="onPatientChange()" title="Velg aktiv pasient (mock-demo)" aria-label="Velg aktiv pasient">
         <option value="">Ingen aktiv pasient</option>
@@ -1071,6 +1140,59 @@
 
     // Conversation history for context
     const conversationHistory = [];
+
+    // Save welcome template so "new chat" can restore it
+    const welcomeTemplate = (() => {
+      const el = document.getElementById('welcome');
+      return el ? el.outerHTML : '';
+    })();
+
+    function newChat() {
+      // Clear all messages and restore welcome screen
+      chat.innerHTML = welcomeTemplate;
+      conversationHistory.length = 0;
+      input.value = '';
+      input.style.height = 'auto';
+      input.focus();
+    }
+
+    function copyAnswer(btn) {
+      const msg = btn.closest('.message.bot');
+      if (!msg) return;
+      const text = msg.dataset.rawAnswer || '';
+      const label = btn.querySelector('.copy-btn-label');
+      const fallbackLabel = label ? label.textContent : 'Kopier';
+
+      const done = () => {
+        btn.classList.add('copied');
+        if (label) label.textContent = 'Kopiert!';
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          if (label) label.textContent = fallbackLabel;
+        }, 1800);
+      };
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(() => {
+          legacyCopy(text);
+          done();
+        });
+      } else {
+        legacyCopy(text);
+        done();
+      }
+    }
+
+    function legacyCopy(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (_) {}
+      document.body.removeChild(ta);
+    }
 
     const AGENT_LABELS = {
       'hapi-retningslinje-agent': 'Retningslinjer',
@@ -1329,6 +1451,7 @@
 
       const div = document.createElement('div');
       div.className = 'message bot';
+      div.dataset.rawAnswer = answer || '';
       div.innerHTML = `
         <div class="avatar">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1337,6 +1460,15 @@
         </div>
         <div class="bubble">
           ${renderMarkdown(answer)}
+          <div class="bubble-actions">
+            <button type="button" class="copy-btn" onclick="copyAnswer(this)" aria-label="Kopier svar" title="Kopier hele svaret">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+              </svg>
+              <span class="copy-btn-label">Kopier</span>
+            </button>
+          </div>
         </div>
       `;
       chat.appendChild(div);
