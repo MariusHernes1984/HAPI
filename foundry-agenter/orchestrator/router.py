@@ -13,6 +13,7 @@ RETNINGSLINJE = "hapi-retningslinje-agent"
 KODEVERK = "hapi-kodeverk-agent"
 STATISTIKK = "hapi-statistikk-agent"
 KJERNEJOURNAL = "hapi-kjernejournal-agent"
+NDLA = "hapi-ndla-agent"
 
 # --- Routing-regler ---
 
@@ -48,6 +49,22 @@ KEYWORD_RULES: list[tuple[list[str], list[str]]] = [
          "30-dagers", "epikrisetid", "pasientsikkerhet"],
         [STATISTIKK],
     ),
+    # NDLA-triggere — fagstoff/pensum for helsearbeiderfag Vg2
+    (
+        ["ndla", "pensum", "laerebok", "laereplan", "kompetansemaal",
+         "kjerneelement", "helsearbeiderfaget", "helsefagarbeider",
+         "vg2", "hs-hea", "fagstoff",
+         # Pedagogiske triggere — spørsmål som typisk dukker opp i
+         # grunnopplæring heller enn i klinisk praksis
+         "hvordan utfoere", "hvordan gjennomfoere", "forklar",
+         "hva betyr", "hva er definisjonen",
+         "prosedyre for", "oppgave", "oevelse",
+         # HS-HEA vg2 domene-termer (grunnleggende, ikke kliniske)
+         "helhetlig omsorg", "grunnleggende sykepleie",
+         "etikk og kommunikasjon", "brukermedvirkning",
+         "livskvalitet", "mestring", "helsefremmende"],
+        [NDLA],
+    ),
 ]
 
 # Diagnosekode-mønster som trigger kodeverk først
@@ -72,6 +89,10 @@ COMPOUND_TRIGGERS = [
     (["legemiddel", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
     (["legemiddel", "behandling"], [KODEVERK, RETNINGSLINJE]),
     (["medisin", "retningslinje"], [KODEVERK, RETNINGSLINJE]),
+    # NDLA + retningslinje — "kompetansemål for X-behandling"
+    (["kompetansemaal", "behandling"], [NDLA, RETNINGSLINJE]),
+    (["pensum", "retningslinje"], [NDLA, RETNINGSLINJE]),
+    (["laereplan", "retningslinje"], [NDLA, RETNINGSLINJE]),
 ]
 
 # Legemiddelnavn som trigger kodeverk (alltid) + retningslinje (kun med behandlings-intent)
@@ -111,6 +132,21 @@ class RoutingDecision:
     reasoning: str = ""
 
 
+def _normalize(text: str) -> str:
+    """Lowercase + transliterér æ/ø/å → ae/oe/aa for robust keyword-match.
+
+    Keyword-listene i denne modulen bruker ASCII-transliterasjon
+    (f.eks. 'maaloppnaaelse', 'foerstevalg', 'pakkeforloep'), så rå
+    norske spørsmål må normaliseres før matching.
+    """
+    return (
+        text.lower()
+        .replace("æ", "ae")
+        .replace("ø", "oe")
+        .replace("å", "aa")
+    )
+
+
 def route(query: str, patient_id: str | None = None) -> RoutingDecision:
     """
     Klassifiser spørsmål og bestem hvilke agenter som trengs.
@@ -123,7 +159,7 @@ def route(query: str, patient_id: str | None = None) -> RoutingDecision:
     Returns:
         RoutingDecision med agenter, koder og konfidens.
     """
-    q = query.lower()
+    q = _normalize(query)
     decision = RoutingDecision()
 
     # Steg 1: Sjekk for diagnosekoder i spørsmålet
@@ -215,7 +251,7 @@ Agenter:
 - hapi-retningslinje-agent: behandling, anbefalinger, retningslinjer, pakkeforløp, antibiotika
 - hapi-kodeverk-agent: kodeverk (ICD-10, ICPC-2, SNOMED, ATC), legemiddeldata, kode-mapping
 - hapi-statistikk-agent: nasjonale kvalitetsindikatorer (NKI), statistikk, trender
-
+- hapi-ndla-agent: pensum og fagstoff for helsearbeiderfag Vg2 (HS-HEA) fra NDLA — grunnleggende prosedyrer, definisjoner, oppgaver, kompetansemål
 
 Svar BARE med JSON: {"agents": ["agent-navn-1", "agent-navn-2"]}
 
