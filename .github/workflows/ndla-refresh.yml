@@ -1,0 +1,101 @@
+name: Refresh NDLA database
+
+# Kjører NDLA-scraperen på en cron (1. hver måned) og åpner en PR hvis
+# DB-filen har endret seg. Kan også trigges manuelt via workflow_dispatch.
+#
+# Ingen AZURE_CREDENTIALS — denne workflowen gjør ingen deploy selv.
+# PR-mergen trigger normalt build-and-deploy-pipelinen for MCP-serveren.
+
+on:
+  schedule:
+    # 05:17 UTC den 1. hver måned (unngår populære topp-tider)
+    - cron: "17 5 1 * *"
+  workflow_dispatch:
+    inputs:
+      incremental:
+        description: "Kun hent nye artikler (hopp over eksisterende)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run NDLA scraper
+        working-directory: ndla-scraper
+        run: |
+          if [[ "${{ inputs.incremental }}" == "true" ]]; then
+            python scrape.py --incremental
+          else
+            python scrape.py
+          fi
+
+      - name: Summarize DB stats
+        id: stats
+        run: |
+          python - <<'PY' >> $GITHUB_STEP_SUMMARY
+          import sqlite3, os
+          conn = sqlite3.connect("ndla-scraper/data/ndla_helsefag.db")
+          tc = conn.execute("SELECT COUNT(*) FROM topics").fetchone()[0]
+          rc = conn.execute("SELECT COUNT(*) FROM resources").fetchone()[0]
+          ac = conn.execute("SELECT COUNT(*) FROM articles").fetchone()[0]
+          last = conn.execute("SELECT value FROM meta WHERE key='last_scrape'").fetchone()
+          size = os.path.getsize("ndla-scraper/data/ndla_helsefag.db") / (1024 * 1024)
+          print(f"## NDLA refresh\n")
+          print(f"| Felt | Verdi |")
+          print(f"|------|-------|")
+          print(f"| Topics | {tc} |")
+          print(f"| Resources | {rc} |")
+          print(f"| Articles | {ac} |")
+          print(f"| Last scrape | {last[0] if last else 'N/A'} |")
+          print(f"| DB size | {size:.1f} MB |")
+          PY
+
+      - name: Check for changes
+        id: diff
+        run: |
+          if git diff --quiet ndla-scraper/data/ndla_helsefag.db; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "Ingen endringer i NDLA-databasen."
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "NDLA-databasen har endret seg — åpner PR."
+          fi
+
+      - name: Create Pull Request
+        if: steps.diff.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: ndla-refresh/${{ github.run_id }}
+          commit-message: "NDLA: månedlig refresh av Helsefremmende arbeid (HS-HEA vg2)"
+          title: "NDLA refresh — ${{ github.event.repository.updated_at }}"
+          body: |
+            Automatisk oppdatering av NDLA-databasen fra `api.ndla.no`.
+
+            Innhold: fag **Helsefremmende arbeid (HS-HEA vg2)** — taksonomi, ressurser og artikler.
+            Trigget av: `${{ github.event_name }}`.
+
+            Merge denne PR-en for å rulle ut oppdatert pensum til MCP-verktøyene
+            `sok_ndla_helsefag`, `hent_ndla_artikkel`, `hent_ndla_temaer` og
+            `list_ndla_ressurser_for_tema`.
+
+            Husk å kjøre `az containerapp update` manuelt etter merge (GitHub
+            Actions-deploy er ødelagt pga. defekt `AZURE_CREDENTIALS`-secret).
+          labels: |
+            ndla
+            data-refresh
+            automated
+          add-paths: |
+            ndla-scraper/data/ndla_helsefag.db

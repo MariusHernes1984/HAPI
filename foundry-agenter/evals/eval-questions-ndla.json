@@ -1,0 +1,200 @@
+{
+  "name": "HAPI NDLA Agent Evaluering",
+  "description": "10 evalueringssporsmal for NDLA-agenten (Helsefremmende arbeid HS-HEA vg2). Verifiserer at fagstoff fra NDLA hentes og presenteres korrekt, og at routing fra orkestratoren traffer ndla-agenten for pensum-/fagdidaktiske sporsmal.",
+  "version": "1.0",
+  "dato": "2026-04-23",
+  "kilde_grunnlag": "NDLA (Nasjonal digital laeringsarena), CC-BY-SA-4.0",
+  "evalueringskriterier": {
+    "KORREKT": "Svaret inneholder fakta som stemmer med NDLA-artikkelens innhold",
+    "FEIL": "Svaret inneholder fakta som IKKE stemmer med kilden",
+    "MANGLER": "Svaret mangler viktig informasjon fra NDLA-artikkelen",
+    "HALLUSINERING": "Svaret inneholder informasjon som ikke finnes i NDLA",
+    "KILDE": "Svaret oppgir 'Kilde: NDLA' og lenke til artikkel",
+    "ROUTING": "Orkestratoren rutet til hapi-ndla-agent"
+  },
+  "questions": [
+    {
+      "id": "NDLA-001",
+      "kategori": "smittevern",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hvorfor er haandhygiene viktig i helsetjenesten?",
+      "tema": "Haandhygiene grunnleggende smittevern",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Haandhygiene hindrer overfoering av smitte",
+          "Riktig utfoert haandhygiene fjerner opptil 99 prosent av smittestoffer",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [
+          "Referanser til Helsedirektoratets retningslinjer som primaerkilde",
+          "Antibiotikadosering"
+        ],
+        "kilde_krav": "NDLA (CC-BY-SA-4.0)"
+      }
+    },
+    {
+      "id": "NDLA-002",
+      "kategori": "ernaering",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hva er tegn paa underernaering hos eldre?",
+      "tema": "Underernaering kartlegging",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Vekttap",
+          "Redusert appetitt eller matinntak",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA"
+      }
+    },
+    {
+      "id": "NDLA-003",
+      "kategori": "prosedyre",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Forklar hvordan man utfoerer riktig haandvask",
+      "tema": "Haandvask prosedyre",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Bruk av saape og vann",
+          "Varighet minst 20 sekunder eller tilsvarende",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA"
+      }
+    },
+    {
+      "id": "NDLA-004",
+      "kategori": "omsorg",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hva betyr helhetlig omsorg i helsearbeiderfaget?",
+      "tema": "Helhetlig omsorg definisjon",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ivareta fysiske, psykiske, sosiale og aandelige behov",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA"
+      }
+    },
+    {
+      "id": "NDLA-005",
+      "kategori": "smittevern",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hva er personlig beskyttelsesutstyr og naar skal det brukes?",
+      "tema": "Beskyttelsesutstyr smittevern",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Hansker",
+          "Munnbind eller visir",
+          "Beskyttelsesfrakk eller forkle",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA"
+      }
+    },
+    {
+      "id": "NDLA-006",
+      "kategori": "oppgave",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hvilke oppgaver finnes paa NDLA om saarstell?",
+      "tema": "Saarstell oppgaver",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Oppgave-ressurser om saarstell fra NDLA",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [
+          "Klinisk behandlingsregime (det er retningslinje-agentens domene)"
+        ],
+        "kilde_krav": "NDLA"
+      },
+      "merknad": "Tester at agenten kan filtrere paa resourceType=Oppgave"
+    },
+    {
+      "id": "NDLA-007",
+      "kategori": "foerstehjelp",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hva skal du gjoere hvis noen faar hjertestans?",
+      "tema": "Hjertestans foerstehjelp",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Ring 113",
+          "Hjerte-lungeredning (HLR)",
+          "Kompresjoner og innblaasninger",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA"
+      }
+    },
+    {
+      "id": "NDLA-008",
+      "kategori": "sykdom",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hva er de viktigste aldersforandringene hos eldre?",
+      "tema": "Aldring fysiologiske endringer",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Redusert reservekapasitet i organer",
+          "Endret sanseapparat (syn, hoersel)",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA"
+      }
+    },
+    {
+      "id": "NDLA-009",
+      "kategori": "kombinert",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Hva sier laereplanen om kompetansemaal innen smittevern?",
+      "tema": "Kompetansemaal smittevern",
+      "forventet_routing": ["hapi-ndla-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Referanse til tema 'Smittevern og hygiene' i HS-HEA vg2",
+          "Kilde: NDLA"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "NDLA",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "Ekslpisitte kompetansemaal-tekster kan ligge utenfor artiklene; agenten kan returnere tema-breadcrumb i stedet."
+      }
+    },
+    {
+      "id": "NDLA-010",
+      "kategori": "cross-agent",
+      "agent": "hapi-ndla-agent",
+      "sporsmal": "Kompetansemaal for KOLS-behandling",
+      "tema": "Kompetansemaal + retningslinje (cross-agent)",
+      "forventet_routing": [
+        "hapi-ndla-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "NDLA-fagstoff om KOLS eller pensum-tema",
+          "Behandlingsanbefalinger fra Helsedirektoratets KOLS-retningslinje",
+          "Kilde: NDLA (fagstoff) og Helsedirektoratet (retningslinje)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Blanding av NDLA-tekst og retningslinjetekst i samme avsnitt uten kildeangivelse"
+        ],
+        "kilde_krav": "NDLA + Helsedirektoratet"
+      },
+      "merknad": "Tester compound-trigger (kompetansemaal + behandling) som ruter til BEGGE agenter"
+    }
+  ]
+}

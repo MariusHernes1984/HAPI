@@ -93,7 +93,15 @@ REGLER FOR SVARET TIL BRUKEREN:
     kontraindikasjoner/interaksjoner. Bruk pasientens navn eller "pasienten"
     naturlig i svaret. Ikke nevn ordet "kjernejournal" — bare fletter inn
     opplysningene som kliniske fakta. Hvis ingen pasientkontekst er oppgitt:
-    svar generelt."""
+    svar generelt.
+
+11. ÆRLIG OM DATAGAP I FEST: Hvis interaksjons-blokken sier "DATAGAP" eller
+    "MERK (datagap)", MÅ du formidle dette ærlig — ikke skjul det og ikke
+    erstatt det med vag tekst som "vurder interaksjoner". Navngi legemidlene
+    konkret, og si at FEST ikke har en registrert interaksjon for paret,
+    at dette ikke utelukker klinisk relevans, og at preparatomtale bør sjekkes.
+    Hold det kort og kliniker-vennlig, ikke en punktliste av farmakologiske
+    mekanismer. Et tomt FEST-oppslag skal formidles som et tomt FEST-oppslag."""
 
 SOURCE_FOOTER = "\n\n---\n*Kilde: Helsedirektoratet*"
 SOURCE_FOOTER_INTERAKSJON = "\n\n---\n*Kilder: Helsedirektoratet · Interaksjonsdata fra FEST/Statens legemiddelverk*"
@@ -150,10 +158,20 @@ LEGEMIDDEL_ALIASES: dict[str, str] = {
     "ciprofloxacin": "Ciprofloxacin", "doksycyklin": "Doksycyklin",
     "erytromycin": "Erytromycin", "metronidazol": "Metronidazol",
     "trimetoprim": "Trimetoprim", "klindamycin": "Klindamycin",
+    "klaritromycin": "Klaritromycin", "klacid": "Klaritromycin",
+    "azitromycin": "Azitromycin", "azitromax": "Azitromycin",
+    "fenoksymetylpenicillin": "Fenoksymetylpenicillin", "apocillin": "Fenoksymetylpenicillin",
     # Antidepressiva / psykofarmaka
     "sertralin": "Sertralin", "escitalopram": "Escitalopram",
     "fluoksetin": "Fluoksetin", "venlafaksin": "Venlafaksin",
     "mirtazapin": "Mirtazapin", "duloksetin": "Duloksetin",
+    # Antipsykotika (ofte involvert i QT/CYP-interaksjoner)
+    "klozapin": "Klozapin", "leponex": "Klozapin",
+    "olanzapin": "Olanzapin", "zyprexa": "Olanzapin",
+    "quetiapin": "Quetiapin", "seroquel": "Quetiapin",
+    "risperidon": "Risperidon", "risperdal": "Risperidon",
+    "aripiprazol": "Aripiprazol", "abilify": "Aripiprazol",
+    "haloperidol": "Haloperidol", "haldol": "Haloperidol",
     # Diuretika
     "furosemid": "Furosemid", "hydroklortiazid": "Hydroklortiazid",
     "spironolakton": "Spironolakton",
@@ -222,11 +240,22 @@ FAREGRAD_LABELS = {
 }
 
 
-async def _sjekk_interaksjoner(medikament_navn: list[str]) -> str | None:
+async def _sjekk_interaksjoner(
+    medikament_navn: list[str],
+    asked_meds: list[str] | None = None,
+) -> str | None:
     """
     Kall interaksjoner.no med en kombinert liste av medisiner
     (pasientens faste + nevnte i spørsmål/agent-output).
-    Returnerer en formatert tekstblokk for syntese-prompten, eller None.
+
+    Args:
+        medikament_navn: Hele listen som sendes til API-et (faste + nye).
+        asked_meds: Legemidler brukeren eksplisitt nevnte i spørsmålet.
+                    Brukes til å rapportere datagap når API gjenkjenner dem
+                    men ikke har noen registrert interaksjon.
+
+    Returnerer en formatert tekstblokk for syntese-prompten, eller None
+    hvis ingen data å rapportere.
     """
     if len(medikament_navn) < 2:
         return None  # Trenger minst 2 legemidler for interaksjonssjekk
@@ -260,7 +289,35 @@ async def _sjekk_interaksjoner(medikament_navn: list[str]) -> str | None:
     interactions = data.get("Interactions") or []
     # Filtrer bort tomme
     interactions = [ix for ix in interactions if ix.get("ATC1")]
+
+    # Bygg navn→ATC-map fra Recognized — ATC er uniform, navn varierer
+    # mellom norsk (Recognized.Word) og engelsk (Interactions.Name1/Name2).
+    recognized = data.get("Recognized") or []
+    name_to_atc: dict[str, str] = {}
+    for r in recognized:
+        word = (r.get("Word") or "").lower()
+        atc = (r.get("ATC") or "").replace(" ", "").upper()
+        if word and atc:
+            name_to_atc[word] = atc
+    recognized_words = set(name_to_atc.keys())
+
     if not interactions:
+        # Datagap: brukeren spurte eksplisitt om et legemiddel som API-et
+        # gjenkjente, men FEST har ingen registrert interaksjon.
+        if asked_meds:
+            recognized_asked = [
+                m for m in asked_meds if m.lower() in recognized_words
+            ]
+            if recognized_asked:
+                linjer = [
+                    "INTERAKSJONSSJEKK FRA FEST/SLV — DATAGAP:",
+                    f"  Kombinasjon sjekket: {', '.join(medikament_navn)}.",
+                    f"  Spurt legemiddel: {', '.join(recognized_asked)}.",
+                    "  FEST har ingen registrert interaksjon for denne kombinasjonen.",
+                    "  Dette utelukker ikke klinisk relevans — sjekk preparatomtale for",
+                    "  CYP-effekt, QT-forlengelse og proteinbinding.",
+                ]
+                return "\n".join(linjer)
         return None
 
     linjer = [f"INTERAKSJONSDATA FRA FEST/SLV ({len(interactions)} funnet):"]
@@ -274,6 +331,31 @@ async def _sjekk_interaksjoner(medikament_navn: list[str]) -> str | None:
         )
         if ix.get("Situation"):
             linjer.append(f"    Merk: {ix['Situation']}")
+
+    # Hvis brukeren spurte om et spesifikt legemiddel, sjekk via ATC-kode
+    # (ikke navn — FEST bruker norske navn i Recognized og engelske i
+    # Interactions, så navn-sammenligning er upålitelig).
+    if asked_meds:
+        recognized_asked = [m for m in asked_meds if m.lower() in recognized_words]
+        if recognized_asked:
+            asked_atcs = {
+                name_to_atc[m.lower()] for m in recognized_asked
+                if m.lower() in name_to_atc
+            }
+            # Normaliser ATC-koder fra Interactions (fjerner mellomrom)
+            def _norm_atc(code: str) -> str:
+                return (code or "").replace(" ", "").upper()
+            asked_in_ix = any(
+                (_norm_atc(ix.get("ATC1", "")) in asked_atcs or
+                 _norm_atc(ix.get("ATC2", "")) in asked_atcs)
+                for ix in interactions
+            )
+            if not asked_in_ix:
+                linjer.append(
+                    f"  MERK (datagap): FEST har ingen registrert interaksjon mellom "
+                    f"{', '.join(recognized_asked)} og pasientens faste medisiner. "
+                    f"Dette utelukker ikke klinisk relevans — sjekk preparatomtale."
+                )
 
     return "\n".join(linjer)
 
@@ -428,6 +510,7 @@ def _agent_label(name: str) -> str:
         "hapi-kodeverk-agent": "Kodeverk-agent",
         "hapi-statistikk-agent": "Statistikk-agent",
         "hapi-kjernejournal-agent": "Kjernejournal-agent",
+        "hapi-ndla-agent": "NDLA-agent",
     }
     return labels.get(name, name)
 
@@ -504,24 +587,28 @@ async def synthesize(
         # Automatisk interaksjonssjekk mot FEST/SLV
         # 1) Pasientens faste medisiner
         patient_meds = _extract_med_names(journal_output)
-        # 2) Medisiner nevnt i spørsmål og fagkilde-output
-        mention_texts = [query] + [r.output for r in knowledge_results]
-        mentioned_meds = _extract_mentioned_meds(mention_texts)
-        # 3) Kombiner og dedupliser (case-insensitive)
+        # 2) Medisiner eksplisitt nevnt i brukerens spørsmål (ikke agent-output)
+        asked_meds = _extract_mentioned_meds([query])
+        # 3) Medisiner nevnt i fagkilde-output (kan gi ekstra kontekst)
+        agent_mentioned = _extract_mentioned_meds([r.output for r in knowledge_results])
+        # 4) Kombiner alle og dedupliser (case-insensitive)
         seen = {m.lower() for m in patient_meds}
-        for m in mentioned_meds:
+        for m in asked_meds + agent_mentioned:
             if m.lower() not in seen:
                 patient_meds.append(m)
                 seen.add(m.lower())
         all_meds = patient_meds
 
         if all_meds:
-            logger.info(f"  Interaksjonssjekk for {len(all_meds)} medisiner: {all_meds}")
-            ix_result = await _sjekk_interaksjoner(all_meds)
+            logger.info(f"  Interaksjonssjekk for {len(all_meds)} medisiner: {all_meds} (asked={asked_meds})")
+            ix_result = await _sjekk_interaksjoner(all_meds, asked_meds=asked_meds)
             if ix_result:
                 interaksjon_block = f"\n{ix_result}\n"
                 has_interaksjoner = True
-                logger.info(f"  Interaksjoner funnet — injiserer i syntese")
+                if "DATAGAP" in ix_result or "datagap" in ix_result:
+                    logger.info(f"  FEST-datagap rapportert — injiserer i syntese")
+                else:
+                    logger.info(f"  Interaksjoner funnet — injiserer i syntese")
 
         patient_block = (
             "\nAKTIV PASIENT (bruk dette til å personalisere svaret):\n"

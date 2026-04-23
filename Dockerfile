@@ -11,6 +11,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=build /app/dist ./dist
+# Bundle NDLA-fagstoff (Helsefremmende arbeid HS-HEA vg2) — SQLite/FTS5
+COPY ndla-scraper/data/ndla_helsefag.db ./dist/ndla_helsefag.db
 ENV PORT=3000
 EXPOSE 3000
 CMD ["node", "dist/index.js"]
