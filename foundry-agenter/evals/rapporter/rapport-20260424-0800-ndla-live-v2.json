@@ -1,0 +1,300 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-24T08:00:08.721820",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 10,
+    "tag": "ndla-live-v2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "9/10 (90%)",
+    "bestatt": 7,
+    "delvis": 2,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 1,
+    "routing_korrekthet": 10,
+    "snitt_responstid_ms": 19876
+  },
+  "resultater": [
+    {
+      "id": "NDLA-001",
+      "kategori": "smittevern",
+      "tema": "Haandhygiene grunnleggende smittevern",
+      "score": "DELVIS",
+      "begrunnelse": "Svar dekker de sentrale fagpoengene fra pensum, men inkluderer en henvisning til Helsedirektoratet som kilde, noe som ikke skulle forekomme.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Haandhygiene hindrer overfoering av smitte",
+        "Riktig utfoert haandhygiene fjerner opptil 99 prosent av smittestoffer",
+        "Kilde: NDLA"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [
+        "Refererer til Helsedirektoratet som kilde, selv om oppgaven krever NDLA som primærkilde"
+      ],
+      "kilde_ok": false,
+      "duration_ms": 14328,
+      "answer_length": 1341,
+      "answer_preview": "I helsetjenesten er **håndhygiene en av de viktigste smittevernrutinene** fordi hendene lett kan overføre mikroorganismer mellom pasienter, personale og utstyr.\n\nIfølge pensum:\n\n- Hendene er helsearbeiderens viktigste arbeidsredskap, men de kan også spre smitte gjennom **direkte og indirekte kontakt"
+    },
+    {
+      "id": "NDLA-002",
+      "kategori": "ernaering",
+      "tema": "Underernaering kartlegging",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret inkluderer både vekttap og redusert appetitt/matinntak og oppgir NDLA som kilde. Ingen medisinske feil eller hallusinasjoner er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Vekttap",
+        "Redusert appetitt eller matinntak"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 16315,
+      "answer_length": 1150,
+      "answer_preview": "**Tegn på underernæring hos eldre** beskrives i NDLA som endringer i kropp og funksjon som skyldes at personen får i seg for lite energi, protein eller andre næringsstoffer.\n\nIfølge NDLA kan underernæring føre til blant annet:\n\n- **Vekttap eller lav kroppsvekt**\n- **Nedsatt appetitt og at personen s"
+    },
+    {
+      "id": "NDLA-003",
+      "kategori": "prosedyre",
+      "tema": "Haandvask prosedyre",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver korrekt håndvask med såpe og vann og angir varighet på minst 20 sekunder. NDLA er oppgitt som kilde og det finnes ingen medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Bruk av saape og vann",
+        "Varighet minst 20 sekunder eller tilsvarende",
+        "Kilde: NDLA"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 18459,
+      "answer_length": 1438,
+      "answer_preview": "Riktig håndvask er en viktig del av smittevern. Håndhygiene er det enkleste og mest effektive tiltaket for å hindre spredning av smitte, og riktig utført håndhygiene kan fjerne opptil 99 % av bakteriene fra hendene.\n\nSlik utfører du riktig håndvask:\n\n1. Fukt hendene i lunkent vann.  \n2. Ta på flyten"
+    },
+    {
+      "id": "NDLA-004",
+      "kategori": "omsorg",
+      "tema": "Helhetlig omsorg definisjon",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret beskriver helhetlig omsorg med fysiske, psykiske, sosiale og åndelige behov og viser til NDLA som kilde. Ingen faglige feil funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Ivareta fysiske behov",
+        "Ivareta psykiske behov",
+        "Ivareta sosiale behov",
+        "Ivareta åndelige behov",
+        "Kilde: NDLA"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 19237,
+      "answer_length": 1136,
+      "answer_preview": "**Helhetlig omsorg** betyr at helsefagarbeideren ser hele mennesket og tar hensyn til flere sider av livet til pasienten – ikke bare sykdommen.\n\nI følge NDLA innebærer dette at man arbeider ut fra et **helhetlig menneskesyn**, der man tar hensyn til at mennesker har flere typer behov. Disse kan være"
+    },
+    {
+      "id": "NDLA-005",
+      "kategori": "smittevern",
+      "tema": "Beskyttelsesutstyr smittevern",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker alle forventede typer personlig beskyttelsesutstyr og forklarer når de skal brukes. NDLA er oppgitt som kilde og det finnes ingen faglige feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Hansker",
+        "Munnbind eller visir",
+        "Beskyttelsesfrakk eller forkle",
+        "Kilde: NDLA"
+      ],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17770,
+      "answer_length": 2110,
+      "answer_preview": "**Personlig beskyttelsesutstyr** er utstyr helsefagarbeidere bruker for å beskytte både seg selv og pasienten mot smitte. Det er en del av de **basale smittevernrutinene i helsetjenesten** og skal brukes riktig og til rett tid for å hindre spredning av mikroorganismer.  \n(Kilde: NDLA)\n\nVanlige typer"
+    },
+    {
+      "id": "NDLA-006",
+      "kategori": "oppgave",
+      "tema": "Saarstell oppgaver",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir konkrete oppgaver fra NDLA om sårstell og angir NDLA som kilde. Det finnes en mindre kildeinkonsistens med Helsedirektoratet, men ingen medisinsk feilinformasjon.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Oppgave-ressurser om sårstell fra NDLA",
+        "Kilde: NDLA"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Svar avsluttes med 'Kilde: Helsedirektoratet' selv om innholdet gjelder NDLA-ressurser"
+      ],
+      "kilde_ok": true,
+      "duration_ms": 11974,
+      "answer_length": 1345,
+      "answer_preview": "Her er oppgaver på NDLA som handler om sårstell for helsefagarbeidere:\n\n1) Sårstell  \n- Ressurstype: Oppgave  \n- Tema: Helsefremmende arbeid (HS-HEA vg2) → Prosedyrer for helsefagarbeideren → Prosedyrer i grunnleggende sykepleie  \n- Innhold: Oppgaven handler om å øve på riktig gjennomføring av sårst"
+    },
+    {
+      "id": "NDLA-007",
+      "kategori": "foerstehjelp",
+      "tema": "Hjertestans foerstehjelp",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret forklarer korrekt hva man skal gjøre ved hjertestans, inkludert å ringe 113 og starte HLR med kompresjoner og innblåsninger. NDLA er oppgitt som kilde.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Ring 113",
+        "Hjerte-lungeredning (HLR)",
+        "Kompresjoner og innblåsninger",
+        "Kilde: NDLA"
+      ],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 16680,
+      "answer_length": 1524,
+      "answer_preview": "Hvis en person får **hjertestans**, må du handle raskt. Tidlig start av **hjerte- og lungeredning (HLR)** kan øke sjansen for overlevelse betydelig. Hvert minutt teller.\n\nIfølge pensum skal du gjøre følgende:\n\n1. **Undersøk personen (BLÅS)**\n   - **B – bevissthet:** Sjekk om personen reagerer.\n   - "
+    },
+    {
+      "id": "NDLA-008",
+      "kategori": "sykdom",
+      "tema": "Aldring fysiologiske endringer",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret beskriver mange aldersforandringer og inkluderer endringer i syn og hørsel samt NDLA-kilde. Det mangler imidlertid den sentrale pensumformuleringen om redusert reservekapasitet i organene.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Endret sanseapparat (syn, hørsel)"
+      ],
+      "forventet": 3,
+      "mangler": [
+        "Redusert reservekapasitet i organer"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 20054,
+      "answer_length": 2795,
+      "answer_preview": "De viktigste aldersforandringene hos eldre er naturlige endringer i kroppen som skjer gradvis med økende alder. Aldring er ikke en sykdom, men en normal prosess. Forandringene kan likevel gi plager og påvirke funksjon og livskvalitet.  \nKilde: NDLA – Helsefremmende arbeid (HS‑HEA vg2) → Helhetlig om"
+    },
+    {
+      "id": "NDLA-009",
+      "kategori": "kombinert",
+      "tema": "Kompetansemaal smittevern",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret refererer eksplisitt til temaet 'Smittevern og hygiene' i HS-HEA vg2 og oppgir NDLA som kilde. Innholdet er faglig korrekt og inneholder ingen medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent"
+      ],
+      "treff": [
+        "Referanse til tema 'Smittevern og hygiene' i HS-HEA vg2",
+        "Kilde: NDLA"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 18667,
+      "answer_length": 1456,
+      "answer_preview": "I NDLA‑pensumet for **Helsefremmende arbeid (HS‑HEA vg2)** blir smittevern omtalt som en sentral del av arbeidet til helsefagarbeidere. Fagstoffet beskriver hvilke kunnskaper og ferdigheter elevene skal utvikle for å forebygge smitte i helse‑ og omsorgstjenesten.\n\nFra fagstoff om smittevern i NDLA:\n"
+    },
+    {
+      "id": "NDLA-010",
+      "kategori": "cross-agent",
+      "tema": "Kompetansemaal + retningslinje (cross-agent)",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Ingen JSON funnet i LLM-svar: I'm sorry, but I cannot assist with that request.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-ndla-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-ndla-agent",
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 45282,
+      "answer_length": 2324,
+      "answer_preview": "**Diagnostikk og vurdering**\n\nHelsepersonell som arbeider med KOLS‑pasienter bør ha kompetanse til å:\n\n- identifisere pasienter med kroniske luftveissymptomer og risikofaktorer  \n- gjennomføre og tolke **spirometri**  \n- stille diagnosen KOLS når **postbronkodilatorisk FEV₁/FVC ligger under nedre no"
+    }
+  ],
+  "statistikk": {
+    "tokens_input": 8787,
+    "tokens_output": 2746,
+    "tokens_total": 11533,
+    "llm_kall": 10,
+    "kostnad_nok": 0.592,
+    "kilde": "maalt-runtime",
+    "prismodell": {
+      "model": "gpt-5.3-chat",
+      "input_usd_per_1m": 1.75,
+      "output_usd_per_1m": 14.0,
+      "kurs_usd_nok": 11.0
+    },
+    "kostnad_per_spoersmaal_nok": 0.0592
+  }
+}
