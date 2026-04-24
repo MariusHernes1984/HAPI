@@ -226,9 +226,15 @@ async def list_agents():
             },
             {
                 "name": KJERNEJOURNAL,
-                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo). "
-                               "Interaksjoner sjekkes automatisk mot FEST/Statens legemiddelverk.",
-                "mcp_tools": ["lokal_pasientoppslag", "interaksjonssjekk (FEST/SLV, automatisk)"],
+                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo).",
+                "mcp_tools": ["lokal_pasientoppslag"],
+            },
+            {
+                "name": "hapi-interaksjon-agent",
+                "description": "Legemiddelinteraksjoner — sjekker automatisk mot FEST/Statens legemiddelverk "
+                               "når pasientens faste medisiner kombineres med nye forordninger. "
+                               "Faregrad, klinisk konsekvens og håndtering.",
+                "mcp_tools": ["sjekk_interaksjoner", "hent_interaksjon"],
             },
             {
                 "name": NDLA,
