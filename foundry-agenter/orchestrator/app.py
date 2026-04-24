@@ -27,7 +27,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from orchestrate import orchestrate, OrchestrationResult
-from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL
+from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA
 import kjernejournal
 import chatlog
 
@@ -197,7 +197,7 @@ async def health():
     return HealthResponse(
         status="ok",
         project_endpoint=PROJECT_ENDPOINT,
-        agents=[RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL],
+        agents=[RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA],
     )
 
 
@@ -226,9 +226,23 @@ async def list_agents():
             },
             {
                 "name": KJERNEJOURNAL,
-                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo). "
-                               "Interaksjoner sjekkes automatisk mot FEST/Statens legemiddelverk.",
-                "mcp_tools": ["lokal_pasientoppslag", "interaksjonssjekk (FEST/SLV, automatisk)"],
+                "description": "Pasientens kjernejournal — diagnoser, faste medisiner, allergier (mock-demo).",
+                "mcp_tools": ["lokal_pasientoppslag"],
+            },
+            {
+                "name": "hapi-interaksjon-agent",
+                "description": "Legemiddelinteraksjoner — sjekker automatisk mot FEST/Statens legemiddelverk "
+                               "når pasientens faste medisiner kombineres med nye forordninger. "
+                               "Faregrad, klinisk konsekvens og håndtering.",
+                "mcp_tools": ["sjekk_interaksjoner", "hent_interaksjon"],
+            },
+            {
+                "name": NDLA,
+                "description": "NDLA-pensum for Helsefremmende arbeid (HS-HEA vg2) — "
+                               "fagstoff, prosedyrer og oppgaver for helsefagarbeiderutdanning. "
+                               "Kilde: NDLA (CC-BY-SA-4.0).",
+                "mcp_tools": ["sok_ndla_helsefag", "hent_ndla_artikkel",
+                              "hent_ndla_temaer", "list_ndla_ressurser_for_tema"],
             },
         ]
     }

@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "HAPI MCP Server (HTTP)",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start"],
+      "autoPort": true
+    },
+    {
+      "name": "HAPI Orchestrator (FastAPI)",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "uvicorn", "app:app", "--host", "0.0.0.0", "--reload"],
+      "cwd": "foundry-agenter/orchestrator",
+      "autoPort": true
+    },
+    {
+      "name": "HAPI Static Preview",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server"],
+      "cwd": "foundry-agenter/orchestrator/static",
+      "autoPort": true
+    }
+  ]
+}

@@ -17,7 +17,7 @@
       "id": "NDLA-001",
       "kategori": "smittevern",
       "agent": "hapi-ndla-agent",
-      "sporsmal": "Hvorfor er haandhygiene viktig i helsetjenesten?",
+      "sporsmal": "Forklar fra pensum i helsearbeiderfag: hvorfor er haandhygiene viktig i helsetjenesten?",
       "tema": "Haandhygiene grunnleggende smittevern",
       "forventet_routing": ["hapi-ndla-agent"],
       "faktasjekk": {
@@ -37,7 +37,7 @@
       "id": "NDLA-002",
       "kategori": "ernaering",
       "agent": "hapi-ndla-agent",
-      "sporsmal": "Hva er tegn paa underernaering hos eldre?",
+      "sporsmal": "Forklar fra NDLA-pensum: hva er tegn paa underernaering hos eldre?",
       "tema": "Underernaering kartlegging",
       "forventet_routing": ["hapi-ndla-agent"],
       "faktasjekk": {
@@ -87,7 +87,7 @@
       "id": "NDLA-005",
       "kategori": "smittevern",
       "agent": "hapi-ndla-agent",
-      "sporsmal": "Hva er personlig beskyttelsesutstyr og naar skal det brukes?",
+      "sporsmal": "Forklar fra pensum: hva er personlig beskyttelsesutstyr og naar skal helsefagarbeideren bruke det?",
       "tema": "Beskyttelsesutstyr smittevern",
       "forventet_routing": ["hapi-ndla-agent"],
       "faktasjekk": {
@@ -105,7 +105,7 @@
       "id": "NDLA-006",
       "kategori": "oppgave",
       "agent": "hapi-ndla-agent",
-      "sporsmal": "Hvilke oppgaver finnes paa NDLA om saarstell?",
+      "sporsmal": "Hvilke oppgaver finnes paa NDLA om saarstell for helsefagarbeider?",
       "tema": "Saarstell oppgaver",
       "forventet_routing": ["hapi-ndla-agent"],
       "faktasjekk": {
@@ -124,7 +124,7 @@
       "id": "NDLA-007",
       "kategori": "foerstehjelp",
       "agent": "hapi-ndla-agent",
-      "sporsmal": "Hva skal du gjoere hvis noen faar hjertestans?",
+      "sporsmal": "Forklar fra pensum i helsearbeiderfag: hva skal du gjoere hvis noen faar hjertestans?",
       "tema": "Hjertestans foerstehjelp",
       "forventet_routing": ["hapi-ndla-agent"],
       "faktasjekk": {
@@ -142,7 +142,7 @@
       "id": "NDLA-008",
       "kategori": "sykdom",
       "agent": "hapi-ndla-agent",
-      "sporsmal": "Hva er de viktigste aldersforandringene hos eldre?",
+      "sporsmal": "Forklar fra pensum for helsefagarbeider Vg2: hva er de viktigste aldersforandringene hos eldre?",
       "tema": "Aldring fysiologiske endringer",
       "forventet_routing": ["hapi-ndla-agent"],
       "faktasjekk": {
