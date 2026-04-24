@@ -238,8 +238,7 @@ async def list_agents():
             },
             {
                 "name": NDLA,
-                "description": "NDLA-pensum for Helsefremmende arbeid (HS-HEA vg2) — "
-                               "fagstoff, prosedyrer og oppgaver for helsefagarbeiderutdanning. "
+                "description": "NDLA prosedyrer og oppgaver for helsefagarbeiderutdanning. "
                                "Kilde: NDLA (CC-BY-SA-4.0).",
                 "mcp_tools": ["sok_ndla_helsefag", "hent_ndla_artikkel",
                               "hent_ndla_temaer", "list_ndla_ressurser_for_tema"],
