@@ -7,12 +7,32 @@
       "alder": 72,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2019" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Essensiell hypertensjon", "siden": "2015" }
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2019"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Essensiell hypertensjon",
+          "siden": "2015"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "2.5 mg daglig", "indikasjon": "Antikoagulasjon ved atrieflimmer" },
-        { "navn": "Ramipril", "atc": "C09AA05", "dose": "5 mg daglig", "indikasjon": "Hypertensjon" }
+        {
+          "navn": "Warfarin (Marevan)",
+          "atc": "B01AA03",
+          "dose": "2.5 mg daglig",
+          "indikasjon": "Antikoagulasjon ved atrieflimmer"
+        },
+        {
+          "navn": "Ramipril",
+          "atc": "C09AA05",
+          "dose": "5 mg daglig",
+          "indikasjon": "Hypertensjon"
+        }
       ],
       "allergier": [],
       "merknader": "Antikoagulert - NSAIDs kontraindisert. Bruk paracetamol ved smerter. INR kontrolleres månedlig."
@@ -23,10 +43,20 @@
       "alder": 68,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2022" }
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Apixaban (Eliquis)", "atc": "B01AF02", "dose": "5 mg x 2 daglig", "indikasjon": "Antikoagulasjon" }
+        {
+          "navn": "Apixaban (Eliquis)",
+          "atc": "B01AF02",
+          "dose": "5 mg x 2 daglig",
+          "indikasjon": "Antikoagulasjon"
+        }
       ],
       "allergier": [],
       "merknader": "DOAK-behandling. Unngå NSAIDs - økt blødningsrisiko."
@@ -37,12 +67,32 @@
       "alder": 81,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "I63", "kodeverk": "ICD-10", "tekst": "Hjerneinfarkt", "siden": "2023" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2010" }
+        {
+          "kode": "I63",
+          "kodeverk": "ICD-10",
+          "tekst": "Hjerneinfarkt",
+          "siden": "2023"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2010"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Rivaroksaban (Xarelto)", "atc": "B01AF01", "dose": "20 mg daglig", "indikasjon": "Sekundærprofylakse slag" },
-        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "40 mg daglig", "indikasjon": "Hyperkolesterolemi" }
+        {
+          "navn": "Rivaroksaban (Xarelto)",
+          "atc": "B01AF01",
+          "dose": "20 mg daglig",
+          "indikasjon": "Sekundærprofylakse slag"
+        },
+        {
+          "navn": "Atorvastatin",
+          "atc": "C10AA05",
+          "dose": "40 mg daglig",
+          "indikasjon": "Hyperkolesterolemi"
+        }
       ],
       "allergier": [],
       "merknader": "Post-slag. Blodfortynnende - NSAIDs kontraindisert."
@@ -53,12 +103,32 @@
       "alder": 75,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I25", "kodeverk": "ICD-10", "tekst": "Kronisk iskemisk hjertesykdom", "siden": "2018" }
+        {
+          "kode": "I25",
+          "kodeverk": "ICD-10",
+          "tekst": "Kronisk iskemisk hjertesykdom",
+          "siden": "2018"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "3 mg daglig", "indikasjon": "Antikoagulasjon" },
-        { "navn": "Acetylsalisylsyre (Albyl-E)", "atc": "B01AC06", "dose": "75 mg daglig", "indikasjon": "Platehemming" },
-        { "navn": "Metoprolol", "atc": "C07AB02", "dose": "50 mg x 2", "indikasjon": "Angina pectoris" }
+        {
+          "navn": "Warfarin (Marevan)",
+          "atc": "B01AA03",
+          "dose": "3 mg daglig",
+          "indikasjon": "Antikoagulasjon"
+        },
+        {
+          "navn": "Acetylsalisylsyre (Albyl-E)",
+          "atc": "B01AC06",
+          "dose": "75 mg daglig",
+          "indikasjon": "Platehemming"
+        },
+        {
+          "navn": "Metoprolol",
+          "atc": "C07AB02",
+          "dose": "50 mg x 2",
+          "indikasjon": "Angina pectoris"
+        }
       ],
       "allergier": [],
       "merknader": "Dobbel blødningsrisiko (Warfarin + ASA). Unngå NSAIDs absolutt."
@@ -69,13 +139,125 @@
       "alder": 66,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "I26", "kodeverk": "ICD-10", "tekst": "Lungeemboli", "siden": "2024" }
+        {
+          "kode": "I26",
+          "kodeverk": "ICD-10",
+          "tekst": "Lungeemboli",
+          "siden": "2024"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Dabigatran (Pradaxa)", "atc": "B01AE07", "dose": "150 mg x 2", "indikasjon": "VTE-profylakse" }
+        {
+          "navn": "Dabigatran (Pradaxa)",
+          "atc": "B01AE07",
+          "dose": "150 mg x 2",
+          "indikasjon": "VTE-profylakse"
+        }
       ],
-      "allergier": ["Penicillin"],
-      "merknader": "DOAK etter LE. NSAIDs frarådes."
+      "allergier": [
+        {
+          "agens": "Penicillin",
+          "reaksjon": "Urtikaria + mildt leppeødem",
+          "alvorlighet": "moderat",
+          "bekreftet": "klinisk anamnese",
+          "dato": "2015-06"
+        }
+      ],
+      "merknader": "DOAK etter LE. NSAIDs frarådes.",
+      "fastlege": "Dr. Torgeir Bru, Sandvika legesenter",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [],
+        "donor": true
+      },
+      "siste_malinger": {
+        "blodtrykk": "124/78",
+        "puls": 76,
+        "vekt": 68,
+        "hoyde": 170,
+        "bmi": 23.5,
+        "so2": 98,
+        "dato": "2026-03-01"
+      },
+      "prover": [
+        {
+          "analyse": "Anti-FXa (Dabigatran trough)",
+          "verdi": 72,
+          "enhet": "ng/ml",
+          "dato": "2026-03-01",
+          "referanse": "trough 28–215"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 82,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-03-01"
+        },
+        {
+          "analyse": "Hemoglobin",
+          "verdi": 13.2,
+          "enhet": "g/dL",
+          "dato": "2026-03-01"
+        },
+        {
+          "analyse": "D-dimer",
+          "verdi": 0.4,
+          "enhet": "mg/L",
+          "dato": "2026-02-05",
+          "referanse": "<0.5"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-20"
+        },
+        {
+          "type": "Covid-19",
+          "siste": "2024-11-01"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvhjulpen",
+        "kognitiv_status": "klar",
+        "mobilitet": "fullt selvstendig",
+        "fallrisiko": "lav"
+      },
+      "sosial": {
+        "bor": "med ektefelle",
+        "pleietjenester": [],
+        "parorende": [
+          {
+            "relasjon": "Ektefelle",
+            "kontakt": "primær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Antikoagulasjonskontroll (anti-FXa)",
+          "frekvens": "hver 6. mnd",
+          "neste_kontroll": "2026-09-05"
+        },
+        {
+          "type": "LE-oppfølging (post-trombotisk vurdering)",
+          "neste_kontroll": "2026-05-15"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2024-11-08",
+          "aarsak": "Lungeemboli (bilateral subsegmental)",
+          "varighet_dager": 6
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Enoksaparin 80 mg x 2 (s.c.)",
+          "seponert": "2024-11-18",
+          "grunn": "Overgang til DOAK etter stabilisering"
+        }
+      ]
     },
     {
       "id": "P-006",
@@ -83,10 +265,20 @@
       "alder": 70,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2020" }
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2020"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Edoksaban (Lixiana)", "atc": "B01AF03", "dose": "60 mg daglig", "indikasjon": "Antikoagulasjon" }
+        {
+          "navn": "Edoksaban (Lixiana)",
+          "atc": "B01AF03",
+          "dose": "60 mg daglig",
+          "indikasjon": "Antikoagulasjon"
+        }
       ],
       "allergier": [],
       "merknader": "DOAK. NSAIDs kontraindisert."
@@ -97,10 +289,20 @@
       "alder": 78,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "I82", "kodeverk": "ICD-10", "tekst": "Dyp venetrombose", "siden": "2023" }
+        {
+          "kode": "I82",
+          "kodeverk": "ICD-10",
+          "tekst": "Dyp venetrombose",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "2 mg daglig", "indikasjon": "Antikoagulasjon" }
+        {
+          "navn": "Warfarin (Marevan)",
+          "atc": "B01AA03",
+          "dose": "2 mg daglig",
+          "indikasjon": "Antikoagulasjon"
+        }
       ],
       "allergier": [],
       "merknader": "Warfarin-behandling. INR-mål 2-3."
@@ -111,10 +313,20 @@
       "alder": 62,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2024" }
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2024"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Apixaban (Eliquis)", "atc": "B01AF02", "dose": "5 mg x 2", "indikasjon": "Antikoagulasjon" }
+        {
+          "navn": "Apixaban (Eliquis)",
+          "atc": "B01AF02",
+          "dose": "5 mg x 2",
+          "indikasjon": "Antikoagulasjon"
+        }
       ],
       "allergier": [],
       "merknader": "Nyoppstartet DOAK. Unngå NSAIDs."
@@ -125,13 +337,38 @@
       "alder": 84,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "I50", "kodeverk": "ICD-10", "tekst": "Hjertesvikt", "siden": "2021" },
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2021" }
+        {
+          "kode": "I50",
+          "kodeverk": "ICD-10",
+          "tekst": "Hjertesvikt",
+          "siden": "2021"
+        },
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2021"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Warfarin (Marevan)", "atc": "B01AA03", "dose": "1.5 mg daglig", "indikasjon": "Antikoagulasjon" },
-        { "navn": "Furosemid", "atc": "C03CA01", "dose": "40 mg daglig", "indikasjon": "Hjertesvikt" },
-        { "navn": "Spironolakton", "atc": "C03DA01", "dose": "25 mg daglig", "indikasjon": "Hjertesvikt" }
+        {
+          "navn": "Warfarin (Marevan)",
+          "atc": "B01AA03",
+          "dose": "1.5 mg daglig",
+          "indikasjon": "Antikoagulasjon"
+        },
+        {
+          "navn": "Furosemid",
+          "atc": "C03CA01",
+          "dose": "40 mg daglig",
+          "indikasjon": "Hjertesvikt"
+        },
+        {
+          "navn": "Spironolakton",
+          "atc": "C03DA01",
+          "dose": "25 mg daglig",
+          "indikasjon": "Hjertesvikt"
+        }
       ],
       "allergier": [],
       "merknader": "Hjertesvikt + antikoagulasjon. NSAIDs absolutt kontraindisert (forverrer både svikt og blødning)."
@@ -142,26 +379,50 @@
       "alder": 73,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I74", "kodeverk": "ICD-10", "tekst": "Arteriell tromboembolisme", "siden": "2022" }
+        {
+          "kode": "I74",
+          "kodeverk": "ICD-10",
+          "tekst": "Arteriell tromboembolisme",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Rivaroksaban (Xarelto)", "atc": "B01AF01", "dose": "20 mg daglig", "indikasjon": "Antikoagulasjon" }
+        {
+          "navn": "Rivaroksaban (Xarelto)",
+          "atc": "B01AF01",
+          "dose": "20 mg daglig",
+          "indikasjon": "Antikoagulasjon"
+        }
       ],
       "allergier": [],
       "merknader": "DOAK. NSAIDs frarådes."
     },
-
     {
       "id": "P-011",
       "navn": "Solveig Pedersen",
       "alder": 64,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes mellitus type 2", "siden": "2018" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes mellitus type 2",
+          "siden": "2018"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
-        { "navn": "Semaglutid (Ozempic)", "atc": "A10BJ06", "dose": "1 mg ukentlig s.c.", "indikasjon": "DM type 2" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "1000 mg x 2",
+          "indikasjon": "DM type 2"
+        },
+        {
+          "navn": "Semaglutid (Ozempic)",
+          "atc": "A10BJ06",
+          "dose": "1 mg ukentlig s.c.",
+          "indikasjon": "DM type 2"
+        }
       ],
       "allergier": [],
       "merknader": "Velregulert DM2. HbA1c 52 mmol/mol."
@@ -172,12 +433,32 @@
       "alder": 58,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes mellitus type 2", "siden": "2020" },
-        { "kode": "E66", "kodeverk": "ICD-10", "tekst": "Fedme", "siden": "2015" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes mellitus type 2",
+          "siden": "2020"
+        },
+        {
+          "kode": "E66",
+          "kodeverk": "ICD-10",
+          "tekst": "Fedme",
+          "siden": "2015"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
-        { "navn": "Empagliflozin (Jardiance)", "atc": "A10BK03", "dose": "25 mg daglig", "indikasjon": "DM type 2" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "1000 mg x 2",
+          "indikasjon": "DM type 2"
+        },
+        {
+          "navn": "Empagliflozin (Jardiance)",
+          "atc": "A10BK03",
+          "dose": "25 mg daglig",
+          "indikasjon": "DM type 2"
+        }
       ],
       "allergier": [],
       "merknader": "Steroider kan gi betydelig hyperglykemi - krever tett monitorering."
@@ -188,12 +469,32 @@
       "alder": 71,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2012" },
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "Kronisk nyresykdom stadium 3", "siden": "2020" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2012"
+        },
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "Kronisk nyresykdom stadium 3",
+          "siden": "2020"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Insulin glargin (Lantus)", "atc": "A10AE04", "dose": "20 E kveld", "indikasjon": "DM type 2" },
-        { "navn": "Gliklazid", "atc": "A10BB09", "dose": "60 mg daglig", "indikasjon": "DM type 2" }
+        {
+          "navn": "Insulin glargin (Lantus)",
+          "atc": "A10AE04",
+          "dose": "20 E kveld",
+          "indikasjon": "DM type 2"
+        },
+        {
+          "navn": "Gliklazid",
+          "atc": "A10BB09",
+          "dose": "60 mg daglig",
+          "indikasjon": "DM type 2"
+        }
       ],
       "allergier": [],
       "merknader": "Metformin seponert pga nedsatt nyrefunksjon (eGFR 42). NSAIDs frarådes ved CKD."
@@ -204,10 +505,20 @@
       "alder": 55,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2023" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "500 mg x 2", "indikasjon": "DM type 2" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "500 mg x 2",
+          "indikasjon": "DM type 2"
+        }
       ],
       "allergier": [],
       "merknader": "Nyoppdaget DM2. Livsstilsintervensjon pågår."
@@ -218,11 +529,26 @@
       "alder": 69,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2017" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2017"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
-        { "navn": "Liraglutid (Victoza)", "atc": "A10BJ02", "dose": "1.8 mg daglig s.c.", "indikasjon": "DM type 2" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "1000 mg x 2",
+          "indikasjon": "DM type 2"
+        },
+        {
+          "navn": "Liraglutid (Victoza)",
+          "atc": "A10BJ02",
+          "dose": "1.8 mg daglig s.c.",
+          "indikasjon": "DM type 2"
+        }
       ],
       "allergier": [],
       "merknader": "GLP-1 agonist. Kvalme bedret etter opptrapping."
@@ -233,14 +559,44 @@
       "alder": 76,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2010" },
-        { "kode": "I25", "kodeverk": "ICD-10", "tekst": "Iskemisk hjertesykdom", "siden": "2015" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2010"
+        },
+        {
+          "kode": "I25",
+          "kodeverk": "ICD-10",
+          "tekst": "Iskemisk hjertesykdom",
+          "siden": "2015"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
-        { "navn": "Empagliflozin (Jardiance)", "atc": "A10BK03", "dose": "10 mg daglig", "indikasjon": "DM2 + kardiovaskulær beskyttelse" },
-        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "80 mg daglig", "indikasjon": "Sekundærprofylakse" },
-        { "navn": "Acetylsalisylsyre", "atc": "B01AC06", "dose": "75 mg daglig", "indikasjon": "Platehemming" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "1000 mg x 2",
+          "indikasjon": "DM type 2"
+        },
+        {
+          "navn": "Empagliflozin (Jardiance)",
+          "atc": "A10BK03",
+          "dose": "10 mg daglig",
+          "indikasjon": "DM2 + kardiovaskulær beskyttelse"
+        },
+        {
+          "navn": "Atorvastatin",
+          "atc": "C10AA05",
+          "dose": "80 mg daglig",
+          "indikasjon": "Sekundærprofylakse"
+        },
+        {
+          "navn": "Acetylsalisylsyre",
+          "atc": "B01AC06",
+          "dose": "75 mg daglig",
+          "indikasjon": "Platehemming"
+        }
       ],
       "allergier": [],
       "merknader": "DM2 med kardiovaskulær komorbiditet. NSAIDs frarådes pga hjertesykdom + ASA."
@@ -251,12 +607,24 @@
       "alder": 60,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2019" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2019"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "850 mg x 2", "indikasjon": "DM type 2" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "850 mg x 2",
+          "indikasjon": "DM type 2"
+        }
       ],
-      "allergier": ["Sulfonamid"],
+      "allergier": [
+        "Sulfonamid"
+      ],
       "merknader": "Velregulert på metformin monoterapi."
     },
     {
@@ -265,27 +633,56 @@
       "alder": 67,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2014" }
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2014"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metformin", "atc": "A10BA02", "dose": "1000 mg x 2", "indikasjon": "DM type 2" },
-        { "navn": "Sitagliptin (Januvia)", "atc": "A10BH01", "dose": "100 mg daglig", "indikasjon": "DM type 2" }
+        {
+          "navn": "Metformin",
+          "atc": "A10BA02",
+          "dose": "1000 mg x 2",
+          "indikasjon": "DM type 2"
+        },
+        {
+          "navn": "Sitagliptin (Januvia)",
+          "atc": "A10BH01",
+          "dose": "100 mg daglig",
+          "indikasjon": "DM type 2"
+        }
       ],
       "allergier": [],
       "merknader": ""
     },
-
     {
       "id": "P-019",
       "navn": "Magnus Holm",
       "alder": 74,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2016" }
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2016"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Tiotropium (Spiriva)", "atc": "R03BB04", "dose": "18 mcg inh daglig", "indikasjon": "KOLS" },
-        { "navn": "Salmeterol/flutikason (Seretide)", "atc": "R03AK06", "dose": "50/500 x 2", "indikasjon": "KOLS" }
+        {
+          "navn": "Tiotropium (Spiriva)",
+          "atc": "R03BB04",
+          "dose": "18 mcg inh daglig",
+          "indikasjon": "KOLS"
+        },
+        {
+          "navn": "Salmeterol/flutikason (Seretide)",
+          "atc": "R03AK06",
+          "dose": "50/500 x 2",
+          "indikasjon": "KOLS"
+        }
       ],
       "allergier": [],
       "merknader": "KOLS GOLD 3. Ikke-selektive betablokkere kontraindisert."
@@ -296,11 +693,26 @@
       "alder": 79,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2014" }
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2014"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Salbutamol", "atc": "R03AC02", "dose": "v/behov inh", "indikasjon": "KOLS" },
-        { "navn": "Budesonid/formoterol (Symbicort)", "atc": "R03AK07", "dose": "160/4.5 x 2", "indikasjon": "KOLS" }
+        {
+          "navn": "Salbutamol",
+          "atc": "R03AC02",
+          "dose": "v/behov inh",
+          "indikasjon": "KOLS"
+        },
+        {
+          "navn": "Budesonid/formoterol (Symbicort)",
+          "atc": "R03AK07",
+          "dose": "160/4.5 x 2",
+          "indikasjon": "KOLS"
+        }
       ],
       "allergier": [],
       "merknader": "Eks-røyker. 2 eksaserbasjoner siste år."
@@ -311,12 +723,32 @@
       "alder": 82,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2010" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2005" }
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2010"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2005"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Tiotropium", "atc": "R03BB04", "dose": "18 mcg daglig", "indikasjon": "KOLS" },
-        { "navn": "Amlodipin", "atc": "C08CA01", "dose": "5 mg daglig", "indikasjon": "Hypertensjon" }
+        {
+          "navn": "Tiotropium",
+          "atc": "R03BB04",
+          "dose": "18 mcg daglig",
+          "indikasjon": "KOLS"
+        },
+        {
+          "navn": "Amlodipin",
+          "atc": "C08CA01",
+          "dose": "5 mg daglig",
+          "indikasjon": "Hypertensjon"
+        }
       ],
       "allergier": [],
       "merknader": "Unngå ikke-selektive betablokkere."
@@ -327,10 +759,20 @@
       "alder": 77,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2018" }
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2018"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Indakaterol (Onbrez)", "atc": "R03AC18", "dose": "150 mcg daglig", "indikasjon": "KOLS" }
+        {
+          "navn": "Indakaterol (Onbrez)",
+          "atc": "R03AC18",
+          "dose": "150 mcg daglig",
+          "indikasjon": "KOLS"
+        }
       ],
       "allergier": [],
       "merknader": "KOLS GOLD 2."
@@ -341,10 +783,20 @@
       "alder": 70,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2019" }
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2019"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Salmeterol/flutikason", "atc": "R03AK06", "dose": "50/250 x 2", "indikasjon": "KOLS" }
+        {
+          "navn": "Salmeterol/flutikason",
+          "atc": "R03AK06",
+          "dose": "50/250 x 2",
+          "indikasjon": "KOLS"
+        }
       ],
       "allergier": [],
       "merknader": ""
@@ -355,27 +807,56 @@
       "alder": 85,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2012" }
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2012"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Tiotropium", "atc": "R03BB04", "dose": "18 mcg daglig", "indikasjon": "KOLS" },
-        { "navn": "Prednisolon", "atc": "H02AB06", "dose": "5 mg daglig", "indikasjon": "Vedlikehold" }
+        {
+          "navn": "Tiotropium",
+          "atc": "R03BB04",
+          "dose": "18 mcg daglig",
+          "indikasjon": "KOLS"
+        },
+        {
+          "navn": "Prednisolon",
+          "atc": "H02AB06",
+          "dose": "5 mg daglig",
+          "indikasjon": "Vedlikehold"
+        }
       ],
       "allergier": [],
       "merknader": "Langtids steroidbruk - økt infeksjonsrisiko."
     },
-
     {
       "id": "P-025",
       "navn": "Siri Fossum",
       "alder": 63,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "Kronisk nyresykdom stadium 4", "siden": "2022" }
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "Kronisk nyresykdom stadium 4",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Erytropoietin", "atc": "B03XA01", "dose": "4000 IE x 1/uke", "indikasjon": "Anemi ved CKD" },
-        { "navn": "Kalsiumkarbonat", "atc": "A12AA04", "dose": "500 mg x 3", "indikasjon": "Fosfatbinder" }
+        {
+          "navn": "Erytropoietin",
+          "atc": "B03XA01",
+          "dose": "4000 IE x 1/uke",
+          "indikasjon": "Anemi ved CKD"
+        },
+        {
+          "navn": "Kalsiumkarbonat",
+          "atc": "A12AA04",
+          "dose": "500 mg x 3",
+          "indikasjon": "Fosfatbinder"
+        }
       ],
       "allergier": [],
       "merknader": "eGFR 22. NSAIDs absolutt kontraindisert. Kontrastmidler frarådes."
@@ -386,10 +867,20 @@
       "alder": 72,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "Kronisk nyresykdom stadium 3b", "siden": "2020" }
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "Kronisk nyresykdom stadium 3b",
+          "siden": "2020"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Ramipril", "atc": "C09AA05", "dose": "2.5 mg daglig", "indikasjon": "Nefroprotektiv" }
+        {
+          "navn": "Ramipril",
+          "atc": "C09AA05",
+          "dose": "2.5 mg daglig",
+          "indikasjon": "Nefroprotektiv"
+        }
       ],
       "allergier": [],
       "merknader": "eGFR 35. NSAIDs frarådes. Dosejuster renalt utskilte medikamenter."
@@ -400,10 +891,20 @@
       "alder": 68,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 3", "siden": "2021" }
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "CKD stadium 3",
+          "siden": "2021"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Losartan", "atc": "C09CA01", "dose": "50 mg daglig", "indikasjon": "Nefroprotektiv + HT" }
+        {
+          "navn": "Losartan",
+          "atc": "C09CA01",
+          "dose": "50 mg daglig",
+          "indikasjon": "Nefroprotektiv + HT"
+        }
       ],
       "allergier": [],
       "merknader": "eGFR 48. NSAIDs frarådes."
@@ -414,12 +915,32 @@
       "alder": 80,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 4", "siden": "2019" },
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2018" }
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "CKD stadium 4",
+          "siden": "2019"
+        },
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2018"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Apixaban (Eliquis)", "atc": "B01AF02", "dose": "2.5 mg x 2 (redusert dose)", "indikasjon": "Antikoagulasjon" },
-        { "navn": "Furosemid", "atc": "C03CA01", "dose": "40 mg daglig", "indikasjon": "Ødem" }
+        {
+          "navn": "Apixaban (Eliquis)",
+          "atc": "B01AF02",
+          "dose": "2.5 mg x 2 (redusert dose)",
+          "indikasjon": "Antikoagulasjon"
+        },
+        {
+          "navn": "Furosemid",
+          "atc": "C03CA01",
+          "dose": "40 mg daglig",
+          "indikasjon": "Ødem"
+        }
       ],
       "allergier": [],
       "merknader": "Dobbel kontraindikasjon mot NSAIDs (CKD + antikoagulasjon). eGFR 28."
@@ -430,27 +951,49 @@
       "alder": 66,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 3", "siden": "2023" }
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "CKD stadium 3",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Ramipril", "atc": "C09AA05", "dose": "5 mg daglig", "indikasjon": "HT + nefroprotektiv" }
+        {
+          "navn": "Ramipril",
+          "atc": "C09AA05",
+          "dose": "5 mg daglig",
+          "indikasjon": "HT + nefroprotektiv"
+        }
       ],
       "allergier": [],
       "merknader": "eGFR 52."
     },
-
     {
       "id": "P-030",
       "navn": "Eivind Tangen",
       "alder": 34,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2005" }
+        {
+          "kode": "J45",
+          "kodeverk": "ICD-10",
+          "tekst": "Astma",
+          "siden": "2005"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Budesonid/formoterol (Symbicort)", "atc": "R03AK07", "dose": "160/4.5 v/behov", "indikasjon": "Astma (MART)" }
+        {
+          "navn": "Budesonid/formoterol (Symbicort)",
+          "atc": "R03AK07",
+          "dose": "160/4.5 v/behov",
+          "indikasjon": "Astma (MART)"
+        }
       ],
-      "allergier": ["Acetylsalisylsyre (ASA)", "NSAIDs"],
+      "allergier": [
+        "Acetylsalisylsyre (ASA)",
+        "NSAIDs"
+      ],
       "merknader": "ASA-indusert astma (AERD). NSAIDs og ASA absolutt kontraindisert - kan utløse alvorlig bronkospasme."
     },
     {
@@ -459,13 +1002,31 @@
       "alder": 42,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2010" }
+        {
+          "kode": "J45",
+          "kodeverk": "ICD-10",
+          "tekst": "Astma",
+          "siden": "2010"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Flutikason (Flutide)", "atc": "R03BA05", "dose": "125 mcg x 2 inh", "indikasjon": "Astma" },
-        { "navn": "Salbutamol", "atc": "R03AC02", "dose": "v/behov", "indikasjon": "Astma" }
+        {
+          "navn": "Flutikason (Flutide)",
+          "atc": "R03BA05",
+          "dose": "125 mcg x 2 inh",
+          "indikasjon": "Astma"
+        },
+        {
+          "navn": "Salbutamol",
+          "atc": "R03AC02",
+          "dose": "v/behov",
+          "indikasjon": "Astma"
+        }
       ],
-      "allergier": ["Pollen", "Katt"],
+      "allergier": [
+        "Pollen",
+        "Katt"
+      ],
       "merknader": "Allergisk astma. Ikke-selektive betablokkere kontraindisert."
     },
     {
@@ -474,10 +1035,20 @@
       "alder": 28,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2000" }
+        {
+          "kode": "J45",
+          "kodeverk": "ICD-10",
+          "tekst": "Astma",
+          "siden": "2000"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Budesonid/formoterol", "atc": "R03AK07", "dose": "160/4.5 x 2", "indikasjon": "Astma" }
+        {
+          "navn": "Budesonid/formoterol",
+          "atc": "R03AK07",
+          "dose": "160/4.5 x 2",
+          "indikasjon": "Astma"
+        }
       ],
       "allergier": [],
       "merknader": ""
@@ -488,11 +1059,26 @@
       "alder": 51,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "1995" }
+        {
+          "kode": "J45",
+          "kodeverk": "ICD-10",
+          "tekst": "Astma",
+          "siden": "1995"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Flutikason/vilanterol (Relvar)", "atc": "R03AK10", "dose": "92/22 daglig", "indikasjon": "Astma" },
-        { "navn": "Montelukast", "atc": "R03DC03", "dose": "10 mg kveld", "indikasjon": "Astma" }
+        {
+          "navn": "Flutikason/vilanterol (Relvar)",
+          "atc": "R03AK10",
+          "dose": "92/22 daglig",
+          "indikasjon": "Astma"
+        },
+        {
+          "navn": "Montelukast",
+          "atc": "R03DC03",
+          "dose": "10 mg kveld",
+          "indikasjon": "Astma"
+        }
       ],
       "allergier": [],
       "merknader": ""
@@ -503,38 +1089,227 @@
       "alder": 19,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma", "siden": "2010" }
+        {
+          "kode": "J45",
+          "kodeverk": "ICD-10",
+          "tekst": "Astma",
+          "siden": "2010"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Salbutamol", "atc": "R03AC02", "dose": "v/behov", "indikasjon": "Astma" }
+        {
+          "navn": "Salbutamol",
+          "atc": "R03AC02",
+          "dose": "v/behov",
+          "indikasjon": "Astma"
+        }
       ],
-      "allergier": ["Peanøtter"],
+      "allergier": [
+        "Peanøtter"
+      ],
       "merknader": "Mild intermitterende astma."
     },
-
     {
       "id": "P-035",
       "navn": "Olav Refsdal",
       "alder": 83,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I50", "kodeverk": "ICD-10", "tekst": "Hjertesvikt", "siden": "2018" },
-        { "kode": "E11", "kodeverk": "ICD-10", "tekst": "Diabetes type 2", "siden": "2005" },
-        { "kode": "N18", "kodeverk": "ICD-10", "tekst": "CKD stadium 3", "siden": "2020" },
-        { "kode": "I48", "kodeverk": "ICD-10", "tekst": "Atrieflimmer", "siden": "2019" },
-        { "kode": "M81", "kodeverk": "ICD-10", "tekst": "Osteoporose", "siden": "2017" }
+        {
+          "kode": "I50",
+          "kodeverk": "ICD-10",
+          "tekst": "Hjertesvikt",
+          "siden": "2018"
+        },
+        {
+          "kode": "E11",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes type 2",
+          "siden": "2005"
+        },
+        {
+          "kode": "N18",
+          "kodeverk": "ICD-10",
+          "tekst": "CKD stadium 3",
+          "siden": "2020"
+        },
+        {
+          "kode": "I48",
+          "kodeverk": "ICD-10",
+          "tekst": "Atrieflimmer",
+          "siden": "2019"
+        },
+        {
+          "kode": "M81",
+          "kodeverk": "ICD-10",
+          "tekst": "Osteoporose",
+          "siden": "2017"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Warfarin", "atc": "B01AA03", "dose": "2 mg daglig", "indikasjon": "Antikoagulasjon" },
-        { "navn": "Furosemid", "atc": "C03CA01", "dose": "40 mg x 2", "indikasjon": "Hjertesvikt" },
-        { "navn": "Metoprolol", "atc": "C07AB02", "dose": "50 mg x 2", "indikasjon": "Hjertesvikt/AF" },
-        { "navn": "Ramipril", "atc": "C09AA05", "dose": "2.5 mg daglig", "indikasjon": "Hjertesvikt" },
-        { "navn": "Empagliflozin", "atc": "A10BK03", "dose": "10 mg daglig", "indikasjon": "DM2/hjertesvikt" },
-        { "navn": "Alendronat", "atc": "M05BA04", "dose": "70 mg ukentlig", "indikasjon": "Osteoporose" },
-        { "navn": "Kolekalsiferol + kalsium", "atc": "A12AX", "dose": "1 x 2", "indikasjon": "Osteoporose" }
+        {
+          "navn": "Warfarin",
+          "atc": "B01AA03",
+          "dose": "2 mg daglig",
+          "indikasjon": "Antikoagulasjon"
+        },
+        {
+          "navn": "Furosemid",
+          "atc": "C03CA01",
+          "dose": "40 mg x 2",
+          "indikasjon": "Hjertesvikt"
+        },
+        {
+          "navn": "Metoprolol",
+          "atc": "C07AB02",
+          "dose": "50 mg x 2",
+          "indikasjon": "Hjertesvikt/AF"
+        },
+        {
+          "navn": "Ramipril",
+          "atc": "C09AA05",
+          "dose": "2.5 mg daglig",
+          "indikasjon": "Hjertesvikt"
+        },
+        {
+          "navn": "Empagliflozin",
+          "atc": "A10BK03",
+          "dose": "10 mg daglig",
+          "indikasjon": "DM2/hjertesvikt"
+        },
+        {
+          "navn": "Alendronat",
+          "atc": "M05BA04",
+          "dose": "70 mg ukentlig",
+          "indikasjon": "Osteoporose"
+        },
+        {
+          "navn": "Kolekalsiferol + kalsium",
+          "atc": "A12AX",
+          "dose": "1 x 2",
+          "indikasjon": "Osteoporose"
+        }
       ],
       "allergier": [],
-      "merknader": "Polyfarmasi - 7 faste medisiner. NSAIDs absolutt kontraindisert (hjertesvikt + CKD + Warfarin). Høy fallrisiko."
+      "merknader": "Polyfarmasi - 7 faste medisiner. NSAIDs absolutt kontraindisert (hjertesvikt + CKD + Warfarin). Høy fallrisiko.",
+      "fastlege": "Dr. Kjersti Tangen, Legesenter Oslo vest",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [
+          {
+            "type": "Pacemaker (DDDR)",
+            "aar": 2020,
+            "mr_sikker": false
+          }
+        ],
+        "kontrastreaksjoner": [
+          "Forsiktighet — CKD3b"
+        ],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "128/78",
+        "puls": 72,
+        "vekt": 78,
+        "hoyde": 175,
+        "bmi": 25.5,
+        "so2": 94,
+        "dato": "2026-03-15"
+      },
+      "prover": [
+        {
+          "analyse": "INR",
+          "verdi": 2.4,
+          "dato": "2026-04-12",
+          "referanse": "2.0–3.0"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 45,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-03-10"
+        },
+        {
+          "analyse": "HbA1c",
+          "verdi": 55,
+          "enhet": "mmol/mol",
+          "dato": "2026-02-10",
+          "referanse": "<53"
+        },
+        {
+          "analyse": "NT-proBNP",
+          "verdi": 1820,
+          "enhet": "ng/L",
+          "dato": "2026-03-10"
+        },
+        {
+          "analyse": "Kalium",
+          "verdi": 4.7,
+          "enhet": "mmol/L",
+          "dato": "2026-03-10"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-08"
+        },
+        {
+          "type": "Pneumokokk 23-valent",
+          "siste": "2021-04"
+        },
+        {
+          "type": "Covid-19 (Comirnaty)",
+          "siste": "2024-09-15"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvhjulpen",
+        "kognitiv_status": "klar",
+        "mobilitet": "selvstendig, gangstokk ved lengre turer",
+        "fallrisiko": "middels"
+      },
+      "sosial": {
+        "bor": "med ektefelle i enebolig",
+        "pleietjenester": [
+          "Hjemmesykepleie 1x/uke (medisindosett)"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Ektefelle",
+            "kontakt": "primær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "INR-kontroll",
+          "frekvens": "månedlig",
+          "neste_kontroll": "2026-05-12"
+        },
+        {
+          "type": "Hjertesvikt-oppfølging",
+          "neste_kontroll": "2026-06-20"
+        },
+        {
+          "type": "Diabetes-oppfølging",
+          "neste_kontroll": "2026-05-28"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2025-08-14",
+          "aarsak": "Dekompensert hjertesvikt",
+          "varighet_dager": 6
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Atenolol",
+          "seponert": "2024-03",
+          "grunn": "Akkumulasjon ved CKD – byttet til metoprolol"
+        }
+      ]
     },
     {
       "id": "P-036",
@@ -542,21 +1317,181 @@
       "alder": 87,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "F03", "kodeverk": "ICD-10", "tekst": "Demens", "siden": "2021" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2000" },
-        { "kode": "M81", "kodeverk": "ICD-10", "tekst": "Osteoporose", "siden": "2018" },
-        { "kode": "F32", "kodeverk": "ICD-10", "tekst": "Depresjon", "siden": "2019" }
+        {
+          "kode": "F03",
+          "kodeverk": "ICD-10",
+          "tekst": "Demens",
+          "siden": "2021"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2000"
+        },
+        {
+          "kode": "M81",
+          "kodeverk": "ICD-10",
+          "tekst": "Osteoporose",
+          "siden": "2018"
+        },
+        {
+          "kode": "F32",
+          "kodeverk": "ICD-10",
+          "tekst": "Depresjon",
+          "siden": "2019"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Donepezil", "atc": "N06DA02", "dose": "10 mg daglig", "indikasjon": "Demens" },
-        { "navn": "Amlodipin", "atc": "C08CA01", "dose": "5 mg daglig", "indikasjon": "HT" },
-        { "navn": "Sertralin", "atc": "N06AB06", "dose": "50 mg daglig", "indikasjon": "Depresjon" },
-        { "navn": "Alendronat", "atc": "M05BA04", "dose": "70 mg ukentlig", "indikasjon": "Osteoporose" },
-        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g x 3 v/behov", "indikasjon": "Smerter" },
-        { "navn": "Melatonin", "atc": "N05CH01", "dose": "2 mg kveld", "indikasjon": "Søvn" }
+        {
+          "navn": "Donepezil",
+          "atc": "N06DA02",
+          "dose": "10 mg daglig",
+          "indikasjon": "Demens"
+        },
+        {
+          "navn": "Amlodipin",
+          "atc": "C08CA01",
+          "dose": "5 mg daglig",
+          "indikasjon": "HT"
+        },
+        {
+          "navn": "Sertralin",
+          "atc": "N06AB06",
+          "dose": "50 mg daglig",
+          "indikasjon": "Depresjon"
+        },
+        {
+          "navn": "Alendronat",
+          "atc": "M05BA04",
+          "dose": "70 mg ukentlig",
+          "indikasjon": "Osteoporose"
+        },
+        {
+          "navn": "Paracetamol",
+          "atc": "N02BE01",
+          "dose": "1 g x 3 v/behov",
+          "indikasjon": "Smerter"
+        },
+        {
+          "navn": "Melatonin",
+          "atc": "N05CH01",
+          "dose": "2 mg kveld",
+          "indikasjon": "Søvn"
+        }
       ],
       "allergier": [],
-      "merknader": "Sårbar eldre. Antikolinerge medikamenter bør unngås (STOPP/START). Høy fallrisiko."
+      "merknader": "Sårbar eldre. Antikolinerge medikamenter bør unngås (STOPP/START). Høy fallrisiko.",
+      "fastlege": "Dr. Henrik Lund, Frogner legesenter",
+      "kritisk_info": {
+        "cpr_status": "Ikke HLR (forhåndsbestemmelse 2024)",
+        "implantater": [],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "142/82",
+        "puls": 76,
+        "vekt": 58,
+        "hoyde": 160,
+        "bmi": 22.7,
+        "dato": "2026-03-28"
+      },
+      "prover": [
+        {
+          "analyse": "MMSE",
+          "verdi": 19,
+          "dato": "2026-02-05",
+          "referanse": "24–30 normalt"
+        },
+        {
+          "analyse": "Kalsium (korrigert)",
+          "verdi": 2.38,
+          "enhet": "mmol/L",
+          "dato": "2026-02-05"
+        },
+        {
+          "analyse": "Vitamin D (25-OH)",
+          "verdi": 48,
+          "enhet": "nmol/L",
+          "dato": "2026-02-05"
+        },
+        {
+          "analyse": "TSH",
+          "verdi": 2.1,
+          "enhet": "mIE/L",
+          "dato": "2026-01-20"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 58,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-02-05"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-12"
+        },
+        {
+          "type": "Pneumokokk 23-valent",
+          "siste": "2018-09"
+        }
+      ],
+      "funksjon": {
+        "adl": "trenger hjelp med stell, påkledning og måltider",
+        "kognitiv_status": "moderat demens (MMSE 19)",
+        "mobilitet": "rullator inne, rullestol ute",
+        "fallrisiko": "høy"
+      },
+      "sosial": {
+        "bor": "omsorgsbolig (Villa Victoria)",
+        "pleietjenester": [
+          "Hjemmesykepleie 4x/dag",
+          "Trygghetsalarm",
+          "Matombringing"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Datter",
+            "kontakt": "primær"
+          },
+          {
+            "relasjon": "Sønn",
+            "kontakt": "sekundær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Demens-oppfølging",
+          "neste_kontroll": "2026-06-10"
+        },
+        {
+          "type": "DEXA-scan (osteoporose)",
+          "frekvens": "årlig",
+          "neste_kontroll": "2026-09-01"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2025-11-03",
+          "aarsak": "Fall hjemme, hodekontusjon",
+          "varighet_dager": 2
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Zopiklon",
+          "seponert": "2023-11",
+          "grunn": "Økt fallrisiko hos eldre med demens (Beers-kriterier)"
+        },
+        {
+          "navn": "Oksazepam",
+          "seponert": "2024-06",
+          "grunn": "Sedasjon + fallrisiko"
+        }
+      ]
     },
     {
       "id": "P-037",
@@ -564,22 +1499,66 @@
       "alder": 79,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I25", "kodeverk": "ICD-10", "tekst": "Iskemisk hjertesykdom", "siden": "2010" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "1998" },
-        { "kode": "E78", "kodeverk": "ICD-10", "tekst": "Hyperkolesterolemi", "siden": "2005" },
-        { "kode": "M17", "kodeverk": "ICD-10", "tekst": "Knegonartrose", "siden": "2015" }
+        {
+          "kode": "I25",
+          "kodeverk": "ICD-10",
+          "tekst": "Iskemisk hjertesykdom",
+          "siden": "2010"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "1998"
+        },
+        {
+          "kode": "E78",
+          "kodeverk": "ICD-10",
+          "tekst": "Hyperkolesterolemi",
+          "siden": "2005"
+        },
+        {
+          "kode": "M17",
+          "kodeverk": "ICD-10",
+          "tekst": "Knegonartrose",
+          "siden": "2015"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Acetylsalisylsyre", "atc": "B01AC06", "dose": "75 mg daglig", "indikasjon": "Platehemming" },
-        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "40 mg daglig", "indikasjon": "Sekundærprofylakse" },
-        { "navn": "Metoprolol", "atc": "C07AB02", "dose": "50 mg x 2", "indikasjon": "Angina" },
-        { "navn": "Nitroglyserin spray", "atc": "C01DA02", "dose": "v/behov", "indikasjon": "Angina" },
-        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g x 3", "indikasjon": "Artrose" }
+        {
+          "navn": "Acetylsalisylsyre",
+          "atc": "B01AC06",
+          "dose": "75 mg daglig",
+          "indikasjon": "Platehemming"
+        },
+        {
+          "navn": "Atorvastatin",
+          "atc": "C10AA05",
+          "dose": "40 mg daglig",
+          "indikasjon": "Sekundærprofylakse"
+        },
+        {
+          "navn": "Metoprolol",
+          "atc": "C07AB02",
+          "dose": "50 mg x 2",
+          "indikasjon": "Angina"
+        },
+        {
+          "navn": "Nitroglyserin spray",
+          "atc": "C01DA02",
+          "dose": "v/behov",
+          "indikasjon": "Angina"
+        },
+        {
+          "navn": "Paracetamol",
+          "atc": "N02BE01",
+          "dose": "1 g x 3",
+          "indikasjon": "Artrose"
+        }
       ],
       "allergier": [],
       "merknader": "Lever med knesmerter. NSAIDs bør unngås pga ASA + iskemisk hjertesykdom - bruker paracetamol."
     },
-
     {
       "id": "P-038",
       "navn": "Nora Eng",
@@ -607,7 +1586,9 @@
       "kjonn": "K",
       "diagnoser": [],
       "faste_medisiner": [],
-      "allergier": ["Penicillin"],
+      "allergier": [
+        "Penicillin"
+      ],
       "merknader": "Frisk. Penicillinallergi dokumentert."
     },
     {
@@ -616,10 +1597,20 @@
       "alder": 51,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2022" }
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Amlodipin", "atc": "C08CA01", "dose": "5 mg daglig", "indikasjon": "HT" }
+        {
+          "navn": "Amlodipin",
+          "atc": "C08CA01",
+          "dose": "5 mg daglig",
+          "indikasjon": "HT"
+        }
       ],
       "allergier": [],
       "merknader": ""
@@ -630,10 +1621,20 @@
       "alder": 45,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "F32", "kodeverk": "ICD-10", "tekst": "Depresjon", "siden": "2023" }
+        {
+          "kode": "F32",
+          "kodeverk": "ICD-10",
+          "tekst": "Depresjon",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Sertralin", "atc": "N06AB06", "dose": "100 mg daglig", "indikasjon": "Depresjon" }
+        {
+          "navn": "Sertralin",
+          "atc": "N06AB06",
+          "dose": "100 mg daglig",
+          "indikasjon": "Depresjon"
+        }
       ],
       "allergier": [],
       "merknader": "SSRI - øker blødningsrisiko ved samtidig NSAID."
@@ -654,10 +1655,20 @@
       "alder": 56,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "E03", "kodeverk": "ICD-10", "tekst": "Hypotyreose", "siden": "2019" }
+        {
+          "kode": "E03",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypotyreose",
+          "siden": "2019"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Levotyroksin", "atc": "H03AA01", "dose": "75 mcg daglig", "indikasjon": "Hypotyreose" }
+        {
+          "navn": "Levotyroksin",
+          "atc": "H03AA01",
+          "dose": "75 mcg daglig",
+          "indikasjon": "Hypotyreose"
+        }
       ],
       "allergier": [],
       "merknader": ""
@@ -678,11 +1689,26 @@
       "alder": 61,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "M06", "kodeverk": "ICD-10", "tekst": "Revmatoid artritt", "siden": "2015" }
+        {
+          "kode": "M06",
+          "kodeverk": "ICD-10",
+          "tekst": "Revmatoid artritt",
+          "siden": "2015"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metotreksat", "atc": "L01BA01", "dose": "15 mg ukentlig", "indikasjon": "RA" },
-        { "navn": "Folsyre", "atc": "B03BB01", "dose": "1 mg daglig", "indikasjon": "MTX-komplement" }
+        {
+          "navn": "Metotreksat",
+          "atc": "L01BA01",
+          "dose": "15 mg ukentlig",
+          "indikasjon": "RA"
+        },
+        {
+          "navn": "Folsyre",
+          "atc": "B03BB01",
+          "dose": "1 mg daglig",
+          "indikasjon": "MTX-komplement"
+        }
       ],
       "allergier": [],
       "merknader": "Immunsupprimert. NSAIDs kan brukes ved behov, men følg nyrefunksjon."
@@ -693,10 +1719,20 @@
       "alder": 49,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "K25", "kodeverk": "ICD-10", "tekst": "Ulcus ventriculi", "siden": "2020" }
+        {
+          "kode": "K25",
+          "kodeverk": "ICD-10",
+          "tekst": "Ulcus ventriculi",
+          "siden": "2020"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Pantoprazol", "atc": "A02BC02", "dose": "40 mg daglig", "indikasjon": "Ulcus" }
+        {
+          "navn": "Pantoprazol",
+          "atc": "A02BC02",
+          "dose": "40 mg daglig",
+          "indikasjon": "Ulcus"
+        }
       ],
       "allergier": [],
       "merknader": "Tidligere magesår - NSAIDs bør unngås pga residivrisiko."
@@ -707,10 +1743,20 @@
       "alder": 32,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "G43", "kodeverk": "ICD-10", "tekst": "Migrene", "siden": "2018" }
+        {
+          "kode": "G43",
+          "kodeverk": "ICD-10",
+          "tekst": "Migrene",
+          "siden": "2018"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Sumatriptan", "atc": "N02CC01", "dose": "50 mg v/anfall", "indikasjon": "Migrene" }
+        {
+          "navn": "Sumatriptan",
+          "atc": "N02CC01",
+          "dose": "50 mg v/anfall",
+          "indikasjon": "Migrene"
+        }
       ],
       "allergier": [],
       "merknader": "Episodisk migrene."
@@ -721,10 +1767,20 @@
       "alder": 57,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "M54", "kodeverk": "ICD-10", "tekst": "Ryggsmerter", "siden": "2021" }
+        {
+          "kode": "M54",
+          "kodeverk": "ICD-10",
+          "tekst": "Ryggsmerter",
+          "siden": "2021"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g v/behov", "indikasjon": "Smerter" }
+        {
+          "navn": "Paracetamol",
+          "atc": "N02BE01",
+          "dose": "1 g v/behov",
+          "indikasjon": "Smerter"
+        }
       ],
       "allergier": [],
       "merknader": ""
@@ -745,11 +1801,26 @@
       "alder": 55,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "C50", "kodeverk": "ICD-10", "tekst": "Brystkreft (ER+/HER2−)", "siden": "2024" }
+        {
+          "kode": "C50",
+          "kodeverk": "ICD-10",
+          "tekst": "Brystkreft (ER+/HER2−)",
+          "siden": "2024"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Tamoksifen", "atc": "L02BA01", "dose": "20 mg daglig", "indikasjon": "Adjuvant hormonbehandling" },
-        { "navn": "Denosumab", "atc": "M05BX04", "dose": "60 mg s.c. hver 6. mnd", "indikasjon": "Beinstyrke under hormonbehandling" }
+        {
+          "navn": "Tamoksifen",
+          "atc": "L02BA01",
+          "dose": "20 mg daglig",
+          "indikasjon": "Adjuvant hormonbehandling"
+        },
+        {
+          "navn": "Denosumab",
+          "atc": "M05BX04",
+          "dose": "60 mg s.c. hver 6. mnd",
+          "indikasjon": "Beinstyrke under hormonbehandling"
+        }
       ],
       "allergier": [],
       "merknader": "Postoperativ adjuvant behandling. Tamoksifen — vær obs på VTE-risiko (unngå østrogenholdige preparater). CYP2D6-substrat: unngå sterke hemmere (paroksetin, fluoksetin)."
@@ -760,18 +1831,165 @@
       "alder": 72,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "C61", "kodeverk": "ICD-10", "tekst": "Prostatakreft med skjelettmetastaser", "siden": "2023" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2012" }
+        {
+          "kode": "C61",
+          "kodeverk": "ICD-10",
+          "tekst": "Prostatakreft med skjelettmetastaser",
+          "siden": "2023"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2012"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Bicalutamid", "atc": "L02BB03", "dose": "50 mg daglig", "indikasjon": "Antiandrogen" },
-        { "navn": "Leuprorelin depot", "atc": "L02AE02", "dose": "22.5 mg s.c. hver 12. uke", "indikasjon": "GnRH-analog" },
-        { "navn": "Oksykodon depot", "atc": "N02AA05", "dose": "20 mg x 2", "indikasjon": "Skjelettsmerter fra metastaser" },
-        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g x 4", "indikasjon": "Basalanalgesi" },
-        { "navn": "Denosumab", "atc": "M05BX04", "dose": "120 mg s.c. hver 4. uke", "indikasjon": "SRE-profylakse ved skjelettmetastaser" }
+        {
+          "navn": "Bicalutamid",
+          "atc": "L02BB03",
+          "dose": "50 mg daglig",
+          "indikasjon": "Antiandrogen"
+        },
+        {
+          "navn": "Leuprorelin depot",
+          "atc": "L02AE02",
+          "dose": "22.5 mg s.c. hver 12. uke",
+          "indikasjon": "GnRH-analog"
+        },
+        {
+          "navn": "Oksykodon depot",
+          "atc": "N02AA05",
+          "dose": "20 mg x 2",
+          "indikasjon": "Skjelettsmerter fra metastaser"
+        },
+        {
+          "navn": "Paracetamol",
+          "atc": "N02BE01",
+          "dose": "1 g x 4",
+          "indikasjon": "Basalanalgesi"
+        },
+        {
+          "navn": "Denosumab",
+          "atc": "M05BX04",
+          "dose": "120 mg s.c. hver 4. uke",
+          "indikasjon": "SRE-profylakse ved skjelettmetastaser"
+        }
       ],
       "allergier": [],
-      "merknader": "Palliativ setting. NSAIDs bør unngås (kardiovaskulær + nefrotoksisk risiko). Obs opioid-indusert obstipasjon — laksantia fast."
+      "merknader": "Palliativ setting. NSAIDs bør unngås (kardiovaskulær + nefrotoksisk risiko). Obs opioid-indusert obstipasjon — laksantia fast.",
+      "fastlege": "Dr. Hans Grindem, Majorstuen legesenter",
+      "kritisk_info": {
+        "cpr_status": "Full HLR (palliativ diskusjon pågår)",
+        "implantater": [],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "138/84",
+        "puls": 82,
+        "vekt": 82,
+        "hoyde": 178,
+        "bmi": 25.9,
+        "dato": "2026-04-08"
+      },
+      "prover": [
+        {
+          "analyse": "PSA",
+          "verdi": 85,
+          "enhet": "µg/L",
+          "dato": "2026-04-02",
+          "referanse": "<4"
+        },
+        {
+          "analyse": "Kalsium (korrigert)",
+          "verdi": 2.55,
+          "enhet": "mmol/L",
+          "dato": "2026-04-02",
+          "referanse": "2.15–2.55"
+        },
+        {
+          "analyse": "Hemoglobin",
+          "verdi": 11.2,
+          "enhet": "g/dL",
+          "dato": "2026-04-02",
+          "referanse": "13.5–17.0"
+        },
+        {
+          "analyse": "ALP",
+          "verdi": 185,
+          "enhet": "U/L",
+          "dato": "2026-04-02",
+          "referanse": "<115"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 72,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-04-02"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-03"
+        },
+        {
+          "type": "Pneumokokk 13-valent (PCV13)",
+          "siste": "2023-11"
+        },
+        {
+          "type": "Covid-19 (Spikevax)",
+          "siste": "2025-09-22"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvhjulpen, noe gangsmerter",
+        "kognitiv_status": "klar",
+        "mobilitet": "selvstendig, krykke ved behov",
+        "fallrisiko": "middels (metastaser i skjelett)"
+      },
+      "sosial": {
+        "bor": "med ektefelle",
+        "pleietjenester": [
+          "Hjemmesykepleie 3x/uke (smertemedisinering)"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Ektefelle",
+            "kontakt": "primær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Pakkeforløp prostatakreft (stadium IV)",
+          "startet": "2024-06-01",
+          "neste_kontroll": "2026-05-14"
+        },
+        {
+          "type": "Smerteklinikk",
+          "frekvens": "hver 6. uke",
+          "neste_kontroll": "2026-05-20"
+        },
+        {
+          "type": "Palliativt team",
+          "status": "aktiv siden 2025-11"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2024-10-22",
+          "aarsak": "Patologisk fraktur lårhals (operert m/ margnagle)",
+          "varighet_dager": 9
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Paracetamol 1g x 4",
+          "seponert": "2024-09",
+          "grunn": "Utilstrekkelig smertelindring – byttet til oksykodon depot"
+        }
+      ]
     },
     {
       "id": "P-053",
@@ -779,12 +1997,32 @@
       "alder": 64,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "C18", "kodeverk": "ICD-10", "tekst": "Kolorektalkreft (stadium III, operert)", "siden": "2026" }
+        {
+          "kode": "C18",
+          "kodeverk": "ICD-10",
+          "tekst": "Kolorektalkreft (stadium III, operert)",
+          "siden": "2026"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Kapecitabin", "atc": "L01BC06", "dose": "1250 mg/m² x 2 i 14 dager (adjuvant)", "indikasjon": "CAPOX adjuvant regime" },
-        { "navn": "Oksaliplatin", "atc": "L01XA03", "dose": "130 mg/m² i.v. dag 1 hver 3. uke", "indikasjon": "CAPOX adjuvant regime" },
-        { "navn": "Ondansetron", "atc": "A04AA01", "dose": "8 mg ved behov", "indikasjon": "Kvalme under cytostatika" }
+        {
+          "navn": "Kapecitabin",
+          "atc": "L01BC06",
+          "dose": "1250 mg/m² x 2 i 14 dager (adjuvant)",
+          "indikasjon": "CAPOX adjuvant regime"
+        },
+        {
+          "navn": "Oksaliplatin",
+          "atc": "L01XA03",
+          "dose": "130 mg/m² i.v. dag 1 hver 3. uke",
+          "indikasjon": "CAPOX adjuvant regime"
+        },
+        {
+          "navn": "Ondansetron",
+          "atc": "A04AA01",
+          "dose": "8 mg ved behov",
+          "indikasjon": "Kvalme under cytostatika"
+        }
       ],
       "allergier": [],
       "merknader": "Adjuvant kjemoterapi 6 mnd post-op. Kapecitabin: obs håndfotsyndrom. Oksaliplatin: perifer nevropati. Unngå warfarin (INR-svingninger); LMWH foretrekkes ved behov for antikoagulasjon."
@@ -795,16 +2033,186 @@
       "alder": 68,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "C34", "kodeverk": "ICD-10", "tekst": "Lungekreft NSCLC (metastatisk, PD-L1 høy)", "siden": "2025" },
-        { "kode": "J44", "kodeverk": "ICD-10", "tekst": "KOLS", "siden": "2018" }
+        {
+          "kode": "C34",
+          "kodeverk": "ICD-10",
+          "tekst": "Lungekreft NSCLC (metastatisk, PD-L1 høy)",
+          "siden": "2025"
+        },
+        {
+          "kode": "J44",
+          "kodeverk": "ICD-10",
+          "tekst": "KOLS",
+          "siden": "2018"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Pembrolizumab", "atc": "L01FF02", "dose": "200 mg i.v. hver 3. uke", "indikasjon": "Immunterapi 1. linje" },
-        { "navn": "Morfin depot", "atc": "N02AA01", "dose": "30 mg x 2", "indikasjon": "Palliativ smerte/dyspné" },
-        { "navn": "Tiotropium", "atc": "R03BB04", "dose": "18 µg inhalert daglig", "indikasjon": "KOLS-vedlikehold" }
+        {
+          "navn": "Pembrolizumab",
+          "atc": "L01FF02",
+          "dose": "200 mg i.v. hver 3. uke",
+          "indikasjon": "Immunterapi 1. linje"
+        },
+        {
+          "navn": "Morfin depot",
+          "atc": "N02AA01",
+          "dose": "30 mg x 2",
+          "indikasjon": "Palliativ smerte/dyspné"
+        },
+        {
+          "navn": "Tiotropium",
+          "atc": "R03BB04",
+          "dose": "18 µg inhalert daglig",
+          "indikasjon": "KOLS-vedlikehold"
+        }
       ],
       "allergier": [],
-      "merknader": "Palliativt forløp. Obs immunrelaterte bivirkninger (kolitt, pneumonitt, hypofysitt). Ved symptomer: høy-dose kortikosteroider. Unngå systemiske steroider profylaktisk (reduserer immunterapi-effekt)."
+      "merknader": "Palliativt forløp. Obs immunrelaterte bivirkninger (kolitt, pneumonitt, hypofysitt). Ved symptomer: høy-dose kortikosteroider. Unngå systemiske steroider profylaktisk (reduserer immunterapi-effekt).",
+      "fastlege": "Dr. Helge Vik, Bærum sykehus onkologi + fastlege Dr. Anita Fossum",
+      "kritisk_info": {
+        "cpr_status": "Palliativ diskusjon pågår (sannsynlig HLR-minus snart)",
+        "implantater": [
+          {
+            "type": "Port-a-cath (v. subclavia dxt.)",
+            "aar": 2025,
+            "mr_sikker": true
+          }
+        ],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "132/78",
+        "puls": 92,
+        "vekt": 55,
+        "hoyde": 165,
+        "bmi": 20.2,
+        "so2": 91,
+        "dato": "2026-04-12"
+      },
+      "prover": [
+        {
+          "analyse": "PD-L1 ekspresjon (TPS)",
+          "verdi": "90%",
+          "dato": "2025-10-02",
+          "referanse": "høy ≥50%"
+        },
+        {
+          "analyse": "LDH",
+          "verdi": 345,
+          "enhet": "U/L",
+          "dato": "2026-04-08",
+          "referanse": "<245"
+        },
+        {
+          "analyse": "CRP",
+          "verdi": 32,
+          "enhet": "mg/L",
+          "dato": "2026-04-08",
+          "referanse": "<5"
+        },
+        {
+          "analyse": "Hemoglobin",
+          "verdi": 10.5,
+          "enhet": "g/dL",
+          "dato": "2026-04-08"
+        },
+        {
+          "analyse": "Nøytrofile granulocytter",
+          "verdi": 2.2,
+          "enhet": "×10⁹/L",
+          "dato": "2026-04-08"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 68,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-04-08"
+        },
+        {
+          "analyse": "Kortisol morgen",
+          "verdi": 380,
+          "enhet": "nmol/L",
+          "dato": "2026-04-08",
+          "referanse": "140–700 (immunterapi-monitorering)"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-05"
+        },
+        {
+          "type": "Pneumokokk 13+23",
+          "siste": "2023-09"
+        },
+        {
+          "type": "Covid-19",
+          "siste": "2025-09-18"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvhjulpen inne, bruker oksygen ved anstrengelse",
+        "kognitiv_status": "klar",
+        "mobilitet": "gangnedsatt, bruker rullator ute",
+        "fallrisiko": "middels"
+      },
+      "sosial": {
+        "bor": "med ektefelle i leilighet",
+        "pleietjenester": [
+          "Hjemmesykepleie 2x/dag",
+          "Kreftsykepleier ukentlig",
+          "Oksygentilskudd hjemme"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Ektefelle",
+            "kontakt": "primær"
+          },
+          {
+            "relasjon": "Datter",
+            "kontakt": "sekundær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Pakkeforløp lungekreft (stadium IV, metastatisk)",
+          "startet": "2025-10-15"
+        },
+        {
+          "type": "Onkologisk poliklinikk (immunterapi)",
+          "frekvens": "hver 3. uke",
+          "neste_kontroll": "2026-05-05"
+        },
+        {
+          "type": "Palliativ poliklinikk",
+          "frekvens": "hver 4. uke",
+          "neste_kontroll": "2026-05-12"
+        },
+        {
+          "type": "Lungerehabilitering KOLS",
+          "status": "pausert under aktiv onkologi"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2026-01-08",
+          "aarsak": "Febril nøytropeni (under immunterapi-syklus 4)",
+          "varighet_dager": 5
+        },
+        {
+          "dato": "2025-10-02",
+          "aarsak": "Diagnostisk — bronchoskopi + stadieinndeling",
+          "varighet_dager": 2
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Cisplatin + pemetreksed",
+          "seponert": "2025-12",
+          "grunn": "Progresjon etter 4 sykluser – byttet til immunterapi"
+        }
+      ]
     },
     {
       "id": "P-055",
@@ -812,13 +2220,38 @@
       "alder": 42,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "C92.0", "kodeverk": "ICD-10", "tekst": "Akutt myeloid leukemi (induksjon)", "siden": "2026" }
+        {
+          "kode": "C92.0",
+          "kodeverk": "ICD-10",
+          "tekst": "Akutt myeloid leukemi (induksjon)",
+          "siden": "2026"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Cytarabin", "atc": "L01BC01", "dose": "100 mg/m² kontinuerlig infusjon 7 dager", "indikasjon": "AML induksjon (7+3)" },
-        { "navn": "Idarubicin", "atc": "L01DB06", "dose": "12 mg/m² i.v. dag 1–3", "indikasjon": "AML induksjon (7+3)" },
-        { "navn": "Posakonazol", "atc": "J02AC04", "dose": "300 mg daglig", "indikasjon": "Soppprofylakse ved langvarig nøytropeni" },
-        { "navn": "Aciklovir", "atc": "J05AB01", "dose": "400 mg x 2", "indikasjon": "HSV-profylakse" }
+        {
+          "navn": "Cytarabin",
+          "atc": "L01BC01",
+          "dose": "100 mg/m² kontinuerlig infusjon 7 dager",
+          "indikasjon": "AML induksjon (7+3)"
+        },
+        {
+          "navn": "Idarubicin",
+          "atc": "L01DB06",
+          "dose": "12 mg/m² i.v. dag 1–3",
+          "indikasjon": "AML induksjon (7+3)"
+        },
+        {
+          "navn": "Posakonazol",
+          "atc": "J02AC04",
+          "dose": "300 mg daglig",
+          "indikasjon": "Soppprofylakse ved langvarig nøytropeni"
+        },
+        {
+          "navn": "Aciklovir",
+          "atc": "J05AB01",
+          "dose": "400 mg x 2",
+          "indikasjon": "HSV-profylakse"
+        }
       ],
       "allergier": [],
       "merknader": "Inneliggende isolert. Pancytopeni — høy infeksjonsrisiko. Feber ≥38.3 = umiddelbar bred antibiotika (piperacillin/tazobaktam). Unngå i.m. injeksjoner og NSAIDs (blødningsrisiko ved trombocytopeni)."
@@ -829,11 +2262,26 @@
       "alder": 59,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "C43", "kodeverk": "ICD-10", "tekst": "Malignt melanom (stadium IV, BRAF V600E+)", "siden": "2025" }
+        {
+          "kode": "C43",
+          "kodeverk": "ICD-10",
+          "tekst": "Malignt melanom (stadium IV, BRAF V600E+)",
+          "siden": "2025"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Dabrafenib", "atc": "L01EC02", "dose": "150 mg x 2", "indikasjon": "BRAF-hemmer" },
-        { "navn": "Trametinib", "atc": "L01EE01", "dose": "2 mg daglig", "indikasjon": "MEK-hemmer" }
+        {
+          "navn": "Dabrafenib",
+          "atc": "L01EC02",
+          "dose": "150 mg x 2",
+          "indikasjon": "BRAF-hemmer"
+        },
+        {
+          "navn": "Trametinib",
+          "atc": "L01EE01",
+          "dose": "2 mg daglig",
+          "indikasjon": "MEK-hemmer"
+        }
       ],
       "allergier": [],
       "merknader": "BRAF/MEK-kombinasjon. Obs pyreksi (vanlig), QT-forlengelse, og hudtoksisitet. Kontraindisert med sterke CYP3A4-hemmere (klaritromycin, itrakonazol)."
@@ -844,15 +2292,157 @@
       "alder": 34,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "F20", "kodeverk": "ICD-10", "tekst": "Paranoid schizofreni (behandlingsresistent)", "siden": "2015" },
-        { "kode": "E78", "kodeverk": "ICD-10", "tekst": "Dyslipidemi", "siden": "2023" }
+        {
+          "kode": "F20",
+          "kodeverk": "ICD-10",
+          "tekst": "Paranoid schizofreni (behandlingsresistent)",
+          "siden": "2015"
+        },
+        {
+          "kode": "E78",
+          "kodeverk": "ICD-10",
+          "tekst": "Dyslipidemi",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Klozapin", "atc": "N05AH02", "dose": "400 mg kveld", "indikasjon": "Antipsykotikum ved TRS" },
-        { "navn": "Atorvastatin", "atc": "C10AA05", "dose": "20 mg kveld", "indikasjon": "Dyslipidemi (indusert av antipsykotika)" }
+        {
+          "navn": "Klozapin",
+          "atc": "N05AH02",
+          "dose": "400 mg kveld",
+          "indikasjon": "Antipsykotikum ved TRS"
+        },
+        {
+          "navn": "Atorvastatin",
+          "atc": "C10AA05",
+          "dose": "20 mg kveld",
+          "indikasjon": "Dyslipidemi (indusert av antipsykotika)"
+        }
       ],
       "allergier": [],
-      "merknader": "Klozapin — obligatorisk blodtellingskontroll (agranulocytose-risiko). Røyking påvirker serumnivå sterkt (CYP1A2). Unngå fluvoksamin (dramatisk klozapin-økning) og karbamazepin."
+      "merknader": "Klozapin — obligatorisk blodtellingskontroll (agranulocytose-risiko). Røyking påvirker serumnivå sterkt (CYP1A2). Unngå fluvoksamin (dramatisk klozapin-økning) og karbamazepin.",
+      "fastlege": "Dr. Øystein Ness, Grønland legesenter + DPS Oslo Sør",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "132/84",
+        "puls": 88,
+        "vekt": 95,
+        "hoyde": 178,
+        "bmi": 30.0,
+        "qtc_ms": 448,
+        "dato": "2026-04-03"
+      },
+      "prover": [
+        {
+          "analyse": "Klozapin (serum)",
+          "verdi": 350,
+          "enhet": "ng/ml",
+          "dato": "2026-04-02",
+          "referanse": "350–600"
+        },
+        {
+          "analyse": "Nøytrofile granulocytter",
+          "verdi": 3.8,
+          "enhet": "×10⁹/L",
+          "dato": "2026-04-02",
+          "referanse": ">2.0 ved klozapin"
+        },
+        {
+          "analyse": "Leukocytter",
+          "verdi": 7.2,
+          "enhet": "×10⁹/L",
+          "dato": "2026-04-02"
+        },
+        {
+          "analyse": "HbA1c",
+          "verdi": 48,
+          "enhet": "mmol/mol",
+          "dato": "2026-03-10",
+          "referanse": "<42 normalt"
+        },
+        {
+          "analyse": "LDL-kolesterol",
+          "verdi": 3.2,
+          "enhet": "mmol/L",
+          "dato": "2026-03-10",
+          "referanse": "<3.0 (intervensjon)"
+        },
+        {
+          "analyse": "QTc (EKG)",
+          "verdi": 448,
+          "enhet": "ms",
+          "dato": "2026-04-02",
+          "referanse": "<450 menn"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-18"
+        },
+        {
+          "type": "Covid-19",
+          "siste": "2023-11-02"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvstendig med støtte i egen leilighet",
+        "kognitiv_status": "negative symptomer dominerer, stabilt",
+        "mobilitet": "selvstendig",
+        "fallrisiko": "lav"
+      },
+      "sosial": {
+        "bor": "alene i kommunal leilighet (oppfølging fra bolig-team)",
+        "pleietjenester": [
+          "Dag-tilbud 3x/uke",
+          "Psykiatrisk sykepleier ukentlig"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Mor",
+            "kontakt": "primær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "DPS-oppfølging (psykolog + lege)",
+          "frekvens": "hver 2. uke",
+          "neste_kontroll": "2026-05-02"
+        },
+        {
+          "type": "Klozapin-overvåkning (blodprøver)",
+          "frekvens": "månedlig"
+        },
+        {
+          "type": "Somatisk oppfølging (vekt, lipider, diabetes)",
+          "frekvens": "hver 3. mnd",
+          "neste_kontroll": "2026-06-10"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2023-07-22",
+          "aarsak": "Psykose-tilbakefall (akuttpsykiatri)",
+          "varighet_dager": 21
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Olanzapin",
+          "seponert": "2021-06",
+          "grunn": "Utilstrekkelig effekt på psykotiske symptomer"
+        },
+        {
+          "navn": "Risperidon",
+          "seponert": "2020-11",
+          "grunn": "Bivirkninger (ekstrapyramidale)"
+        }
+      ]
     },
     {
       "id": "P-058",
@@ -860,11 +2450,26 @@
       "alder": 45,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "F31", "kodeverk": "ICD-10", "tekst": "Bipolar lidelse type I", "siden": "2012" }
+        {
+          "kode": "F31",
+          "kodeverk": "ICD-10",
+          "tekst": "Bipolar lidelse type I",
+          "siden": "2012"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Litium", "atc": "N05AN01", "dose": "800 mg kveld (serum 0.7 mmol/L)", "indikasjon": "Stemningsstabilisator" },
-        { "navn": "Quetiapin", "atc": "N05AH04", "dose": "300 mg kveld", "indikasjon": "Bipolar vedlikehold" }
+        {
+          "navn": "Litium",
+          "atc": "N05AN01",
+          "dose": "800 mg kveld (serum 0.7 mmol/L)",
+          "indikasjon": "Stemningsstabilisator"
+        },
+        {
+          "navn": "Quetiapin",
+          "atc": "N05AH04",
+          "dose": "300 mg kveld",
+          "indikasjon": "Bipolar vedlikehold"
+        }
       ],
       "allergier": [],
       "merknader": "Litium — smalt terapeutisk vindu. NSAIDs, ACE-hemmere, thiazider og dehydrering kan gi litiumintoksikasjon. Serum-litium hver 3. mnd, TSH og kreatinin hver 6. mnd."
@@ -875,10 +2480,20 @@
       "alder": 28,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "F90", "kodeverk": "ICD-10", "tekst": "ADHD i voksenalder", "siden": "2021" }
+        {
+          "kode": "F90",
+          "kodeverk": "ICD-10",
+          "tekst": "ADHD i voksenalder",
+          "siden": "2021"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metylfenidat depot", "atc": "N06BA04", "dose": "54 mg morgen", "indikasjon": "ADHD-behandling" }
+        {
+          "navn": "Metylfenidat depot",
+          "atc": "N06BA04",
+          "dose": "54 mg morgen",
+          "indikasjon": "ADHD-behandling"
+        }
       ],
       "allergier": [],
       "merknader": "Sentralstimulerende — reseptkrav, uttak under kontroll. BT og puls følges. Unngå MAO-hemmere (hypertensiv krise). Obs misbrukspotensial."
@@ -889,13 +2504,38 @@
       "alder": 51,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "F33.2", "kodeverk": "ICD-10", "tekst": "Tilbakevendende depresjon (alvorlig, behandlingsresistent)", "siden": "2018" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2020" }
+        {
+          "kode": "F33.2",
+          "kodeverk": "ICD-10",
+          "tekst": "Tilbakevendende depresjon (alvorlig, behandlingsresistent)",
+          "siden": "2018"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2020"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Venlafaksin depot", "atc": "N06AX16", "dose": "225 mg morgen", "indikasjon": "SNRI ved TRD" },
-        { "navn": "Kvetiapin", "atc": "N05AH04", "dose": "150 mg kveld", "indikasjon": "Augmentering" },
-        { "navn": "Litium", "atc": "N05AN01", "dose": "600 mg kveld", "indikasjon": "Augmentering" }
+        {
+          "navn": "Venlafaksin depot",
+          "atc": "N06AX16",
+          "dose": "225 mg morgen",
+          "indikasjon": "SNRI ved TRD"
+        },
+        {
+          "navn": "Kvetiapin",
+          "atc": "N05AH04",
+          "dose": "150 mg kveld",
+          "indikasjon": "Augmentering"
+        },
+        {
+          "navn": "Litium",
+          "atc": "N05AN01",
+          "dose": "600 mg kveld",
+          "indikasjon": "Augmentering"
+        }
       ],
       "allergier": [],
       "merknader": "Tredobbel TRD-regime. Obs serotonergt syndrom (unngå tramadol, triptaner kombinert med SSRI/SNRI). Litium + venlafaksin + NSAID = markert litium-økning."
@@ -906,11 +2546,26 @@
       "alder": 37,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "F41.0", "kodeverk": "ICD-10", "tekst": "Panikklidelse med agorafobi", "siden": "2022" }
+        {
+          "kode": "F41.0",
+          "kodeverk": "ICD-10",
+          "tekst": "Panikklidelse med agorafobi",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Escitalopram", "atc": "N06AB10", "dose": "20 mg morgen", "indikasjon": "SSRI" },
-        { "navn": "Oksazepam", "atc": "N05BA04", "dose": "15 mg ved behov (maks x 2)", "indikasjon": "Anfallsdempende, korttidsbruk" }
+        {
+          "navn": "Escitalopram",
+          "atc": "N06AB10",
+          "dose": "20 mg morgen",
+          "indikasjon": "SSRI"
+        },
+        {
+          "navn": "Oksazepam",
+          "atc": "N05BA04",
+          "dose": "15 mg ved behov (maks x 2)",
+          "indikasjon": "Anfallsdempende, korttidsbruk"
+        }
       ],
       "allergier": [],
       "merknader": "Benzodiazepin skal trappes ned — opptrapping av KAT-tilbud i gang. Obs QT-forlengelse ved escitalopram >20 mg (ikke overskride)."
@@ -921,14 +2576,129 @@
       "alder": 32,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "O24.4", "kodeverk": "ICD-10", "tekst": "Svangerskapsdiabetes (uke 30)", "siden": "2026" }
+        {
+          "kode": "O24.4",
+          "kodeverk": "ICD-10",
+          "tekst": "Svangerskapsdiabetes (uke 30)",
+          "siden": "2026"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Insulin isofan", "atc": "A10AC01", "dose": "10 IE kveld", "indikasjon": "Basal-insulin i svangerskap" },
-        { "navn": "Folsyre", "atc": "B03BB01", "dose": "0.4 mg daglig", "indikasjon": "Svangerskapsprofylakse" }
+        {
+          "navn": "Insulin isofan",
+          "atc": "A10AC01",
+          "dose": "10 IE kveld",
+          "indikasjon": "Basal-insulin i svangerskap"
+        },
+        {
+          "navn": "Folsyre",
+          "atc": "B03BB01",
+          "dose": "0.4 mg daglig",
+          "indikasjon": "Svangerskapsprofylakse"
+        }
       ],
       "allergier": [],
-      "merknader": "Gravid uke 30. ACE-hemmere, ARB, statiner og warfarin KONTRAINDISERT. Metformin er alternativ ved behov. LMWH hvis VTE-profylakse trenges."
+      "merknader": "Gravid uke 30. ACE-hemmere, ARB, statiner og warfarin KONTRAINDISERT. Metformin er alternativ ved behov. LMWH hvis VTE-profylakse trenges.",
+      "fastlege": "Dr. Mette Ryde, St. Hanshaugen legesenter",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [],
+        "donor": true
+      },
+      "siste_malinger": {
+        "blodtrykk": "118/72",
+        "puls": 84,
+        "vekt": 78,
+        "hoyde": 168,
+        "bmi": 27.6,
+        "dato": "2026-04-15"
+      },
+      "prover": [
+        {
+          "analyse": "HbA1c",
+          "verdi": 42,
+          "enhet": "mmol/mol",
+          "dato": "2026-04-10",
+          "referanse": "mål <42 ved graviditet"
+        },
+        {
+          "analyse": "Fastende glukose",
+          "verdi": 5.4,
+          "enhet": "mmol/L",
+          "dato": "2026-04-15",
+          "referanse": "<5.3 ved svangerskapsdiabetes"
+        },
+        {
+          "analyse": "TSH",
+          "verdi": 2.1,
+          "enhet": "mIE/L",
+          "dato": "2026-03-02",
+          "referanse": "0.1–2.5 (gravid)"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 105,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-03-02"
+        },
+        {
+          "analyse": "Hemoglobin",
+          "verdi": 11.8,
+          "enhet": "g/dL",
+          "dato": "2026-04-10",
+          "referanse": "11.0–14.0 (gravid)"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "dTp (gravid uke 27)",
+          "siste": "2026-03-29"
+        },
+        {
+          "type": "Influensa",
+          "siste": "2025-10-10"
+        },
+        {
+          "type": "Covid-19",
+          "siste": "2024-09-05"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvstendig",
+        "kognitiv_status": "klar",
+        "mobilitet": "fullt selvstendig",
+        "fallrisiko": "lav"
+      },
+      "sosial": {
+        "bor": "med samboer",
+        "pleietjenester": [],
+        "parorende": [
+          {
+            "relasjon": "Samboer",
+            "kontakt": "primær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Svangerskapskontroll (uke 30, første barn)",
+          "neste_kontroll": "2026-05-02"
+        },
+        {
+          "type": "Jordmor-oppfølging",
+          "frekvens": "hver 2. uke"
+        },
+        {
+          "type": "Ultralyd uke 32",
+          "neste_kontroll": "2026-05-09"
+        },
+        {
+          "type": "Endokrinolog (svangerskapsdiabetes)",
+          "neste_kontroll": "2026-05-20"
+        }
+      ],
+      "innleggelser": [],
+      "historiske_medisiner": []
     },
     {
       "id": "P-063",
@@ -936,11 +2706,26 @@
       "alder": 29,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "O14", "kodeverk": "ICD-10", "tekst": "Preeklampsi (uke 34)", "siden": "2026" }
+        {
+          "kode": "O14",
+          "kodeverk": "ICD-10",
+          "tekst": "Preeklampsi (uke 34)",
+          "siden": "2026"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Labetalol", "atc": "C07AG01", "dose": "200 mg x 3", "indikasjon": "Blodtrykkskontroll i svangerskap" },
-        { "navn": "Acetylsalisylsyre", "atc": "B01AC06", "dose": "150 mg kveld", "indikasjon": "Lavdose ASA fra tidlig svangerskap" }
+        {
+          "navn": "Labetalol",
+          "atc": "C07AG01",
+          "dose": "200 mg x 3",
+          "indikasjon": "Blodtrykkskontroll i svangerskap"
+        },
+        {
+          "navn": "Acetylsalisylsyre",
+          "atc": "B01AC06",
+          "dose": "150 mg kveld",
+          "indikasjon": "Lavdose ASA fra tidlig svangerskap"
+        }
       ],
       "allergier": [],
       "merknader": "Innlagt for overvåkning. ACE-hemmere/ARB FORBUDT (fosterskade). Magnesiumsulfat ved behov mot krampeanfall. Forløsning vurderes kontinuerlig."
@@ -951,17 +2736,168 @@
       "alder": 78,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "S72", "kodeverk": "ICD-10", "tekst": "Hoftefraktur (operert, dag 5)", "siden": "2026" },
-        { "kode": "I10", "kodeverk": "ICD-10", "tekst": "Hypertensjon", "siden": "2010" }
+        {
+          "kode": "S72",
+          "kodeverk": "ICD-10",
+          "tekst": "Hoftefraktur (operert, dag 5)",
+          "siden": "2026"
+        },
+        {
+          "kode": "I10",
+          "kodeverk": "ICD-10",
+          "tekst": "Hypertensjon",
+          "siden": "2010"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Enoksaparin", "atc": "B01AB05", "dose": "40 mg s.c. daglig", "indikasjon": "VTE-profylakse post-op" },
-        { "navn": "Paracetamol", "atc": "N02BE01", "dose": "1 g x 4", "indikasjon": "Postoperativ smerte" },
-        { "navn": "Oksykodon", "atc": "N02AA05", "dose": "5 mg ved behov", "indikasjon": "Gjennombruddssmerte" },
-        { "navn": "Ramipril", "atc": "C09AA05", "dose": "2.5 mg daglig", "indikasjon": "Hypertensjon" }
+        {
+          "navn": "Enoksaparin",
+          "atc": "B01AB05",
+          "dose": "40 mg s.c. daglig",
+          "indikasjon": "VTE-profylakse post-op"
+        },
+        {
+          "navn": "Paracetamol",
+          "atc": "N02BE01",
+          "dose": "1 g x 4",
+          "indikasjon": "Postoperativ smerte"
+        },
+        {
+          "navn": "Oksykodon",
+          "atc": "N02AA05",
+          "dose": "5 mg ved behov",
+          "indikasjon": "Gjennombruddssmerte"
+        },
+        {
+          "navn": "Ramipril",
+          "atc": "C09AA05",
+          "dose": "2.5 mg daglig",
+          "indikasjon": "Hypertensjon"
+        }
       ],
       "allergier": [],
-      "merknader": "Postoperativ hofte. VTE-profylakse 35 dager totalt. NSAIDs bør unngås (nyretoksisk hos eldre + interaksjon med ramipril)."
+      "merknader": "Postoperativ hofte. VTE-profylakse 35 dager totalt. NSAIDs bør unngås (nyretoksisk hos eldre + interaksjon med ramipril).",
+      "fastlege": "Dr. Anne Lise Dahl, Grünerløkka legesenter",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [
+          {
+            "type": "Proximal femur plate (glideskrue)",
+            "aar": 2026,
+            "mr_sikker": true
+          }
+        ],
+        "donor": true
+      },
+      "siste_malinger": {
+        "blodtrykk": "140/85",
+        "puls": 88,
+        "vekt": 62,
+        "hoyde": 163,
+        "bmi": 23.3,
+        "so2": 96,
+        "dato": "2026-04-23"
+      },
+      "prover": [
+        {
+          "analyse": "Hemoglobin",
+          "verdi": 10.8,
+          "enhet": "g/dL",
+          "dato": "2026-04-22",
+          "referanse": "12.0–16.0"
+        },
+        {
+          "analyse": "eGFR",
+          "verdi": 68,
+          "enhet": "ml/min/1.73m²",
+          "dato": "2026-04-19"
+        },
+        {
+          "analyse": "CRP",
+          "verdi": 28,
+          "enhet": "mg/L",
+          "dato": "2026-04-22",
+          "referanse": "<5"
+        },
+        {
+          "analyse": "Anti-FXa (Enoksaparin)",
+          "verdi": 0.35,
+          "enhet": "IE/ml",
+          "dato": "2026-04-21",
+          "referanse": "profylakse 0.2–0.5"
+        },
+        {
+          "analyse": "Kalsium",
+          "verdi": 2.28,
+          "enhet": "mmol/L",
+          "dato": "2026-04-19"
+        },
+        {
+          "analyse": "Vitamin D (25-OH)",
+          "verdi": 42,
+          "enhet": "nmol/L",
+          "dato": "2026-04-19"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Influensa",
+          "siste": "2025-10-15"
+        },
+        {
+          "type": "Pneumokokk 23-valent",
+          "siste": "2019-11"
+        },
+        {
+          "type": "Covid-19",
+          "siste": "2024-10-02"
+        }
+      ],
+      "funksjon": {
+        "adl": "pre-op selvhjulpen; post-op trenger hjelp med stell og påkledning",
+        "kognitiv_status": "klar",
+        "mobilitet": "rullator m/ fysioterapeut, vektbelastning som tolerert",
+        "fallrisiko": "høy (post-op, osteoporose)"
+      },
+      "sosial": {
+        "bor": "alene i leilighet 2. etg uten heis",
+        "pleietjenester": [
+          "Ingen før innleggelse — planlagt hjemmesykepleie og trygghetsalarm ved utskrivning"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Datter",
+            "kontakt": "primær"
+          },
+          {
+            "relasjon": "Sønn",
+            "kontakt": "sekundær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Innleggelse hoftefraktur (operert dag 0)",
+          "startet": "2026-04-18",
+          "status": "postop dag 5"
+        },
+        {
+          "type": "Rehabilitering (planlagt)",
+          "neste_kontroll": "2026-04-28 (overføres til Cathinka Guldberg)"
+        },
+        {
+          "type": "Osteoporose-utredning (DEXA + oppstart)",
+          "neste_kontroll": "2026-05-25"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2026-04-18",
+          "aarsak": "Hoftefraktur etter fall hjemme (operert innen 24t)",
+          "varighet_dager": 10
+        }
+      ],
+      "historiske_medisiner": []
     },
     {
       "id": "P-065",
@@ -969,13 +2905,38 @@
       "alder": 45,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "T91.3", "kodeverk": "ICD-10", "tekst": "Følgetilstand etter ryggmargsskade (thorakalt nivå)", "siden": "2021" },
-        { "kode": "G82.2", "kodeverk": "ICD-10", "tekst": "Paraplegi", "siden": "2021" }
+        {
+          "kode": "T91.3",
+          "kodeverk": "ICD-10",
+          "tekst": "Følgetilstand etter ryggmargsskade (thorakalt nivå)",
+          "siden": "2021"
+        },
+        {
+          "kode": "G82.2",
+          "kodeverk": "ICD-10",
+          "tekst": "Paraplegi",
+          "siden": "2021"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Gabapentin", "atc": "N03AX12", "dose": "600 mg x 3", "indikasjon": "Nevropatisk smerte" },
-        { "navn": "Baklofen", "atc": "M03BX01", "dose": "20 mg x 3", "indikasjon": "Spastisitet" },
-        { "navn": "Oksybutynin", "atc": "G04BD04", "dose": "5 mg x 3", "indikasjon": "Nevrogen overaktiv blære" }
+        {
+          "navn": "Gabapentin",
+          "atc": "N03AX12",
+          "dose": "600 mg x 3",
+          "indikasjon": "Nevropatisk smerte"
+        },
+        {
+          "navn": "Baklofen",
+          "atc": "M03BX01",
+          "dose": "20 mg x 3",
+          "indikasjon": "Spastisitet"
+        },
+        {
+          "navn": "Oksybutynin",
+          "atc": "G04BD04",
+          "dose": "5 mg x 3",
+          "indikasjon": "Nevrogen overaktiv blære"
+        }
       ],
       "allergier": [],
       "merknader": "Rullestolbruker. Obs autonom dysrefleksi. Tilbakevendende UVI — antibiotikabruk må styres (resistensutvikling). Antikolinergt-sum fra oksybutynin og gabapentin vurderes."
@@ -986,13 +2947,38 @@
       "alder": 38,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "T31.3", "kodeverk": "ICD-10", "tekst": "Brannskade 30 % (flamme, thorax/armer)", "siden": "2026" }
+        {
+          "kode": "T31.3",
+          "kodeverk": "ICD-10",
+          "tekst": "Brannskade 30 % (flamme, thorax/armer)",
+          "siden": "2026"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Morfin i.v.", "atc": "N02AA01", "dose": "5 mg x 4 ved smerte", "indikasjon": "Akutt sårsmerte" },
-        { "navn": "Cefazolin", "atc": "J01DB04", "dose": "2 g x 3 i.v.", "indikasjon": "Peri-op ved hudtransplantasjon" },
-        { "navn": "Enoksaparin", "atc": "B01AB05", "dose": "40 mg s.c. daglig", "indikasjon": "VTE-profylakse" },
-        { "navn": "Sølvsulfadiazin krem", "atc": "D06BA01", "dose": "Topikal x 2", "indikasjon": "Sårbehandling" }
+        {
+          "navn": "Morfin i.v.",
+          "atc": "N02AA01",
+          "dose": "5 mg x 4 ved smerte",
+          "indikasjon": "Akutt sårsmerte"
+        },
+        {
+          "navn": "Cefazolin",
+          "atc": "J01DB04",
+          "dose": "2 g x 3 i.v.",
+          "indikasjon": "Peri-op ved hudtransplantasjon"
+        },
+        {
+          "navn": "Enoksaparin",
+          "atc": "B01AB05",
+          "dose": "40 mg s.c. daglig",
+          "indikasjon": "VTE-profylakse"
+        },
+        {
+          "navn": "Sølvsulfadiazin krem",
+          "atc": "D06BA01",
+          "dose": "Topikal x 2",
+          "indikasjon": "Sårbehandling"
+        }
       ],
       "allergier": [],
       "merknader": "Intensiv brannskadeenhet. Høyt væskebehov, høyt proteinbehov. Obs Curling-sår (PPI-profylakse). Unngå kolloider i tidlig fase."
@@ -1003,13 +2989,30 @@
       "alder": 8,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "J45", "kodeverk": "ICD-10", "tekst": "Astma (moderat, barn)", "siden": "2023" }
+        {
+          "kode": "J45",
+          "kodeverk": "ICD-10",
+          "tekst": "Astma (moderat, barn)",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Budesonid inhalator", "atc": "R03BA02", "dose": "200 µg x 2", "indikasjon": "Vedlikeholdsbehandling astma" },
-        { "navn": "Salbutamol inhalator", "atc": "R03AC02", "dose": "100 µg ved anfall", "indikasjon": "Rask bronkodilatasjon" }
+        {
+          "navn": "Budesonid inhalator",
+          "atc": "R03BA02",
+          "dose": "200 µg x 2",
+          "indikasjon": "Vedlikeholdsbehandling astma"
+        },
+        {
+          "navn": "Salbutamol inhalator",
+          "atc": "R03AC02",
+          "dose": "100 µg ved anfall",
+          "indikasjon": "Rask bronkodilatasjon"
+        }
       ],
-      "allergier": ["Peanøtter"],
+      "allergier": [
+        "Peanøtter"
+      ],
       "merknader": "Pediatrisk pasient. EpiPen forskrevet for peanøtt-anafylaksi. Inhalatorteknikk følges opp. Ved forverring: vurder prednisolon-støt (1–2 mg/kg, maks 40 mg)."
     },
     {
@@ -1018,13 +3021,138 @@
       "alder": 12,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "E10", "kodeverk": "ICD-10", "tekst": "Diabetes mellitus type 1", "siden": "2022" }
+        {
+          "kode": "E10",
+          "kodeverk": "ICD-10",
+          "tekst": "Diabetes mellitus type 1",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Insulin aspart (pumpe)", "atc": "A10AB05", "dose": "Basal 0.6 IE/t + bolus", "indikasjon": "T1DM insulinpumpe" }
+        {
+          "navn": "Insulin aspart (pumpe)",
+          "atc": "A10AB05",
+          "dose": "Basal 0.6 IE/t + bolus",
+          "indikasjon": "T1DM insulinpumpe"
+        }
       ],
       "allergier": [],
-      "merknader": "Pediatrisk T1DM på pumpe + CGM. HbA1c 58 mmol/mol. Foreldre og skole opplært i hypoglykemi-håndtering. Ketoacidose-plan ved pumpedefekt."
+      "merknader": "Pediatrisk T1DM på pumpe + CGM. HbA1c 58 mmol/mol. Foreldre og skole opplært i hypoglykemi-håndtering. Ketoacidose-plan ved pumpedefekt.",
+      "fastlege": "Dr. Petter Hov, Ullevål legesenter + Barnediabetes-poliklinikk OUS",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [
+          {
+            "type": "Kontinuerlig glukosemonitor (Dexcom G7)",
+            "aar": 2025,
+            "mr_sikker": false
+          }
+        ],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "105/65",
+        "puls": 88,
+        "vekt": 42,
+        "hoyde": 152,
+        "bmi": 18.2,
+        "dato": "2026-04-05"
+      },
+      "prover": [
+        {
+          "analyse": "HbA1c",
+          "verdi": 68,
+          "enhet": "mmol/mol",
+          "dato": "2026-04-05",
+          "referanse": "mål <53 (barn/ungdom)"
+        },
+        {
+          "analyse": "Ketoner (kapillært)",
+          "verdi": 0.3,
+          "enhet": "mmol/L",
+          "dato": "2026-04-05",
+          "referanse": "<0.6"
+        },
+        {
+          "analyse": "TSH",
+          "verdi": 2.4,
+          "enhet": "mIE/L",
+          "dato": "2026-01-12"
+        },
+        {
+          "analyse": "Anti-TPO",
+          "verdi": 18,
+          "enhet": "IE/ml",
+          "dato": "2026-01-12",
+          "referanse": "<34"
+        },
+        {
+          "analyse": "Anti-transglutaminase (cøliaki-screening)",
+          "verdi": 2,
+          "enhet": "U/ml",
+          "dato": "2026-01-12",
+          "referanse": "<7"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Barnevaksinasjonsprogram",
+          "siste": "komplett t.o.m. 10-år"
+        },
+        {
+          "type": "HPV (Gardasil 9, dose 2)",
+          "siste": "2024-11-18"
+        },
+        {
+          "type": "Influensa",
+          "siste": "2025-10-28"
+        }
+      ],
+      "funksjon": {
+        "adl": "aldersvarende selvstendig",
+        "kognitiv_status": "klar, 7. klasse",
+        "mobilitet": "aktiv (fotball 2x/uke)",
+        "fallrisiko": "lav"
+      },
+      "sosial": {
+        "bor": "med mor, far og 2 søsken",
+        "pleietjenester": [
+          "Foreldre administrerer insulin og CGM"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Mor",
+            "kontakt": "primær"
+          },
+          {
+            "relasjon": "Far",
+            "kontakt": "sekundær"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "Barnediabetes-poliklinikk OUS",
+          "frekvens": "hver 3. mnd",
+          "neste_kontroll": "2026-06-14"
+        },
+        {
+          "type": "Diabetessykepleier (CGM-opplæring)",
+          "neste_kontroll": "2026-05-08"
+        },
+        {
+          "type": "Årlig screening (cøliaki/tyreoidea)",
+          "neste_kontroll": "2027-01-12"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2022-09-03",
+          "aarsak": "Debut type 1 diabetes (DKA)",
+          "varighet_dager": 5
+        }
+      ],
+      "historiske_medisiner": []
     },
     {
       "id": "P-069",
@@ -1032,10 +3160,20 @@
       "alder": 6,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "G40.3", "kodeverk": "ICD-10", "tekst": "Generalisert epilepsi (idiopatisk)", "siden": "2024" }
+        {
+          "kode": "G40.3",
+          "kodeverk": "ICD-10",
+          "tekst": "Generalisert epilepsi (idiopatisk)",
+          "siden": "2024"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Valproat", "atc": "N03AG01", "dose": "20 mg/kg/døgn delt på 2", "indikasjon": "Antiepileptikum" }
+        {
+          "navn": "Valproat",
+          "atc": "N03AG01",
+          "dose": "20 mg/kg/døgn delt på 2",
+          "indikasjon": "Antiepileptikum"
+        }
       ],
       "allergier": [],
       "merknader": "Valproat brukes hos jente — foreldre informert om teratogenitet (fremtidig familieplanlegging). Kontroll av lever + ammoniakk. Anfallsdagbok."
@@ -1046,14 +3184,157 @@
       "alder": 41,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "F11.2", "kodeverk": "ICD-10", "tekst": "Opioidavhengighet (i LAR)", "siden": "2019" },
-        { "kode": "B18.2", "kodeverk": "ICD-10", "tekst": "Kronisk hepatitt C (behandlet, SVR12)", "siden": "2023" }
+        {
+          "kode": "F11.2",
+          "kodeverk": "ICD-10",
+          "tekst": "Opioidavhengighet (i LAR)",
+          "siden": "2019"
+        },
+        {
+          "kode": "B18.2",
+          "kodeverk": "ICD-10",
+          "tekst": "Kronisk hepatitt C (behandlet, SVR12)",
+          "siden": "2023"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Metadon", "atc": "N07BC02", "dose": "100 mg daglig (utdeling)", "indikasjon": "LAR-substitusjon" }
+        {
+          "navn": "Metadon",
+          "atc": "N07BC02",
+          "dose": "100 mg daglig (utdeling)",
+          "indikasjon": "LAR-substitusjon"
+        }
       ],
       "allergier": [],
-      "merknader": "LAR-pasient. Utdeling via apotek. Metadon = sterk QT-forlenger — unngå samtidig ondansetron, klaritromycin, kinoloner. Andre opioider og benzodiazepiner kun etter LAR-senter-samråd."
+      "merknader": "LAR-pasient. Utdeling via apotek. Metadon = sterk QT-forlenger — unngå samtidig ondansetron, klaritromycin, kinoloner. Andre opioider og benzodiazepiner kun etter LAR-senter-samråd.",
+      "fastlege": "Dr. Kjell Brenna, Tøyen legesenter + LAR-poliklinikk OUS Aker",
+      "kritisk_info": {
+        "cpr_status": "Full HLR",
+        "implantater": [],
+        "donor": false
+      },
+      "siste_malinger": {
+        "blodtrykk": "130/82",
+        "puls": 74,
+        "vekt": 74,
+        "hoyde": 178,
+        "bmi": 23.4,
+        "qtc_ms": 465,
+        "dato": "2026-03-18"
+      },
+      "prover": [
+        {
+          "analyse": "Metadon (serum trough)",
+          "verdi": 285,
+          "enhet": "ng/ml",
+          "dato": "2026-03-18",
+          "referanse": "trough 150–400"
+        },
+        {
+          "analyse": "ALAT",
+          "verdi": 32,
+          "enhet": "U/L",
+          "dato": "2026-03-01",
+          "referanse": "<50"
+        },
+        {
+          "analyse": "Hep C RNA",
+          "verdi": "ikke-påvisbart",
+          "dato": "2026-02-15",
+          "referanse": "SVR12 oppnådd 2023-04"
+        },
+        {
+          "analyse": "HIV-test",
+          "verdi": "negativ",
+          "dato": "2026-02-15"
+        },
+        {
+          "analyse": "QTc (EKG)",
+          "verdi": 465,
+          "enhet": "ms",
+          "dato": "2026-03-18",
+          "referanse": "<450 menn (grenseverdi)"
+        },
+        {
+          "analyse": "Anti-HBs",
+          "verdi": 145,
+          "enhet": "mIE/ml",
+          "dato": "2025-09-01",
+          "referanse": ">10 = immunitet"
+        }
+      ],
+      "vaksiner": [
+        {
+          "type": "Hepatitt A+B (Twinrix, fullvaksinert)",
+          "siste": "2022-08"
+        },
+        {
+          "type": "Tetanus/difteri",
+          "siste": "2023-11"
+        },
+        {
+          "type": "Influensa",
+          "siste": "2025-10-25"
+        }
+      ],
+      "funksjon": {
+        "adl": "selvstendig",
+        "kognitiv_status": "klar",
+        "mobilitet": "selvstendig, arbeider deltid (vaktmester)",
+        "fallrisiko": "lav"
+      },
+      "sosial": {
+        "bor": "med samboer (også i LAR)",
+        "pleietjenester": [
+          "LAR-poliklinikk månedlig",
+          "Sosialkurator ved NAV"
+        ],
+        "parorende": [
+          {
+            "relasjon": "Samboer",
+            "kontakt": "primær"
+          },
+          {
+            "relasjon": "Sønn (13 år, fra tidl. forhold)"
+          }
+        ]
+      },
+      "aktive_forlop": [
+        {
+          "type": "LAR-oppfølging",
+          "frekvens": "månedlig",
+          "neste_kontroll": "2026-05-10"
+        },
+        {
+          "type": "Hep C-oppfølging (SVR-bekreftet)",
+          "frekvens": "årlig",
+          "neste_kontroll": "2027-02-15"
+        },
+        {
+          "type": "EKG-kontroll (QTc-overvåkning)",
+          "frekvens": "hver 6. mnd",
+          "neste_kontroll": "2026-09-18"
+        }
+      ],
+      "innleggelser": [
+        {
+          "dato": "2019-06-02",
+          "aarsak": "Heroin-overdose (før LAR)",
+          "varighet_dager": 3
+        }
+      ],
+      "historiske_medisiner": [
+        {
+          "navn": "Buprenorfin/nalokson (Subutex)",
+          "seponert": "2020-04",
+          "grunn": "Byttet til metadon pga utilstrekkelig mettelse"
+        },
+        {
+          "navn": "Sofosbuvir/velpatasvir (Epclusa)",
+          "seponert": "2023-04",
+          "grunn": "Hep C-kur fullført (SVR12 oppnådd)"
+        }
+      ]
     },
     {
       "id": "P-071",
@@ -1061,14 +3342,44 @@
       "alder": 58,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "F10.2", "kodeverk": "ICD-10", "tekst": "Alkoholavhengighet", "siden": "2010" },
-        { "kode": "K70.3", "kodeverk": "ICD-10", "tekst": "Alkoholisk cirrhose (Child-Pugh B)", "siden": "2022" }
+        {
+          "kode": "F10.2",
+          "kodeverk": "ICD-10",
+          "tekst": "Alkoholavhengighet",
+          "siden": "2010"
+        },
+        {
+          "kode": "K70.3",
+          "kodeverk": "ICD-10",
+          "tekst": "Alkoholisk cirrhose (Child-Pugh B)",
+          "siden": "2022"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Tiamin", "atc": "A11DA01", "dose": "100 mg daglig", "indikasjon": "Profylakse Wernicke" },
-        { "navn": "Spironolakton", "atc": "C03DA01", "dose": "100 mg daglig", "indikasjon": "Ascites" },
-        { "navn": "Propranolol", "atc": "C07AA05", "dose": "40 mg x 2", "indikasjon": "Variceblødningsprofylakse" },
-        { "navn": "Laktulose", "atc": "A06AD11", "dose": "20 ml x 3", "indikasjon": "HE-profylakse" }
+        {
+          "navn": "Tiamin",
+          "atc": "A11DA01",
+          "dose": "100 mg daglig",
+          "indikasjon": "Profylakse Wernicke"
+        },
+        {
+          "navn": "Spironolakton",
+          "atc": "C03DA01",
+          "dose": "100 mg daglig",
+          "indikasjon": "Ascites"
+        },
+        {
+          "navn": "Propranolol",
+          "atc": "C07AA05",
+          "dose": "40 mg x 2",
+          "indikasjon": "Variceblødningsprofylakse"
+        },
+        {
+          "navn": "Laktulose",
+          "atc": "A06AD11",
+          "dose": "20 ml x 3",
+          "indikasjon": "HE-profylakse"
+        }
       ],
       "allergier": [],
       "merknader": "Dekompensert cirrhose. Paracetamol maks 2 g/døgn. NSAIDs forbudt (varicer, nyresvikt). Sedativa skal unngås (utløser HE). Alle nye medikamenter doseres forsiktig."
@@ -1079,12 +3390,32 @@
       "alder": 67,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "A41.9", "kodeverk": "ICD-10", "tekst": "Sepsis (overlevende, post-ITU)", "siden": "2026" },
-        { "kode": "J15.1", "kodeverk": "ICD-10", "tekst": "Pseudomonas-pneumoni", "siden": "2026" }
+        {
+          "kode": "A41.9",
+          "kodeverk": "ICD-10",
+          "tekst": "Sepsis (overlevende, post-ITU)",
+          "siden": "2026"
+        },
+        {
+          "kode": "J15.1",
+          "kodeverk": "ICD-10",
+          "tekst": "Pseudomonas-pneumoni",
+          "siden": "2026"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Piperacillin/tazobaktam", "atc": "J01CR05", "dose": "4 g/0.5 g x 4 i.v.", "indikasjon": "Bred empirisk dekning" },
-        { "navn": "Enoksaparin", "atc": "B01AB05", "dose": "40 mg s.c. daglig", "indikasjon": "VTE-profylakse" }
+        {
+          "navn": "Piperacillin/tazobaktam",
+          "atc": "J01CR05",
+          "dose": "4 g/0.5 g x 4 i.v.",
+          "indikasjon": "Bred empirisk dekning"
+        },
+        {
+          "navn": "Enoksaparin",
+          "atc": "B01AB05",
+          "dose": "40 mg s.c. daglig",
+          "indikasjon": "VTE-profylakse"
+        }
       ],
       "allergier": [],
       "merknader": "Avgiftning etter sepsisjokk. Overgang til peroral antibiotika planlagt etter dyrkning. Nyrefunksjon svingt — alle doser justert etter eGFR."
@@ -1095,10 +3426,20 @@
       "alder": 44,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "B20", "kodeverk": "ICD-10", "tekst": "HIV-infeksjon (stabil på ART, CD4 640)", "siden": "2014" }
+        {
+          "kode": "B20",
+          "kodeverk": "ICD-10",
+          "tekst": "HIV-infeksjon (stabil på ART, CD4 640)",
+          "siden": "2014"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Bictegravir/emtricitabin/tenofovir-alafenamid", "atc": "J05AR20", "dose": "1 tablett daglig", "indikasjon": "Antiretroviral behandling (ART)" }
+        {
+          "navn": "Bictegravir/emtricitabin/tenofovir-alafenamid",
+          "atc": "J05AR20",
+          "dose": "1 tablett daglig",
+          "indikasjon": "Antiretroviral behandling (ART)"
+        }
       ],
       "allergier": [],
       "merknader": "Stabil HIV-pasient, VL <20. Obs interaksjoner: polyvalente kationer (Ca, Mg, Fe, antacida) reduserer bictegravir — ta adskilt. Rifampicin kontraindisert."
@@ -1109,12 +3450,32 @@
       "alder": 71,
       "kjonn": "M",
       "diagnoser": [
-        { "kode": "G20", "kodeverk": "ICD-10", "tekst": "Parkinsons sykdom", "siden": "2017" }
+        {
+          "kode": "G20",
+          "kodeverk": "ICD-10",
+          "tekst": "Parkinsons sykdom",
+          "siden": "2017"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Levodopa/karbidopa", "atc": "N04BA02", "dose": "100/25 mg x 5", "indikasjon": "Dopamin-prekursor" },
-        { "navn": "Entakapon", "atc": "N04BX02", "dose": "200 mg med hver L-DOPA-dose", "indikasjon": "COMT-hemmer, forlenger effekt" },
-        { "navn": "Rasagilin", "atc": "N04BD02", "dose": "1 mg daglig", "indikasjon": "MAO-B-hemmer" }
+        {
+          "navn": "Levodopa/karbidopa",
+          "atc": "N04BA02",
+          "dose": "100/25 mg x 5",
+          "indikasjon": "Dopamin-prekursor"
+        },
+        {
+          "navn": "Entakapon",
+          "atc": "N04BX02",
+          "dose": "200 mg med hver L-DOPA-dose",
+          "indikasjon": "COMT-hemmer, forlenger effekt"
+        },
+        {
+          "navn": "Rasagilin",
+          "atc": "N04BD02",
+          "dose": "1 mg daglig",
+          "indikasjon": "MAO-B-hemmer"
+        }
       ],
       "allergier": [],
       "merknader": "Metoklopramid og haloperidol KONTRAINDISERT (dopaminblokkerende — forverrer PD). Bruk domperidon ved kvalme. Rasagilin: unngå meperidin, tramadol (serotonergt syndrom-risiko)."
@@ -1125,11 +3486,26 @@
       "alder": 33,
       "kjonn": "K",
       "diagnoser": [
-        { "kode": "G35", "kodeverk": "ICD-10", "tekst": "Multippel sklerose (relapserende remitterende)", "siden": "2020" }
+        {
+          "kode": "G35",
+          "kodeverk": "ICD-10",
+          "tekst": "Multippel sklerose (relapserende remitterende)",
+          "siden": "2020"
+        }
       ],
       "faste_medisiner": [
-        { "navn": "Okrelizumab", "atc": "L04AA36", "dose": "600 mg i.v. hver 6. mnd", "indikasjon": "Sykdomsmodifiserende MS-behandling" },
-        { "navn": "Vitamin D3", "atc": "A11CC05", "dose": "50 µg daglig", "indikasjon": "Substitusjon" }
+        {
+          "navn": "Okrelizumab",
+          "atc": "L04AA36",
+          "dose": "600 mg i.v. hver 6. mnd",
+          "indikasjon": "Sykdomsmodifiserende MS-behandling"
+        },
+        {
+          "navn": "Vitamin D3",
+          "atc": "A11CC05",
+          "dose": "50 µg daglig",
+          "indikasjon": "Substitusjon"
+        }
       ],
       "allergier": [],
       "merknader": "Anti-CD20. Økt infeksjonsrisiko — vaksinasjonsstatus må være oppdatert før infusjon (ikke levende vaksiner under behandling). Screen for hepatitt B før oppstart."
