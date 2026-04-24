@@ -1001,7 +1001,7 @@
       </select>
       <button type="button" class="header-badge" onclick="openAgentModal()" aria-label="Vis tilkoblede agenter">
         <span class="status-dot" aria-hidden="true"></span>
-        <span id="agentBadge" class="badge-text">4 agenter aktive</span>
+        <span id="agentBadge" class="badge-text">Agenter</span>
       </button>
       <a class="header-btn" href="/pasienter" aria-label="Pasientoversikt">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1796,6 +1796,18 @@ Nytt oppfølgingsspørsmål: ${query}`;
       if (e && e.target !== e.currentTarget) return;
       document.getElementById('agentModal').classList.remove('active');
     }
+
+    async function updateAgentBadge() {
+      try {
+        const resp = await fetch(`${API_BASE}/agents`);
+        const data = await resp.json();
+        const badge = document.getElementById('agentBadge');
+        if (badge && Array.isArray(data.agents)) {
+          badge.textContent = `${data.agents.length} agenter aktive`;
+        }
+      } catch (_) { /* badge beholder default-tekst */ }
+    }
+    updateAgentBadge();
 
     async function fetchAgents() {
       const body = document.getElementById('agentModalBody');
