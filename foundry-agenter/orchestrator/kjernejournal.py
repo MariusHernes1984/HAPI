@@ -86,15 +86,40 @@ def list_patients_summary() -> list[dict]:
     return out
 
 
+def _format_allergier(allergier: list) -> str:
+    """Støtter både gammel (strenger) og ny (dict med agens/reaksjon/alvorlighet)."""
+    parts = []
+    for a in allergier:
+        if isinstance(a, str):
+            parts.append(a)
+        elif isinstance(a, dict):
+            txt = a.get("agens", "ukjent")
+            details = []
+            if a.get("reaksjon"):
+                details.append(a["reaksjon"])
+            if a.get("alvorlighet"):
+                details.append(a["alvorlighet"])
+            if details:
+                txt += f" ({', '.join(details)})"
+            parts.append(txt)
+    return ", ".join(parts)
+
+
 def format_patient_context(patient: dict) -> str:
     """
     Formater pasientdata til en kompakt tekst som synthesis-prompten kan bruke.
-    Inkluderer alder, kjønn, diagnoser, medisiner, allergier og merknader.
+    Inkluderer alder, kjønn, diagnoser, medisiner, allergier, vitale parametere,
+    prøvesvar, funksjonsnivå, kritisk info og pågående forløp — når disse finnes.
+    Gamle mock-pasienter uten de nye feltene fungerer uendret.
     """
     kjonn_tekst = {"K": "kvinne", "M": "mann"}.get(patient.get("kjonn", ""), "")
     linjer = [
         f"Pasient {patient['id']}: {patient['navn']}, {patient['alder']} år {kjonn_tekst}",
     ]
+
+    fastlege = patient.get("fastlege")
+    if fastlege:
+        linjer.append(f"Fastlege: {fastlege}")
 
     diagnoser = patient.get("diagnoser") or []
     if diagnoser:
@@ -116,9 +141,99 @@ def format_patient_context(patient: dict) -> str:
     else:
         linjer.append("Faste medisiner: ingen")
 
+    historiske = patient.get("historiske_medisiner") or []
+    if historiske:
+        h_tekst = "; ".join(
+            f"{h['navn']} (seponert {h.get('seponert','?')}, grunn: {h.get('grunn','')})"
+            for h in historiske
+        )
+        linjer.append(f"Seponerte medisiner: {h_tekst}")
+
     allergier = patient.get("allergier") or []
     if allergier:
-        linjer.append(f"Allergier: {', '.join(allergier)}")
+        linjer.append(f"Allergier: {_format_allergier(allergier)}")
+
+    kritisk = patient.get("kritisk_info") or {}
+    if kritisk:
+        biter = []
+        if kritisk.get("cpr_status"):
+            biter.append(f"HLR-status: {kritisk['cpr_status']}")
+        for impl in kritisk.get("implantater", []):
+            txt = impl.get("type", "implantat")
+            if impl.get("aar"):
+                txt += f" ({impl['aar']})"
+            if impl.get("mr_sikker") is False:
+                txt += " – IKKE MR-sikker"
+            biter.append(txt)
+        for kontrast in kritisk.get("kontrastreaksjoner", []) or kritisk.get("kontrastallergier", []):
+            biter.append(f"Kontrast: {kontrast}")
+        if kritisk.get("donor") is not None:
+            biter.append("Organdonor: ja" if kritisk["donor"] else "Organdonor: nei")
+        if biter:
+            linjer.append(f"Kritisk info: {'; '.join(biter)}")
+
+    malinger = patient.get("siste_malinger") or {}
+    if malinger:
+        biter = []
+        for key, label in [("blodtrykk", "BT"), ("puls", "puls"), ("vekt", "vekt"),
+                           ("hoyde", "høyde"), ("bmi", "BMI"), ("so2", "SpO2")]:
+            if malinger.get(key) is not None:
+                biter.append(f"{label} {malinger[key]}")
+        if malinger.get("dato"):
+            biter.append(f"(dato: {malinger['dato']})")
+        if biter:
+            linjer.append(f"Vitale parametere: {', '.join(biter)}")
+
+    prover = patient.get("prover") or []
+    if prover:
+        p_tekst = "; ".join(
+            f"{p['analyse']} {p['verdi']}{' '+p['enhet'] if p.get('enhet') else ''}"
+            + (f" (ref {p['referanse']})" if p.get("referanse") else "")
+            + (f" {p['dato']}" if p.get("dato") else "")
+            for p in prover
+        )
+        linjer.append(f"Relevante prøvesvar: {p_tekst}")
+
+    vaksiner = patient.get("vaksiner") or []
+    if vaksiner:
+        v_tekst = "; ".join(
+            f"{v['type']} ({v.get('siste','?')})" for v in vaksiner
+        )
+        linjer.append(f"Vaksinehistorikk: {v_tekst}")
+
+    funksjon = patient.get("funksjon") or {}
+    if funksjon:
+        biter = []
+        for key in ["adl", "kognitiv_status", "mobilitet", "fallrisiko"]:
+            if funksjon.get(key):
+                biter.append(f"{key}: {funksjon[key]}")
+        if biter:
+            linjer.append(f"Funksjonsnivå: {'; '.join(biter)}")
+
+    sosial = patient.get("sosial") or {}
+    if sosial:
+        biter = []
+        if sosial.get("bor"):
+            biter.append(f"bor: {sosial['bor']}")
+        if sosial.get("pleietjenester"):
+            biter.append(f"pleietjenester: {', '.join(sosial['pleietjenester'])}")
+        if biter:
+            linjer.append(f"Sosiale forhold: {'; '.join(biter)}")
+
+    forlop = patient.get("aktive_forlop") or []
+    if forlop:
+        f_tekst = "; ".join(
+            f"{f['type']}" + (f" (neste: {f['neste_kontroll']})" if f.get("neste_kontroll") else "")
+            for f in forlop
+        )
+        linjer.append(f"Aktive forløp: {f_tekst}")
+
+    innleggelser = patient.get("innleggelser") or []
+    if innleggelser:
+        i_tekst = "; ".join(
+            f"{i.get('aarsak','?')} ({i.get('dato','?')})" for i in innleggelser[:3]
+        )
+        linjer.append(f"Siste innleggelser: {i_tekst}")
 
     merknader = patient.get("merknader")
     if merknader:
