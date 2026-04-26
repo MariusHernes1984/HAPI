@@ -25,9 +25,11 @@ import kjernejournal
 
 logger = logging.getLogger(__name__)
 
-# Modell brukt i syntese-steget. Kan overstyres via SYNTH_MODEL env-var
-# uten redeploy/kode-endring (f.eks. SYNTH_MODEL=gpt-5.5 for A/B-test).
-SYNTH_MODEL = os.environ.get("SYNTH_MODEL", "gpt-5.3-chat")
+# Modell brukt i syntese-steget. Default oppgradert til gpt-5.4
+# (apr 2026): 11% raskere enn 5.3, samme kvalitetsskår på NDLA-evalen.
+# Kan overstyres via SYNTH_MODEL env-var (f.eks. =gpt-5.5 for A/B-test).
+# Se evals/rapporter/rapport-20260426-1111-synth-5.4.json for grunnlaget.
+SYNTH_MODEL = os.environ.get("SYNTH_MODEL", "gpt-5.4")
 
 
 @dataclass
