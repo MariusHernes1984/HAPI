@@ -264,9 +264,10 @@ def route_with_llm(query: str, openai_client) -> RoutingDecision:
     Kalles kun når keyword-routing har lav konfidens.
     """
     import json as json_mod
+    import os
 
     response = openai_client.responses.create(
-        model="gpt-5.3-chat",
+        model=os.environ.get("ROUTER_MODEL", "gpt-5.3-chat"),
         input=LLM_ROUTING_PROMPT.format(query=query),
     )
 
