@@ -56,7 +56,10 @@ EVAL_FILE = EVAL_DIR / "eval-questions-hapi.json"
 RAPPORTER_DIR = EVAL_DIR / "rapporter"
 
 # --- Eval-dommermodell (kan overstyres via JUDGE_MODEL env-var) ---
-JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "gpt-5.3-chat")
+# Default oppgradert til gpt-5.5 (april 2026): færre tekniske feil,
+# strengere på kildeinkonsistens, 34% raskere. A/B mot gpt-5.3-chat
+# bevart i rapport-20260426-1045-judge-5.5.json.
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "gpt-5.5")
 
 # --- Token-bruk og kostnad — pris pr. modell ---
 PRISER_USD_PER_1M = {
