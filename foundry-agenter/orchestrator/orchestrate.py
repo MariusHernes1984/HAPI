@@ -9,6 +9,7 @@ Flyten:
 """
 
 import asyncio
+import os
 import re
 import time
 import logging
@@ -23,6 +24,10 @@ from router import route, route_with_llm, RoutingDecision, KJERNEJOURNAL
 import kjernejournal
 
 logger = logging.getLogger(__name__)
+
+# Modell brukt i syntese-steget. Kan overstyres via SYNTH_MODEL env-var
+# uten redeploy/kode-endring (f.eks. SYNTH_MODEL=gpt-5.5 for A/B-test).
+SYNTH_MODEL = os.environ.get("SYNTH_MODEL", "gpt-5.3-chat")
 
 
 @dataclass
@@ -654,7 +659,7 @@ async def synthesize(
     try:
         openai = project.get_openai_client()
         response = await openai.responses.create(
-            model="gpt-5.3-chat",
+            model=SYNTH_MODEL,
             input=prompt,
         )
         return response.output_text, has_interaksjoner

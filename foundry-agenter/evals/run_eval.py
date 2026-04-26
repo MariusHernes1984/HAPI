@@ -55,9 +55,17 @@ EVAL_DIR = Path(__file__).parent
 EVAL_FILE = EVAL_DIR / "eval-questions-hapi.json"
 RAPPORTER_DIR = EVAL_DIR / "rapporter"
 
-# --- Token-bruk og kostnad (gpt-5.3-chat, USD->NOK kurs 11) ---
-PRIS_INPUT_USD_PER_1M = 1.75
-PRIS_OUTPUT_USD_PER_1M = 14.00
+# --- Eval-dommermodell (kan overstyres via JUDGE_MODEL env-var) ---
+JUDGE_MODEL = os.environ.get("JUDGE_MODEL", "gpt-5.3-chat")
+
+# --- Token-bruk og kostnad — pris pr. modell ---
+PRISER_USD_PER_1M = {
+    "gpt-5.3-chat": {"input": 1.75, "output": 14.00},
+    "gpt-5.4": {"input": 2.50, "output": 15.00},
+    "gpt-5.5": {"input": 5.00, "output": 30.00},
+}
+PRIS_INPUT_USD_PER_1M = PRISER_USD_PER_1M.get(JUDGE_MODEL, PRISER_USD_PER_1M["gpt-5.3-chat"])["input"]
+PRIS_OUTPUT_USD_PER_1M = PRISER_USD_PER_1M.get(JUDGE_MODEL, PRISER_USD_PER_1M["gpt-5.3-chat"])["output"]
 USD_NOK = 11.0
 NOK_PER_INPUT_TOKEN = PRIS_INPUT_USD_PER_1M * USD_NOK / 1_000_000
 NOK_PER_OUTPUT_TOKEN = PRIS_OUTPUT_USD_PER_1M * USD_NOK / 1_000_000
@@ -93,7 +101,7 @@ def _build_statistikk(usage: dict) -> dict:
         "kostnad_nok": kost,
         "kilde": "maalt-runtime",
         "prismodell": {
-            "model": "gpt-5.3-chat",
+            "model": JUDGE_MODEL,
             "input_usd_per_1m": PRIS_INPUT_USD_PER_1M,
             "output_usd_per_1m": PRIS_OUTPUT_USD_PER_1M,
             "kurs_usd_nok": USD_NOK,
@@ -182,7 +190,7 @@ async def llm_fact_check(
     try:
         openai = project.get_openai_client()
         response = await openai.responses.create(
-            model="gpt-5.3-chat",
+            model=JUDGE_MODEL,
             input=prompt,
         )
         _add_usage(response)
@@ -561,7 +569,7 @@ def save_report(results: list[dict], tag: str = "", usage: dict | None = None):
             "versjon": "v2-llm",
             "antall_spoersmaal": total,
             "tag": tag or None,
-            "eval_metode": "LLM-faktasjekk (gpt-5.3-chat)",
+            "eval_metode": f"LLM-faktasjekk ({JUDGE_MODEL})",
         },
         "oppsummering": {
             "korrekthetsscore": f"{bestatt}/{total} ({bestatt/total*100:.0f}%)",
@@ -705,7 +713,7 @@ def build_combined_report(
             "antall_spoersmaal": total,
             "antall_kjoringer": n_runs,
             "tag": tag or None,
-            "eval_metode": "LLM-faktasjekk (gpt-5.3-chat) — konsensus",
+            "eval_metode": f"LLM-faktasjekk ({JUDGE_MODEL}) — konsensus",
         },
         "oppsummering": {
             "korrekthetsscore": f"{bestatt}/{total} ({bestatt/total*100:.0f}%)",
