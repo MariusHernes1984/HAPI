@@ -1,0 +1,624 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-27T16:40:17.821957",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 15,
+    "antall_kjoringer": 3,
+    "tag": "fk-3runs",
+    "eval_metode": "LLM-faktasjekk (gpt-5.5) — konsensus"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "15/15 (100%)",
+    "bestatt": 15,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "stabilitet_prosent": 86.7,
+    "unanime_spoersmaal": 13,
+    "routing_korrekthet": 14
+  },
+  "resultater": [
+    {
+      "id": "FK-001",
+      "kategori": "dosering-barn",
+      "tema": "Paracet barn vekt-basert dosering",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde med URL og scrape-dato, og inkluderer de forventede doseringspunktene for barn. Ingen av de spesifiserte feilene eller medisinsk feilinformasjon er funnet.",
+          "duration_ms": 15373
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering i tråd med Felleskatalogen, inkludert 15 mg/kg og maksimal døgndose 75 mg/kg. Kilde, URL og scrape-dato er oppgitt, og ingen forbudte eller medisinsk feilaktige anbefalinger er funnet.",
+          "duration_ms": 13406
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde med URL og scrape-dato, og inkluderer forventet dosering 15 mg/kg samt maksimal døgndose 75 mg/kg. Ingen av de spesifiserte feilene eller medisinsk feilinformasjon er funnet.",
+          "duration_ms": 12446
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-002",
+      "kategori": "antikoagulasjon",
+      "tema": "Apixaban NVAF normaldosering",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og angir dosering ved ikke-valvulær atrieflimmer som 5 mg 2 ganger daglig. Ingen reelle medisinske feil eller forbudte formuleringer er funnet.",
+          "duration_ms": 11802
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og inkluderer korrekt dosering for Eliquis ved ikke-valvulær atrieflimmer: 5 mg 2 ganger daglig. Ingen reelle medisinske feil eller forbudte formuleringer er funnet.",
+          "duration_ms": 11570
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og angir dosering ved ikke-valvulær atrieflimmer som 5 mg 2 × daglig. Ingen reelle medisinske feil eller forbudte formuleringer er funnet.",
+          "duration_ms": 10839
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-003",
+      "kategori": "antikoagulasjon",
+      "tema": "Marevan Warfarin initialdose",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret gjengir initialdoseringen korrekt som 3 tabletter (7,5 mg) 1. og 2. dag og oppgir Felleskatalogen/preparatomtale Marevan som kilde. Ingen reelle medisinske feil eller forbudt kildebruk er funnet.",
+          "duration_ms": 13928
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt initialdosering fra preparatomtalen for Marevan: vanlig dose 1. og 2. dag er 3 tabletter, tilsvarende 7,5 mg. Kilden er angitt som felleskatalogen.no, og ingen forbudte eller feilaktige kilder som Helsedirektoratet brukes.",
+          "duration_ms": 11060
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret gjengir preparatomtalens initialdosering korrekt: vanlig dose 1. og 2. dag er 3 tabletter, tilsvarende 7,5 mg. Kilden er oppgitt som Felleskatalogen/preparatomtale for Marevan.",
+          "duration_ms": 10318
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-004",
+      "kategori": "kardiovaskulaer",
+      "tema": "Selo-Zok hypertensjon voksendose",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering ved hypertensjon som 50-100 mg i døgnet og viser til Felleskatalogen/Selo-Zok. Ingen reelle medisinske feil eller forbudt anbefalingsformulering er funnet.",
+          "duration_ms": 13068
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering for hypertensjon som 50-100 mg i døgnet og viser til felleskatalogen.no/Selo-Zok. Ingen forbudt anbefalingsformulering eller reell medisinsk feil er funnet.",
+          "duration_ms": 10842
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering ved hypertensjon for voksne som 50-100 mg i døgnet og viser til Felleskatalogen/Selo-Zok med URL. Ingen forbudt anbefalingsformulering eller medisinsk feilinformasjon er funnet.",
+          "duration_ms": 11047
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-005",
+      "kategori": "diuretika",
+      "tema": "Furosemid oedem voksendose",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt dosering ved ødem som 20-40 mg, helst om morgenen, og viser til Felleskatalogen/Furix som kilde. Det inneholder ikke formuleringen «Jeg anbefaler» eller annen reell medisinsk feilinformasjon.",
+          "duration_ms": 31932
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering ved ødem som 20-40 mg helst om morgenen og viser til Felleskatalogen/Furix. Ingen reelle medisinske feil eller forbudt anbefalingsformulering er funnet.",
+          "duration_ms": 14160
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt dosering ved ødem som 20-40 mg, helst om morgenen, og viser til Felleskatalogen for Furix. Ingen reelle medisinske feil eller forbudt anbefalingsformulering er funnet.",
+          "duration_ms": 14524
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-006",
+      "kategori": "psykiatri",
+      "tema": "Leponex klozapin titrering",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Leponex som kilde og inkluderer sentrale doseringspunkter som individuell tilpasning til lavest mulig effektive dose og forsiktig titrering. Ingen forbudt kilde eller åpenbar medisinsk feilinformasjon er funnet.",
+          "duration_ms": 13446
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Leponex som kilde og inkluderer sentrale doseringspunkter som individuell tilpasning til lavest mulig effektive dose og forsiktig titrering. Ingen forbudt kilde eller åpenbar medisinsk feilinformasjon er identifisert.",
+          "duration_ms": 13020
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Leponex som kilde og inkluderer sentrale doseringspunkter som individuell tilpasning til lavest mulig effektive dose og forsiktig titrering. Ingen forbudt eller feil kilde som Helsedirektoratet er brukt.",
+          "duration_ms": 9848
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-007",
+      "kategori": "lipidsenkende",
+      "tema": "Lipitor atorvastatin individualisering",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Lipitor som kilde og inkluderer dosering med individualisering basert på LDL-kolesterol samt relevant doseringsinformasjon. Ingen reelle medisinske feil eller uønsket formulering som egen startdoseanbefaling er funnet.",
+          "duration_ms": 12142
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Lipitor som kilde og inkluderer sentrale doseringspunkter inkludert individualisering og LDL-kolesterol. Ingen reelle medisinske feil eller forbudt formulering om egen anbefalt startdose er funnet.",
+          "duration_ms": 11371
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Lipitor som kilde og inkluderer sentrale doseringspunkter som individualisering basert på LDL-kolesterolnivå og respons. Ingen reelle medisinske feil eller forbudt formulering om egen foreslått startdose er funnet.",
+          "duration_ms": 10268
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-008",
+      "kategori": "antikoagulasjon",
+      "tema": "Pradaxa dabigatran ClCR krav",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Pradaxa som kilde og inkluderer relevant informasjon om at nyrefunksjon skal vurderes med ClCR og at alvorlig nedsatt nyrefunksjon er ClCR <30 ml/minutt. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+          "duration_ms": 13592
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde for Pradaxa og inkluderer relevante opplysninger om ClCR og grensen 30 ml/minutt ved dabigatran. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+          "duration_ms": 19540
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Pradaxa som kilde og dekker nyrefunksjon med ClCR og grensen ClCR <30 ml/minutt som kontraindikasjon hos voksne. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+          "duration_ms": 24164
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-009",
+      "kategori": "antikoagulasjon",
+      "tema": "Klexane LMWH sporbarhet",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "BESTATT",
+        "FEIL_TEKNISK",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde med URL til Klexane og inkluderer anbefalingen om registrering av preparatnavn og batchnummer. Det inneholder relevant doseringsinformasjon og ingen åpenbare medisinske feil eller forbudt formulering.",
+          "duration_ms": 12649
+        },
+        {
+          "run": 2,
+          "score": "FEIL_TEKNISK",
+          "begrunnelse": "LLM-faktasjekk feilet: Connection error.",
+          "duration_ms": 9511
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Klexane som kilde og inkluderer forventet informasjon om registrering av preparatnavn og batchnummer. Det inneholder relevante doseringsopplysninger og ingen påvist medisinsk feilinformasjon eller forbudt formulering.",
+          "duration_ms": 11151
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-010",
+      "kategori": "demens",
+      "tema": "Aricept Alzheimers initiering",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Aricept som kilde og inkluderer doseringsinformasjon for donepezil med omtale av Alzheimers demens og krav om omsorgsperson. Ingen forbudt kilde eller medisinsk feilinformasjon er funnet.",
+          "duration_ms": 11572
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Aricept som kilde og inkluderer dosering, indikasjon/kontekst for Alzheimers demens og krav om omsorgsperson. Ingen forbudte eller medisinsk feilaktige opplysninger er identifisert.",
+          "duration_ms": 8427
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Aricept som kilde og inkluderer dosering med oppstart 5 mg daglig, mulig økning til 10 mg, samt relevante krav om Alzheimers-diagnose og omsorgsperson. Ingen medisinske feil eller uønsket kilde som Helsedirektoratet er funnet.",
+          "duration_ms": 11254
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-011",
+      "kategori": "diabetes",
+      "tema": "Jardiance startdose",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering for empagliflozin/Jardiance i tråd med Felleskatalogen, inkludert 10 mg én gang daglig og relevante eGFR-begrensninger. Kildekravet er oppfylt med lenke til felleskatalogen.no og ingen reelle medisinske feil eller forbudt formulering er funnet.",
+          "duration_ms": 9892
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen/Jardiance som kilde og dekker anbefalt dosering inkludert 10 mg én gang daglig og relevante eGFR-begrensninger. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+          "duration_ms": 12008
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret gjengir dosering for empagliflozin/Jardiance med 10 mg 1 gang daglig og relevante eGFR-begrensninger, og oppgir Felleskatalogen som kilde. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+          "duration_ms": 13007
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-012",
+      "kategori": "psykiatri",
+      "tema": "Zoloft depresjon vs panikklidelse",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering for sertralin/Zoloft fra Felleskatalogen, inkludert 50 mg daglig, 25 mg daglig og indikasjonen panikklidelse. Kildekravet er oppfylt med URL til felleskatalogen.no og ingen reelle medisinske feil er identifisert.",
+          "duration_ms": 13518
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering for sertralin/Zoloft i tråd med Felleskatalogen, inkludert relevante startdoser og panikklidelse. Kildekravet er oppfylt med Felleskatalogen/Zoloft og URL til felleskatalogen.no.",
+          "duration_ms": 13098
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir dosering fra Felleskatalogen for Zoloft/sertralin og inkluderer alle forventede fakta. Det er ikke funnet reell medisinsk feilinformasjon i det siterte innholdet.",
+          "duration_ms": 10265
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-013",
+      "kategori": "smerte-opiat",
+      "tema": "Oksykodon depot 12-timers intervall",
+      "consensus_score": "BESTATT",
+      "unanimous": false,
+      "all_scores": [
+        "FEIL",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "FEIL",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og dekker forventede fakta om individuell dosetitrering og dosering hver 12. time. Det inneholder likevel konkrete startdoser, som er eksplisitt angitt som en uønsket feil i vurderingsgrunnlaget.",
+          "duration_ms": 11675
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og inkluderer at OxyContin skal dosetitreres individuelt og ikke gis oftere enn hver 12. time. Det inneholder startdoser som sitat fra kilden, ikke som egen anbefaling, og ingen reelle medisinske feil er identifisert.",
+          "duration_ms": 13632
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og dekker at dosering skal titreres individuelt og normalt gis hver 12. time. Det inneholder startdoser som del av sitert preparatomtale, ikke som et selvstendig doseforslag fra agenten.",
+          "duration_ms": 10377
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    },
+    {
+      "id": "FK-014",
+      "kategori": "negativ-test-routing",
+      "tema": "Negativ test: doseringsspm uten Felleskatalogen-trigger",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir korrekt vanlig voksendosering av paracetamol med maksimal døgndose 4 g og advarsel om leverskade ved overdose. Kilden er Helsedirektoratet og det forekommer ikke uønsket Felleskatalogen-sitering.",
+          "duration_ms": 11814
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Helsedirektoratet som kilde og angir vanlig anbefalt voksendose 500–1000 mg opptil 4 ganger daglig, maksimalt 4 g/døgn. Det inneholder ingen forbudte Felleskatalogen-sitater eller reelle medisinske feil.",
+          "duration_ms": 11661
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret oppgir Helsedirektoratet som kilde og angir korrekt vanlig voksendosering med maksimal døgndose 4 g. Det inneholder ikke forbudte Felleskatalogen-sitater eller åpenbar medisinsk feilinformasjon.",
+          "duration_ms": 9058
+        }
+      ],
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ]
+    },
+    {
+      "id": "FK-015",
+      "kategori": "negativ-test-data",
+      "tema": "Negativ test: trigger aktiv men preparat ikke i POC-utvalget",
+      "consensus_score": "BESTATT",
+      "unanimous": true,
+      "all_scores": [
+        "BESTATT",
+        "BESTATT",
+        "BESTATT"
+      ],
+      "run_details": [
+        {
+          "run": 1,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret sier eksplisitt at preparatet ikke finnes i HAPIs Felleskatalogen-demosett/POC-utvalget og anbefaler å sjekke Felleskatalogen direkte. Det inneholder ingen av de forbudte dosepåstandene eller annen medisinsk feilinformasjon.",
+          "duration_ms": 4083
+        },
+        {
+          "run": 2,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret sier eksplisitt at preparatet ikke finnes i HAPIs Felleskatalogen-demosett/POC-utvalget og anbefaler å sjekke Felleskatalogen direkte. Ingen av de forbudte doseringspåstandene forekommer.",
+          "duration_ms": 3542
+        },
+        {
+          "run": 3,
+          "score": "BESTATT",
+          "begrunnelse": "Svaret sier eksplisitt at preparatet ikke finnes i HAPIs Felleskatalogen-demosett/POC-utvalget og anbefaler å sjekke Felleskatalogen direkte. Det inneholder ingen av de forbudte doseringspåstandene eller annen medisinsk feilinformasjon.",
+          "duration_ms": 2907
+        }
+      ],
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ]
+    }
+  ],
+  "statistikk": {
+    "tokens_input": 57496,
+    "tokens_output": 5884,
+    "tokens_total": 63380,
+    "llm_kall": 44,
+    "kostnad_nok": 5.104,
+    "kilde": "maalt-runtime",
+    "prismodell": {
+      "model": "gpt-5.5",
+      "input_usd_per_1m": 5.0,
+      "output_usd_per_1m": 30.0,
+      "kurs_usd_nok": 11.0
+    },
+    "kostnad_per_spoersmaal_nok": 0.1134
+  }
+}

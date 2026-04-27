@@ -1,0 +1,421 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-04-27T16:36:11.567693",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 15,
+    "tag": "fk-3runs-run2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.5)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "14/15 (93%)",
+    "bestatt": 14,
+    "delvis": 0,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 1,
+    "routing_korrekthet": 14,
+    "snitt_responstid_ms": 11789
+  },
+  "resultater": [
+    {
+      "id": "FK-001",
+      "kategori": "dosering-barn",
+      "tema": "Paracet barn vekt-basert dosering",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir dosering i tråd med Felleskatalogen, inkludert 15 mg/kg og maksimal døgndose 75 mg/kg. Kilde, URL og scrape-dato er oppgitt, og ingen forbudte eller medisinsk feilaktige anbefalinger er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "15 mg/kg",
+        "Maks. doegndose er 75 mg/kg",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13406,
+      "answer_length": 2890,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Paracet (scrape-dato 2026-04-27T12:07:38Z)  \n**URL:** https://www.felleskatalogen.no/medisin/paracet-karo-pharma-562628  \n\n**Paracet** (paracetamol, ATC N02BE01)  \nProdusent: Karo Pharma  \n\n**Dosering** (sitert ordrett):  \nL"
+    },
+    {
+      "id": "FK-002",
+      "kategori": "antikoagulasjon",
+      "tema": "Apixaban NVAF normaldosering",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og inkluderer korrekt dosering for Eliquis ved ikke-valvulær atrieflimmer: 5 mg 2 ganger daglig. Ingen reelle medisinske feil eller forbudte formuleringer er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "5 mg 2",
+        "ikke-valvulaer atrieflimmer",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 11570,
+      "answer_length": 2921,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Eliquis (scrape-dato 2026-04-27T12:08:05Z)  \n**URL:** https://www.felleskatalogen.no/medisin/eliquis-bristol-myers-squibb-pfizer-572466  \n\n**Eliquis** (apixaban, ATC B01AF02)  \nProdusent: Bristol-Myers Squibb / Pfizer  \n\n**D"
+    },
+    {
+      "id": "FK-003",
+      "kategori": "antikoagulasjon",
+      "tema": "Marevan Warfarin initialdose",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt initialdosering fra preparatomtalen for Marevan: vanlig dose 1. og 2. dag er 3 tabletter, tilsvarende 7,5 mg. Kilden er angitt som felleskatalogen.no, og ingen forbudte eller feilaktige kilder som Helsedirektoratet brukes.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "3 tabletter",
+        "7,5 mg",
+        "1. og 2. dag",
+        "felleskatalogen.no"
+      ],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 11060,
+      "answer_length": 2905,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Marevan (scrape-dato 2026-04-27T12:08:17Z)  \n**URL:** https://www.felleskatalogen.no/medisin/marevan-orifarm-healthcare-561230  \n\n**Marevan** (warfarin, ATC B01AA03)  \nProdusent: Orifarm Healthcare  \n\n**Dosering** (sitert or"
+    },
+    {
+      "id": "FK-004",
+      "kategori": "kardiovaskulaer",
+      "tema": "Selo-Zok hypertensjon voksendose",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir dosering for hypertensjon som 50-100 mg i døgnet og viser til felleskatalogen.no/Selo-Zok. Ingen forbudt anbefalingsformulering eller reell medisinsk feil er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "50-100 mg",
+        "doegnet",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 10842,
+      "answer_length": 2892,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Selo-Zok (scrape-dato 2026-04-27T12:09:11Z)  \n**URL:** https://www.felleskatalogen.no/medisin/selo-zok-recordati-563801  \n\n**Selo-Zok** (metoprolol, ATC C07AB02)  \nProdusent: Recordati  \n\n**Dosering** (sitert ordrett):  \nInd"
+    },
+    {
+      "id": "FK-005",
+      "kategori": "diuretika",
+      "tema": "Furosemid oedem voksendose",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir dosering ved ødem som 20-40 mg helst om morgenen og viser til Felleskatalogen/Furix. Ingen reelle medisinske feil eller forbudt anbefalingsformulering er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "20-40 mg",
+        "morgenen",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 14160,
+      "answer_length": 2896,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Furix (scrape-dato 2026-04-27T12:09:22Z)  \n**URL:** https://www.felleskatalogen.no/medisin/furix-orifarm-healthcare-559469  \n\n**Furix** (furosemid, ATC C03CA01)  \nProdusent: Orifarm Healthcare  \n\n**Dosering** (sitert ordrett"
+    },
+    {
+      "id": "FK-006",
+      "kategori": "psykiatri",
+      "tema": "Leponex klozapin titrering",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen/Leponex som kilde og inkluderer sentrale doseringspunkter som individuell tilpasning til lavest mulig effektive dose og forsiktig titrering. Ingen forbudt kilde eller åpenbar medisinsk feilinformasjon er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "lavest mulig effektive dose",
+        "titrering",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13020,
+      "answer_length": 2879,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Leponex (scrape-dato 2026-04-27T12:10:16Z)  \n**URL:** https://www.felleskatalogen.no/medisin/leponex-viatris-560891  \n\n**Leponex** (klozapin, ATC N05AH02)  \nProdusent: Viatris  \n\n**Dosering** (sitert ordrett):  \nDosering til"
+    },
+    {
+      "id": "FK-007",
+      "kategori": "lipidsenkende",
+      "tema": "Lipitor atorvastatin individualisering",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen/Lipitor som kilde og inkluderer sentrale doseringspunkter inkludert individualisering og LDL-kolesterol. Ingen reelle medisinske feil eller forbudt formulering om egen anbefalt startdose er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "individualiseres",
+        "LDL",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 11371,
+      "answer_length": 2883,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Lipitor (scrape-dato 2026-04-27T12:09:44Z)  \n**URL:** https://www.felleskatalogen.no/medisin/lipitor-viatris-560999  \n\n**Lipitor** (atorvastatin, ATC C10AA05)  \nProdusent: Viatris  \n\n**Dosering** (sitert ordrett):  \nPasiente"
+    },
+    {
+      "id": "FK-008",
+      "kategori": "antikoagulasjon",
+      "tema": "Pradaxa dabigatran ClCR krav",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen som kilde for Pradaxa og inkluderer relevante opplysninger om ClCR og grensen 30 ml/minutt ved dabigatran. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "ClCR",
+        "30 ml/minutt",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 19540,
+      "answer_length": 5445,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Pradaxa (scrape-dato 2026-04-27T12:08:39Z)  \n**URL:** https://www.felleskatalogen.no/medisin/pradaxa-boehringer-ingelheim-562917  \n\n**Pradaxa** (dabigatran, ATC B01AE07)  \nProdusent: Boehringer Ingelheim  \n\n**Dosering** (sit"
+    },
+    {
+      "id": "FK-009",
+      "kategori": "antikoagulasjon",
+      "tema": "Klexane LMWH sporbarhet",
+      "score": "FEIL_TEKNISK",
+      "begrunnelse": "LLM-faktasjekk feilet: Connection error.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": false,
+      "duration_ms": 9511,
+      "answer_length": 2896,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Klexane (scrape-dato 2026-04-27T12:09:01Z)  \n**URL:** https://www.felleskatalogen.no/medisin/klexane-sanofi-aventis-560569  \n\n**Klexane** (enoksaparin, ATC B01AB05)  \nProdusent: sanofi-aventis  \n\n**Dosering** (sitert ordrett"
+    },
+    {
+      "id": "FK-010",
+      "kategori": "demens",
+      "tema": "Aricept Alzheimers initiering",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen/Aricept som kilde og inkluderer dosering, indikasjon/kontekst for Alzheimers demens og krav om omsorgsperson. Ingen forbudte eller medisinsk feilaktige opplysninger er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "Alzheimers",
+        "omsorgsperson",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 8427,
+      "answer_length": 2084,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Aricept (scrape-dato 2026-04-27T12:10:05Z)  \n**URL:** https://www.felleskatalogen.no/medisin/aricept-pfizer-546439  \n\n**Aricept** (donepezil, ATC N06DA02)  \nProdusent: Pfizer  \n\n**Dosering** (sitert ordrett):  \nBehandling bø"
+    },
+    {
+      "id": "FK-011",
+      "kategori": "diabetes",
+      "tema": "Jardiance startdose",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen/Jardiance som kilde og dekker anbefalt dosering inkludert 10 mg én gang daglig og relevante eGFR-begrensninger. Ingen reelle medisinske feil eller forbudt formulering er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "10 mg 1 gang daglig",
+        "eGFR",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 12008,
+      "answer_length": 2757,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Jardiance (scrape-dato 2026-04-27T12:09:55Z)  \n**URL:** https://www.felleskatalogen.no/medisin/jardiance-boehringer-ingelheim-590471  \n\n**Jardiance** (empagliflozin, ATC A10BK03)  \nProdusent: Boehringer Ingelheim  \n\n**Doseri"
+    },
+    {
+      "id": "FK-012",
+      "kategori": "psykiatri",
+      "tema": "Zoloft depresjon vs panikklidelse",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir dosering for sertralin/Zoloft i tråd med Felleskatalogen, inkludert relevante startdoser og panikklidelse. Kildekravet er oppfylt med Felleskatalogen/Zoloft og URL til felleskatalogen.no.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "50 mg daglig",
+        "25 mg daglig",
+        "Panikklidelse",
+        "felleskatalogen.no"
+      ],
+      "forventet": 4,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13098,
+      "answer_length": 2875,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Zoloft (scrape-dato 2026-04-27T12:10:27Z)  \n**URL:** https://www.felleskatalogen.no/medisin/zoloft-2care4-639548  \n\n**Zoloft** (sertralin, ATC N06AB06)  \nProdusent: 2care4  \n\n**Dosering** (sitert ordrett):  \nStartdose Depres"
+    },
+    {
+      "id": "FK-013",
+      "kategori": "smerte-opiat",
+      "tema": "Oksykodon depot 12-timers intervall",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Felleskatalogen som kilde og inkluderer at OxyContin skal dosetitreres individuelt og ikke gis oftere enn hver 12. time. Det inneholder startdoser som sitat fra kilden, ikke som egen anbefaling, og ingen reelle medisinske feil er identifisert.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "12. time",
+        "individuelt",
+        "felleskatalogen.no"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13632,
+      "answer_length": 2900,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale OxyContin (scrape-dato 2026-04-27T12:10:49Z)  \n**URL:** https://www.felleskatalogen.no/medisin/oxycontin-mundipharma-562548  \n\n**OxyContin** (oksykodon depot, ATC N02AA05)  \nProdusent: Mundipharma  \n\n**Dosering** (sitert ord"
+    },
+    {
+      "id": "FK-014",
+      "kategori": "negativ-test-routing",
+      "tema": "Negativ test: doseringsspm uten Felleskatalogen-trigger",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir Helsedirektoratet som kilde og angir vanlig anbefalt voksendose 500–1000 mg opptil 4 ganger daglig, maksimalt 4 g/døgn. Det inneholder ingen forbudte Felleskatalogen-sitater eller reelle medisinske feil.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Helsedirektoratet"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 11661,
+      "answer_length": 582,
+      "answer_preview": "Ifølge Helsedirektoratet:\n\n- **Voksne:** **500–1000 mg paracetamol opptil 4 ganger per døgn**  \nKilde: Helsedirektoratet – anbefaling *“Kortvarig bruk av paracetamol eller ibuprofen ved akutte TMD‑smerter”*.\n\nDette tilsvarer en **maksimal døgndose på 4000 mg (4 g)** dersom man tar 1000 mg × 4.\n\nVikt"
+    },
+    {
+      "id": "FK-015",
+      "kategori": "negativ-test-data",
+      "tema": "Negativ test: trigger aktiv men preparat ikke i POC-utvalget",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret sier eksplisitt at preparatet ikke finnes i HAPIs Felleskatalogen-demosett/POC-utvalget og anbefaler å sjekke Felleskatalogen direkte. Ingen av de forbudte doseringspåstandene forekommer.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "ikke i"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 3542,
+      "answer_length": 207,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\nDette preparatet finnes ikke i HAPIs Felleskatalogen-demosett. POC-utvalget dekker ~17 vanlige flaggskip-legemidler. Sjekk felleskatalogen.no direkte.\n[/FELLESKATALOGEN-VERBATIM]"
+    }
+  ],
+  "statistikk": {
+    "tokens_input": 18201,
+    "tokens_output": 1849,
+    "tokens_total": 20050,
+    "llm_kall": 14,
+    "kostnad_nok": 1.6112,
+    "kilde": "maalt-runtime",
+    "prismodell": {
+      "model": "gpt-5.5",
+      "input_usd_per_1m": 5.0,
+      "output_usd_per_1m": 30.0,
+      "kurs_usd_nok": 11.0
+    },
+    "kostnad_per_spoersmaal_nok": 0.1074
+  }
+}

@@ -1,0 +1,1420 @@
+{
+  "name": "HAPI Felleskatalogen-eval (utvidet)",
+  "description": "75 spm for stabilitetssjekk av Felleskatalogen-agenten. 54 per-preparat (3 spm × 18 preparater), 8 edge cases, 8 negative tester, 5 robusthetsvarianter. Designet for å kjøres med --runs 3 (225 totale kjøringer).",
+  "version": "2.0",
+  "dato": "2026-04-27",
+  "kilde_grunnlag": "Felleskatalogen.no — POC-utvalg 18 flaggskip-legemidler (scrapet 2026-04-27). Negative-data-spm bruker preparater bevisst utenfor POC-utvalget.",
+  "evalueringskriterier": {
+    "verbatim_krav": "Svaret skal inneholde ordrett tekst fra preparatomtalen.",
+    "kilde_krav": "Hvert FK-svar skal ha 'felleskatalogen.no' URL.",
+    "routing_krav": "Triggers MÅ aktivere FK-agenten. Spm uten trigger skal IKKE.",
+    "stabilitet_krav": "Score skal være konsistent på tvers av kjøringer (3× repetisjon)."
+  },
+  "questions": [
+    {
+      "id": "FK-PA-01",
+      "kategori": "smerte-feber",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for paracetamol til barn",
+      "tema": "Paracet barn",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "15 mg/kg",
+          "Maks. døgndose er 75 mg/kg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-PA-02",
+      "kategori": "smerte-feber",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Paracet ifølge Felleskatalogen",
+      "tema": "Paracet kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-PA-03",
+      "kategori": "smerte-feber",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for paracetamol til voksne over 50 kg",
+      "tema": "Paracet voksne >50 kg",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "1-2 brusetabletter",
+          "500 mg",
+          "Maks. døgndose er 4 g",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EL-01",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Eliquis ifølge Felleskatalogen ved atrieflimmer",
+      "tema": "Apixaban NVAF",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "5 mg 2",
+          "ikke-valvulær atrieflimmer",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EL-02",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva er kontraindikasjoner for Eliquis ifølge Felleskatalogen?",
+      "tema": "Apixaban kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Aktiv",
+          "blødning",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EL-03",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosereduksjon ved Eliquis ifølge Felleskatalogen for eldre",
+      "tema": "Apixaban dosereduksjon eldre",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "alder",
+          "80",
+          "kroppsvekt",
+          "60 kg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-MA-01",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier preparatomtalen om initialdosering av Warfarin?",
+      "tema": "Marevan initial",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "3 tabletter",
+          "7,5 mg",
+          "1. og 2. dag",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-MA-02",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Marevan ifølge Felleskatalogen",
+      "tema": "Marevan kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Graviditet",
+          "1. trimester",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-MA-03",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om Marevan ved demens og rusmisbruk?",
+      "tema": "Marevan forsiktighet kognitiv",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "rusmisbruk",
+          "alkoholisme",
+          "demens",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-XA-01",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Xarelto ifølge Felleskatalogen ved akutt koronarsyndrom",
+      "tema": "Xarelto ACS",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "2,5 mg 2 ganger daglig",
+          "ASA",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-XA-02",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Xarelto ifølge Felleskatalogen",
+      "tema": "Xarelto kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "blødning",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-XA-03",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis forsiktighetsregler for Xarelto ifølge Felleskatalogen",
+      "tema": "Xarelto forsiktighet",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "blødning",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-PR-01",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "SPC for dabigatran og nyrefunksjon",
+      "tema": "Pradaxa nyrefunksjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ClCR",
+          "30 ml/minutt",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-PR-02",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Pradaxa ifølge Felleskatalogen ved atrieflimmer",
+      "tema": "Pradaxa NVAF",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "atrieflimmer",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-PR-03",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Pradaxa ifølge Felleskatalogen",
+      "tema": "Pradaxa kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LI-01",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Lixiana ifølge Felleskatalogen ved atrieflimmer",
+      "tema": "Lixiana NVAF",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "60 mg 1 gang daglig",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LI-02",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Lixiana ifølge Felleskatalogen",
+      "tema": "Lixiana kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "aktiv blødning",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LI-03",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis forsiktighetsregler for Lixiana ifølge Felleskatalogen",
+      "tema": "Lixiana blødning",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Blødningsrisiko",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-KL-01",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Klexane ifølge Felleskatalogen for sporbarhet",
+      "tema": "Klexane sporbarhet",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "preparatnavn og batchnummer",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-KL-02",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Klexane ifølge Felleskatalogen",
+      "tema": "Klexane kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "enoksaparin",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-KL-03",
+      "kategori": "antikoagulasjon",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om utskifting av enoksaparin og andre LMWH?",
+      "tema": "Klexane LMWH-bytte",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "lavmolekylære hepariner",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-SZ-01",
+      "kategori": "kardiovaskulær",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for metoprolol ved hypertensjon",
+      "tema": "Selo-Zok hypertensjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "50-100 mg",
+          "døgnet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-SZ-02",
+      "kategori": "kardiovaskulær",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Selo-Zok ifølge Felleskatalogen",
+      "tema": "Selo-Zok kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-SZ-03",
+      "kategori": "kardiovaskulær",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Slå opp dosering for Selo-Zok ved angina ifølge Felleskatalogen",
+      "tema": "Selo-Zok angina",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "mg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-FU-01",
+      "kategori": "diuretika",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Slå opp dosering for Furix ved ødem",
+      "tema": "Furix ødem",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "20-40 mg",
+          "morgenen",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-FU-02",
+      "kategori": "diuretika",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Furix ifølge Felleskatalogen",
+      "tema": "Furix kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "Anuri",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-FU-03",
+      "kategori": "diuretika",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om Furix og sulfonamid-allergi?",
+      "tema": "Furix sulfonamid",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "sulfonamid",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-TR-01",
+      "kategori": "kardiovaskulær",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Triatec ifølge Felleskatalogen ved hypertensjon",
+      "tema": "Triatec hypertensjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Individuell",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-TR-02",
+      "kategori": "kardiovaskulær",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Triatec ifølge Felleskatalogen",
+      "tema": "Triatec kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-TR-03",
+      "kategori": "kardiovaskulær",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier preparatomtalen om Triatec ved nyresvikt?",
+      "tema": "Triatec nyrefunksjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "nyre",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LP-01",
+      "kategori": "lipidsenkende",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for atorvastatin ifølge Felleskatalogen",
+      "tema": "Lipitor LDL",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "individualiseres",
+          "LDL",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LP-02",
+      "kategori": "lipidsenkende",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Lipitor ifølge Felleskatalogen",
+      "tema": "Lipitor kontra graviditet",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "graviditet",
+          "amming",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LP-03",
+      "kategori": "lipidsenkende",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis forsiktighetsregler for Lipitor ifølge Felleskatalogen ved leverfunksjon",
+      "tema": "Lipitor lever",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Leverfunksjonstest",
+          "transaminase",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-JA-01",
+      "kategori": "diabetes",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for empagliflozin ifølge Felleskatalogen",
+      "tema": "Jardiance startdose",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "10 mg 1 gang daglig",
+          "eGFR",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-JA-02",
+      "kategori": "diabetes",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Jardiance ifølge Felleskatalogen",
+      "tema": "Jardiance kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-JA-03",
+      "kategori": "diabetes",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier preparatomtalen om Jardiance ved diabetes type 1?",
+      "tema": "Jardiance DM1 fare",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "diabetes",
+          "type 1",
+          "ketoacidose",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-AR-01",
+      "kategori": "demens",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for donepezil ifølge Felleskatalogen",
+      "tema": "Aricept Alzheimers",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Alzheimers",
+          "omsorgsperson",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-AR-02",
+      "kategori": "demens",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Aricept ifølge Felleskatalogen",
+      "tema": "Aricept piperidin",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "piperidinderivater",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-AR-03",
+      "kategori": "demens",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om Aricept ved anestesi?",
+      "tema": "Aricept anestesi",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "anestesi",
+          "donepezil",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LE-01",
+      "kategori": "psykiatri",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Verifisert dosering for klozapin ifølge Felleskatalogen",
+      "tema": "Leponex titrering",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "lavest mulig effektive dose",
+          "titrering",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LE-02",
+      "kategori": "psykiatri",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Leponex ifølge Felleskatalogen",
+      "tema": "Leponex agranulocytose",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "agranulocytose",
+          "blodkontroll",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-LE-03",
+      "kategori": "psykiatri",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om blodmonitorering ved Leponex?",
+      "tema": "Leponex blodmon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "agranulocytose",
+          "blodmonitorering",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ZO-01",
+      "kategori": "psykiatri",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for sertralin ifølge Felleskatalogen",
+      "tema": "Zoloft startdose",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "50 mg daglig",
+          "25 mg daglig",
+          "Panikklidelse",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ZO-02",
+      "kategori": "psykiatri",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Zoloft ifølge Felleskatalogen ved depresjon",
+      "tema": "Zoloft depresjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Depresjon",
+          "50 mg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ZO-03",
+      "kategori": "psykiatri",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Zoloft ifølge Felleskatalogen ved panikklidelse",
+      "tema": "Zoloft panikk",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "25 mg",
+          "Panikklidelse",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-FO-01",
+      "kategori": "osteoporose",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Fosamax ifølge Felleskatalogen",
+      "tema": "Fosamax ukentlig",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "70 mg",
+          "1 gang i uken",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-FO-02",
+      "kategori": "osteoporose",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for Fosamax ifølge Felleskatalogen",
+      "tema": "Fosamax hypokalsemi",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Hypokalsemi",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-FO-03",
+      "kategori": "osteoporose",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om Fosamax og oppreist stilling?",
+      "tema": "Fosamax oppreist",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "oppreist",
+          "1 / 2 time",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-OC-01",
+      "kategori": "smerte-opiat",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for OxyContin ifølge Felleskatalogen",
+      "tema": "OxyContin depot",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "12. time",
+          "individuelt",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-OC-02",
+      "kategori": "smerte-opiat",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for OxyContin ifølge Felleskatalogen",
+      "tema": "OxyContin kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Paralytisk ileus",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-OC-03",
+      "kategori": "smerte-opiat",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier Felleskatalogen om respirasjonsdepresjon ved OxyContin?",
+      "tema": "OxyContin respdep",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Respirasjonsdepresjon",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ON-01",
+      "kategori": "smerte-opiat",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for OxyNorm ifølge Felleskatalogen som akuttbehandling",
+      "tema": "OxyNorm akutt",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "akuttbehandling",
+          "depotpreparat",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ON-02",
+      "kategori": "smerte-opiat",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis kontraindikasjoner for OxyNorm ifølge Felleskatalogen",
+      "tema": "OxyNorm kontra",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Overfølsomhet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ON-03",
+      "kategori": "smerte-opiat",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier preparatomtalen om OxyNorm titrering?",
+      "tema": "OxyNorm titrering",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "titrer",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-01",
+      "kategori": "trigger-variant",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Preparatomtale for paracetamol",
+      "tema": "Trigger 'preparatomtale' alene",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Paracet",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-02",
+      "kategori": "trigger-variant",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva er SPC for warfarin?",
+      "tema": "Trigger 'SPC'",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Marevan",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-03",
+      "kategori": "trigger-variant",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Verifisert dosering Lipitor",
+      "tema": "Trigger 'verifisert'",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "atorvastatin",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-04",
+      "kategori": "cross-section",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering OG kontraindikasjoner for Eliquis ifølge Felleskatalogen",
+      "tema": "Multi-seksjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "5 mg 2",
+          "Aktiv",
+          "blødning",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-05",
+      "kategori": "cross-section",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis Felleskatalogen-data for Marevan: dosering og forsiktighetsregler",
+      "tema": "Multi-seksjon",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "3 tabletter",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-06",
+      "kategori": "indikasjons-spesifikk",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Eliquis ifølge Felleskatalogen ved DVT",
+      "tema": "Apixaban DVT",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "10 mg",
+          "DVT",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-07",
+      "kategori": "indikasjons-spesifikk",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Eliquis ifølge Felleskatalogen ved hofteprotesekirurgi",
+      "tema": "Apixaban hofteprotese",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "2,5 mg",
+          "hofteprotese",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-EDGE-08",
+      "kategori": "indikasjons-spesifikk",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for Lipitor ifølge Felleskatalogen ved hyperkolesterolemi",
+      "tema": "Lipitor LDL-mål",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "LDL",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-NEG-01",
+      "kategori": "negativ-routing",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hvor mye paracetamol kan en voksen ta?",
+      "tema": "Uten trigger → retningslinje",
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Helsedirektoratet"
+        ],
+        "skal_IKKE_inneholde": [
+          "[FELLESKATALOGEN-VERBATIM]"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "FK-NEG-02",
+      "kategori": "negativ-routing",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva er anbefalt behandling ved KOLS-eksaserbasjon?",
+      "tema": "KOLS uten trigger",
+      "forventet_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "KOLS"
+        ],
+        "skal_IKKE_inneholde": [
+          "[FELLESKATALOGEN-VERBATIM]"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "FK-NEG-03",
+      "kategori": "negativ-routing",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hva er ICD-10 koden for atrieflimmer?",
+      "tema": "Kode-spm uten trigger",
+      "forventet_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "I48"
+        ],
+        "skal_IKKE_inneholde": [
+          "[FELLESKATALOGEN-VERBATIM]"
+        ],
+        "kilde_krav": "Helsedirektoratet"
+      }
+    },
+    {
+      "id": "FK-NEG-04",
+      "kategori": "negativ-data",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for Ozempic",
+      "tema": "Ozempic ikke i POC",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ikke i"
+        ],
+        "skal_IKKE_inneholde": [
+          "Ozempic 0,25 mg",
+          "Ozempic 1 mg"
+        ],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-NEG-05",
+      "kategori": "negativ-data",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for Wegovy",
+      "tema": "Wegovy ikke i POC",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ikke i"
+        ],
+        "skal_IKKE_inneholde": [
+          "Wegovy 0,25 mg",
+          "semaglutid 2,4 mg"
+        ],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-NEG-06",
+      "kategori": "negativ-data",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Preparatomtale for Tradolan",
+      "tema": "Tradolan ikke i POC",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ikke i"
+        ],
+        "skal_IKKE_inneholde": [
+          "Tradolan 50 mg",
+          "tramadol 50 mg"
+        ],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-NEG-07",
+      "kategori": "negativ-data",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for Diovan",
+      "tema": "Diovan ikke i POC",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ikke i"
+        ],
+        "skal_IKKE_inneholde": [
+          "Diovan 80 mg",
+          "valsartan"
+        ],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-NEG-08",
+      "kategori": "negativ-data",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "SPC for Cipralex",
+      "tema": "Cipralex ikke i POC",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ikke i"
+        ],
+        "skal_IKKE_inneholde": [
+          "Cipralex 10 mg",
+          "escitalopram"
+        ],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ROB-01",
+      "kategori": "robusthet",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "vis dosering ifølge felleskatalogen for paracetamol",
+      "tema": "Lowercase trigger",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "15 mg/kg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ROB-02",
+      "kategori": "robusthet",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering for METOPROLOL ifølge Felleskatalogen",
+      "tema": "UPPERCASE virkestoff",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "50-100 mg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ROB-03",
+      "kategori": "robusthet",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "felleskatalogen dosering Marevan",
+      "tema": "Telegrafstil",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "3 tabletter",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ROB-04",
+      "kategori": "robusthet",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Hva sier preparatomtalen om Eliquis 5 mg dosering?",
+      "tema": "Med styrke i spm",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "5 mg",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    },
+    {
+      "id": "FK-ROB-05",
+      "kategori": "robusthet",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis Felleskatalogen-info for Lipitor",
+      "tema": "Generisk 'info' med trigger",
+      "forventet_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "atorvastatin",
+          "felleskatalogen.no"
+        ],
+        "skal_IKKE_inneholde": [],
+        "kilde_krav": "Felleskatalogen"
+      }
+    }
+  ]
+}
