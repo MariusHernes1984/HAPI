@@ -14,6 +14,21 @@ KODEVERK = "hapi-kodeverk-agent"
 STATISTIKK = "hapi-statistikk-agent"
 KJERNEJOURNAL = "hapi-kjernejournal-agent"
 NDLA = "hapi-ndla-agent"
+FELLESKATALOGEN = "hapi-felleskatalogen-agent"
+
+# Felleskatalogen er OPT-IN: trigges KUN ved eksplisitte ord eller via UI-flagg.
+# Den blandes ALDRI inn i syntese — output går verbatim til bruker som sitat.
+FELLESKATALOGEN_TRIGGERS = [
+    "felleskatalogen",
+    "preparatomtale", "preparatomtaler",
+    "verifisert dosering", "verifiser dosering",
+    "ordrett dosering", "ordrett fra",
+    "spc",   # Summary of Product Characteristics
+    "vis dosering",
+    "slå opp dosering", "slaa opp dosering",
+    "dosering ifolge",  # ASCII-norm
+    "doseringsoppslag",
+]
 
 # --- Routing-regler ---
 
@@ -184,6 +199,13 @@ def route(query: str, patient_id: str | None = None) -> RoutingDecision:
             else:
                 decision.reasoning += f"Legemiddel '{drug}' — kun kodeverk (ingen behandlings-intent). "
             break
+
+    # Steg 1c: Felleskatalogen — opt-in agent, trigges KUN ved eksplisitt nøkkelord.
+    # Output går aldri gjennom syntese; returneres verbatim til bruker.
+    if any(t in q for t in FELLESKATALOGEN_TRIGGERS):
+        if FELLESKATALOGEN not in decision.agents:
+            decision.agents.append(FELLESKATALOGEN)
+        decision.reasoning += "Eksplisitt Felleskatalogen-trigger — verbatim doseringssitat. "
 
     # Steg 2: Sjekk sammensatte triggere først
     for triggers, agents in COMPOUND_TRIGGERS:

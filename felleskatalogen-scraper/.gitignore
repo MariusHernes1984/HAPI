@@ -1,0 +1,4 @@
+# Rå HTML-snapshots — ikke committed (regenereres ved scrape)
+data/raw/
+data/*.html
+data/sok_*.html

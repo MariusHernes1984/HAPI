@@ -561,6 +561,52 @@ def _sanitize_statistikk(output: str) -> str:
     return sanitized
 
 
+# --- Felleskatalogen-bypass ---
+# Felleskatalogen-agenten omslutter sitt verbatim-svar med disse markørene
+# slik at vi enkelt kan plukke ut bare den verbatim-bevarte delen.
+_FK_MARKER_RE = re.compile(
+    r"\[VERBATIM-FELLESKATALOGEN\](.*?)\[/VERBATIM-FELLESKATALOGEN\]",
+    re.DOTALL,
+)
+
+
+def _format_felleskatalogen_block(results: list[AgentResult]) -> str:
+    """Pakk Felleskatalogen-output(s) som adskilt verbatim-blokk.
+
+    Frontend rendrer dette som blockquote med tydelig kildemerking. Synthesis-
+    laget får ALDRI se denne teksten — den blandes ikke med LLM-genererte ord.
+    """
+    if not results:
+        return ""
+    parts = []
+    for r in results:
+        if not r.success or not r.output:
+            continue
+        # Trekk ut bare det som er omsluttet av markørene; om markører mangler
+        # bruker vi hele agent-output verbatim (agent-prompten påbyr markørene,
+        # men vi er tilgivende).
+        m = _FK_MARKER_RE.search(r.output)
+        verbatim = m.group(1).strip() if m else r.output.strip()
+        parts.append(verbatim)
+    if not parts:
+        return ""
+    body = "\n\n---\n\n".join(parts)
+    # Frontend bruker disse markørene til å gjenkjenne blokken og
+    # rendre den som <div class="felleskatalogen-quote">.
+    return (
+        "\n\n[FELLESKATALOGEN-VERBATIM]\n"
+        + body
+        + "\n[/FELLESKATALOGEN-VERBATIM]"
+    )
+
+
+def _append_fk(answer: str, fk_block: str) -> str:
+    """Legg til Felleskatalogen-blokken etter syntese-svaret."""
+    if not fk_block:
+        return answer
+    return answer.rstrip() + "\n" + fk_block
+
+
 async def synthesize(
     project: AsyncProjectClient,
     query: str,
@@ -578,7 +624,20 @@ async def synthesize(
         if r.agent_name == "hapi-statistikk-agent":
             r.output = _sanitize_statistikk(r.output)
 
+    # Separer Felleskatalogen-output FØR vi sjekker for tom successful-liste:
+    # output er allerede verbatim sitat fra preparatomtalen og skal aldri
+    # gjennom LLM-syntesen. Hentes ut og appendes til svaret nederst.
+    felleskatalogen_results = [
+        r for r in successful if r.agent_name == "hapi-felleskatalogen-agent"
+    ]
+    felleskatalogen_block = _format_felleskatalogen_block(felleskatalogen_results)
+    successful = [r for r in successful if r.agent_name != "hapi-felleskatalogen-agent"]
+
+    # Hvis Felleskatalogen var eneste agent (eller eneste vellykkete), returner
+    # verbatim-blokken alene — ingen syntese, ingen footer-omslag.
     if not successful:
+        if felleskatalogen_block:
+            return felleskatalogen_block, False
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False
 
     # Separer kjernejournal-output fra de andre fagkildene
@@ -635,12 +694,14 @@ async def synthesize(
     # Hvis ingen fagkunnskap-kilder (bare journal eller tom), fallback
     if not knowledge_results:
         if journal_results:
-            return journal_results[0].output + footer, has_interaksjoner
+            return _append_fk(journal_results[0].output + footer, felleskatalogen_block), has_interaksjoner
+        if felleskatalogen_block:
+            return felleskatalogen_block, False
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False
 
     # Hvis bare én fagkunnskap-kilde og ingen pasient, bruk direkte
     if len(knowledge_results) == 1 and not journal_results:
-        return knowledge_results[0].output + footer, False
+        return _append_fk(knowledge_results[0].output + footer, felleskatalogen_block), False
 
     # Syntetiser via LLM
     agent_outputs = ""
@@ -664,12 +725,12 @@ async def synthesize(
             model=SYNTH_MODEL,
             input=prompt,
         )
-        return response.output_text, has_interaksjoner
+        return _append_fk(response.output_text, felleskatalogen_block), has_interaksjoner
     except Exception as e:
         logger.error(f"Syntese feilet: {e}")
         # Fallback: konkatener fagkunnskap-resultatene
         parts = [r.output for r in knowledge_results]
-        return "\n\n".join(parts) + SOURCE_FOOTER, has_interaksjoner
+        return _append_fk("\n\n".join(parts) + SOURCE_FOOTER, felleskatalogen_block), has_interaksjoner
 
 
 async def orchestrate(
