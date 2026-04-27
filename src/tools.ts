@@ -1,6 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { registerNdlaTools } from "./ndla.js";
+import { registerFelleskatalogenTools } from "./felleskatalogen.js";
 
 const API_HOST = "https://api-qa.helsedirektoratet.no";
 const BASE_URL = `${API_HOST}/innhold`;
@@ -852,6 +853,10 @@ export function createServer(): McpServer {
 
   // 19-22. NDLA-fagstoff (Helsefremmende arbeid HS-HEA vg2) — offline SQLite/FTS5
   registerNdlaTools(server);
+
+  // 23-25. Felleskatalogen — verbatim doseringssitater (POC-data)
+  // VIKTIG: agenten som bruker disse skal ALDRI omformulere svaret.
+  registerFelleskatalogenTools(server);
 
   return server;
 }

@@ -829,6 +829,34 @@
     .agent-card-icon.statistikk { background: #d1fae5; }
     .agent-card-icon.interaksjon { background: #fef3c7; color: #b45309; }
     .agent-card-icon.ndla { background: #ede9fe; color: #6d28d9; }
+    .agent-card-icon.felleskatalogen { background: #ecfeff; color: #0e7490; }
+
+    /* --- Felleskatalogen verbatim-blockquote --- */
+    .felleskatalogen-quote {
+      border-left: 4px solid #0e7490;
+      background: #ecfeff;
+      padding: 12px 16px;
+      margin: 16px 0;
+      border-radius: 0 8px 8px 0;
+      font-family: ui-monospace, "Consolas", "Menlo", monospace;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+    .felleskatalogen-quote .fk-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-sans, system-ui, sans-serif);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #0e7490;
+      background: white;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid #0e7490;
+      margin-bottom: 8px;
+    }
 
     .agent-card-name {
       font-weight: 600;
@@ -1172,6 +1200,7 @@
       'hapi-kjernejournal-agent': 'Kjernejournal',
       'hapi-interaksjon-agent': 'Interaksjon',
       'hapi-ndla-agent': 'NDLA Prosedyrer',
+      'hapi-felleskatalogen-agent': 'Felleskatalogen',
     };
 
     // --- Pasient-state ---
@@ -1647,7 +1676,29 @@
 
     function renderMarkdown(text) {
       if (!text) return '';
+
+      // Felleskatalogen verbatim-blokk: [FELLESKATALOGEN-VERBATIM]...[/FELLESKATALOGEN-VERBATIM]
+      // Plukk ut og rendre som blockquote-sitat med tydelig kildemerking,
+      // FØR markdown-prosessering så blokken bevares som ren tekst.
+      const fkPlaceholders = [];
+      text = text.replace(
+        /\[FELLESKATALOGEN-VERBATIM\]([\s\S]*?)\[\/FELLESKATALOGEN-VERBATIM\]/g,
+        (match, body) => {
+          const idx = fkPlaceholders.length;
+          fkPlaceholders.push(body.trim());
+          return `\u0000FK${idx}\u0000`;
+        }
+      );
+
       let html = escapeHtml(text);
+
+      // Substituér placeholders med blockquote (etter escapeHtml så
+      // body-innholdet selv blir trygt escapet).
+      for (let i = 0; i < fkPlaceholders.length; i++) {
+        const safeBody = escapeHtml(fkPlaceholders[i]);
+        const blockHtml = `<div class="felleskatalogen-quote"><span class="fk-badge">📋 Felleskatalogen — verbatim</span>\n${safeBody}</div>`;
+        html = html.replace(`\u0000FK${i}\u0000`, blockHtml);
+      }
 
       // Headers
       html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
@@ -1784,6 +1835,7 @@ Nytt oppfølgingsspørsmål: ${query}`;
       'hapi-kjernejournal-agent': { icon: '\u{1FAC0}', css: 'kjernejournal', label: 'Kjernejournal' },
       'hapi-interaksjon-agent': { icon: '\u{26A0}\uFE0F', css: 'interaksjon', label: 'Interaksjon' },
       'hapi-ndla-agent': { icon: '\u{1F393}', css: 'ndla', label: 'NDLA Prosedyrer' },
+      'hapi-felleskatalogen-agent': { icon: '\u{1F4CB}', css: 'felleskatalogen', label: 'Felleskatalogen' },
     };
 
     function openAgentModal() {

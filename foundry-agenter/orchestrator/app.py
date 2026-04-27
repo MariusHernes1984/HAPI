@@ -27,7 +27,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from orchestrate import orchestrate, OrchestrationResult
-from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA
+from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA, FELLESKATALOGEN
 import kjernejournal
 import chatlog
 
@@ -197,7 +197,7 @@ async def health():
     return HealthResponse(
         status="ok",
         project_endpoint=PROJECT_ENDPOINT,
-        agents=[RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA],
+        agents=[RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA, FELLESKATALOGEN],
     )
 
 
@@ -242,6 +242,15 @@ async def list_agents():
                                "Kilde: NDLA (CC-BY-SA-4.0).",
                 "mcp_tools": ["sok_ndla_helsefag", "hent_ndla_artikkel",
                               "hent_ndla_temaer", "list_ndla_ressurser_for_tema"],
+            },
+            {
+                "name": FELLESKATALOGEN,
+                "description": "Verbatim doseringsoppslag fra Felleskatalogen. "
+                               "Trigges kun eksplisitt (skriv f.eks. 'vis dosering ifølge Felleskatalogen for X'). "
+                               "Output bypasser LLM-syntese — sitatet leveres ordrett til bruker. "
+                               "POC-utvalg av ~18 flaggskip-legemidler.",
+                "mcp_tools": ["sok_felleskatalogen", "hent_felleskatalogen_dosering",
+                              "list_felleskatalogen_preparater"],
             },
         ]
     }
