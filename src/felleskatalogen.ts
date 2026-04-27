@@ -207,10 +207,19 @@ export function registerFelleskatalogenTools(server: McpServer): void {
 
       const seksjonerOutput: Record<string, string> = {};
       const manglendeSeksjoner: string[] = [];
+      // Trunkér svært lange seksjoner (typisk Dosering for Klexane/OxyContin)
+      // for å unngå at agentens output-token-grense kutter kildelink/disclaimer.
+      const MAX_LEN = 2500;
       for (const s of wantedSections) {
         const found = sections.find((x) => x.seksjon === s);
         if (found) {
-          seksjonerOutput[s] = found.innhold_tekst;
+          let txt = found.innhold_tekst;
+          if (txt.length > MAX_LEN) {
+            txt =
+              txt.slice(0, MAX_LEN - 100) +
+              `... [forkortet — se fullstendig ${s.toLowerCase()} i preparatomtalen på felleskatalogen.no]`;
+          }
+          seksjonerOutput[s] = txt;
         } else {
           manglendeSeksjoner.push(s);
         }
