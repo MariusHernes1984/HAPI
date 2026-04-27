@@ -8,5 +8,10 @@
     "name": "hapi-ndla-agent",
     "id": "hapi-ndla-agent:1",
     "version": "1"
+  },
+  "hapi-felleskatalogen-agent": {
+    "name": "hapi-felleskatalogen-agent",
+    "id": "hapi-felleskatalogen-agent:2",
+    "version": "2"
   }
 }
