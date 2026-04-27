@@ -765,7 +765,7 @@ def main():
     eval_file = Path(args.file).resolve() if args.file else EVAL_FILE
     safe_print(f"Evalueringsfil: {eval_file.name}")
 
-    with open(eval_file) as f:
+    with open(eval_file, encoding="utf-8") as f:
         data = json.load(f)
 
     questions = data["questions"]
