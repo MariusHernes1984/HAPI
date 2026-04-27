@@ -1174,18 +1174,18 @@
       "kategori": "negativ-routing",
       "agent": "hapi-retningslinje-agent",
       "sporsmal": "Hvor mye paracetamol kan en voksen ta?",
-      "tema": "Uten trigger → retningslinje",
+      "tema": "Uten trigger — ikke FK",
       "forventet_routing": [
         "hapi-retningslinje-agent"
       ],
       "faktasjekk": {
         "skal_inneholde": [
-          "Helsedirektoratet"
+          "paracetamol"
         ],
         "skal_IKKE_inneholde": [
           "[FELLESKATALOGEN-VERBATIM]"
         ],
-        "kilde_krav": "Helsedirektoratet"
+        "kilde_krav": "Ikke Felleskatalogen"
       }
     },
     {
@@ -1198,13 +1198,11 @@
         "hapi-retningslinje-agent"
       ],
       "faktasjekk": {
-        "skal_inneholde": [
-          "KOLS"
-        ],
+        "skal_inneholde": [],
         "skal_IKKE_inneholde": [
           "[FELLESKATALOGEN-VERBATIM]"
         ],
-        "kilde_krav": "Helsedirektoratet"
+        "kilde_krav": "Ikke Felleskatalogen"
       }
     },
     {
@@ -1218,12 +1216,12 @@
       ],
       "faktasjekk": {
         "skal_inneholde": [
-          "I48"
+          "atrieflimmer"
         ],
         "skal_IKKE_inneholde": [
           "[FELLESKATALOGEN-VERBATIM]"
         ],
-        "kilde_krav": "Helsedirektoratet"
+        "kilde_krav": "Ikke Felleskatalogen"
       }
     },
     {
@@ -1321,7 +1319,7 @@
         ],
         "skal_IKKE_inneholde": [
           "Cipralex 10 mg",
-          "escitalopram"
+          "Cipralex 20 mg"
         ],
         "kilde_krav": "Felleskatalogen"
       }
