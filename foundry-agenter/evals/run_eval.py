@@ -183,7 +183,7 @@ async def llm_fact_check(
 
     prompt = JUDGE_PROMPT.format(
         question=question,
-        answer=answer[:3000],  # Begrens for aa unngaa for stort input
+        answer=answer[:8000],  # Begrens for stort input — 8K dekker ogsaa lange Felleskatalogen-verbatim-blokker
         skal_inneholde=skal_inneholde or "(ingen spesifikke krav)",
         skal_ikke_inneholde=skal_ikke or "(ingen)",
         kilde_krav=kilde,

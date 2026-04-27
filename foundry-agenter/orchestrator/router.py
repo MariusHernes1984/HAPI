@@ -202,10 +202,19 @@ def route(query: str, patient_id: str | None = None) -> RoutingDecision:
 
     # Steg 1c: Felleskatalogen — opt-in agent, trigges KUN ved eksplisitt nøkkelord.
     # Output går aldri gjennom syntese; returneres verbatim til bruker.
-    if any(t in q for t in FELLESKATALOGEN_TRIGGERS):
-        if FELLESKATALOGEN not in decision.agents:
-            decision.agents.append(FELLESKATALOGEN)
-        decision.reasoning += "Eksplisitt Felleskatalogen-trigger — verbatim doseringssitat. "
+    # VIKTIG: Når Felleskatalogen er eksplisitt valgt, ekskluderer vi
+    # retningslinje- og kodeverk-agentene helt — ellers skriver de
+    # "finner ikke" og forurenser hovedsvaret over verbatim-blokken.
+    has_fk_trigger = any(t in q for t in FELLESKATALOGEN_TRIGGERS)
+    if has_fk_trigger:
+        decision.agents = [FELLESKATALOGEN]
+        decision.reasoning += "Eksklusiv Felleskatalogen-trigger — kun verbatim doseringssitat. "
+        # Hopp over resten av routing-stegene; FK er enestende klinisk kilde her.
+        if patient_id:
+            decision.agents.append(KJERNEJOURNAL)
+            decision.reasoning += f"Pasient {patient_id} — kjernejournal beholdt. "
+        decision.confidence = "høy"
+        return decision
 
     # Steg 2: Sjekk sammensatte triggere først
     for triggers, agents in COMPOUND_TRIGGERS:
