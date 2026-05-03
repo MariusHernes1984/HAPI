@@ -33,7 +33,7 @@ Helsedirektoratets HAPI API (api-qa.helsedirektoratet.no)
 | `hent_kvalitetsindikatorer` | Nasjonale kvalitetsindikatorer | HAPI API `api-qa.helsedirektoratet.no/innhold/kvalitetsindikatorer` |
 | `hent_kvalitetsindikator` | Spesifikk kvalitetsindikator etter ID | HAPI API `api-qa.helsedirektoratet.no/innhold/kvalitetsindikatorer/{id}` |
 | `hent_endringer` | Endringer siden et gitt tidspunkt | HAPI API `api-qa.helsedirektoratet.no/innhold/GetChanges` |
-| `sok_legemidler` | Søk i FEST-legemiddelregisteret etter navn, virkestoff, ATC-kode eller form | HAPI API `api-qa.helsedirektoratet.no/legemidler/legemiddelvirkestoff` (cachet i minne) |
+| `sok_legemidler` | Søk i FEST-legemiddelregisteret etter navn, virkestoff, ATC-kode eller form | HAPI API `api-qa.helsedirektoratet.no/legemidler/legemiddelvirkestoff` (mellomlagret i minne) |
 | `hent_legemiddel` | Hent detaljert legemiddelinfo etter ID (virkestoff, styrke, pakninger) | HAPI API `api-qa.helsedirektoratet.no/legemidler/legemiddelvirkestoff/{id}` |
 | `sjekk_interaksjoner` | Sjekk legemiddelinteraksjoner (FEST/SLV) — faregrad, klinisk konsekvens | FEST-interaksjonsdata fra Statens legemiddelverk via `interaksjoner.no` |
 | `hent_interaksjon` | Hent interaksjonsdetaljer — mekanisme, håndtering, PubMed-referanser | FEST-interaksjonsdata fra Statens legemiddelverk via `interaksjoner.azurewebsites.net` |
