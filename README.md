@@ -10,10 +10,8 @@ MCP-server for Helsedirektoratets HAPI innholdstjenester. Serveren gir AI-agente
 Copilot Studio / Azure AI Foundry / Claude Code
         ↓ (MCP over Streamable HTTP / stdio)
 HAPI MCP Server
-        ↓ (REST)
-Helsedirektoratets HAPI API (api-qa.helsedirektoratet.no)
-        ↓
-Lokale SQLite-kilder (NDLA og Felleskatalogen POC)
+        ├─ REST → Helsedirektoratets HAPI API (api-qa.helsedirektoratet.no)
+        └─ SQLite/FTS5 → NDLA og Felleskatalogen POC
 ```
 
 ## Funksjonalitet
@@ -218,4 +216,3 @@ Push til `master` trigger GitHub Actions som bygger Docker-image og pusher til `
 - NDLA-innhold er CC-BY-SA-4.0 og skal krediteres med kilde-URL.
 - Felleskatalogen-data i dette repoet er POC-data. Kommersiell avtale er ikke etablert, og innholdet må ikke distribueres bredt før lisens er på plass.
 - Dette er et tredjepartsverktøy og fremstår ikke som Helsedirektoratet selv.
-
