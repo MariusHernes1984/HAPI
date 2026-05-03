@@ -17,26 +17,33 @@ Helsedirektoratets HAPI API (api-qa.helsedirektoratet.no)
 
 ## Tilgjengelige tools
 
-| Tool | Beskrivelse |
-|------|-------------|
-| `sok_innhold` | Fritekst-søk i alt innhold |
-| `hent_retningslinjer` | Liste over alle nasjonale faglige retningslinjer |
-| `hent_retningslinje` | Spesifikk retningslinje etter ID (inkl. kapitler og anbefalinger) |
-| `hent_anbefalinger` | Anbefalinger, filtrerbare på kodeverk (ICPC-2, ICD-10) og kode |
-| `hent_anbefaling` | Spesifikk anbefaling etter ID |
-| `hent_veiledere` | Liste over alle nasjonale veiledere |
-| `hent_veileder` | Spesifikk veileder etter ID |
-| `hent_pakkeforlop` | Liste over alle pakkeforløp |
-| `hent_pakkeforlop_id` | Spesifikt pakkeforløp etter ID |
-| `hent_innhold` | Generisk innholdshenting med filtre (infotype, kodeverk, målgruppe) |
-| `hent_innhold_id` | Spesifikt innhold etter ID |
-| `hent_kvalitetsindikatorer` | Nasjonale kvalitetsindikatorer |
-| `hent_kvalitetsindikator` | Spesifikk kvalitetsindikator etter ID |
-| `hent_endringer` | Endringer siden et gitt tidspunkt |
-| `sok_legemidler` | Søk i FEST-legemiddelregisteret etter navn, virkestoff, ATC-kode eller form |
-| `hent_legemiddel` | Hent detaljert legemiddelinfo etter ID (virkestoff, styrke, pakninger) |
-| `sjekk_interaksjoner` | Sjekk legemiddelinteraksjoner (FEST/SLV) — faregrad, klinisk konsekvens |
-| `hent_interaksjon` | Hent interaksjonsdetaljer — mekanisme, håndtering, PubMed-referanser |
+| Tool | Beskrivelse | Kilde |
+|------|-------------|-------|
+| `sok_innhold` | Fritekst-søk i alt innhold | HAPI API `api-qa.helsedirektoratet.no/innhold/sok/infobit` |
+| `hent_retningslinjer` | Liste over alle nasjonale faglige retningslinjer | HAPI API `api-qa.helsedirektoratet.no/innhold/retningslinjer` |
+| `hent_retningslinje` | Spesifikk retningslinje etter ID (inkl. kapitler og anbefalinger) | HAPI API `api-qa.helsedirektoratet.no/innhold/retningslinjer/{id}` |
+| `hent_anbefalinger` | Anbefalinger, filtrerbare på kodeverk (ICPC-2, ICD-10) og kode | HAPI API `api-qa.helsedirektoratet.no/innhold/anbefalinger` |
+| `hent_anbefaling` | Spesifikk anbefaling etter ID | HAPI API `api-qa.helsedirektoratet.no/innhold/anbefalinger/{id}` |
+| `hent_veiledere` | Liste over alle nasjonale veiledere | HAPI API `api-qa.helsedirektoratet.no/innhold/veiledere` |
+| `hent_veileder` | Spesifikk veileder etter ID | HAPI API `api-qa.helsedirektoratet.no/innhold/veiledere/{id}` |
+| `hent_pakkeforlop` | Liste over alle pakkeforløp | HAPI API `api-qa.helsedirektoratet.no/innhold/pakkeforløp` |
+| `hent_pakkeforlop_id` | Spesifikt pakkeforløp etter ID | HAPI API `api-qa.helsedirektoratet.no/innhold/pakkeforløp/{id}` |
+| `hent_innhold` | Generisk innholdshenting med filtre (infotype, kodeverk, målgruppe) | HAPI API `api-qa.helsedirektoratet.no/innhold/innhold` |
+| `hent_innhold_id` | Spesifikt innhold etter ID | HAPI API `api-qa.helsedirektoratet.no/innhold/innhold/{id}` |
+| `hent_kvalitetsindikatorer` | Nasjonale kvalitetsindikatorer | HAPI API `api-qa.helsedirektoratet.no/innhold/kvalitetsindikatorer` |
+| `hent_kvalitetsindikator` | Spesifikk kvalitetsindikator etter ID | HAPI API `api-qa.helsedirektoratet.no/innhold/kvalitetsindikatorer/{id}` |
+| `hent_endringer` | Endringer siden et gitt tidspunkt | HAPI API `api-qa.helsedirektoratet.no/innhold/GetChanges` |
+| `sok_legemidler` | Søk i FEST-legemiddelregisteret etter navn, virkestoff, ATC-kode eller form | HAPI API `api-qa.helsedirektoratet.no/legemidler/legemiddelvirkestoff` (cachet i minne) |
+| `hent_legemiddel` | Hent detaljert legemiddelinfo etter ID (virkestoff, styrke, pakninger) | HAPI API `api-qa.helsedirektoratet.no/legemidler/legemiddelvirkestoff/{id}` |
+| `sjekk_interaksjoner` | Sjekk legemiddelinteraksjoner (FEST/SLV) — faregrad, klinisk konsekvens | FEST-interaksjonsdata fra Statens legemiddelverk via `interaksjoner.no` |
+| `hent_interaksjon` | Hent interaksjonsdetaljer — mekanisme, håndtering, PubMed-referanser | FEST-interaksjonsdata fra Statens legemiddelverk via `interaksjoner.azurewebsites.net` |
+| `sok_ndla_helsefag` | Søk i NDLAs fagstoff for Helsefremmende arbeid (HS-HEA vg2) | Lokal SQLite/FTS-database bygget av `ndla-scraper/scrape.py` fra NDLA |
+| `hent_ndla_artikkel` | Hent full NDLA-artikkel basert på artikkel-ID | Lokal SQLite-database bygget av `ndla-scraper/scrape.py` fra NDLA |
+| `hent_ndla_temaer` | Liste alle tema og undertema i NDLAs Helsefremmende arbeid | Lokal SQLite-database bygget av `ndla-scraper/scrape.py` fra NDLA |
+| `list_ndla_ressurser_for_tema` | List ressurser under et gitt NDLA-tema | Lokal SQLite-database bygget av `ndla-scraper/scrape.py` fra NDLA |
+| `sok_felleskatalogen` | Søk etter preparat i Felleskatalogen-databasen | Lokal SQLite/FTS-database bygget av `felleskatalogen-scraper/scrape.py` fra Felleskatalogen.no |
+| `hent_felleskatalogen_dosering` | Hent verbatim tekst fra én eller flere seksjoner av Felleskatalogen-preparatomtalen | Lokal SQLite-database bygget av `felleskatalogen-scraper/scrape.py` fra Felleskatalogen.no |
+| `list_felleskatalogen_preparater` | Liste alle preparater i Felleskatalogen-demo-databasen | Lokal SQLite-database bygget av `felleskatalogen-scraper/scrape.py` fra Felleskatalogen.no |
 
 ## Forutsetninger
 
