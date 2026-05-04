@@ -81,8 +81,8 @@ Settings → Actions → Add action → MCP Server
 | Felt | Verdi |
 |------|-------|
 | Server name | `hapi-helsedirektoratet` |
-| Server URL | `https://<din-app>.azurecontainerapps.io/mcp` |
-| Authentication | API Key, header: `x-api-key` |
+| Server URL | `https://<din-apim>.azure-api.net/mcp` |
+| Authentication | API Key (APIM subscription key), header: `Ocp-Apim-Subscription-Key` |
 
 ### Azure AI Foundry
 
@@ -90,8 +90,8 @@ Legg til Remote MCP Server:
 
 | Felt | Verdi |
 |------|-------|
-| Endpoint | `https://<din-app>.azurecontainerapps.io/mcp` |
-| Authentication | API Key |
+| Endpoint | `https://<din-apim>.azure-api.net/mcp` |
+| Authentication | API Key (APIM subscription key) |
 
 ### Claude Code
 

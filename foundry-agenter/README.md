@@ -115,12 +115,12 @@ Lokal mock-agent (ikke Foundry) som returnerer pasientens journaldata. Aktiveres
 
 ## MCP Server
 
-HAPI MCP Serveren kjører i **Azure Container Apps** og eksponerer 14 verktøy mot `api.helsedirektoratet.no`.
+HAPI MCP Serveren kjører i **Azure Container Apps**, men eksponeres utad via **Azure API Management**.
 
 | Variabel | Verdi |
 |---|---|
-| `MCP_SERVER_URL` | `https://hapitest.nicefield-3933b657.norwayeast.azurecontainerapps.io/mcp` |
-| Auth | Ingen (QA-miljø) |
+| `MCP_SERVER_URL` | `https://<apim-gateway>.azure-api.net/mcp` |
+| Auth | API Management subscription key (`Ocp-Apim-Subscription-Key`) |
 
 ---
 
@@ -148,7 +148,7 @@ Rediger `.env` eller sett miljøvariabler:
 
 ```env
 PROJECT_ENDPOINT=https://kateecosystem-resource.services.ai.azure.com/api/projects/kateecosystem
-MCP_SERVER_URL=https://hapitest.nicefield-3933b657.norwayeast.azurecontainerapps.io/mcp
+MCP_SERVER_URL=https://<apim-gateway>.azure-api.net/mcp
 MODEL_DEPLOYMENT=gpt-5.3-chat
 ```
 

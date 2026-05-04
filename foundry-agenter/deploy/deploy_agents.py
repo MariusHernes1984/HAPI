@@ -33,7 +33,7 @@ PROJECT_ENDPOINT = os.environ.get(
 )
 MCP_SERVER_URL = os.environ.get(
     "MCP_SERVER_URL",
-    "https://hapitest.nicefield-3933b657.norwayeast.azurecontainerapps.io/mcp",
+    "https://<apim-gateway>.azure-api.net/mcp",
 )
 MODEL = os.environ.get("MODEL_DEPLOYMENT", "gpt-5.3-chat")
 
