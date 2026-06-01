@@ -1,17 +1,27 @@
 {
   "hapi-statistikk-agent": {
     "name": "hapi-statistikk-agent",
-    "id": "hapi-statistikk-agent:25",
-    "version": "25"
+    "id": "hapi-statistikk-agent:27",
+    "version": "27"
   },
   "hapi-ndla-agent": {
     "name": "hapi-ndla-agent",
-    "id": "hapi-ndla-agent:1",
-    "version": "1"
+    "id": "hapi-ndla-agent:2",
+    "version": "2"
   },
   "hapi-felleskatalogen-agent": {
     "name": "hapi-felleskatalogen-agent",
     "id": "hapi-felleskatalogen-agent:2",
     "version": "2"
+  },
+  "hapi-retningslinje-agent": {
+    "name": "hapi-retningslinje-agent",
+    "id": "hapi-retningslinje-agent:22",
+    "version": "22"
+  },
+  "hapi-kodeverk-agent": {
+    "name": "hapi-kodeverk-agent",
+    "id": "hapi-kodeverk-agent:17",
+    "version": "17"
   }
 }
