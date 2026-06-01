@@ -20,6 +20,12 @@ import logging
 from pathlib import Path
 from contextlib import asynccontextmanager
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
 from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse, FileResponse
@@ -30,6 +36,7 @@ from orchestrate import orchestrate, OrchestrationResult
 from router import route, RETNINGSLINJE, KODEVERK, STATISTIKK, KJERNEJOURNAL, NDLA, FELLESKATALOGEN
 import kjernejournal
 import chatlog
+import admin as admin_module
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s")
 logger = logging.getLogger(__name__)
@@ -104,6 +111,9 @@ app.add_middleware(
 STATIC_DIR = Path(__file__).parent / "static"
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
+# Admin-meny (passord-beskyttet via ADMIN_PASSWORD env-var)
+app.include_router(admin_module.router, prefix="/admin")
 
 
 # --- Endepunkter ---

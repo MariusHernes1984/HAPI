@@ -6,4 +6,7 @@ fastapi>=0.115.0
 uvicorn>=0.32.0
 pydantic>=2.0.0
 python-dotenv>=1.0.0
+# anthropic SDK gir AnthropicFoundry/AsyncAnthropicFoundry for Claude i Azure AI Foundry
+# (brukes av llm_client.py når SYNTH_MODEL/ROUTER_MODEL starter med "claude-")
+anthropic>=0.40.0
 # Cache bust: 1775246500

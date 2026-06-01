@@ -293,19 +293,21 @@ def route_with_llm(query: str, openai_client) -> RoutingDecision:
     """
     Bruk LLM for å rute tvetydige spørsmål.
     Kalles kun når keyword-routing har lav konfidens.
+
+    Modellnavn kommer fra ROUTER_MODEL — `claude-*` rutes via Anthropic Messages API,
+    alt annet via openai_client.responses.create (uendret oppførsel).
     """
     import json as json_mod
     import os
+    from llm_client import complete_text
 
-    response = openai_client.responses.create(
-        model=os.environ.get("ROUTER_MODEL", "gpt-5.3-chat"),
-        input=LLM_ROUTING_PROMPT.format(query=query),
-    )
+    model = os.environ.get("ROUTER_MODEL", "gpt-5.3-chat")
+    text = complete_text(openai_client, model=model, prompt=LLM_ROUTING_PROMPT.format(query=query))
 
     decision = RoutingDecision(confidence="middels", reasoning="LLM-routing. ")
 
     try:
-        text = response.output_text.strip()
+        text = text.strip()
         # Ekstraher JSON fra svaret
         start = text.index("{")
         end = text.rindex("}") + 1

@@ -22,6 +22,7 @@ from azure.ai.projects.aio import AIProjectClient as AsyncProjectClient
 
 from router import route, route_with_llm, RoutingDecision, KJERNEJOURNAL
 import kjernejournal
+from llm_client import acomplete_text
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +31,44 @@ logger = logging.getLogger(__name__)
 # Kan overstyres via SYNTH_MODEL env-var (f.eks. =gpt-5.5 for A/B-test).
 # Se evals/rapporter/rapport-20260426-1111-synth-5.4.json for grunnlaget.
 SYNTH_MODEL = os.environ.get("SYNTH_MODEL", "gpt-5.4")
+
+# Hot-reload av synthesis-prompt+modell fra Azure Table (admin-menyen).
+# Cache i 60s for å unngå Table-kall ved hver request. Faller tilbake til
+# konstantene over hvis Table ikke er aktivert eller raden ikke finnes.
+_SYNTH_OVERRIDE_TTL_S = 60
+_synth_override_cache: dict = {"expires_at": 0.0, "prompt": None, "model": None}
+
+
+def _get_synth_override() -> tuple[str | None, str | None]:
+    """Returner (prompt, model) fra Table — eller (None, None) hvis ingen override.
+
+    Bruker enkel TTL-cache for å holde overhead nede; admin-endring er synlig
+    innen 60s uten restart.
+    """
+    now = time.monotonic()
+    if now < _synth_override_cache["expires_at"]:
+        return _synth_override_cache["prompt"], _synth_override_cache["model"]
+
+    prompt = None
+    model = None
+    try:
+        import agent_config  # lokal import — agent_config kan være no-op uten storage
+        if agent_config.is_enabled():
+            endpoint = os.environ.get(
+                "PROJECT_ENDPOINT",
+                "https://kateecosystem-resource.services.ai.azure.com/api/projects/kateecosystem",
+            )
+            cur = agent_config.get_store(endpoint).get_current(agent_config.SYNTHESIS_AGENT)
+            if cur:
+                prompt = cur.get("prompt") or None
+                model = cur.get("model") or None
+    except Exception as e:
+        logger.warning(f"synthesis override read feilet: {e}")
+
+    _synth_override_cache["expires_at"] = now + _SYNTH_OVERRIDE_TTL_S
+    _synth_override_cache["prompt"] = prompt
+    _synth_override_cache["model"] = model
+    return prompt, model
 
 
 @dataclass
@@ -712,22 +751,37 @@ async def synthesize(
         agent_outputs += f"\n--- {label} ---\n{r.output}\n"
 
     agent_names = ", ".join(agent_names_list)
-    prompt = SYNTHESIS_PROMPT.format(
-        query=query,
-        patient_block=patient_block,
-        agent_outputs=agent_outputs,
-        agent_names=agent_names,
-    )
+
+    # Hot-reload synthesis-prompt+modell fra admin-menyen (Azure Table).
+    # Faller stille tilbake til konstantene hvis override mangler eller bryter.
+    override_prompt, override_model = _get_synth_override()
+    synth_template = override_prompt or SYNTHESIS_PROMPT
+    synth_model = override_model or SYNTH_MODEL
+    try:
+        prompt = synth_template.format(
+            query=query,
+            patient_block=patient_block,
+            agent_outputs=agent_outputs,
+            agent_names=agent_names,
+        )
+    except (KeyError, IndexError, ValueError) as fmt_err:
+        logger.warning(f"Synthesis override format-feil ({fmt_err}) — bruker default")
+        synth_template = SYNTHESIS_PROMPT
+        synth_model = SYNTH_MODEL
+        prompt = synth_template.format(
+            query=query,
+            patient_block=patient_block,
+            agent_outputs=agent_outputs,
+            agent_names=agent_names,
+        )
 
     try:
-        openai = project.get_openai_client()
-        response = await openai.responses.create(
-            model=SYNTH_MODEL,
-            input=prompt,
-        )
-        return _append_fk(response.output_text, felleskatalogen_block), has_interaksjoner
+        # acomplete_text ruter til Anthropic Messages API hvis synth_model starter med
+        # "claude-", ellers Azure OpenAI Responses API som før.
+        output_text = await acomplete_text(project, model=synth_model, prompt=prompt)
+        return _append_fk(output_text, felleskatalogen_block), has_interaksjoner
     except Exception as e:
-        logger.error(f"Syntese feilet: {e}")
+        logger.error(f"Syntese feilet ({synth_model}): {e}")
         # Fallback: konkatener fagkunnskap-resultatene
         parts = [r.output for r in knowledge_results]
         return _append_fk("\n\n".join(parts) + SOURCE_FOOTER, felleskatalogen_block), has_interaksjoner

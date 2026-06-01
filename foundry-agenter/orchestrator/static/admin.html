@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="/static/design-tokens.css">
+  <title>HAPI Admin</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--hapi-bg);
+      color: var(--hapi-text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--hapi-grad-header);
+      color: white;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: var(--hapi-shadow-header);
+    }
+    header h1 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
+    header .badge {
+      margin-left: auto;
+      padding: 4px 10px;
+      border-radius: var(--hapi-radius-pill);
+      background: rgba(255,255,255,0.15);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+    }
+    header a { color: white; text-decoration: none; opacity: 0.85; font-size: 0.85rem; }
+    header a:hover { opacity: 1; }
+
+    main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 0;
+    }
+
+    aside {
+      background: var(--hapi-surface);
+      border-right: 1px solid var(--hapi-border);
+      padding: 16px 0;
+      overflow-y: auto;
+    }
+    aside h2 {
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--hapi-text-light);
+      padding: 8px 20px;
+      margin-bottom: 8px;
+    }
+    .agent-list { list-style: none; }
+    .agent-list li {
+      padding: 12px 20px;
+      cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: background 0.15s;
+    }
+    .agent-list li:hover { background: var(--hapi-bg-alt); }
+    .agent-list li.active {
+      background: var(--hapi-accent-light);
+      border-left-color: var(--hapi-primary);
+    }
+    .agent-list .name { font-weight: 600; font-size: 0.95rem; }
+    .agent-list .desc { font-size: 0.78rem; color: var(--hapi-text-light); margin-top: 2px; }
+    .agent-list .meta {
+      font-size: 0.7rem;
+      color: var(--hapi-text-light);
+      margin-top: 4px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .pill {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: var(--hapi-radius-full);
+      background: var(--hapi-bg);
+      font-size: 0.7rem;
+    }
+    .pill.warn { background: var(--hapi-warning-bg); color: var(--hapi-warning-fg); }
+    .pill.err  { background: var(--hapi-danger-bg); color: var(--hapi-danger-fg); }
+    .pill.ok   { background: var(--hapi-mint-bg); color: var(--hapi-score-pass); }
+
+    section.editor {
+      padding: 24px 32px;
+      overflow-y: auto;
+      max-width: 980px;
+    }
+    section.editor h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    section.editor .sub {
+      color: var(--hapi-text-light);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+    }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--hapi-text);
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--hapi-border);
+      border-radius: var(--hapi-radius-sm);
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: var(--hapi-surface);
+      color: var(--hapi-text);
+    }
+    .field textarea {
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      min-height: 320px;
+      resize: vertical;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      outline: 2px solid var(--hapi-primary-light);
+      outline-offset: -1px;
+      border-color: transparent;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin: 18px 0;
+      flex-wrap: wrap;
+    }
+    button {
+      padding: 10px 18px;
+      border: none;
+      border-radius: var(--hapi-radius-sm);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+    }
+    button.primary {
+      background: var(--hapi-primary);
+      color: white;
+      box-shadow: var(--hapi-shadow-send);
+    }
+    button.primary:hover { background: var(--hapi-primary-light); }
+    button.secondary {
+      background: var(--hapi-surface);
+      color: var(--hapi-primary);
+      border: 1px solid var(--hapi-border);
+    }
+    button.secondary:hover { background: var(--hapi-bg-alt); }
+    button.warn {
+      background: var(--hapi-warning-bg);
+      color: var(--hapi-warning-fg);
+    }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .status {
+      padding: 10px 14px;
+      border-radius: var(--hapi-radius-sm);
+      font-size: 0.88rem;
+      margin: 10px 0;
+      display: none;
+    }
+    .status.ok    { background: var(--hapi-mint-bg);   color: var(--hapi-score-pass); display: block; }
+    .status.err   { background: var(--hapi-danger-bg); color: var(--hapi-danger-fg);  display: block; }
+    .status.info  { background: var(--hapi-info-bg);   color: var(--hapi-info-fg);    display: block; }
+
+    h3 {
+      margin-top: 28px;
+      margin-bottom: 10px;
+      font-size: 1.05rem;
+      color: var(--hapi-primary-dark);
+    }
+
+    table.history, table.audit {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: var(--hapi-surface);
+      border: 1px solid var(--hapi-border);
+      border-radius: var(--hapi-radius-sm);
+      overflow: hidden;
+    }
+    table.history th, table.history td,
+    table.audit th, table.audit td {
+      padding: 8px 12px;
+      text-align: left;
+      border-bottom: 1px solid var(--hapi-border-soft);
+    }
+    table.history th, table.audit th {
+      background: var(--hapi-bg-alt);
+      font-weight: 600;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--hapi-text-light);
+    }
+    table.history tr:hover, table.audit tr:hover { background: var(--hapi-bg-alt); }
+
+    .test-modal-bg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+    }
+    .test-modal-bg.show { display: flex; }
+    .test-modal {
+      background: var(--hapi-surface);
+      border-radius: var(--hapi-radius);
+      padding: 24px;
+      max-width: 720px;
+      width: 92%;
+      max-height: 86vh;
+      overflow-y: auto;
+      box-shadow: var(--hapi-shadow-lg);
+    }
+    .test-modal h3 { margin-top: 0; }
+    .test-result {
+      background: var(--hapi-bg-alt);
+      padding: 14px;
+      border-radius: var(--hapi-radius-sm);
+      font-size: 0.92rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      max-height: 320px;
+      overflow-y: auto;
+      border: 1px solid var(--hapi-border-soft);
+    }
+
+    .empty {
+      padding: 40px;
+      text-align: center;
+      color: var(--hapi-text-light);
+    }
+
+    @media (max-width: 720px) {
+      main { grid-template-columns: 1fr; }
+      aside { border-right: none; border-bottom: 1px solid var(--hapi-border); max-height: 240px; }
+    }
+
+    /* --- Login-skjerm --- */
+    .login-screen {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    .login-form {
+      background: var(--hapi-surface);
+      padding: 32px 28px;
+      border-radius: var(--hapi-radius);
+      box-shadow: var(--hapi-shadow-lg);
+      max-width: 380px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .login-form h2 { font-size: 1.4rem; font-weight: 700; }
+    .login-form .sub { color: var(--hapi-text-light); font-size: 0.9rem; margin-bottom: 6px; }
+    .login-form button { width: 100%; padding: 12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>HAPI Admin — Agent-konfigurasjon</h1>
+    <span class="badge" id="user-badge">…</span>
+    <a href="/">← Til chat</a>
+  </header>
+
+  <div class="login-screen" id="login-screen" style="display:none;">
+    <form class="login-form" id="login-form">
+      <h2>Logg inn</h2>
+      <p class="sub">Admin-tilgang krever passord.</p>
+      <div class="field">
+        <label for="login-user">Brukernavn</label>
+        <input id="login-user" type="text" autocomplete="username" autofocus value="marius">
+      </div>
+      <div class="field">
+        <label for="login-pass">Passord</label>
+        <input id="login-pass" type="password" autocomplete="current-password">
+      </div>
+      <button class="primary" id="login-submit" type="submit">Logg inn</button>
+      <div class="status" id="login-status"></div>
+    </form>
+  </div>
+
+  <main id="dashboard" style="display:none;">
+    <aside>
+      <h2>Agenter</h2>
+      <ul class="agent-list" id="agents"></ul>
+    </aside>
+
+    <section class="editor" id="editor">
+      <div class="empty">Velg en agent fra listen til venstre.</div>
+    </section>
+  </main>
+
+  <div class="test-modal-bg" id="test-modal-bg">
+    <div class="test-modal">
+      <h3>Test-spørring</h3>
+      <p class="sub" style="margin-bottom: 14px;">
+        Kjører Responses API med inline prompt + valgt modell. Rører IKKE produksjon-agenten.
+      </p>
+      <div class="field">
+        <label for="test-query">Spørsmål</label>
+        <textarea id="test-query" rows="3" placeholder="Skriv et test-spørsmål..."></textarea>
+      </div>
+      <div class="actions">
+        <button class="primary" id="run-test">Kjør test</button>
+        <button class="secondary" id="close-test">Lukk</button>
+      </div>
+      <div id="test-status" class="status"></div>
+      <div class="test-result" id="test-result" style="display:none;"></div>
+    </div>
+  </div>
+
+  <script src="/static/admin.js"></script>
+</body>
+</html>
