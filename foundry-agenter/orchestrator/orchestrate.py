@@ -32,6 +32,14 @@ logger = logging.getLogger(__name__)
 # Se evals/rapporter/rapport-20260426-1111-synth-5.4.json for grunnlaget.
 SYNTH_MODEL = os.environ.get("SYNTH_MODEL", "gpt-5.4")
 
+# Hybrid-overstyring: bruk en annen modell når hapi-statistikk-agent er blant
+# kildene. Bakgrunn: 30-spm A/B 2026-06-01 viste at claude-opus-4-8 eliminerte
+# 1 HALLUSINERING i statistikk-svar mens gpt-5.4 var bedre på retningslinje-
+# syntese. Hybriden ruter til Claude bare når statistikk er involvert (der
+# hallusinering er mest skadelig), og beholder gpt-5.4 ellers. Tom = av.
+# Se evals/rapporter/rapport-20260601-2208-hapi30-claude-opus-4-8.json
+SYNTH_MODEL_STATISTIKK = os.environ.get("SYNTH_MODEL_STATISTIKK", "")
+
 # Hot-reload av synthesis-prompt+modell fra Azure Table (admin-menyen).
 # Cache i 60s for å unngå Table-kall ved hver request. Faller tilbake til
 # konstantene over hvis Table ikke er aktivert eller raden ikke finnes.
@@ -757,6 +765,17 @@ async def synthesize(
     override_prompt, override_model = _get_synth_override()
     synth_template = override_prompt or SYNTHESIS_PROMPT
     synth_model = override_model or SYNTH_MODEL
+
+    # Hybrid-overstyring: ruter til SYNTH_MODEL_STATISTIKK hvis statistikk-agenten
+    # er blant kildene OG admin-overstyring ikke er satt. Hallusinering-risiko
+    # ved tall er størst i statistikk-syntese; Claude er mer disiplinert der.
+    if SYNTH_MODEL_STATISTIKK and not override_model:
+        if any(r.agent_name == "hapi-statistikk-agent" for r in knowledge_results):
+            logger.info(
+                f"Hybrid: bytter syntese-modell til {SYNTH_MODEL_STATISTIKK} "
+                f"(statistikk-agent involvert)"
+            )
+            synth_model = SYNTH_MODEL_STATISTIKK
     try:
         prompt = synth_template.format(
             query=query,
