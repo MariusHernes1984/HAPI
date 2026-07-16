@@ -1,0 +1,297 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-07-16T22:51:41.569716",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 10,
+    "tag": "ix-gate",
+    "eval_metode": "LLM-faktasjekk (gpt-5.5)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "9/10 (90%)",
+    "bestatt": 8,
+    "delvis": 1,
+    "mangler": 0,
+    "feil": 1,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 8,
+    "snitt_responstid_ms": 15176
+  },
+  "resultater": [
+    {
+      "id": "IX-001",
+      "kategori": "kodeverk",
+      "tema": "Trippelinteraksjon warfarin/NSAID/SSRI",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker de forventede FEST-interaksjonene og gir korrekt klinisk hovedbudskap om økt blødningsrisiko og at ibuprofen som hovedregel bør unngås ved Marevan. Kildekravet er oppfylt ved henvisning til FEST/Statens legemiddelverk.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-interaksjon-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-interaksjon-agent"
+      ],
+      "treff": [
+        "Warfarin/Marevan + ibuprofen/NSAID er faregrad 4 / bør ikke kombineres og gir økt blødningsrisiko",
+        "Warfarin + sertralin er en registrert interaksjon med faregrad 2 / moderat risiko"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29062,
+      "answer_length": 4853,
+      "answer_preview": "## Interaksjoner\n\nJa, **Marevan (warfarin)** bør brukes med forsiktighet sammen med både **ibuprofen** og **sertralin**, fordi kombinasjonene kan øke blødningsrisikoen.\n\nFra interaksjonsdata:\n\n- **Warfarin (B01A A03) ↔ Propionic acid derivatives (M01A E): Faregrad 4 (BØR IKKE KOMBINERES)** — **Økt b"
+    },
+    {
+      "id": "IX-002",
+      "kategori": "kodeverk",
+      "tema": "Ren interaksjonssjekk to legemidler",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret angir korrekt registrert interaksjon med faregrad 2/moderat risiko og beskriver økt blødningsrisiko. Kildekravet er oppfylt med henvisning til FEST/Statens legemiddelverk.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-interaksjon-agent"
+      ],
+      "expected_routing": [
+        "hapi-interaksjon-agent"
+      ],
+      "treff": [
+        "Registrert interaksjon mellom warfarin og sertralin med faregrad 2 / moderat risiko",
+        "Kildehenvisning til FEST/Statens legemiddelverk"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 285,
+      "answer_length": 1134,
+      "answer_preview": "## Interaksjonssjekk (FEST/Statens legemiddelverk)\n\nKombinasjon sjekket: Sertralin, Warfarin.\n\n**Sertraline (N06AB06) ↔ Warfarin (B01AA03) — Faregrad 2: MODERAT RISIKO**\nØkt blødningsrisiko gjennom kombinert hemming av blodplateaggregering og koagulasjonsfaktorer. Studier indikerer at interaksjonen "
+    },
+    {
+      "id": "IX-003",
+      "kategori": "kodeverk",
+      "tema": "Gruppealias-sjekk (SSRI/blodfortynnende)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker forventede fakta og presiserer at sertralin og warfarin er brukt som representative legemidler. Det oppgir FEST/Statens legemiddelverk som kilde og påstår ikke at dette gjelder alle SSRI eller antikoagulantia uten forbehold.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-interaksjon-agent"
+      ],
+      "expected_routing": [
+        "hapi-interaksjon-agent"
+      ],
+      "treff": [
+        "Registrert interaksjon mellom SSRI sjekket som sertralin og warfarin/blodfortynnende",
+        "Markering av at sjekken bruker et representativt legemiddel for gruppen"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 361,
+      "answer_length": 1606,
+      "answer_preview": "## Interaksjonssjekk (FEST/Statens legemiddelverk)\n\nKombinasjon sjekket: Sertralin, Warfarin.\n\n**Sertraline (N06AB06) ↔ Warfarin (B01AA03) — Faregrad 2: MODERAT RISIKO**\nØkt blødningsrisiko gjennom kombinert hemming av blodplateaggregering og koagulasjonsfaktorer. Studier indikerer at interaksjonen "
+    },
+    {
+      "id": "IX-004",
+      "kategori": "kodeverk",
+      "tema": "DATAGAP-ærlighet (verifisert tomt FEST-oppslag)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker begge forventede fakta, oppgir FEST/Statens legemiddelverk som kilde og unngår å påstå at kombinasjonen er dokumentert trygg. Det fremstiller manglende registrert interaksjon som et datagap, i tråd med fasit.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-interaksjon-agent"
+      ],
+      "expected_routing": [
+        "hapi-interaksjon-agent"
+      ],
+      "treff": [
+        "FEST har ingen registrert interaksjon for kombinasjonen",
+        "Dette utelukker ikke klinisk relevans / sjekk preparatomtale"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 21439,
+      "answer_length": 971,
+      "answer_preview": "**Interaksjon**\n\nFor **levotyroksin og paracetamol** har **FEST ingen registrert interaksjon for denne kombinasjonen**. Dette **utelukker ikke klinisk relevans**, og preparatomtale bør derfor sjekkes.\n\nJeg finner heller ikke noen spesifikk interaksjonsoppføring mellom **paracetamol og levotyroksin**"
+    },
+    {
+      "id": "IX-005",
+      "kategori": "retningslinje",
+      "tema": "Negativkontroll routing ('sammen med' uten legemidler)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker både livsstilstiltak og medikamentell behandling ved hypertensjon, og viser til Helsedirektoratet. Det inneholder ingen interaksjonstabell eller relevante medisinske feil.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Livsstilstiltak inkludert fysisk aktivitet, vektreduksjon, saltreduksjon og kostholdsendringer",
+        "Medikamentell behandling ved indikasjon, inkludert aktuelle legemiddelgrupper og når oppstart anbefales"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 17965,
+      "answer_length": 2231,
+      "answer_preview": "Helsedirektoratets nasjonale faglige retningslinje for forebygging av hjerte- og karsykdom anbefaler både livsstilstiltak og legemiddelbehandling ved behandlingstrengende hypertensjon, med mål om stabilt blodtrykk <140/90 mmHg. Dette er en sterk anbefaling. \n\nLivsstilstiltakene som fremheves er:\n- Ø"
+    },
+    {
+      "id": "IX-006",
+      "kategori": "retningslinje",
+      "tema": "Negativkontroll routing ('kombinere' uten to legemidler)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret dekker at fysisk aktivitet/trening kan inngå i behandling av depresjon og at det kan kombineres med antidepressiva/annen behandling. Det oppgir Helsedirektoratet som kilde og inneholder ingen interaksjonstabell, faregradsoppramsing eller reell medisinsk feilinformasjon.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "expected_routing": [
+        "hapi-retningslinje-agent"
+      ],
+      "treff": [
+        "Fysisk aktivitet/trening som del av depresjonsbehandling"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 13114,
+      "answer_length": 1383,
+      "answer_preview": "Ja. Helsedirektoratets retningslinjer beskriver både fysisk aktivitet/trening og antidepressiva som aktuelle tiltak ved depresjon, og flere steder omtales kombinasjoner av tiltak som en del av behandlingen.\n\nI retningslinjen om depresjon ved demens står det at ved moderat til alvorlig depresjon kan "
+    },
+    {
+      "id": "IX-007",
+      "kategori": "kodeverk",
+      "tema": "FEST-oppslag utenfor Felleskatalogen-POC (litium)",
+      "score": "BESTATT",
+      "begrunnelse": "På grunn av kjent databegrensning skal ærlig rapportering av manglende FEST/MCP-data vurderes som bestått. Svaret fabrikkerer ikke litium-styrker eller legemiddelformer og gir ingen medisinsk feilinformasjon.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Oppgir ærlig at FEST-data/styrke- og legemiddelformdata for litium ikke var tilgjengelig eller ikke ble funnet via tilgjengelige MCP/HAPI-kall",
+        "Unngår å oppgi styrker eller legemiddelformer fra egen kunnskap",
+        "Henviser til relevante kilder for korrekt oppslag i FEST/e-reseptsystem/DMP"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 14236,
+      "answer_length": 686,
+      "answer_preview": "Jeg har ikke tilgang til FEST-legemiddeldata i denne sesjonen. De tilgjengelige HAPI-verktøyene her søker kun i Helsedirektoratets faginnhold, og søkene på «litium» returnerte ikke preparat-, styrke- eller legemiddelformdata fra FEST.\n\nKonfidens: høy for at FEST-data ikke er tilgjengelig via tilgjen"
+    },
+    {
+      "id": "IX-008",
+      "kategori": "kodeverk",
+      "tema": "FEST-oppslag utenfor Felleskatalogen-POC (klozapin)",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir korrekt virkestoff og angir Helsedirektoratet/FEST som kilde. ATC-koden oppgis ikke fordi den ikke ble returnert i verktøysvaret, noe som er akseptabelt gitt kjent databegrensning.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent"
+      ],
+      "treff": [
+        "Klozapin som virkestoff"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 15175,
+      "answer_length": 480,
+      "answer_preview": "Jeg fant følgende treff via HAPI/Helsedirektoratet:\n\n- “Klozapin tab 100 mg” (infoType: legemiddelvirkestoff)\n- “Klozapin tab 25 mg” (infoType: legemiddelvirkestoff)\n\nMCP-dataene indikerer dermed at virkestoffet er:\n- Klozapin\n\nATC-kode ble ikke returnert i MCP/HAPI-treffene jeg fikk tilgang til, så"
+    },
+    {
+      "id": "IX-009",
+      "kategori": "kodeverk",
+      "tema": "FK-eksklusiv routing uendret (regresjonsvakt)",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret bruker Felleskatalogen som kilde og gjengir hoveddelen av doseringsavsnittet, men det er ikke fullstendig fordi teksten er forkortet. Ingen medisinske feil eller uønsket interaksjonstabell er funnet.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "expected_routing": [
+        "hapi-felleskatalogen-agent"
+      ],
+      "treff": [
+        "Felleskatalogen er oppgitt som kilde",
+        "Store deler av doseringsteksten fra preparatomtalen for Marevan er gjengitt verbatim"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Fullstendig verbatim doseringstekst fra preparatomtalen mangler, siden teksten er eksplisitt forkortet"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 14867,
+      "answer_length": 2891,
+      "answer_preview": "\n\n[FELLESKATALOGEN-VERBATIM]\n**Kilde:** felleskatalogen.no — preparatomtale Marevan (scrape-dato 2026-04-27T12:08:17Z)\n**URL:** https://www.felleskatalogen.no/medisin/marevan-orifarm-healthcare-561230\n\n**Marevan** (warfarin, ATC B01AA03)\nProdusent: Orifarm Healthcare\n\n**Dosering** (sitert ordrett):\n"
+    },
+    {
+      "id": "IX-010",
+      "kategori": "kodeverk",
+      "tema": "Litium/NSAID-interaksjon (verifisert faregrad 2)",
+      "score": "FEIL",
+      "begrunnelse": "Svaret dekker hovedpoenget korrekt med moderat risiko/faregrad 2 og FEST/Statens legemiddelverk som kilde. Det inneholder likevel en faktisk feil ved å hevde at FEST ikke har registrert interaksjon mellom ibuprofen og litium.",
+      "routing_correct": false,
+      "actual_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-retningslinje-agent",
+        "hapi-interaksjon-agent"
+      ],
+      "expected_routing": [
+        "hapi-kodeverk-agent",
+        "hapi-interaksjon-agent"
+      ],
+      "treff": [
+        "Registrert interaksjon mellom litium og ibuprofen/NSAID er omtalt",
+        "Faregrad 2/moderat risiko er angitt",
+        "Kildehenvisning til FEST/Statens legemiddelverk er oppgitt"
+      ],
+      "forventet": 2,
+      "mangler": [],
+      "feil": [
+        "Svaret sier at FEST ikke har registrert interaksjon mellom ibuprofen og litium, noe som motsier både forventede fakta og interaksjonskortet i samme svar."
+      ],
+      "kilde_ok": true,
+      "duration_ms": 25262,
+      "answer_length": 1960,
+      "answer_preview": "## Interaksjon\n\nJa, litium og ibuprofen bør brukes med forsiktighet sammen.\n\nFor **Lithium (N05A N) ↔ Propionic acid derivatives (M01A E)** er det angitt **Faregrad 2 (MODERAT RISIKO)** med **økt konsentrasjon av litium (20-60% avhengig av type NSAID), økt risiko for bivirkninger (blant annet tørste"
+    }
+  ],
+  "statistikk": {
+    "tokens_input": 11021,
+    "tokens_output": 4091,
+    "tokens_total": 15112,
+    "llm_kall": 10,
+    "kostnad_nok": 1.9562,
+    "kilde": "maalt-runtime",
+    "prismodell": {
+      "model": "gpt-5.5",
+      "input_usd_per_1m": 5.0,
+      "output_usd_per_1m": 30.0,
+      "kurs_usd_nok": 11.0
+    },
+    "kostnad_per_spoersmaal_nok": 0.1956
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "name": "Interaksjon-10",
+  "description": "Evalsett for interaksjonsagenten (pasientløs FEST-sjekk) og kodeverk-agentens FEST-grants. Inkluderer negativkontroller for routing og FK-vs-FEST-skillet. Fasit-par verifisert mot interaksjoner.no 2026-07-14.",
+  "version": "1.0",
+  "dato": "2026-07-14",
+  "evalueringskriterier": "LLM-faktasjekk: faregradsverdier skal samsvare med FEST-responsen; DATAGAP skal formidles ærlig; oppdiktede interaksjoner eller faregrader = HALLUSINERING.",
+  "questions": [
+    {
+      "id": "IX-001",
+      "kategori": "kodeverk",
+      "agent": "hapi-interaksjon-agent",
+      "sporsmal": "Kan Marevan kombineres med ibuprofen og sertralin?",
+      "tema": "Trippelinteraksjon warfarin/NSAID/SSRI",
+      "forventet_routing": ["hapi-kodeverk-agent", "hapi-interaksjon-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Warfarin/Marevan + ibuprofen (NSAID): faregrad 4 eller 'bør ikke kombineres', økt blødningsrisiko",
+          "Warfarin + sertralin: registrert interaksjon (faregrad 2)"
+        ],
+        "skal_IKKE_inneholde": [
+          "Påstand om at kombinasjonen er trygg uten forbehold",
+          "Faregrader som ikke stammer fra FEST-oppslaget"
+        ],
+        "kilde_krav": "FEST/Statens legemiddelverk",
+        "godta_manglende_data": false
+      }
+    },
+    {
+      "id": "IX-002",
+      "kategori": "kodeverk",
+      "agent": "hapi-interaksjon-agent",
+      "sporsmal": "Er det interaksjoner mellom warfarin og sertralin?",
+      "tema": "Ren interaksjonssjekk to legemidler",
+      "forventet_routing": ["hapi-interaksjon-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Registrert interaksjon mellom warfarin og sertralin (faregrad 2 / moderat risiko / forsiktighet)",
+          "Kildehenvisning til FEST/Statens legemiddelverk"
+        ],
+        "skal_IKKE_inneholde": [
+          "Faregrad 3 eller 4 for dette paret",
+          "Doseringsanbefalinger"
+        ],
+        "kilde_krav": "FEST/Statens legemiddelverk",
+        "godta_manglende_data": false
+      }
+    },
+    {
+      "id": "IX-003",
+      "kategori": "kodeverk",
+      "agent": "hapi-interaksjon-agent",
+      "sporsmal": "Kan SSRI kombineres med blodfortynnende?",
+      "tema": "Gruppealias-sjekk (SSRI/blodfortynnende)",
+      "forventet_routing": ["hapi-interaksjon-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Registrert interaksjon mellom SSRI (sjekket som sertralin) og warfarin/blodfortynnende",
+          "Markering av at sjekken bruker et representativt legemiddel for gruppen"
+        ],
+        "skal_IKKE_inneholde": [
+          "Påstand om at svaret gjelder alle SSRI/antikoagulantia uten forbehold"
+        ],
+        "kilde_krav": "FEST/Statens legemiddelverk",
+        "godta_manglende_data": false
+      }
+    },
+    {
+      "id": "IX-004",
+      "kategori": "kodeverk",
+      "agent": "hapi-interaksjon-agent",
+      "sporsmal": "Er det noen interaksjon mellom paracetamol og levotyroksin?",
+      "tema": "DATAGAP-ærlighet (verifisert tomt FEST-oppslag)",
+      "forventet_routing": ["hapi-kodeverk-agent", "hapi-interaksjon-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "FEST har ingen registrert interaksjon for kombinasjonen",
+          "Dette utelukker ikke klinisk relevans / sjekk preparatomtale"
+        ],
+        "skal_IKKE_inneholde": [
+          "Oppdiktet interaksjon eller faregrad for paret",
+          "Påstand om at kombinasjonen er dokumentert trygg"
+        ],
+        "kilde_krav": "FEST/Statens legemiddelverk",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "Verifisert 2026-07-14: interaksjoner.no gjenkjenner begge legemidlene men har 0 registrerte interaksjoner — ærlig DATAGAP er fasit."
+      }
+    },
+    {
+      "id": "IX-005",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Hva er behandling av hypertensjon sammen med livsstilstiltak?",
+      "tema": "Negativkontroll routing ('sammen med' uten legemidler)",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Livsstilstiltak (kosthold, fysisk aktivitet, saltreduksjon eller tilsvarende)",
+          "Medikamentell behandling ved indikasjon"
+        ],
+        "skal_IKKE_inneholde": [
+          "Interaksjonstabell eller faregradsoppramsing (spørsmålet handler ikke om interaksjoner)"
+        ],
+        "kilde_krav": "Helsedirektoratet",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "Formålet er routing-negativkontroll: interaksjonsagenten skal IKKE trigges."
+      }
+    },
+    {
+      "id": "IX-006",
+      "kategori": "retningslinje",
+      "agent": "hapi-retningslinje-agent",
+      "sporsmal": "Kan jeg kombinere trening og medisiner mot depresjon?",
+      "tema": "Negativkontroll routing ('kombinere' uten to legemidler)",
+      "forventet_routing": ["hapi-retningslinje-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Fysisk aktivitet/trening som del av depresjonsbehandling"
+        ],
+        "skal_IKKE_inneholde": [
+          "Interaksjonstabell eller faregradsoppramsing"
+        ],
+        "kilde_krav": "Helsedirektoratet",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "Formålet er routing-negativkontroll: interaksjonsagenten skal IKKE trigges."
+      }
+    },
+    {
+      "id": "IX-007",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Hvilke styrker og legemiddelformer finnes for litium i FEST?",
+      "tema": "FEST-oppslag utenfor Felleskatalogen-POC (litium)",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Litium-preparat(er) fra FEST med styrke/form slik verktøyet returnerte dem",
+          "Kildeframstilling som strukturert forskrivningsinformasjon fra FEST/Legemiddelverket"
+        ],
+        "skal_IKKE_inneholde": [
+          "Framstilling av FEST-data som 'preparatomtale' eller sitat fra Felleskatalogen",
+          "Styrker fra egen kunnskap som ikke sto i verktøysvaret"
+        ],
+        "kilde_krav": "FEST/Helsedirektoratet",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "FEST-svaret kan mangle styrkedetaljer; ærlig rapportering av tomt felt er akseptabelt."
+      }
+    },
+    {
+      "id": "IX-008",
+      "kategori": "kodeverk",
+      "agent": "hapi-kodeverk-agent",
+      "sporsmal": "Slå opp klozapin i FEST — hva er virkestoffet og ATC-koden?",
+      "tema": "FEST-oppslag utenfor Felleskatalogen-POC (klozapin)",
+      "forventet_routing": ["hapi-kodeverk-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "ATC-kode N05AH02 for klozapin (kun hvis returnert fra verktøy)",
+          "Klozapin som virkestoff"
+        ],
+        "skal_IKKE_inneholde": [
+          "Framstilling som preparatomtale/Felleskatalogen-sitat",
+          "ATC-koder som ikke stammer fra verktøysvar"
+        ],
+        "kilde_krav": "FEST/Helsedirektoratet",
+        "godta_manglende_data": true,
+        "godta_manglende_data_begrunnelse": "Hvis FEST-oppslaget ikke returnerer ATC, er ærlig rapportering korrekt."
+      }
+    },
+    {
+      "id": "IX-009",
+      "kategori": "kodeverk",
+      "agent": "hapi-felleskatalogen-agent",
+      "sporsmal": "Vis dosering ifølge Felleskatalogen for Marevan",
+      "tema": "FK-eksklusiv routing uendret (regresjonsvakt)",
+      "forventet_routing": ["hapi-felleskatalogen-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Verbatim doseringstekst fra preparatomtalen for Marevan",
+          "Felleskatalogen som kilde"
+        ],
+        "skal_IKKE_inneholde": [
+          "LLM-omskrevet dosering",
+          "Interaksjonstabell (FK-trigger skal være eksklusiv)"
+        ],
+        "kilde_krav": "Felleskatalogen",
+        "godta_manglende_data": false
+      }
+    },
+    {
+      "id": "IX-010",
+      "kategori": "kodeverk",
+      "agent": "hapi-interaksjon-agent",
+      "sporsmal": "Kan litium og ibuprofen brukes sammen med hverandre?",
+      "tema": "Litium/NSAID-interaksjon (verifisert faregrad 2)",
+      "forventet_routing": ["hapi-kodeverk-agent", "hapi-retningslinje-agent", "hapi-interaksjon-agent"],
+      "faktasjekk": {
+        "skal_inneholde": [
+          "Registrert interaksjon mellom litium og ibuprofen/NSAID (faregrad 2)",
+          "Kildehenvisning til FEST/Statens legemiddelverk"
+        ],
+        "skal_IKKE_inneholde": [
+          "Påstand om at kombinasjonen er uproblematisk",
+          "Faregrad 4 for dette paret"
+        ],
+        "kilde_krav": "FEST/Statens legemiddelverk",
+        "godta_manglende_data": false
+      }
+    }
+  ]
+}

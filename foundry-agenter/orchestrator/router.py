@@ -8,6 +8,8 @@ Fallback til LLM-routing via orkestrator-agenten for tvetydige spørsmål.
 import re
 from dataclasses import dataclass, field
 
+from legemiddel_lexicon import extract_mentioned_meds
+
 # --- Agent-navn ---
 RETNINGSLINJE = "hapi-retningslinje-agent"
 KODEVERK = "hapi-kodeverk-agent"
@@ -15,6 +17,20 @@ STATISTIKK = "hapi-statistikk-agent"
 KJERNEJOURNAL = "hapi-kjernejournal-agent"
 NDLA = "hapi-ndla-agent"
 FELLESKATALOGEN = "hapi-felleskatalogen-agent"
+# Lokal agent (kjøres i orchestratoren, ikke i Foundry) — pasientløs
+# interaksjonssjekk mot FEST/SLV via interaksjoner.no.
+INTERAKSJON = "hapi-interaksjon-agent"
+
+# Interaksjonsagenten trigges av interaksjonsspråk + minst 2 gjenkjente
+# legemidler i spørsmålet (lexicon-krav demper feilfyring på generelle
+# behandlingsspørsmål). Med aktiv pasient dekkes sjekken allerede av den
+# automatiske inline-sjekken i synthesize() — da rutes IKKE hit.
+INTERAKSJON_TRIGGERS = [
+    "interaksjon", "interaksjoner", "interagere", "interagerer",
+    "kombinere", "kombineres", "kombinasjon med",
+    "sammen med", "samtidig med", "samtidig som", "gis samtidig",
+    "forsterke effekten", "svekke effekten",
+]
 
 # Felleskatalogen er OPT-IN: trigges KUN ved eksplisitte ord eller via UI-flagg.
 # Den blandes ALDRI inn i syntese — output går verbatim til bruker som sitat.
@@ -256,6 +272,25 @@ def route(query: str, patient_id: str | None = None) -> RoutingDecision:
         decision.agents = [RETNINGSLINJE]
         decision.confidence = "lav"
         decision.reasoning += "Ingen eksakt match — bruker retningslinje-agent som default. "
+
+    # Steg 4c: Interaksjonsagent — pasientløs interaksjonssjekk (lokal agent).
+    # Plassert ETTER keyword-stegene så den aldri påvirker eksisterende routing-
+    # logikk (steg 3 sitt len<=1-gate). Krav: interaksjonsspråk + >=2 gjenkjente
+    # legemidler. Med aktiv pasient dekker inline-sjekken i synthesize() dette.
+    if patient_id is None and any(t in q for t in INTERAKSJON_TRIGGERS):
+        mentioned = extract_mentioned_meds([query])
+        if len(mentioned) >= 2:
+            # Rent interaksjonsspørsmål: erstatt lav-konfidens-fallbacken så
+            # retningslinje-agenten ikke støyer med "finner ikke"-tekst.
+            if decision.agents == [RETNINGSLINJE] and "Ingen eksakt match" in decision.reasoning:
+                decision.agents = []
+                decision.confidence = "høy"
+            if INTERAKSJON not in decision.agents:
+                decision.agents.append(INTERAKSJON)
+            decision.reasoning += (
+                f"Interaksjonstrigger + {len(mentioned)} gjenkjente legemidler "
+                f"({', '.join(sorted(mentioned))}) — interaksjonsagent. "
+            )
 
     # Steg 4b: Kjernejournal — trigges av aktiv pasient, ikke nøkkelord
     if patient_id:

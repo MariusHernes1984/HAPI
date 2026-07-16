@@ -152,6 +152,12 @@ MCP_SERVER_URL=https://hapitest.nicefield-3933b657.norwayeast.azurecontainerapps
 MODEL_DEPLOYMENT=gpt-5.3-chat
 ```
 
+> **NB — modellvalg i produksjon:** CI/CD setter *ingen* modell-miljøvariabler på
+> Container App-en. Kodedefaultene er dermed effektiv produksjonskonfig:
+> `SYNTH_MODEL` (orchestrate.py), `ROUTER_MODEL` (router.py), `MODEL_DEPLOYMENT`
+> (deploy_agents.py). Endres modell, endre defaulten i koden — ikke bare env-var
+> på en enkelt revisjon.
+
 ---
 
 ## Testing

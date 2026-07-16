@@ -9,20 +9,26 @@ Flyten:
 """
 
 import asyncio
+import json
 import os
 import re
 import time
 import logging
-import re
 from dataclasses import dataclass, field
 from urllib.parse import quote
 
 from azure.identity.aio import DefaultAzureCredential as AsyncCredential
 from azure.ai.projects.aio import AIProjectClient as AsyncProjectClient
 
-from router import route, route_with_llm, RoutingDecision, KJERNEJOURNAL
+from router import route, route_with_llm, RoutingDecision, KJERNEJOURNAL, INTERAKSJON
 import kjernejournal
 from llm_client import acomplete_text
+from legemiddel_lexicon import (
+    LEGEMIDDEL_ALIASES,
+    GRUPPE_ALIASES,
+    extract_mentioned_meds,
+    extract_mentioned_meds_detailed,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +37,14 @@ logger = logging.getLogger(__name__)
 # Kan overstyres via SYNTH_MODEL env-var (f.eks. =gpt-5.5 for A/B-test).
 # Se evals/rapporter/rapport-20260426-1111-synth-5.4.json for grunnlaget.
 SYNTH_MODEL = os.environ.get("SYNTH_MODEL", "gpt-5.4")
+
+# Hybrid-overstyring: bruk en annen modell når hapi-statistikk-agent er blant
+# kildene. Bakgrunn: 30-spm A/B 2026-06-01 viste at claude-opus-4-8 eliminerte
+# 1 HALLUSINERING i statistikk-svar mens gpt-5.4 var bedre på retningslinje-
+# syntese. Hybriden ruter til Claude bare når statistikk er involvert (der
+# hallusinering er mest skadelig), og beholder gpt-5.4 ellers. Tom = av.
+# Se evals/rapporter/rapport-20260601-2208-hapi30-claude-opus-4-8.json
+SYNTH_MODEL_STATISTIKK = os.environ.get("SYNTH_MODEL_STATISTIKK", "")
 
 # Hot-reload av synthesis-prompt+modell fra Azure Table (admin-menyen).
 # Cache i 60s for å unngå Table-kall ved hver request. Faller tilbake til
@@ -79,6 +93,9 @@ class AgentResult:
     duration_ms: int
     success: bool
     error: str | None = None
+    # Valgfri strukturert nyttelast (brukes av lokale agenter, f.eks.
+    # interaksjonsagentens FEST-data til frontend-kort). Aldri LLM-generert.
+    data: dict | None = None
 
 
 @dataclass
@@ -154,129 +171,10 @@ SOURCE_FOOTER_INTERAKSJON = "\n\n---\n*Kilder: Helsedirektoratet · Interaksjons
 
 INTERAKSJON_URL = "https://www.interaksjoner.no/Analyze.asp"
 
-# Alias-ordbok: vanlige legemiddelnavn, merkenavn og gruppenavn → normalisert navn
-# for interaksjoner.no.  Brukes til å fange medisiner nevnt i spørsmål og agent-output.
-LEGEMIDDEL_ALIASES: dict[str, str] = {
-    # NSAIDs
-    "ibux": "Ibuprofen", "ibuprofen": "Ibuprofen", "brufen": "Ibuprofen",
-    "voltaren": "Diklofenak", "diklofenak": "Diklofenak", "diclofenac": "Diklofenak",
-    "naproxen": "Naproxen", "napren": "Naproxen",
-    "piroksikam": "Piroksikam", "meloksikam": "Meloksikam",
-    "celecoxib": "Celecoxib", "celebra": "Celecoxib",
-    "indometacin": "Indometacin",
-    "aspirin": "Acetylsalisylsyre", "acetylsalisylsyre": "Acetylsalisylsyre",
-    "albyl": "Acetylsalisylsyre", "asa": "Acetylsalisylsyre",
-    # Paracetamol
-    "paracetamol": "Paracetamol", "paracet": "Paracetamol", "panodil": "Paracetamol",
-    # Opioider
-    "tramadol": "Tramadol", "kodein": "Kodein", "morfin": "Morfin",
-    "oxycontin": "Oksykodon", "oksykodon": "Oksykodon", "oxynorm": "Oksykodon",
-    "palexia": "Tapentadol", "tapentadol": "Tapentadol",
-    # Antikoagulantia
-    "warfarin": "Warfarin", "marevan": "Warfarin",
-    "eliquis": "Apiksaban", "apiksaban": "Apiksaban", "apixaban": "Apiksaban",
-    "xarelto": "Rivaroksaban", "rivaroksaban": "Rivaroksaban", "rivaroxaban": "Rivaroksaban",
-    "pradaxa": "Dabigatran", "dabigatran": "Dabigatran",
-    # Platehemmere
-    "klopidogrel": "Klopidogrel", "plavix": "Klopidogrel",
-    "dipyridamol": "Dipyridamol", "persantin": "Dipyridamol",
-    # Betablokkere
-    "metoprolol": "Metoprolol", "selo-zok": "Metoprolol",
-    "atenolol": "Atenolol", "propranolol": "Propranolol",
-    "bisoprolol": "Bisoprolol", "karvedilol": "Karvedilol",
-    # ACE-hemmere / ARB
-    "ramipril": "Ramipril", "enalapril": "Enalapril", "lisinopril": "Lisinopril",
-    "losartan": "Losartan", "valsartan": "Valsartan", "candesartan": "Kandesartan",
-    # Statiner
-    "atorvastatin": "Atorvastatin", "simvastatin": "Simvastatin",
-    "rosuvastatin": "Rosuvastatin",
-    # Diabetes
-    "metformin": "Metformin", "insulin": "Insulin",
-    "ozempic": "Semaglutid", "semaglutid": "Semaglutid",
-    "jardiance": "Empagliflozin", "empagliflozin": "Empagliflozin",
-    "forxiga": "Dapagliflozin", "dapagliflozin": "Dapagliflozin",
-    # Steroider
-    "prednisolon": "Prednisolon", "prednison": "Prednisolon",
-    "deksametason": "Deksametason", "kortison": "Prednisolon",
-    "metylprednisolon": "Metylprednisolon",
-    # Antibiotika
-    "amoxicillin": "Amoxicillin", "penicillin": "Penicillin",
-    "ciprofloxacin": "Ciprofloxacin", "doksycyklin": "Doksycyklin",
-    "erytromycin": "Erytromycin", "metronidazol": "Metronidazol",
-    "trimetoprim": "Trimetoprim", "klindamycin": "Klindamycin",
-    "klaritromycin": "Klaritromycin", "klacid": "Klaritromycin",
-    "azitromycin": "Azitromycin", "azitromax": "Azitromycin",
-    "fenoksymetylpenicillin": "Fenoksymetylpenicillin", "apocillin": "Fenoksymetylpenicillin",
-    # Antidepressiva / psykofarmaka
-    "sertralin": "Sertralin", "escitalopram": "Escitalopram",
-    "fluoksetin": "Fluoksetin", "venlafaksin": "Venlafaksin",
-    "mirtazapin": "Mirtazapin", "duloksetin": "Duloksetin",
-    # Antipsykotika (ofte involvert i QT/CYP-interaksjoner)
-    "klozapin": "Klozapin", "leponex": "Klozapin",
-    "olanzapin": "Olanzapin", "zyprexa": "Olanzapin",
-    "quetiapin": "Quetiapin", "seroquel": "Quetiapin",
-    "risperidon": "Risperidon", "risperdal": "Risperidon",
-    "aripiprazol": "Aripiprazol", "abilify": "Aripiprazol",
-    "haloperidol": "Haloperidol", "haldol": "Haloperidol",
-    # Diuretika
-    "furosemid": "Furosemid", "hydroklortiazid": "Hydroklortiazid",
-    "spironolakton": "Spironolakton",
-    # PPI
-    "omeprazol": "Omeprazol", "pantoprazol": "Pantoprazol",
-    "esomeprazol": "Esomeprazol", "lanzoprazol": "Lanzoprazol",
-    # Annet
-    "alendronat": "Alendronat", "levaxin": "Levotyroksin",
-    "levotyroksin": "Levotyroksin",
-    "ventoline": "Salbutamol", "salbutamol": "Salbutamol",
-    "amlodipin": "Amlodipin", "nifedipin": "Nifedipin",
-    "gabapentin": "Gabapentin", "pregabalin": "Pregabalin", "lyrica": "Pregabalin",
-    "karbamazepin": "Karbamazepin", "fenytoin": "Fenytoin",
-    "litium": "Litium", "valproat": "Valproat",
-    "digoksin": "Digoksin", "amiodaron": "Amiodaron",
-}
-
-# Gruppenavn → representativt legemiddel (for å trigge interaksjonssjekk)
-GRUPPE_ALIASES: dict[str, str] = {
-    "nsaid": "Ibuprofen", "nsaids": "Ibuprofen",
-    "betablokker": "Metoprolol", "betablokkere": "Metoprolol",
-    "ace-hemmer": "Ramipril", "ace-hemmere": "Ramipril",
-    "statin": "Atorvastatin", "statiner": "Atorvastatin",
-    "kortikosteroid": "Prednisolon", "kortikosteroider": "Prednisolon",
-    "ssri": "Sertralin", "snri": "Venlafaksin",
-    "opioid": "Tramadol", "opioider": "Tramadol",
-    "blodfortynnende": "Warfarin",
-    "platehemmer": "Klopidogrel", "platehemmere": "Klopidogrel",
-}
-
-
-def _extract_mentioned_meds(texts: list[str]) -> list[str]:
-    """
-    Skann fritekst (spørsmål + agent-output) for kjente legemiddelnavn.
-
-    Returnerer en deduplisert liste med normaliserte navn som kan brukes
-    mot interaksjoner.no sammen med pasientens faste medisiner.
-    """
-    found: set[str] = set()
-
-    combined = " ".join(texts).lower()
-    # Fjern noen tegn som kan hindre matching
-    combined = re.sub(r"[/\-–]", " ", combined)
-
-    # Sjekk enkeltord mot alias-ordbøkene
-    words = set(re.findall(r"[a-zæøå]+", combined))
-    for word in words:
-        if word in LEGEMIDDEL_ALIASES:
-            found.add(LEGEMIDDEL_ALIASES[word])
-        elif word in GRUPPE_ALIASES:
-            found.add(GRUPPE_ALIASES[word])
-
-    # Sjekk også flerords-aliaser (f.eks. "selo-zok" → "selo zok" etter normalisering)
-    for alias, norm in LEGEMIDDEL_ALIASES.items():
-        if " " in alias and alias in combined:
-            found.add(norm)
-
-    return list(found)
-
+# LEGEMIDDEL_ALIASES/GRUPPE_ALIASES og ekstraksjon bor i legemiddel_lexicon.py
+# (delt med router.py). Re-importert øverst; _extract_mentioned_meds beholdes
+# som alias for bakoverkompatibilitet.
+_extract_mentioned_meds = extract_mentioned_meds
 
 FAREGRAD_LABELS = {
     4: "BØR IKKE KOMBINERES",
@@ -284,6 +182,35 @@ FAREGRAD_LABELS = {
     2: "MODERAT RISIKO",
     1: "LAV RISIKO",
 }
+
+
+async def _fetch_interaksjoner(medikament_navn: list[str]) -> dict | None:
+    """Hent rå interaksjonsdata fra interaksjoner.no. None ved HTTP-/nettverksfeil."""
+    søkeord = " ".join(medikament_navn)
+    url = f"{INTERAKSJON_URL}?PreparatNavn={quote(søkeord)}"
+
+    try:
+        import aiohttp
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
+                if resp.status != 200:
+                    logger.warning(f"Interaksjoner.no returnerte {resp.status}")
+                    return None
+                return await resp.json(content_type=None)
+    except ImportError:
+        # Fallback: synkront kall via urllib
+        import urllib.request
+        import json as _json
+        try:
+            req = urllib.request.Request(url, headers={"Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                return _json.loads(resp.read())
+        except Exception as e:
+            logger.warning(f"Interaksjonssjekk feilet (urllib): {e}")
+            return None
+    except Exception as e:
+        logger.warning(f"Interaksjonssjekk feilet: {e}")
+        return None
 
 
 async def _sjekk_interaksjoner(
@@ -306,32 +233,22 @@ async def _sjekk_interaksjoner(
     if len(medikament_navn) < 2:
         return None  # Trenger minst 2 legemidler for interaksjonssjekk
 
-    søkeord = " ".join(medikament_navn)
-    url = f"{INTERAKSJON_URL}?PreparatNavn={quote(søkeord)}"
-
-    try:
-        import aiohttp
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, timeout=aiohttp.ClientTimeout(total=10)) as resp:
-                if resp.status != 200:
-                    logger.warning(f"Interaksjoner.no returnerte {resp.status}")
-                    return None
-                data = await resp.json(content_type=None)
-    except ImportError:
-        # Fallback: synkront kall via urllib
-        import urllib.request
-        import json as _json
-        try:
-            req = urllib.request.Request(url, headers={"Accept": "application/json"})
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                data = _json.loads(resp.read())
-        except Exception as e:
-            logger.warning(f"Interaksjonssjekk feilet (urllib): {e}")
-            return None
-    except Exception as e:
-        logger.warning(f"Interaksjonssjekk feilet: {e}")
+    data = await _fetch_interaksjoner(medikament_navn)
+    if data is None:
         return None
+    return _format_interaksjoner(data, medikament_navn, asked_meds)
 
+
+def _format_interaksjoner(
+    data: dict,
+    medikament_navn: list[str],
+    asked_meds: list[str] | None = None,
+) -> str | None:
+    """Formater rå interaksjonsdata til tekstblokk for syntese-prompten.
+
+    Skilt ut fra _sjekk_interaksjoner slik at interaksjonsagenten kan
+    gjenbruke samme henting/formatering — output er uendret for /ask-stien.
+    """
     interactions = data.get("Interactions") or []
     # Filtrer bort tomme
     interactions = [ix for ix in interactions if ix.get("ATC1")]
@@ -391,9 +308,18 @@ async def _sjekk_interaksjoner(
             # Normaliser ATC-koder fra Interactions (fjerner mellomrom)
             def _norm_atc(code: str) -> str:
                 return (code or "").replace(" ", "").upper()
+
+            def _atc_match(ix_code: str) -> bool:
+                # FEST bruker gruppe-ATC i Interactions (M01AE) men full kode i
+                # Recognized (M01AE01) — prefiks-match begge veier, ellers får
+                # gruppetreff en selvmotsigende "datagap"-merknad (jf. IX-010).
+                n = _norm_atc(ix_code)
+                if not n:
+                    return False
+                return any(a.startswith(n) or n.startswith(a) for a in asked_atcs)
+
             asked_in_ix = any(
-                (_norm_atc(ix.get("ATC1", "")) in asked_atcs or
-                 _norm_atc(ix.get("ATC2", "")) in asked_atcs)
+                _atc_match(ix.get("ATC1", "")) or _atc_match(ix.get("ATC2", ""))
                 for ix in interactions
             )
             if not asked_in_ix:
@@ -404,6 +330,160 @@ async def _sjekk_interaksjoner(
                 )
 
     return "\n".join(linjer)
+
+
+# --- Lokal interaksjonsagent (pasientløs) ---
+# Ingen Foundry-agent: kjøres i orchestratoren som KJERNEJOURNAL-mønsteret.
+# Gjør "hapi-interaksjon-agent" (annonsert i /agents og UI) til en ekte,
+# rutbar agent for spørsmål uten aktiv pasient.
+
+def _parse_interaksjoner_structured(
+    data: dict,
+    checked: list[str],
+    group_map: dict[str, str],
+) -> dict:
+    """Strukturert representasjon av FEST-responsen for frontend-kort.
+
+    Alle verdier kopieres deterministisk fra API-responsen — aldri LLM.
+    """
+    interactions = [ix for ix in (data.get("Interactions") or []) if ix.get("ATC1")]
+    recognized = [
+        r.get("Word") for r in (data.get("Recognized") or []) if r.get("Word")
+    ]
+    cards = []
+    for ix in interactions:
+        level = ix.get("Level", 0)
+        cards.append({
+            "name1": ix.get("Name1", "?"),
+            "atc1": (ix.get("ATC1") or "").replace(" ", "").upper(),
+            "name2": ix.get("Name2", "?"),
+            "atc2": (ix.get("ATC2") or "").replace(" ", "").upper(),
+            "level": level,
+            "label": FAREGRAD_LABELS.get(level, f"Ukjent ({level})"),
+            "description": ix.get("Description", ""),
+            "situation": ix.get("Situation", ""),
+        })
+    group_notes = [
+        f"«{word}» er sjekket som {norm} — representativt for gruppen, "
+        f"ikke nødvendigvis brukerens konkrete legemiddel"
+        for norm, word in sorted(group_map.items())
+    ]
+    return {
+        "interactions": cards,
+        "checked": checked,
+        "recognized": recognized,
+        "datagap": not cards,
+        "group_notes": group_notes,
+        "unavailable": False,
+    }
+
+
+def _render_interaksjon_answer(structured: dict) -> str:
+    """Deterministisk brukersvar når interaksjonsagenten er eneste kilde.
+
+    Bygget utelukkende fra FEST-feltene — ingen LLM-tekst, ingen doseringsråd.
+    """
+    lines = ["## Interaksjonssjekk (FEST/Statens legemiddelverk)", ""]
+    lines.append(f"Kombinasjon sjekket: {', '.join(structured['checked'])}.")
+
+    if structured.get("unavailable"):
+        lines += [
+            "",
+            "Interaksjonstjenesten var utilgjengelig — sjekken kunne ikke gjennomføres.",
+            "Dette skal IKKE tolkes som at kombinasjonen er trygg. Sjekk preparatomtale,",
+            "eller prøv igjen senere.",
+        ]
+    elif structured["interactions"]:
+        for c in structured["interactions"]:
+            lines.append("")
+            lines.append(
+                f"**{c['name1']} ({c['atc1']}) ↔ {c['name2']} ({c['atc2']}) — "
+                f"Faregrad {c['level']}: {c['label']}**"
+            )
+            if c["description"]:
+                lines.append(c["description"])
+            if c["situation"]:
+                lines.append(f"*Merk: {c['situation']}*")
+    else:
+        lines += [
+            "",
+            "FEST har ingen registrert interaksjon for denne kombinasjonen.",
+            "Dette utelukker ikke klinisk relevans — sjekk preparatomtale for",
+            "CYP-effekt, QT-forlengelse og proteinbinding.",
+        ]
+
+    for note in structured.get("group_notes", []):
+        lines += ["", f"*{note}.*"]
+
+    lines += [
+        "",
+        "Interaksjonssjekk er beslutningsstøtte og erstatter ikke klinisk vurdering.",
+    ]
+    return "\n".join(lines)
+
+
+def _format_interaksjon_kort(structured: dict) -> str:
+    """Marker-blokk med strukturert interaksjonsdata som frontend rendrer
+    som fargekodede faregrad-kort. JSON-en er deterministisk fra FEST."""
+    try:
+        payload = json.dumps(structured, ensure_ascii=False)
+    except (TypeError, ValueError):
+        return ""
+    return "\n\n[INTERAKSJON-KORT]\n" + payload + "\n[/INTERAKSJON-KORT]"
+
+
+async def call_interaksjon_agent(query: str) -> AgentResult:
+    """Lokal interaksjonsagent: sjekk legemidlene nevnt i spørsmålet mot FEST/SLV."""
+    start = time.monotonic()
+
+    meds, group_map = extract_mentioned_meds_detailed([query])
+    meds_sorted = sorted(meds)
+    if len(meds_sorted) < 2:
+        return AgentResult(
+            agent_name=INTERAKSJON,
+            output="",
+            duration_ms=0,
+            success=False,
+            error="Færre enn 2 gjenkjente legemidler i spørsmålet",
+        )
+
+    data = await _fetch_interaksjoner(meds_sorted)
+    duration = int((time.monotonic() - start) * 1000)
+
+    if data is None:
+        # Ærlig utilgjengelighet — aldri stille utelatt (kan ellers leses som "trygt")
+        structured = {
+            "interactions": [], "checked": meds_sorted, "recognized": [],
+            "datagap": False, "group_notes": [], "unavailable": True,
+        }
+        output = (
+            "INTERAKSJONSSJEKK UTILGJENGELIG: kilden (interaksjoner.no/FEST) svarte ikke. "
+            "Dette skal IKKE tolkes som at kombinasjonen er trygg — sjekk preparatomtale "
+            "eller prøv igjen senere."
+        )
+        logger.warning(f"  {INTERAKSJON}: kilde utilgjengelig ({duration}ms)")
+        return AgentResult(
+            agent_name=INTERAKSJON, output=output, duration_ms=duration,
+            success=True, data=structured,
+        )
+
+    structured = _parse_interaksjoner_structured(data, meds_sorted, group_map)
+    text = _format_interaksjoner(data, meds_sorted, asked_meds=list(meds))
+    if text is None:
+        # Ingen interaksjoner og ingen gjenkjente spurte legemidler i responsen
+        text = (
+            f"INTERAKSJONSSJEKK FRA FEST/SLV: ingen registrert interaksjon funnet for "
+            f"kombinasjonen {', '.join(meds_sorted)}. Dette utelukker ikke klinisk "
+            f"relevans — sjekk preparatomtale."
+        )
+
+    logger.info(
+        f"  {INTERAKSJON}: {duration}ms, {len(structured['interactions'])} interaksjon(er)"
+    )
+    return AgentResult(
+        agent_name=INTERAKSJON, output=text, duration_ms=duration,
+        success=True, data=structured,
+    )
 
 
 def _extract_med_names(patient_output: str) -> list[str]:
@@ -563,10 +643,12 @@ def _agent_label(name: str) -> str:
 
 # --- Statistikk hallusinerings-guard ---
 
-# Mønster som indikerer suspekte NKI-tall (prosenter med desimal, tertial-referanser)
-_SUSPECT_NKI_PCT = re.compile(r'\d{1,3}[,.]\d\s*%')      # f.eks. "59,9 %"
+# Mønster som indikerer suspekte NKI-tall (prosenter med desimal, tertial-referanser).
+# Matcher både "%" og utskrevet "prosent" — HAPI-30-regresjonen 16. juli viste at
+# agenten skriver "59,9 prosent", som slapp forbi det rene %-mønsteret (EVAL-023).
+_SUSPECT_NKI_PCT = re.compile(r'\d{1,3}[,.]\d\s*(?:%|prosent)', re.IGNORECASE)
 _SUSPECT_TERTIAL = re.compile(r'\d\.\s*tertial\s+\d{4}', re.IGNORECASE)  # "2. tertial 2022"
-_SUSPECT_YEAR_PCT = re.compile(r'(i|fra|per|år)\s+\d{4}.*?\d{1,3}[,.]\d\s*%', re.IGNORECASE)
+_SUSPECT_YEAR_PCT = re.compile(r'(i|fra|per|år)\s+\d{4}.*?\d{1,3}[,.]\d\s*(?:%|prosent)', re.IGNORECASE)
 _STATISTIKK_DISCLAIMER = (
     "\n\nFor oppdaterte tallverdier, se Helsedirektoratets statistikkbank "
     "(https://www.helsedirektoratet.no/statistikk)."
@@ -650,6 +732,7 @@ async def synthesize(
     project: AsyncProjectClient,
     query: str,
     results: list[AgentResult],
+    event_queue: "asyncio.Queue | None" = None,
 ) -> tuple[str, bool]:
     """Kombiner agent-resultater til ett svar via LLM.
 
@@ -672,9 +755,23 @@ async def synthesize(
     felleskatalogen_block = _format_felleskatalogen_block(felleskatalogen_results)
     successful = [r for r in successful if r.agent_name != "hapi-felleskatalogen-agent"]
 
-    # Hvis Felleskatalogen var eneste agent (eller eneste vellykkete), returner
-    # verbatim-blokken alene — ingen syntese, ingen footer-omslag.
+    # Separer den lokale interaksjonsagenten (pasientløs FEST-sjekk).
+    # Tekstblokken injiseres i syntesen; strukturert data blir frontend-kort.
+    interaksjon_agent_results = [r for r in successful if r.agent_name == INTERAKSJON]
+    successful = [r for r in successful if r.agent_name != INTERAKSJON]
+    ix_agent = interaksjon_agent_results[0] if interaksjon_agent_results else None
+    ix_card = _format_interaksjon_kort(ix_agent.data) if ix_agent and ix_agent.data else ""
+
+    # Hvis Felleskatalogen/interaksjonsagenten var eneste vellykkete kilder,
+    # returner deterministisk — ingen syntese, ingen LLM.
     if not successful:
+        if ix_agent:
+            answer = (
+                _render_interaksjon_answer(ix_agent.data)
+                if ix_agent.data else ix_agent.output
+            )
+            answer = answer + SOURCE_FOOTER_INTERAKSJON + ix_card
+            return _append_fk(answer, felleskatalogen_block), True
         if felleskatalogen_block:
             return felleskatalogen_block, False
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False
@@ -706,6 +803,7 @@ async def synthesize(
 
         if all_meds:
             logger.info(f"  Interaksjonssjekk for {len(all_meds)} medisiner: {all_meds} (asked={asked_meds})")
+            _emit(event_queue, {"type": "interaksjonssjekk"})
             ix_result = await _sjekk_interaksjoner(all_meds, asked_meds=asked_meds)
             if ix_result:
                 interaksjon_block = f"\n{ix_result}\n"
@@ -728,18 +826,30 @@ async def synthesize(
     else:
         patient_block = ""
 
+    # Interaksjonsagentens funn injiseres i syntesen sammen med fagkildene
+    # (pasientløs sti — med aktiv pasient dekker inline-sjekken over dette).
+    if ix_agent:
+        patient_block += (
+            "\nINTERAKSJONSSJEKK (FEST/SLV) for legemidlene i spørsmålet:\n"
+            + ix_agent.output
+            + "\nVIKTIG: Gjengi faregrad og klinisk konsekvens fra interaksjonsdataene "
+            "eksakt. Hvis blokken viser DATAGAP eller at kilden var utilgjengelig, "
+            "formidl dette ærlig (jf. regel 11).\n"
+        )
+        has_interaksjoner = True
+
     footer = SOURCE_FOOTER_INTERAKSJON if has_interaksjoner else SOURCE_FOOTER
 
     # Hvis ingen fagkunnskap-kilder (bare journal eller tom), fallback
     if not knowledge_results:
         if journal_results:
-            return _append_fk(journal_results[0].output + footer, felleskatalogen_block), has_interaksjoner
+            return _append_fk(journal_results[0].output + footer + ix_card, felleskatalogen_block), has_interaksjoner
         if felleskatalogen_block:
             return felleskatalogen_block, False
         return "Beklager, ingen av agentene klarte å hente data for dette spørsmålet.", False
 
-    # Hvis bare én fagkunnskap-kilde og ingen pasient, bruk direkte
-    if len(knowledge_results) == 1 and not journal_results:
+    # Hvis bare én fagkunnskap-kilde og ingen pasient/interaksjonsdata, bruk direkte
+    if len(knowledge_results) == 1 and not journal_results and not ix_agent:
         return _append_fk(knowledge_results[0].output + footer, felleskatalogen_block), False
 
     # Syntetiser via LLM
@@ -757,6 +867,17 @@ async def synthesize(
     override_prompt, override_model = _get_synth_override()
     synth_template = override_prompt or SYNTHESIS_PROMPT
     synth_model = override_model or SYNTH_MODEL
+
+    # Hybrid-overstyring: ruter til SYNTH_MODEL_STATISTIKK hvis statistikk-agenten
+    # er blant kildene OG admin-overstyring ikke er satt. Hallusinering-risiko
+    # ved tall er størst i statistikk-syntese; Claude er mer disiplinert der.
+    if SYNTH_MODEL_STATISTIKK and not override_model:
+        if any(r.agent_name == "hapi-statistikk-agent" for r in knowledge_results):
+            logger.info(
+                f"Hybrid: bytter syntese-modell til {SYNTH_MODEL_STATISTIKK} "
+                f"(statistikk-agent involvert)"
+            )
+            synth_model = SYNTH_MODEL_STATISTIKK
     try:
         prompt = synth_template.format(
             query=query,
@@ -775,16 +896,27 @@ async def synthesize(
             agent_names=agent_names,
         )
 
+    _emit(event_queue, {"type": "synthesis_start", "model": synth_model})
     try:
         # acomplete_text ruter til Anthropic Messages API hvis synth_model starter med
         # "claude-", ellers Azure OpenAI Responses API som før.
         output_text = await acomplete_text(project, model=synth_model, prompt=prompt)
-        return _append_fk(output_text, felleskatalogen_block), has_interaksjoner
+        return _append_fk(output_text + ix_card, felleskatalogen_block), has_interaksjoner
     except Exception as e:
         logger.error(f"Syntese feilet ({synth_model}): {e}")
         # Fallback: konkatener fagkunnskap-resultatene
         parts = [r.output for r in knowledge_results]
-        return _append_fk("\n\n".join(parts) + SOURCE_FOOTER, felleskatalogen_block), has_interaksjoner
+        return _append_fk("\n\n".join(parts) + SOURCE_FOOTER + ix_card, felleskatalogen_block), has_interaksjoner
+
+
+def _emit(queue: "asyncio.Queue | None", event: dict) -> None:
+    """Legg en SSE-hendelse på køen — no-op uten kø, så /ask-stien er uendret."""
+    if queue is None:
+        return
+    try:
+        queue.put_nowait(event)
+    except Exception:
+        pass
 
 
 async def orchestrate(
@@ -792,6 +924,7 @@ async def orchestrate(
     query: str,
     use_llm_routing: bool = False,
     patient_id: str | None = None,
+    event_queue: "asyncio.Queue | None" = None,
 ) -> OrchestrationResult:
     """
     Hovedfunksjon: rut, kall agenter parallelt, syntetiser.
@@ -800,6 +933,8 @@ async def orchestrate(
         project_endpoint: Azure AI Foundry prosjekt-URL
         query: Brukerens spørsmål
         use_llm_routing: Bruk LLM for routing ved lav konfidens
+        event_queue: Valgfri kø for SSE-hendelser (routing/agent_start/
+                     agent_result/synthesis_start). None = ingen emisjon.
 
     Returns:
         OrchestrationResult med endelig svar og metadata
@@ -810,6 +945,9 @@ async def orchestrate(
     logger.info(f"Routing: '{query[:80]}...' (patient_id={patient_id})")
     decision = route(query, patient_id=patient_id)
     logger.info(f"  -> {decision.agents} (konfidens: {decision.confidence})")
+    _emit(event_queue, {
+        "type": "routing", "agents": decision.agents, "confidence": decision.confidence,
+    })
 
     # Valgfritt: LLM-routing ved lav konfidens
     if use_llm_routing and decision.confidence == "lav":
@@ -820,9 +958,22 @@ async def orchestrate(
                 openai = project.get_openai_client()
                 decision = route_with_llm(query, openai)
                 logger.info(f"  LLM re-routing -> {decision.agents}")
+                _emit(event_queue, {
+                    "type": "routing", "agents": decision.agents,
+                    "confidence": decision.confidence,
+                })
 
     # Steg 2: Kall agenter parallelt
     logger.info(f"Kaller {len(decision.agents)} agent(er) parallelt...")
+
+    async def _run_and_emit(coro, agent_name: str) -> AgentResult:
+        _emit(event_queue, {"type": "agent_start", "agent": agent_name})
+        res = await coro
+        _emit(event_queue, {
+            "type": "agent_result", "agent": agent_name,
+            "success": res.success, "duration_ms": res.duration_ms,
+        })
+        return res
 
     async with AsyncCredential() as cred:
         async with AsyncProjectClient(
@@ -832,14 +983,20 @@ async def orchestrate(
             for agent_name in decision.agents:
                 if agent_name == KJERNEJOURNAL:
                     # Lokalt oppslag — ikke Foundry-agent
-                    tasks.append(kjernejournal.call_kjernejournal_agent(patient_id))
+                    coro = kjernejournal.call_kjernejournal_agent(patient_id)
+                elif agent_name == INTERAKSJON:
+                    # Lokal interaksjonsagent — FEST-sjekk uten Foundry
+                    coro = call_interaksjon_agent(query)
                 else:
-                    tasks.append(call_agent(project, agent_name, query))
+                    coro = call_agent(project, agent_name, query)
+                tasks.append(_run_and_emit(coro, agent_name))
             results = await asyncio.gather(*tasks)
 
             # Steg 3: Syntetiser
             logger.info("Syntetiserer svar...")
-            final_answer, has_interaksjoner = await synthesize(project, query, list(results))
+            final_answer, has_interaksjoner = await synthesize(
+                project, query, list(results), event_queue=event_queue
+            )
 
     total_ms = int((time.monotonic() - start) * 1000)
 
