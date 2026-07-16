@@ -66,6 +66,10 @@ PRISER_USD_PER_1M = {
     "gpt-5.3-chat": {"input": 1.75, "output": 14.00},
     "gpt-5.4": {"input": 2.50, "output": 15.00},
     "gpt-5.5": {"input": 5.00, "output": 30.00},
+    # GPT-5.6-serien (juli 2026) — listepriser; Azure retail-meters ikke publisert enda
+    "gpt-5.6-sol": {"input": 5.00, "output": 30.00},
+    "gpt-5.6-terra": {"input": 2.50, "output": 15.00},
+    "gpt-5.6-luna": {"input": 1.00, "output": 6.00},
 }
 PRIS_INPUT_USD_PER_1M = PRISER_USD_PER_1M.get(JUDGE_MODEL, PRISER_USD_PER_1M["gpt-5.3-chat"])["input"]
 PRIS_OUTPUT_USD_PER_1M = PRISER_USD_PER_1M.get(JUDGE_MODEL, PRISER_USD_PER_1M["gpt-5.3-chat"])["output"]

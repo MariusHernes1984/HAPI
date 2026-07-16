@@ -317,6 +317,9 @@ async def list_models(_user: str = Depends(verify_admin)):
     Faller tilbake til en kjent kuratert liste basert på prosjektets evals.
     """
     fallback = [
+        "gpt-5.6-sol",
+        "gpt-5.6-terra",
+        "gpt-5.6-luna",
         "gpt-5.5",
         "gpt-5.4",
         "gpt-5.3-chat",
