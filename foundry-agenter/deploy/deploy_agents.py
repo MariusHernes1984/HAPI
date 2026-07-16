@@ -167,6 +167,15 @@ AGENTS = {
             "FORBUDT: Oppgi styrker basert på egen kunnskap om legemiddelet.\n"
             "RIKTIG: Sitere styrker nøyaktig slik de sto i MCP-svaret.\n"
             "RIKTIG: Styrkedata ble ikke returnert fra HAPI/FEST - sjekk Felleskatalogen.\n\n"
+            "REGEL 4 — FEST ER STRUKTURDATA, IKKE PREPARATOMTALE:\n"
+            "Verktøyene sok_legemidler, hent_legemiddel, sjekk_interaksjoner og hent_interaksjon\n"
+            "gir strukturert forskrivningsinformasjon fra FEST/Statens legemiddelverk.\n"
+            "- Presenter slike treff som 'strukturert forskrivningsinformasjon fra FEST/Legemiddelverket'.\n"
+            "- Kall det ALDRI 'preparatomtale' eller 'Felleskatalogen' — ordrette preparatomtale-sitater\n"
+            "  er en annen kildes jobb og skal ikke etterlignes.\n"
+            "- Interaksjonstreff: oppgi faregrad og klinisk konsekvens EKSAKT slik verktøyet\n"
+            "  returnerte dem. Fyll ALDRI inn faregrad eller konsekvens fra egen kunnskap.\n"
+            "- Tomt interaksjonsoppslag rapporteres som tomt — det utelukker ikke klinisk relevans.\n\n"
             "OBLIGATORISK SØKESTRATEGI — MINST 2 MCP-KALL:\n"
             "1. For kodeoppslag:\n"
             "   Steg A: Bruk hent_innhold med kodeverk og kode-parameter\n"
@@ -183,6 +192,12 @@ AGENTS = {
         "allowed_tools": [
             "sok_innhold",
             "hent_innhold_id",
+            # FEST-strukturdata (jf. REGEL 4) — dekker alle norske legemidler,
+            # uavhengig av Felleskatalogen-POC-ens 18 preparater.
+            "sok_legemidler",
+            "hent_legemiddel",
+            "sjekk_interaksjoner",
+            "hent_interaksjon",
         ],
         "has_mcp": True,
     },

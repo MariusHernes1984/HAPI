@@ -171,33 +171,78 @@ async def ask(request: AskRequest, background_tasks: BackgroundTasks):
 
 @app.post("/ask/stream")
 async def ask_stream(request: AskRequest):
-    """Streaming-versjon — sender partial results via SSE."""
+    """Streaming-versjon — ekte per-agent-hendelser via SSE.
+
+    Hendelser: routing → agent_start/agent_result (per agent, sanntid) →
+    synthesis_start → final_answer (samme form som AskResponse) → [DONE].
+    Heartbeat-kommentar hvert 10s holder forbindelsen åpen gjennom ingress.
+    Logger til chatlog etter [DONE] — paritet med /ask.
+    """
+    logger.info(f"POST /ask/stream: {request.query[:80]}")
 
     async def event_generator():
-        import json
-
-        # Steg 1: Routing
-        decision = route(request.query, patient_id=request.patient_id)
-        yield f"data: {json.dumps({'type': 'routing', 'agents': decision.agents, 'confidence': decision.confidence})}\n\n"
-
-        # Steg 2: Kall agenter
-        result = await orchestrate(
+        queue: asyncio.Queue = asyncio.Queue()
+        task = asyncio.create_task(orchestrate(
             project_endpoint=PROJECT_ENDPOINT,
             query=request.query,
             use_llm_routing=request.use_llm_routing,
             patient_id=request.patient_id,
-        )
+            event_queue=queue,
+        ))
+        try:
+            while not (task.done() and queue.empty()):
+                try:
+                    event = await asyncio.wait_for(queue.get(), timeout=10)
+                    yield f"data: {json.dumps(event, ensure_ascii=False)}\n\n"
+                except asyncio.TimeoutError:
+                    # SSE-kommentar — agentkall kan ta opptil AGENT_TIMEOUT_S
+                    yield ": ping\n\n"
 
-        for r in result.agent_results:
-            yield f"data: {json.dumps({'type': 'agent_result', 'agent': r.agent_name, 'success': r.success, 'duration_ms': r.duration_ms})}\n\n"
+            result: OrchestrationResult = await task
 
-        # Steg 3: Endelig svar
-        yield f"data: {json.dumps({'type': 'final_answer', 'answer': result.final_answer, 'total_duration_ms': result.total_duration_ms})}\n\n"
+            payload = {
+                "answer": result.final_answer,
+                "routing": {
+                    "agents": result.routing.agents,
+                    "confidence": result.routing.confidence,
+                    "reasoning": result.routing.reasoning,
+                    "detected_codes": result.routing.detected_codes,
+                },
+                "agent_results": [
+                    {
+                        "agent_name": r.agent_name,
+                        "output": (r.output or "")[:2000],
+                        "duration_ms": r.duration_ms,
+                        "success": r.success,
+                        "error": r.error,
+                    }
+                    for r in result.agent_results
+                ],
+                "total_duration_ms": result.total_duration_ms,
+                "interaksjonssjekk": result.interaksjonssjekk,
+            }
+            yield f"data: {json.dumps({'type': 'final_answer', **payload}, ensure_ascii=False)}\n\n"
+
+            # Chatlog-paritet med /ask (BackgroundTasks kjører ikke i
+            # streaming-generatorer — fire-and-forget via to_thread).
+            if request.patient_id and request.user_id:
+                asyncio.create_task(asyncio.to_thread(
+                    chatlog.log_chat,
+                    request.patient_id,
+                    request.user_id,
+                    request.query,
+                    payload,
+                ))
+        except Exception as e:
+            logger.error(f"Stream-orkestrering feilet: {e}")
+            yield f"data: {json.dumps({'type': 'error', 'message': str(e)}, ensure_ascii=False)}\n\n"
+
         yield "data: [DONE]\n\n"
 
     return StreamingResponse(
         event_generator(),
         media_type="text/event-stream",
+        headers={"Cache-Control": "no-cache", "X-Accel-Buffering": "no"},
     )
 
 
@@ -241,10 +286,12 @@ async def list_agents():
             },
             {
                 "name": "hapi-interaksjon-agent",
-                "description": "Legemiddelinteraksjoner — sjekker automatisk mot FEST/Statens legemiddelverk "
-                               "når pasientens faste medisiner kombineres med nye forordninger. "
-                               "Faregrad, klinisk konsekvens og håndtering.",
-                "mcp_tools": ["sjekk_interaksjoner", "hent_interaksjon"],
+                "description": "Legemiddelinteraksjoner mot FEST/Statens legemiddelverk. "
+                               "Sjekker automatisk når en pasient er aktiv, og rutes direkte for "
+                               "pasientløse interaksjonsspørsmål (f.eks. 'kan X kombineres med Y?'). "
+                               "Faregrad, klinisk konsekvens og håndtering. "
+                               "Kjøres lokalt i orchestratoren (interaksjoner.no) — ikke en Foundry-agent.",
+                "mcp_tools": ["lokal_interaksjonssjekk (interaksjoner.no/FEST)"],
             },
             {
                 "name": NDLA,

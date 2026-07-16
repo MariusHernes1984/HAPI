@@ -1,0 +1,173 @@
+{
+  "metadata": {
+    "tidspunkt": "2026-07-16T23:10:55.601604",
+    "versjon": "v2-llm",
+    "antall_spoersmaal": 5,
+    "tag": "stat-guard-v2",
+    "eval_metode": "LLM-faktasjekk (gpt-5.5)"
+  },
+  "oppsummering": {
+    "korrekthetsscore": "5/5 (100%)",
+    "bestatt": 4,
+    "delvis": 1,
+    "mangler": 0,
+    "feil": 0,
+    "hallusinering": 0,
+    "teknisk_feil": 0,
+    "routing_korrekthet": 5,
+    "snitt_responstid_ms": 21840
+  },
+  "resultater": [
+    {
+      "id": "EVAL-019",
+      "kategori": "statistikk",
+      "tema": "NKI KOLS",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir en relevant nasjonal kvalitetsindikator for KOLS og angir Helsedirektoratet som kilde. Det er ikke påvist oppdiktede indikatorer eller åpenbart fabrikkerte tall i svaret.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for KOLS er oppgitt med navn",
+        "Kilde er oppgitt",
+        "Kilde er Helsedirektoratet/NKI"
+      ],
+      "forventet": 3,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 22592,
+      "answer_length": 780,
+      "answer_preview": "Indikatornavn: Reinnleggelse innen 30 dager for eldre pasienter etter sykehusinnleggelse for astma/kronisk obstruktiv lungesykdom (KOLS)\nBeskrivelse: Sannsynlighet for akutt reinnleggelse innen 30 dager etter utskrivning av eldre pasienter (>= 67 år)\r\nmed primær sykehusinnleggelse for astma/kronisk "
+    },
+    {
+      "id": "EVAL-020",
+      "kategori": "statistikk",
+      "tema": "NKI hjerneslag",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir relevante kvalitetsindikatorer for hjerneslag og bruker Helsedirektoratet som kilde. Det presenterer ikke oppdiktede prosentverdier eller utenlandske tall som norske.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Oppgir minst én nasjonal kvalitetsindikator for hjerneslag med navn: Hjerneslag - behandlet i slagenhet etter akutt hjerneslag",
+        "Oppgir Helsedirektoratet som kilde"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 29518,
+      "answer_length": 863,
+      "answer_preview": "Indikatornavn: Blodtrykksbehandling etter hjerneslag.\nBeskrivelse: Andel pasienter som har fått blodtrykksbehandling etter hjerneslag\nTallverdi: Se Helsedirektoratets statistikkbank for oppdaterte tall\nKilde: Helsedirektoratet\n\nIndikatornavn: Hjerneslag - behandlet i slagenhet etter akutt hjerneslag",
+      "kjent_databegrensning": "MCP/NKI returnerer ikke paalitelig NKI-data for hjerneslag. Agenten finner lite eller ingenting."
+    },
+    {
+      "id": "EVAL-021",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes HbA1c",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret identifiserer relevant HbA1c-indikator og oppgir Helsedirektoratet som kilde, uten å dikte opp tallverdier. Gitt kjent databegrensning der MCP ikke eksponerer måleverdier, er manglende tallverdi akseptabelt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "HbA1c-indikator er identifisert med navn: Diabetes - blodsukkerregulering hos voksne med diabetes type 1",
+        "Agenten oppgir ikke oppdiktede prosenttall og viser til Helsedirektoratets statistikkbank for oppdaterte tall"
+      ],
+      "forventet": 1,
+      "mangler": [],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 20666,
+      "answer_length": 3412,
+      "answer_preview": "Indikatornavn: Diabetes  - blodsukkerregulering hos voksne med diabetes type 1\nBeskrivelse: Norsk pasientregister Resultater HbA1c reflekterer blodsukkernivået de siste 8-12 ukene, og er i dag det beste målet på blodsukkerkontroll hos pasienter med diabetes type 1. Godt regulert blodsukker ligger om",
+      "kjent_databegrensning": "MCP returnerer indikatordefinisjon men ikke faktiske tallverdier/perioder for HbA1c."
+    },
+    {
+      "id": "EVAL-022",
+      "kategori": "statistikk",
+      "tema": "NKI diabetes",
+      "score": "BESTATT",
+      "begrunnelse": "Svaret oppgir flere relevante diabetesindikatorer fra Helsedirektoratet/NKI og angir kilde. Det mangler infoId, men kildekravet er likevel oppfylt siden Helsedirektoratet er oppgitt.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Minst en kvalitetsindikator for diabetes er oppgitt med navn",
+        "Flere relevante nasjonale kvalitetsindikatorer for diabetes er oppgitt",
+        "Kilde er oppgitt som Helsedirektoratet"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "infoId er ikke oppgitt"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 20171,
+      "answer_length": 2122,
+      "answer_preview": "Indikatornavn: Diabetes - amputasjoner blant personer med diabetes\nBeskrivelse: Kvalitetsindikatoren viser antall personer med diabetes type 1 eller type 2, og som har amputert en tå, fot eller et ben.\nTallverdi: I 2025 var det 1,7 per 1 000 personer med diabetes som måtte amputere en tå, fot eller "
+    },
+    {
+      "id": "EVAL-023",
+      "kategori": "statistikk",
+      "tema": "NKI hoftebrudd (mangler-test)",
+      "score": "DELVIS",
+      "begrunnelse": "Svaret identifiserer riktig indikator og bruker Helsedirektoratet som kilde, men gir ikke de etterspurte nyeste tallene eller en klar vurdering av måloppnåelse. Det er ingen tydelige oppdiktede tall eller medisinske feil, men svaret er ufullstendig.",
+      "routing_correct": true,
+      "actual_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "expected_routing": [
+        "hapi-statistikk-agent"
+      ],
+      "treff": [
+        "Indikator for hoftebrudd er identifisert med navn: Hoftebrudd operert innen henholdsvis 24 timer og 48 timer",
+        "Kilde er oppgitt som Helsedirektoratet/NKI",
+        "Svaret fabrikkerer ikke konkrete prosenttall"
+      ],
+      "forventet": 2,
+      "mangler": [
+        "Nyeste publiserte NKI-tall oppgis ikke",
+        "Det gis ikke en tydelig vurdering av om de nasjonale tidskravene/målene er oppfylt",
+        "Manglende data håndteres bare med plassholdere, ikke som en klar forklaring på at tall ikke var tilgjengelige"
+      ],
+      "feil": [],
+      "kilde_ok": true,
+      "duration_ms": 16255,
+      "answer_length": 2527,
+      "answer_preview": "Indikatornavn: Hoftebrudd operert innen henholdsvis 24 timer og 48 timer  \nBeskrivelse: Hoftebrudd forekommer hyppig, særlig hos eldre. Om lag 70 prosent som rammes er kvinner. Hoftebrudd har alvorlige konsekvenser for pasienten med smerter og ubehag, men også i tapt evne til å bevege seg, redusert "
+    }
+  ],
+  "statistikk": {
+    "tokens_input": 5516,
+    "tokens_output": 3161,
+    "tokens_total": 8677,
+    "llm_kall": 5,
+    "kostnad_nok": 1.3465,
+    "kilde": "maalt-runtime",
+    "prismodell": {
+      "model": "gpt-5.5",
+      "input_usd_per_1m": 5.0,
+      "output_usd_per_1m": 30.0,
+      "kurs_usd_nok": 11.0
+    },
+    "kostnad_per_spoersmaal_nok": 0.2693
+  }
+}

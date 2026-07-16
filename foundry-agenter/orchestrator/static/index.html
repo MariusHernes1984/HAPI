@@ -858,6 +858,45 @@
       margin-bottom: 8px;
     }
 
+    /* --- Interaksjonskort (FEST faregrad) --- */
+    .interaksjon-kort {
+      border-left: 4px solid #9ca3af;
+      background: #f9fafb;
+      padding: 10px 14px;
+      margin: 10px 0;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    .interaksjon-kort.faregrad-4 { border-color: #dc2626; background: #fef2f2; }
+    .interaksjon-kort.faregrad-3 { border-color: #ea580c; background: #fff7ed; }
+    .interaksjon-kort.faregrad-2 { border-color: #ca8a04; background: #fefce8; }
+    .interaksjon-kort.faregrad-1 { border-color: #9ca3af; background: #f9fafb; }
+    .interaksjon-kort.ix-info { border-color: #2563eb; background: #eff6ff; }
+    .ix-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: white;
+      margin-bottom: 6px;
+      border: 1px solid currentColor;
+    }
+    .interaksjon-kort.faregrad-4 .ix-badge { color: #dc2626; }
+    .interaksjon-kort.faregrad-3 .ix-badge { color: #ea580c; }
+    .interaksjon-kort.faregrad-2 .ix-badge { color: #ca8a04; }
+    .interaksjon-kort.faregrad-1 .ix-badge { color: #6b7280; }
+    .interaksjon-kort.ix-info .ix-badge { color: #2563eb; }
+    .ix-pair { font-weight: 600; display: block; margin-bottom: 4px; }
+    .ix-desc { display: block; }
+    .ix-situation { display: block; font-style: italic; color: var(--text-light); margin-top: 4px; }
+    .ix-footnote { font-size: 0.78rem; color: var(--text-light); margin: 6px 0 2px; }
+    .orch-ms { font-size: 0.7rem; opacity: 0.7; margin-left: 2px; }
+
     .agent-card-name {
       font-weight: 600;
       font-size: 0.92rem;
@@ -1282,7 +1321,9 @@
         { icon: '\u{1F3E5}', text: 'Hvor lang er maksimal total tid i pakkeforløp lungekreft?' },
         { icon: '\u{1F9E0}', text: 'Hva er mål for tid fra ankomst sykehus til trombolyse ved hjerneslag?' },
         { icon: '\u{1F9B4}', text: 'Anbefalt tromboseprofylakse etter hoftebruddsoperasjon — hvor lenge?' },
-        { icon: '\u{1F489}', text: 'Empirisk antibiotikavalg ved nøytropen feber i sykehus?' }
+        { icon: '\u{1F489}', text: 'Empirisk antibiotikavalg ved nøytropen feber i sykehus?' },
+        // Pasientløs interaksjonssjekk — rutes til den lokale interaksjonsagenten
+        { icon: '⚠️', text: 'Kan Marevan kombineres med ibuprofen og sertralin?' }
       ],
       onkologi: [
         { icon: '\u26A0\uFE0F', text: 'Pasienten har hatt diaré flere ganger daglig i noen dager. Hvordan bør jeg tenke?' },
@@ -1533,7 +1574,7 @@
       if (prev) prev.remove();
 
       const agentChips = agents.map(a =>
-        `<span class="orch-step agent loading"><span class="step-icon">&#x1F916;</span> ${AGENT_LABELS[a] || a}</span>`
+        `<span class="orch-step agent loading" id="orch-agent-${a}"><span class="step-icon">&#x1F916;</span> ${AGENT_LABELS[a] || a}</span>`
       ).join('<span class="orch-arrow">&#x2192;</span>');
 
       const div = document.createElement('div');
@@ -1674,6 +1715,32 @@
       return d.innerHTML;
     }
 
+    function renderInteraksjonKort(payload) {
+      // Rendrer strukturert FEST-data (fra [INTERAKSJON-KORT]-blokken) som
+      // fargekodede faregrad-kort. All tekst escapes — verdiene er API-data.
+      // Bygges som én-linjes HTML så markdown-regexene under ikke rører den.
+      const e = escapeHtml;
+      let out = '';
+      if (payload.unavailable) {
+        out += `<div class="interaksjon-kort ix-info"><span class="ix-badge">INTERAKSJONSSJEKK UTILGJENGELIG</span><span class="ix-desc">Kilden (interaksjoner.no/FEST) svarte ikke. Skal IKKE tolkes som at kombinasjonen er trygg — sjekk preparatomtale eller prøv igjen.</span></div>`;
+      } else if (payload.interactions && payload.interactions.length) {
+        const sorted = payload.interactions.slice().sort((a, b) => (b.level || 0) - (a.level || 0));
+        for (const c of sorted) {
+          const lvl = [1, 2, 3, 4].includes(c.level) ? c.level : 1;
+          out += `<div class="interaksjon-kort faregrad-${lvl}"><span class="ix-badge">FAREGRAD ${lvl} — ${e(c.label || '')}</span><span class="ix-pair">${e(c.name1)} (${e(c.atc1)}) ↔ ${e(c.name2)} (${e(c.atc2)})</span>${c.description ? `<span class="ix-desc">${e(c.description)}</span>` : ''}${c.situation ? `<span class="ix-situation">Merk: ${e(c.situation)}</span>` : ''}</div>`;
+        }
+      } else if (payload.datagap) {
+        out += `<div class="interaksjon-kort ix-info"><span class="ix-badge">DATAGAP</span><span class="ix-desc">FEST har ingen registrert interaksjon for kombinasjonen ${e((payload.checked || []).join(', '))}. Utelukker ikke klinisk relevans — sjekk preparatomtale.</span></div>`;
+      }
+      for (const note of payload.group_notes || []) {
+        out += `<div class="ix-footnote">${e(note)}.</div>`;
+      }
+      if (out) {
+        out += `<div class="ix-footnote">Kilde: FEST/Statens legemiddelverk (interaksjoner.no) — hvert kort er en API-verdi, ikke modelltekst.</div>`;
+      }
+      return out;
+    }
+
     function renderMarkdown(text) {
       if (!text) return '';
 
@@ -1690,6 +1757,20 @@
         }
       );
 
+      // Interaksjonskort: [INTERAKSJON-KORT]{json}[/INTERAKSJON-KORT] --
+      // samme placeholder-monster som FK-blokken.
+      const ixPayloads = [];
+      text = text.replace(
+        /\[INTERAKSJON-KORT\]\s*([\s\S]*?)\s*\[\/INTERAKSJON-KORT\]/g,
+        (match, body) => {
+          const idx = ixPayloads.length;
+          let payload = null;
+          try { payload = JSON.parse(body); } catch (_) {}
+          ixPayloads.push(payload);
+          return `\u0000IX${idx}\u0000`;
+        }
+      );
+
       let html = escapeHtml(text);
 
       // Substituér placeholders med blockquote (etter escapeHtml så
@@ -1698,6 +1779,9 @@
         const safeBody = escapeHtml(fkPlaceholders[i]);
         const blockHtml = `<div class="felleskatalogen-quote"><span class="fk-badge">📋 Felleskatalogen — verbatim</span>\n${safeBody}</div>`;
         html = html.replace(`\u0000FK${i}\u0000`, blockHtml);
+      }
+      for (let i = 0; i < ixPayloads.length; i++) {
+        html = html.replace(`\u0000IX${i}\u0000`, ixPayloads[i] ? renderInteraksjonKort(ixPayloads[i]) : '');
       }
 
       // Headers
@@ -1780,51 +1864,126 @@ Nytt oppfølgingsspørsmål: ${query}`;
 
       showLoading();
 
+      const body = JSON.stringify({
+        query,
+        patient_id: selectedPatientId || null,
+        user_id: localStorage.getItem('hapi_user_name') || null,
+      });
+
       try {
-        const resp = await fetch(`${API_BASE}/ask`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            query,
-            patient_id: selectedPatientId || null,
-            user_id: localStorage.getItem('hapi_user_name') || null,
-          }),
-        });
-
-        if (!resp.ok) {
-          const err = await resp.json().catch(() => ({ detail: 'Ukjent feil' }));
-          throw new Error(err.detail || `HTTP ${resp.status}`);
+        // Primær: ekte SSE-strømming med per-agent-hendelser.
+        await sendMessageStreaming(rawQuery, body);
+      } catch (streamErr) {
+        // Fallback: klassisk blocking /ask (f.eks. hvis en proxy bufrer SSE)
+        console.warn('Streaming feilet, faller tilbake til /ask:', streamErr);
+        try {
+          await sendMessageBlocking(rawQuery, body);
+        } catch (err) {
+          addErrorMessage(err.message);
         }
-
-        const data = await resp.json();
-
-        // Remove loading, show orchestration flow
-        removeLoading();
-        if (data.routing && data.routing.agents) {
-          showOrchFlow(data.routing.agents);
-        }
-
-        // Small delay so user sees the orchestration flow
-        await new Promise(r => setTimeout(r, 800));
-
-        // Save to conversation history
-        conversationHistory.push({
-          query: rawQuery,
-          agents: data.routing ? data.routing.agents : [],
-          answer: data.answer ? data.answer.substring(0, 200) : '',
-        });
-        // Keep max 5 exchanges
-        if (conversationHistory.length > 5) conversationHistory.shift();
-
-        addBotMessage(data.answer, data.routing, data.agent_results, data.total_duration_ms, data.interaksjonssjekk);
-
-      } catch (err) {
-        addErrorMessage(err.message);
       } finally {
         isLoading = false;
         sendBtn.disabled = false;
         input.focus();
       }
+    }
+
+    function markAgentChip(agent, success, durationMs) {
+      const chip = document.getElementById(`orch-agent-${agent}`);
+      if (!chip) return;
+      chip.classList.remove('loading');
+      const secs = (durationMs / 1000).toFixed(1);
+      chip.innerHTML = `<span class="step-icon">${success ? '✅' : '❌'}</span> ${AGENT_LABELS[agent] || agent} <span class="orch-ms">${secs}s</span>`;
+    }
+
+    function handleStreamEvent(ev, rawQuery) {
+      if (ev.type === 'routing') {
+        removeLoading();
+        showOrchFlow(ev.agents || []);
+      } else if (ev.type === 'agent_result') {
+        markAgentChip(ev.agent, ev.success, ev.duration_ms);
+      } else if (ev.type === 'synthesis_start') {
+        const synth = document.querySelector('#orchFlow .orch-step.synth');
+        if (synth) synth.classList.add('loading');
+      } else if (ev.type === 'final_answer') {
+        conversationHistory.push({
+          query: rawQuery,
+          agents: ev.routing ? ev.routing.agents : [],
+          answer: ev.answer ? ev.answer.substring(0, 200) : '',
+        });
+        if (conversationHistory.length > 5) conversationHistory.shift();
+        addBotMessage(ev.answer, ev.routing, ev.agent_results, ev.total_duration_ms, ev.interaksjonssjekk);
+      }
+    }
+
+    async function sendMessageStreaming(rawQuery, body) {
+      const resp = await fetch(`${API_BASE}/ask/stream`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      });
+      if (!resp.ok || !resp.body) throw new Error(`HTTP ${resp.status}`);
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let gotFinal = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        let idx;
+        while ((idx = buffer.indexOf('\n\n')) >= 0) {
+          const chunk = buffer.slice(0, idx);
+          buffer = buffer.slice(idx + 2);
+          for (const line of chunk.split('\n')) {
+            if (!line.startsWith('data: ')) continue; // hopp over ping-kommentarer
+            const payload = line.slice(6).trim();
+            if (payload === '[DONE]') continue;
+            let ev;
+            try { ev = JSON.parse(payload); } catch (_) { continue; }
+            if (ev.type === 'error') throw new Error(ev.message || 'Stream-feil');
+            handleStreamEvent(ev, rawQuery);
+            if (ev.type === 'final_answer') gotFinal = true;
+          }
+        }
+      }
+      if (!gotFinal) throw new Error('Stream endte uten svar');
+    }
+
+    async function sendMessageBlocking(rawQuery, body) {
+      if (!document.getElementById('loading')) showLoading();
+
+      const resp = await fetch(`${API_BASE}/ask`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      });
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({ detail: 'Ukjent feil' }));
+        throw new Error(err.detail || `HTTP ${resp.status}`);
+      }
+
+      const data = await resp.json();
+
+      removeLoading();
+      if (data.routing && data.routing.agents) {
+        showOrchFlow(data.routing.agents);
+      }
+
+      // Small delay so user sees the orchestration flow
+      await new Promise(r => setTimeout(r, 800));
+
+      conversationHistory.push({
+        query: rawQuery,
+        agents: data.routing ? data.routing.agents : [],
+        answer: data.answer ? data.answer.substring(0, 200) : '',
+      });
+      if (conversationHistory.length > 5) conversationHistory.shift();
+
+      addBotMessage(data.answer, data.routing, data.agent_results, data.total_duration_ms, data.interaksjonssjekk);
     }
 
     // --- Agent modal ---
